@@ -34,7 +34,8 @@
         <div class="test-background" style="background-color: #dadde6;height: 350px;">
         </div>
         <div class="wrapper">
-            <form id="searchKeywordForm">
+            <form action="${pageContext.request.contextPath}/search/results" method="post"
+            id="searchKeywordForm">
                 <ul class="search-condition clearfix">
 
                     <li class="local clearfix">
