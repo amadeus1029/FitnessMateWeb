@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+#header {
+    position: static;
+}
+.signUpPart {
+    background-color: #ffffff;
+    padding-left: 350px;
+    height: 538px;
+}
+div.imgPart {
+    position: absolute;
+    top: -100px;
+    right: 0px;
+    width: 60%;
+    height: 740px;
+    background-image: url('../../assets/image/signUp.jpg');
+}
+#container .signUpPart{
+    width: 200px;
+    font-size: 15px;
+    line-height: 150%;
+    padding-top: 20px;
+    text-align: center;
+}
+#container .signUpPart .buttonPart input{
+    display: none;
+}
+.buttonPart{
+    margin-top: 30px;
+    width: 200px;
+    text-align: center;
+}
+.bold{
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+.bold_small{
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: #008526;
+}
+.button-label {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    color: #008526;
+    border: 1px solid #008526;
+    border-radius: 5px;
+    background: #ffffff;
+    transition: 0.3s;
+    user-select: none;
+}
+.button-label:active {
+    transform: translateY(2px);
+}
+input[type="radio"]:checked + label  {
+    background: #008526;
+    color: #ffffff;
+}
+a.button.main{
+    width: 100%;
+    margin: 20px 0px 0px 0px;
+}
