@@ -33,19 +33,19 @@
             <p class="bold">회원가입</p>
             <p>가입하고자 하는 유형을<br>
             아래에서 선택해주세요</p>
-            <form>
-            <div class="buttonPart">
-                <input type="radio" id="trainee" name="userType">
-                <label for="trainee" class="button-label lable_trainee">
-                    일반회원
-                </label>
-                <p>or</p>
-                <input type="radio" id="trainer" name="userType">
-                <label for="trainer" class="button-label lable_trainer">
-                    트레이너 회원
-                </label>
-            </div>
-            <a href="#none" class="button main">회원가입</a>
+            <form action="${pageContext.request.contextPath}/user/signForm" method="get">
+	            <div class="buttonPart">
+	                <input type="radio" id="trainee" name="userType">
+	                <label for="trainee" class="button-label lable_trainee">
+	                    일반회원
+	                </label>
+	                <p>or</p>
+	                <input type="radio" id="trainer" name="userType">
+	                <label for="trainer" class="button-label lable_trainer">
+	                    트레이너 회원
+	                </label>
+	            </div>
+	            <a href="#none" class="button main">회원가입</a>
             </form>
 
         </div>
