@@ -157,6 +157,20 @@
   opacity: 0.5;
   pointer-events: none;
 }
+#loginModal .modal-wrapper {
+  width: 380px;
+}
+#loginModal .modal-wrapper .modal-content p {
+  font-size: 24px;
+  font-weight: 600;
+}
+#loginModal .modal-wrapper .modal-btn-area table {
+  margin-bottom: 10px;
+}
+#loginModal .modal-wrapper .modal-btn-area table tr th {
+  padding-right: 10px;
+  text-align: right;
+}
 /* import/variable { */
 .clearfix:after {
   content: '';

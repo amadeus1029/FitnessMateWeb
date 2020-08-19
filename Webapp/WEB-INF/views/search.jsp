@@ -21,10 +21,6 @@
     <script src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/modal.js"></script>
 
-    <!-- slide -->
-    <link href="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/css/swiper.min.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/js/swiper.min.js"></script>
-
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css">
 </head>
