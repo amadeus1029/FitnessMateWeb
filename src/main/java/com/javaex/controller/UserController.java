@@ -11,7 +11,8 @@ public class UserController {
 
     @RequestMapping("/signUp")
     public String SignUp() {
-        return "user/signUp";
+    	System.out.println("dfsfsdfsf");
+    	return "user/signUp";
     }
  
 }
