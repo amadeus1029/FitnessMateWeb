@@ -11,7 +11,11 @@ public class UserController {
 
     @RequestMapping("/signUp")
     public String SignUp() {
+    	System.out.println("/signUp");
         return "user/signUp";
     }
  
+
+    
+    
 }

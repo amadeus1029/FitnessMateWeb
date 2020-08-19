@@ -13,11 +13,20 @@
         <nav id="nav">
         </nav>
         <div class="btn-area clearfix">
-            <a href="${pageContext.request.contextPath}/user/signUp" class="button sub">회원가입</a>
-            <a href="#none" class="button main" id="btn_login">로그인</a>
+        	<c:choose>
+        		<c:when test="${empty authUser}">
+		            <a href="${pageContext.request.contextPath}/user/signUp" class="button sub">회원가입</a>
+		            <a href="#none" class="button main" id="btn_login">로그인</a>
+	            </c:when>
+				<c:otherwise>
+					<a href="#none" class="button sub">마이페이지</a>
+		            <a href="#none" class="button main" id="btn_login">로그아웃</a>
+            	</c:otherwise>
+            </c:choose>
         </div>
     </div>
 </header>
+
 <!-- 모달임미다 -->
     <div class="modal-layer" id="loginModal">
         <div class="modal-wrapper">
@@ -29,13 +38,13 @@
                     <colgroup>
                       <col style="width: 100px;">
                       <col style="">
-                  </colgroup>
+                  	</colgroup>
                     <tr>
-                        <td><label for="userId">아이디</label></td>
+                        <th><label for="userId">아이디</label></th>
                         <td><input id="userId" type="text" name="id"></td>
                     </tr>
                     <tr>
-                        <td><label for="userPw">패스워드</label> </td>
+                        <th><label for="userPw">패스워드</label></th>
                         <td><input id="userPw" type="password" name="password"></td>   
                                        
                     </tr> 
@@ -52,3 +61,31 @@
             </div>
         </div>
     </div>
+
+    
+    
+<script type="text/javascript">
+
+	$("#btn_login").on("click", function(){
+	    // 이벤트 초기화
+	    event.preventDefault();
+	
+	    // input 초기화
+	    $("#userId").val("");
+	    $("#userPw").val("");
+	
+	    showModal("#loginModal");
+	});
+	
+	$(".modal-cancel").on("click", function(){
+	    forceHideModal('#loginModal')
+	});
+	
+	$(".modal-confirm").on("click", function(){
+	
+	    // 데이터 보내서 세션에 저장해야함
+	
+	    forceHideModal('#loginModal')
+	});
+
+</script>
