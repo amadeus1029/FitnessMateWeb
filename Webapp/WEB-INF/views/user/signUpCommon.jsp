@@ -12,33 +12,33 @@
     <title>Document</title>
 
     <!-- icon 사용을 위한 css -->
-    <link rel="stylesheet" href="../assets/css/fontawesome/all.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/fontawesome/all.css">
 
     <!-- 반드시 넣어야 하는 2가지 css -->
-    <link rel="stylesheet" href="../assets/css/reset.css">
-    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reset.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/common.css">
 
     <!-- 반드시 넣어야 하는 2가지 js -->
-    <script src="../assets/js/jquery/jquery-1.12.4.min.js"></script>
-    <script src="../assets/js/modal.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/modal.js"></script>
 
     <!-- slide -->
-    <link href="../assets/js/swiper-4.2.6/dist/css/swiper.min.css" rel="stylesheet">
-    <script src="../assets/js/swiper-4.2.6/dist/js/swiper.min.js"></script>
+    <link href="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/css/swiper.min.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/js/swiper.min.js"></script>
 
     <!-- 해당 페이지 css -->
-    <link rel="stylesheet" href="../assets/css/signUpCommon.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/signUpCommon.css">
 	
 </head>
 <body>
     <header id="header">
         <div class="wrapper clearfix">
             <h1 class="logo">
-                <a href="../html/index.html">
-                    <img src="../assets/image/logoB.jpeg" title="logo" alt="logo">
+                <a href="${pageContext.request.contextPath}/html/index.html">
+                    <img src="${pageContext.request.contextPath}/assets/image/logoB.jpeg" title="logo" alt="logo">
                 </a>
             </h1>
-            <a href="../html/search.html" class="search-link"><i class="fas fa-search"></i></a>
+            <a href="${pageContext.request.contextPath}/html/search.html" class="search-link"><i class="fas fa-search"></i></a>
             <nav id="nav">
             </nav>
             <div class="btn-area clearfix">
@@ -52,41 +52,43 @@
     <div id="container">
        
         <div class="wrapper">
-            <form action="" method="" enctype="multipart/form-data">
+            <form action="${pageContext.request.contextPath}/user/signUp" method="get" enctype="multipart/form-data">
                 <p class="title">기본정보 입력 - 트레이너</p>
                 <p>아이디</p>
-                <input type="text" placeholder="id">
+                <input type="text" name="userId" placeholder="id">
                 <p class="errMsg">이미 사용 중인 아이디 입니다.</p>
+                <p class="emtMsg">사용 불가한 아이디 입니다.</p>
+                <p class="okMsg">사용 가능한 아이디 입니다.</p>
                 <button type="button" id="idCheck">중복 확인</button>
                 <p>비밀번호</p>
-                <input type="text" placeholder="********">
+                <input type="password" name="password" placeholder="********">
                 <p>비밀번호 확인</p>
-                <input type="text" placeholder="********">
+                <input type="password" id="pw" placeholder="********">
                 <p>이름</p>
-                <input type="text" placeholder="김이름">
+                <input type="text" name="name" placeholder="김이름">
                 <p>휴대전화 번호</p>
-                <input type="text" placeholder="-를 제외한 휴대폰 번호를 입력해주세요">
+                <input type="text" name="phone" placeholder="010-0000-1111">
                 <p>성별</p>
-                <input type="radio" id="male" name="gender">
+                <input type="radio" id="male" name="gender" value="male">
                 <label for="male">남</label>
-                <input type="radio" id="female" name="gender">
+                <input type="radio" id="female" name="gender" value="female">
                 <label for="female">여</label>
                 <p>프로필 이미지</p>
-                <img id="proImg" src="../assets/image/unnamed.jpg">
-                <input type="file" id="imgPreview" name="profileImg">
+                <img id="proImg" src="${pageContext.request.contextPath}/assets/image/unnamed.jpg">
+                <input type="file" id="imgPreview" name="profileImage">
                 
-            </form>
-
 				<c:choose>
-                	<!-- 트레이너인 경우 -->
                 	<c:when test="${param.userType eq 'trainer'}">
-                		<a href="#none" class="button main">다음</a>
+                		<button type="submit" class="button main">다음</button>
+                		<input type="hidden" name="userType" value="${param.userType}">
                 	</c:when>
-                	<!-- 일반 회원인 경우 -->
                 	<c:otherwise>
-	                	<a href="#none" class="button main">완료</a>
+                		<button type="submit" class="button main">완료</button>
 	                </c:otherwise>
 				</c:choose>
+				
+            </form>
+
         </div>
     </div>
 
@@ -122,12 +124,17 @@
 </body>
 
 <script type="text/javascript">
+	//아이디 중복체크 변수 선언
+	var uniqueId = false;
+
     $(document).ready(function (){
-       $(".errMsg").hide(); 
+       $(".errMsg").hide();
+       $(".okMsg").hide();
+       $(".emtMsg").hide();
     })
 
 	//프로필 미리보기
-    $("#imgPreview").on("change", function(){
+    $("input[name='profileImage']").on("change", function(){
     	var reader = new FileReader();
     	
         reader.onload = function (e) {
@@ -138,11 +145,82 @@
     });
 
     // 아이디 체크
-    $("#idCheck").on("click",function(){
+    $("#idCheck").on("click", function(){
         // 데이터 받아와서 확인하기
+        var newId = $("input[name='userId']").val();
+		console.log("newId: "+newId);
+		
+		$.ajax({
+			
+			url : "${pageContext.request.contextPath}/user/idCheck",		
+			type : "post",
+			data : {newId: newId},
 
-        $(".errMsg").show();
+			dataType : "json",
+			success : function(result){
+				console.log(result);
+				
+				/*성공시 처리해야될 코드 작성*/
+				if(result == false){
+					//중복 아이디인 경우
+			        $(".errMsg").show();
+			        $(".emtMsg").hide();
+			        $(".okMsg").hide();
+				} else{
+					if(newId == ""){
+						//공란인경우
+				        $(".errMsg").hide();
+						$(".emtMsg").show();
+				        $(".okMsg").hide();
+					}else {
+					//사용가능한 아이디인 경우
+					$(".errMsg").hide();
+					$(".emtMsg").hide();
+			        $(".okMsg").show();
+			        uniqueId = true;
+					}
+				}
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			} 
+		})
+
     });
+    
+    $("button.main").on("click", function(){
+		//아이디를 입력해 주세요
+		if($("input[name='userId']").val() == ""){
+			alert("아이디를 입력해주세요");
+			return false;
+		}
+		
+		// 아이디 중복체크를 해주세요
+		if(uniqueId == false){
+			alert("아이디 중복체크를 해주세요");
+			return false;
+		}
+		
+		//패스워드를 입력해 주세요
+		if($("input[name='password']").val() == ""){
+			alert("패스워드를 입력해주세요");
+			return false;
+		}
+		
+		//이름을 입력해 주세요
+		if($("input[name='name']").val() == ""){
+			alert("이름 입력해주세요");
+			return false;
+		}
+
+		//패스워드가 일치하지 않습니다
+		if($("input[name='password']").val() != $("#pw").val()){
+			alert("패스워드가 일치하지 않습니다");
+			return false;
+		}
+		
+	});
 
     
     

@@ -12,5 +12,18 @@
 
 		 ]]>
 	</select>
+	
+	<insert id="insertUser" parameterType="com.javaex.vo.UserVo">
+		<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
+			SELECT seq_userNo.nextval FROM dual
+		</selectKey>
+		
+		<![CDATA[
+		
+			INSERT INTO users 
+			VALUES(#{userNo}, #{userId}, #{password}, #{name}, #{gender}, #{phone}, 0, #{userType}, '#{profileImg}', '', 1, '', '', '')
 
+		 ]]>
+	</insert>
+	
 </mapper>

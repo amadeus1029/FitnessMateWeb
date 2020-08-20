@@ -8,5 +8,7 @@
     <mappers>
     	<mapper resource="mybatis/mappers/test.xml" />
     	<mapper resource="mybatis/mappers/search.xml" />
+    	<mapper resource="mybatis/mappers/user.xml" />
+
     </mappers>
 </configuration>
