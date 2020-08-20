@@ -9,7 +9,8 @@ public class AddressVo {
 	
 	//생성자
 	public AddressVo() {}
-
+	
+	
 	public AddressVo(String province, String city, String region) {
 		super();
 		this.province = province;

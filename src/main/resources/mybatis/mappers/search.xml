@@ -3,9 +3,8 @@
 
 <mapper namespace="search">
 
-
 	<!--지역 정보 불러오기 -->
-	<select id="address" resultType="com.javaex.vo.AddressVo">
+	<select id="addressProvince" resultType="com.javaex.vo.AddressVo">
 	<![CDATA[
 	SELECT province
 	FROM address
@@ -13,5 +12,38 @@
 	ORDER BY province ASC
 	]]>
 	</select>
-
+	
+	<!--구 정보 불러오기 -->
+	<select id="addressCity" parameterType="String"
+	resultType="com.javaex.vo.AddressVo">
+	<![CDATA[
+	SELECT city
+	FROM address
+	WHERE province = #{province}
+	GROUP by city
+	ORDER BY city ASC
+	]]>
+	</select>
+	
+	<!--동 정보 불러오기 -->
+	<select id="addressRegion" parameterType="String"
+	resultType="com.javaex.vo.AddressVo">
+	<![CDATA[
+	SELECT region
+	FROM address
+	WHERE city like #{city}
+	ORDER BY region ASC
+	]]>
+	</select>
+	
+	<!--전문분야 정보 불러오기 -->
+	<select id="fieldname" resultType="com.javaex.vo.InterestFieldVo">
+	<![CDATA[
+	SELECT fieldno,fieldname
+	FROM interest_field
+	]]>
+	</select>
+	
+	
+	
 </mapper>

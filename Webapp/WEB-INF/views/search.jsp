@@ -34,61 +34,71 @@
         <div class="test-background" style="background-color: #dadde6;height: 350px;">
         </div>
         <div class="wrapper">
+        
+        
             <form action="${pageContext.request.contextPath}/search/results" method="post"
             id="searchKeywordForm">
                 <ul class="search-condition clearfix">
 
                     <li class="local clearfix">
+                    
+                    
                         <h3 class="title">지역</h3>
-                        <select>
-                            <option selected>전체</option>
-                            <option>서울특별시</option>
-                            <option>부산광역시</option>
-                            <option>광주강역시</option>
-                            <option>경기도</option>
+                        <!--지역 고르기 -->
+                        <select name="province">
+                        	<option>전체</option>
+                         <c:forEach items="${addVo}" var="addVo">
+                            <option >${addVo.province}</option>
+                         </c:forEach>
                         </select>
-                        <select>
-                            <option selected>전체</option>
-                            <option>송파구</option>
-                            <option>구로구</option>
-                            <option>서초구</option>
-                            <option>영구</option>
+                        
+                        <!--구 고르기 -->
+                        <select name="city" >
                         </select>
-                        <select>
-                            <option selected>전체</option>
-                            <option>송내동</option>
-                            <option>가리봉동</option>
-                            <option>홍길동</option>
+                        
+                        <!--동 고르기 -->
+                        <select name="region">
                         </select>
+                        
+                        
+                        
                     </li>
                     <li class="gender">
                         <h3 class="title">성별</h3>
                         <div class="radio-wrapper clearfix">
-                            <input type="radio" id="genderMale" name="gender" value="male" checked>
+                            <input type="radio" id="genderMale" name="gender" value="male">
                             <label for="genderMale">남성</label>
                             <input type="radio" id="genderFemale" name="gender" value="female">
                             <label for="genderFemale">여성</label>
                         </div>
                     </li>
+                    
+                    
+                    
                     <li class="field">
                         <h3 class="title">전문분야</h3>
-                        <select>
-                            <option selected>다이어트</option>
-                            <option>재활</option>
-                            <option>기초체력 향상</option>
-                            <option>근력 향상</option>
-                            <option>프로필 촬영</option>
-                            <option>대회 준비</option>
-                            <option>체형 교정</option>
+                         <select>
+                         	<option>전체</option>
+	                        <c:forEach items="${fieldVo}" var="fieldVo">
+	                         <option>${fieldVo.fieldName}</option>
+	                        </c:forEach>
                         </select>
                     </li>
+                    
+                    
+                    
                     <li class="keyword">
                         <h3 class="title">검색어</h3>
                         <input type="text" placeholder="검색어를 입력해주세요">
                     </li>
+                    
                 </ul>
                 <button type="submit" class="button">검색</button>
             </form>
+            
+            
+            
+            
             <ul class="search-list clearfix">
                 <li class="search-result" onclick="showProfileModal($(this))">
                     <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');">
@@ -361,7 +371,72 @@
         </div>
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
-    <script type="text/javascript">
+    
+    
+    <script type="text/javascript">    
+    
+    //구 불러오기
+    $("select[name='province']").on("change",function(){
+    	console.log("지역선택");
+    	$("select[name='city']").empty();
+    	$("select[name='region']").empty();
+    	
+    	var province = $(this).val();
+    	
+    	$.ajax({
+			url : "${pageContext.request.contextPath }/search/getCity",
+			type : "post",
+			data : {province: province},
+
+			dataType : "json",
+			success : function(cityList) {
+				console.log(cityList);
+				/*성공시 처리해야될 코드 작성*/
+				var cityStr ='<option>전체</option>';
+				for (var i in cityList ) {
+					cityStr +='<option>'+cityList[i].city+'</option>';
+					
+				}
+				$("select[name='city']").append(cityStr);
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+    });
+    
+  	//동면리 불러오기
+    $("select[name='city']").on("change",function(){
+    	console.log("도시선택");
+    	$("select[name='region']").empty();
+    	
+    	var city = $(this).val();
+    	
+    	$.ajax({
+			url : "${pageContext.request.contextPath }/search/getRegion",
+			type : "post",
+			data : {city: city},
+
+			dataType : "json",
+			success : function(regionList) {
+				/*성공시 처리해야될 코드 작성*/
+				var regionStr ='<option>전체</option>';
+				for (var i in regionList ) {
+					console.log(regionList[i].region);
+					regionStr +='<option>'+regionList[i].region+'</option>';
+					
+				}
+				$("select[name='region']").append(regionStr);
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+    });
+    
+    
+    
+    
     function showProfileModal(obj) {
             //다른 버튼 on 제거
             $("#profileModal .label-wrapper .label-btn").removeClass("on");

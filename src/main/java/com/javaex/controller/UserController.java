@@ -19,12 +19,6 @@ public class UserController {
 	@Autowired
 	private UserService userService; 
 
-    @RequestMapping("/signUp")
-
-    public String SignUp() {
-    
-    	return "user/signUp";}
-    
 
     @RequestMapping("/signUpStart")
     public String signUpStart() {
