@@ -15,6 +15,7 @@
         <div class="btn-area clearfix">
         	<c:choose>
         		<c:when test="${empty authUser}">
+                    <a href="${pageContext.request.contextPath}/mypage/schedule" class="button sub">접근용 버튼</a>
 		            <a href="${pageContext.request.contextPath}/user/signUp" class="button sub">회원가입</a>
 		            <a href="#none" class="button main" id="btn_login">로그인</a>
 	            </c:when>

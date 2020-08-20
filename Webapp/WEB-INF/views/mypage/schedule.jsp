@@ -27,6 +27,12 @@
 
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage.css">
+
+    <!-- calendar css/js -->
+    <link href='${pageContext.request.contextPath}/assets/js/calendar/main.css' rel='stylesheet'>
+    <script src='${pageContext.request.contextPath}/assets/js/calendar/main.js'></script>
+    <script src='${pageContext.request.contextPath}/assets/js/calendar/theme-chooser.js'></script>
+
     <style>
 
         #top {
@@ -185,6 +191,114 @@
             overflow: visible;
         }
     </style>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar;
+
+            initThemeChooser({
+
+                init: function (themeSystem) {
+                    calendar = new FullCalendar.Calendar(calendarEl, {
+                        themeSystem: themeSystem,
+                        headerToolbar: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+                        },
+                        initialDate: '2020-08-12',
+                        weekNumbers: false,
+                        navLinks: true, // can click day/week names to navigate views
+                        editable: false,
+                        selectable: true,
+                        nowIndicator: true,
+                        dayMaxEvents: false, // allow "more" link when too many events
+                        // showNonCurrentDates: false,
+                        dateClick: function (info) {
+                            //TODO - 날짜 클릭시 발생 이벤트
+                            showModal("#addModal");
+
+                        },
+                        eventClick: function (info) {
+                            //TODO - 일정 클릭시 발생 이벤트
+                            event.stopPropagation();
+                            $(".btn_pop").remove();
+                            $(info.el).append(
+                                "<div class='btn_pop'>" +
+                                "<button type='button' class='button btn_modify' onclick='btnModify();'>스케쥴변경</button>" +
+                                "<button type='button' class='button' onclick='startExercise();'>운동시작</button>" +
+                                "<div>"
+                            );
+                        },
+                        height: 'auto',
+                        overflow: 'visible',
+                        events: [
+                            {
+                                title: '김영희 님',
+                                start: '2020-08-01T09:00'
+                            },
+                            {
+                                title: '김철수 님',
+                                start: '2020-08-01T11:00'
+                            },
+                            {
+                                title: '이영희 님',
+                                start: '2020-08-01T14:00'
+                            },
+                            {
+                                title: '박철민 님',
+                                start: '2020-08-01T16:00'
+                            },
+                            {
+                                title: '황정민 님',
+                                start: '2020-08-01T191:00'
+                            },
+                            {
+                                title: '김영희 님',
+                                start: '2020-08-02T09:00'
+                            },
+                            {
+                                title: '김철수 님',
+                                start: '2020-08-02T11:00'
+                            },
+                            {
+                                title: '이영희 님',
+                                start: '2020-08-02T14:00'
+                            },
+                            {
+                                title: '김영희 님',
+                                start: '2020-08-05T09:00'
+                            },
+                            {
+                                title: '김영희 님',
+                                start: '2020-08-11T09:00'
+                            },
+                            {
+                                title: '김영희 님',
+                                start: '2020-08-17T09:00'
+                            },
+                            {
+                                title: '김철수 님',
+                                start: '2020-08-17T11:00'
+                            },
+                            {
+                                title: '이영희 님',
+                                start: '2020-08-17T14:00'
+                            },
+                            {
+                                title: '박철민 님',
+                                start: '2020-08-17T16:00'
+                            },
+                        ]
+                    });
+                    calendar.render();
+                },
+                change: function (themeSystem) {
+                    calendar.setOption('themeSystem', themeSystem);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
@@ -255,112 +369,6 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            document.addEventListener('DOMContentLoaded', function () {
-                var calendarEl = document.getElementById('calendar');
-                var calendar;
-
-                initThemeChooser({
-
-                    init: function (themeSystem) {
-                        calendar = new FullCalendar.Calendar(calendarEl, {
-                            themeSystem: themeSystem,
-                            headerToolbar: {
-                                left: 'prev,next today',
-                                center: 'title',
-                                right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-                            },
-                            initialDate: '2020-08-12',
-                            weekNumbers: false,
-                            navLinks: true, // can click day/week names to navigate views
-                            editable: false,
-                            selectable: true,
-                            nowIndicator: true,
-                            dayMaxEvents: false, // allow "more" link when too many events
-                            // showNonCurrentDates: false,
-                            dateClick: function (info) {
-                                //TODO - 날짜 클릭시 발생 이벤트
-                                showModal("#addModal");
-
-                            },
-                            eventClick: function (info) {
-                                //TODO - 일정 클릭시 발생 이벤트
-                                event.stopPropagation();
-                                $(".btn_pop").remove();
-                                $(info.el).append(
-                                    "<div class='btn_pop'>" +
-                                    "<button type='button' class='button btn_modify' onclick='btnModify();'>스케쥴변경</button>" +
-                                    "<button type='button' class='button' onclick='startExercise();'>운동시작</button>" +
-                                    "<div>"
-                                );
-                            },
-                            height: 'auto',
-                            overflow: 'visible',
-                            events: [
-                                {
-                                    title: '김영희 님',
-                                    start: '2020-08-01T09:00'
-                                },
-                                {
-                                    title: '김철수 님',
-                                    start: '2020-08-01T11:00'
-                                },
-                                {
-                                    title: '이영희 님',
-                                    start: '2020-08-01T14:00'
-                                },
-                                {
-                                    title: '박철민 님',
-                                    start: '2020-08-01T16:00'
-                                },
-                                {
-                                    title: '황정민 님',
-                                    start: '2020-08-01T191:00'
-                                },
-                                {
-                                    title: '김영희 님',
-                                    start: '2020-08-02T09:00'
-                                },
-                                {
-                                    title: '김철수 님',
-                                    start: '2020-08-02T11:00'
-                                },
-                                {
-                                    title: '이영희 님',
-                                    start: '2020-08-02T14:00'
-                                },
-                                {
-                                    title: '김영희 님',
-                                    start: '2020-08-05T09:00'
-                                },
-                                {
-                                    title: '김영희 님',
-                                    start: '2020-08-11T09:00'
-                                },
-                                {
-                                    title: '김영희 님',
-                                    start: '2020-08-17T09:00'
-                                },
-                                {
-                                    title: '김철수 님',
-                                    start: '2020-08-17T11:00'
-                                },
-                                {
-                                    title: '이영희 님',
-                                    start: '2020-08-17T14:00'
-                                },
-                                {
-                                    title: '박철민 님',
-                                    start: '2020-08-17T16:00'
-                                },
-                            ]
-                        });
-                        calendar.render();
-                    },
-                    change: function (themeSystem) {
-                        calendar.setOption('themeSystem', themeSystem);
-                    }
-                });
-            });
 
             //화면 아무곳이나 클릭시 스케쥴 팝업 제거
             $(window).on("click",function () {
