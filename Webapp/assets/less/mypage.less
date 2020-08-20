@@ -108,13 +108,13 @@
 }
 
 .calendar-wrapper {
+  padding-bottom: 70px;
   #top {
     display: none;
   }
 
   #calendar {
     overflow: visible;
-
     button.btn-primary {
       margin: 0;
       min-width: 0;
@@ -169,7 +169,7 @@
     .btn_pop {
       position: absolute;
       z-index: 999;
-      top: -60px;
+      top: 0px;
       right: -80px;
       background-color: #fff;
       border: 1px solid #292c33;
@@ -224,7 +224,8 @@ form#addExercise {
 }
 #exerciseList {
   float: right;
-  min-height: 492px;
+  height: 492px;
+  overflow-y: scroll;
   .exercise {
     position: relative;
     box-sizing: border-box;
@@ -571,6 +572,7 @@ ul.user-list {
           }
           p.info {
             float: left;
+            text-align: left;
             span.name {
               display: block;
               line-height: 30px;
@@ -583,6 +585,34 @@ ul.user-list {
               line-height: 30px;
               font-size: 16px;
               color: @color-gray-sub;
+            }
+          }
+          .schedule-input-wrapper {
+            float: right;
+            margin-top: 10px;
+            position: relative;
+            .schedule-input {
+              float: left;
+              width: 70px;
+              height: 40px;
+              line-height: 40px;
+              font-size: 24px;
+              text-align: center;
+              text-indent: 0;
+              &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
+            }
+            span.mark {
+              display: block;
+              float: left;
+              margin-left: 10px;
+              height: 40px;
+              color: @color-gray;
+              font-size: 20px;
+              font-weight: 700;
+              line-height: 40px;
             }
           }
         }

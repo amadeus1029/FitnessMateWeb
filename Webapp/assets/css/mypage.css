@@ -315,6 +315,9 @@
   font-weight: 700;
   line-height: 60px;
 }
+.calendar-wrapper {
+  padding-bottom: 70px;
+}
 .calendar-wrapper #top {
   display: none;
 }
@@ -371,7 +374,7 @@
 .calendar-wrapper #calendar .btn_pop {
   position: absolute;
   z-index: 999;
-  top: -60px;
+  top: 0px;
   right: -80px;
   background-color: #fff;
   border: 1px solid #292c33;
@@ -423,7 +426,8 @@ form#addExercise button.add-exercise {
 }
 #exerciseList {
   float: right;
-  min-height: 492px;
+  height: 492px;
+  overflow-y: scroll;
 }
 #exerciseList .exercise {
   position: relative;
@@ -745,6 +749,7 @@ ul.user-list li.user p.info span.id {
 }
 #addUserModal .modal-wrapper .modal-content .search-result div.user p.info {
   float: left;
+  text-align: left;
 }
 #addUserModal .modal-wrapper .modal-content .search-result div.user p.info span.name {
   display: block;
@@ -758,4 +763,32 @@ ul.user-list li.user p.info span.id {
   line-height: 30px;
   font-size: 16px;
   color: #45474d;
+}
+#addUserModal .modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper {
+  float: right;
+  margin-top: 10px;
+  position: relative;
+}
+#addUserModal .modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper .schedule-input {
+  float: left;
+  width: 70px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 24px;
+  text-align: center;
+  text-indent: 0;
+}
+#addUserModal .modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper .schedule-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#addUserModal .modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper span.mark {
+  display: block;
+  float: left;
+  margin-left: 10px;
+  height: 40px;
+  color: #292c33;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 40px;
 }

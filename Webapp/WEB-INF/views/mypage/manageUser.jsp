@@ -47,42 +47,42 @@
             </form>
             <ul class="user-list now clearfix">
                 <li class="user clearfix" onclick="showUser();">
-                    <img src="../assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">
+                    <img src="${pageContext.request.contextPath}/assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">
                     <p class="info">
                         <span class="name">이광수</span>
                         <span class="id">kslee0421</span>
                     </p>
                 </li>
                 <li class="user clearfix" onclick="showUser();">
-                    <img src="../assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
+                    <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
                     <p class="info">
                         <span class="name">이효리</span>
                         <span class="id">dqwhdwqj1232</span>
                     </p>
                 </li>
                 <li class="user clearfix" onclick="showUser();">
-                    <img src="../assets/image/face/Yang-Se-chan.jpg" alt="profile image" title="profile image">
+                    <img src="${pageContext.request.contextPath}/assets/image/face/Yang-Se-chan.jpg" alt="profile image" title="profile image">
                     <p class="info">
                         <span class="name">양세찬</span>
                         <span class="id">yangcyangc</span>
                     </p>
                 </li>
                 <li class="user clearfix" onclick="showUser();">
-                    <img src="../assets/image/face/JungWooSung.jpg" alt="profile image" title="profile image">
+                    <img src="${pageContext.request.contextPath}/assets/image/face/JungWooSung.jpg" alt="profile image" title="profile image">
                     <p class="info">
                         <span class="name">정우성</span>
                         <span class="id">jsw9232</span>
                     </p>
                 </li>
                 <li class="user clearfix" onclick="showUser();">
-                    <img src="../assets/image/face/Yoo-Jae-Suk.jpg" alt="profile image" title="profile image">
+                    <img src="${pageContext.request.contextPath}/assets/image/face/Yoo-Jae-Suk.jpg" alt="profile image" title="profile image">
                     <p class="info">
                         <span class="name">유재석</span>
                         <span class="id">yoosansle</span>
                     </p>
                 </li>
                 <li class="user clearfix" onclick="showUser();">
-                    <img src="../assets/image/face/Jeongjae-Lee.jpg" alt="profile image" title="profile image">
+                    <img src="${pageContext.request.contextPath}/assets/image/face/Jeongjae-Lee.jpg" alt="profile image" title="profile image">
                     <p class="info">
                         <span class="name">이정재</span>
                         <span class="id">imking2302</span>
@@ -91,42 +91,42 @@
             </ul>
             <ul class="user-list former clearfix off">
                 <li class="user clearfix" onclick="showUser();">
-                    <img src="../assets/image/face/JungWooSung.jpg" alt="profile image" title="profile image">
+                    <img src="${pageContext.request.contextPath}/assets/image/face/JungWooSung.jpg" alt="profile image" title="profile image">
                     <p class="info">
                         <span class="name">정우성</span>
                         <span class="id">jsw9232</span>
                     </p>
                 </li>
                 <li class="user clearfix" onclick="showUser();">
-                    <img src="../assets/image/face/Yoo-Jae-Suk.jpg" alt="profile image" title="profile image">
+                    <img src="${pageContext.request.contextPath}/assets/image/face/Yoo-Jae-Suk.jpg" alt="profile image" title="profile image">
                     <p class="info">
                         <span class="name">유재석</span>
                         <span class="id">yoosansle</span>
                     </p>
                 </li>
                 <li class="user clearfix" onclick="showUser();">
-                    <img src="../assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">
+                    <img src="${pageContext.request.contextPath}/assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">
                     <p class="info">
                         <span class="name">이광수</span>
                         <span class="id">kslee0421</span>
                     </p>
                 </li>
                 <li class="user clearfix" onclick="showUser();">
-                    <img src="../assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
+                    <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
                     <p class="info">
                         <span class="name">이효리</span>
                         <span class="id">dqwhdwqj1232</span>
                     </p>
                 </li>
                 <li class="user clearfix" onclick="showUser();">
-                    <img src="../assets/image/face/Yang-Se-chan.jpg" alt="profile image" title="profile image">
+                    <img src="${pageContext.request.contextPath}/assets/image/face/Yang-Se-chan.jpg" alt="profile image" title="profile image">
                     <p class="info">
                         <span class="name">양세찬</span>
                         <span class="id">yangcyangc</span>
                     </p>
                 </li>
                 <li class="user clearfix" onclick="showUser();">
-                    <img src="../assets/image/face/Jeongjae-Lee.jpg" alt="profile image" title="profile image">
+                    <img src="${pageContext.request.contextPath}/assets/image/face/Jeongjae-Lee.jpg" alt="profile image" title="profile image">
                     <p class="info">
                         <span class="name">이정재</span>
                         <span class="id">imking2302</span>
@@ -171,12 +171,18 @@
                     <button type="button" class="button search">검색</button>
                 </div>
                 <div class="search-result">
+                    <%--TODO 정확히 아이디를 입력해서 검색했을 때 추가할 유저가 보이게 됩니다--%>
+                    <%--TODO 검색해서 회원이 나타나고 스케쥴 횟수에 수치를 입력했을 때만 추가버튼이 활성화되게 할게요--%>
                     <div class="user clearfix">
-                        <img src="../assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">
+                        <img src="${pageContext.request.contextPath}/assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">
                         <p class="info">
                             <span class="name">이광수</span>
                             <span class="id">kslee0421</span>
                         </p>
+                        <div class="schedule-input-wrapper clearfix">
+                            <input class="schedule-input" type="number" name="schedule" placeholder="0" max="999">
+                            <span class="mark">회</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -230,6 +236,7 @@
         }
 
         function addUser() {
+            <%--TODO 유저 추가는 이곳에서 ajax로 작동되게 하면 좋을거 같습니다--%>
             forceHideModal('#addUserModal');
         }
     </script>

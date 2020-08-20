@@ -22,4 +22,8 @@ public class MyPageController {
     public String Profile() {
         return "mypage/profile";
     }
+    @RequestMapping("/recordEx")
+    public String RecordEx() {
+        return "mypage/recordEx";
+    }
 }
