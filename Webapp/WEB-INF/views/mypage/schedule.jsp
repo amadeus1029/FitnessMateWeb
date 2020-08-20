@@ -25,172 +25,14 @@
     <link href="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/css/swiper.min.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/js/swiper.min.js"></script>
 
-    <!-- 해당 페이지 css -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage.css">
-
     <!-- calendar css/js -->
     <link href='${pageContext.request.contextPath}/assets/js/calendar/main.css' rel='stylesheet'>
     <script src='${pageContext.request.contextPath}/assets/js/calendar/main.js'></script>
     <script src='${pageContext.request.contextPath}/assets/js/calendar/theme-chooser.js'></script>
+    
+    <!-- 해당 페이지 css -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage.css">
 
-    <style>
-
-        #top {
-            display: none;
-        }
-
-        #top .selector {
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        #top select {
-            font: inherit; /* mock what Boostrap does, don't compete  */
-        }
-
-        .left {
-            float: left
-        }
-
-        .right {
-            float: right
-        }
-
-        .clear {
-            clear: both
-        }
-
-        #calendar {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 10px;
-            overflow: visible;
-        }
-
-        button.btn-primary {
-            margin: 0;
-            min-width: 0;
-            width: 80px;
-        }
-
-        button.fc-prev-button, button.fc-next-button {
-            min-width: 0;
-            width: 50px;
-        }
-
-        button.fc-today-button {
-            min-width: 0;
-            display: inline-block;
-        }
-
-        td.fc-daygrid-day {
-            position: relative;
-        }
-
-        td.fc-daygrid-day:after {
-            content: '+';
-            position: absolute;
-            right: 5px;
-            top: 5px;
-            width: 24px;
-            height: 24px;
-            line-height: 20px;
-            text-align: center;
-            font-size: 24px;
-            color: gray;
-            opacity: 0;
-            cursor: pointer;
-            border: 1px solid gray;
-        }
-
-        td.fc-daygrid-day:hover:after {
-            transition: all ease 0.7s 0s;
-            opacity: 1;
-        }
-
-        .fc a.fc-daygrid-day-number {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .modal-wrapper {
-            width: 400px;
-            text-align: left;
-        }
-
-        select {
-            width: 80px;
-            height: 35px;
-            display: inline-block !important;
-        }
-
-        select[name="user_name"] {
-            width: 200px;
-            margin-left: 30px;
-        }
-
-        .text {
-            font-size: 20px;
-            margin: 0 0 10px;
-            font-weight: 700;
-        }
-
-        ol {
-            margin: 0px 30px 0px 30px;
-            float: left;
-        }
-
-        select[name="hour"], select[name="minute"] {
-            margin-top: 10px;
-        }
-
-        p.text {
-            margin-left: 30px;
-        }
-
-        .modal-wrapper .modal-btn-area button {
-            margin-top: 30px;
-        }
-
-        .modal-wrapper .modal-content {
-            padding-bottom: 0px;
-        }
-
-        .fc-daygrid-day-events {
-            padding-top: 30px;
-        }
-
-        table tbody td.fc-day {
-            height: 180px;
-        }
-
-        .btn_pop {
-            position: absolute;
-            z-index: 999;
-            top: -60px;
-            right: -80px;
-            background-color: #fff;
-            border: 1px solid #292c33;
-            -webkit-transform: translate3d(0, 0, 0);
-            -o-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
-        }
-
-        .btn_pop button.button {
-            border-radius: 0;
-            margin: 0;
-            width: 120px;
-            border: 0;
-        }
-        .btn_pop button.button:hover {
-            background-color: #dadde6;
-        }
-
-        .fc .fc-scroller-harness {
-            overflow: visible;
-        }
-    </style>
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
@@ -216,7 +58,7 @@
                         // showNonCurrentDates: false,
                         dateClick: function (info) {
                             //TODO - 날짜 클릭시 발생 이벤트
-                            showModal("#addModal");
+                            showModal("#addScheduleModal");
 
                         },
                         eventClick: function (info) {
@@ -226,12 +68,11 @@
                             $(info.el).append(
                                 "<div class='btn_pop'>" +
                                 "<button type='button' class='button btn_modify' onclick='btnModify();'>스케쥴변경</button>" +
-                                "<button type='button' class='button' onclick='startExercise();'>운동시작</button>" +
+                                "<a href='${pageContext.request.contextPath}/mypage/recordForm' class='button'>운동시작</a>" +
                                 "<div>"
                             );
                         },
                         height: 'auto',
-                        overflow: 'visible',
                         events: [
                             {
                                 title: '김영희 님',
@@ -292,9 +133,6 @@
                         ]
                     });
                     calendar.render();
-                },
-                change: function (themeSystem) {
-                    calendar.setOption('themeSystem', themeSystem);
                 }
             });
         });
@@ -302,70 +140,166 @@
 </head>
 <body>
     <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
-    <div id="container">
+    <div id="container" class="calendar-wrapper">
         <c:import url="/WEB-INF/views/mypage/includes/menu.jsp"></c:import>
-        <div id='top'>
+        <div class="wrapper">
+            <div id='top'>
 
-            <div class='left'>
+                <div class='left'>
 
-                <div id='theme-system-selector' class='selector'>
-                    Theme System:
+                    <div id='theme-system-selector' class='selector'>
+                        Theme System:
 
-                    <select>
-                        <option value='bootstrap' selected>Bootstrap 4</option>
-                        <option value='standard'>unthemed</option>
-                    </select>
+                        <select>
+                            <option value='bootstrap' selected>Bootstrap 4</option>
+                            <option value='standard'>unthemed</option>
+                        </select>
+                    </div>
+
+                    <div data-theme-system="bootstrap" class='selector' style='display:none'>
+                        Theme Name:
+
+                        <select>
+                            <option value='' selected>Default</option>
+                            <option value='cerulean'>Cerulean</option>
+                            <option value='cosmo'>Cosmo</option>
+                            <option value='cyborg'>Cyborg</option>
+                            <option value='darkly'>Darkly</option>
+                            <option value='flatly'>Flatly</option>
+                            <option value='journal'>Journal</option>
+                            <option value='litera'>Litera</option>
+                            <option value='lumen'>Lumen</option>
+                            <option value='lux'>Lux</option>
+                            <option value='materia'>Materia</option>
+                            <option value='minty'>Minty</option>
+                            <option value='pulse'>Pulse</option>
+                            <option value='sandstone'>Sandstone</option>
+                            <option value='simplex'>Simplex</option>
+                            <option value='sketchy'>Sketchy</option>
+                            <option value='slate'>Slate</option>
+                            <option value='solar'>Solar</option>
+                            <option value='spacelab'>Spacelab</option>
+                            <option value='superhero'>Superhero</option>
+                            <option value='united'>United</option>
+                            <option value='yeti'>Yeti</option>
+                        </select>
+                    </div>
+
+                    <span id='loading' style='display:none'>loading theme...</span>
+
                 </div>
 
-                <div data-theme-system="bootstrap" class='selector' style='display:none'>
-                    Theme Name:
-
-                    <select>
-                        <option value='' selected>Default</option>
-                        <option value='cerulean'>Cerulean</option>
-                        <option value='cosmo'>Cosmo</option>
-                        <option value='cyborg'>Cyborg</option>
-                        <option value='darkly'>Darkly</option>
-                        <option value='flatly'>Flatly</option>
-                        <option value='journal'>Journal</option>
-                        <option value='litera'>Litera</option>
-                        <option value='lumen'>Lumen</option>
-                        <option value='lux'>Lux</option>
-                        <option value='materia'>Materia</option>
-                        <option value='minty'>Minty</option>
-                        <option value='pulse'>Pulse</option>
-                        <option value='sandstone'>Sandstone</option>
-                        <option value='simplex'>Simplex</option>
-                        <option value='sketchy'>Sketchy</option>
-                        <option value='slate'>Slate</option>
-                        <option value='solar'>Solar</option>
-                        <option value='spacelab'>Spacelab</option>
-                        <option value='superhero'>Superhero</option>
-                        <option value='united'>United</option>
-                        <option value='yeti'>Yeti</option>
-                    </select>
-                </div>
-
-                <span id='loading' style='display:none'>loading theme...</span>
-
-            </div>
-
-            <div class='right'>
+                <div class='right'>
       <span class='credits' data-credit-id='bootstrap-standard' style='display:none'>
         <a href='https://getbootstrap.com/docs/3.3/' target='_blank'>Theme by Bootstrap</a>
       </span>
-                <span class='credits' data-credit-id='bootstrap-custom' style='display:none'>
+                    <span class='credits' data-credit-id='bootstrap-custom' style='display:none'>
         <a href='https://bootswatch.com/' target='_blank'>Theme by Bootswatch</a>
       </span>
+                </div>
+
+                <div class='clear'></div>
             </div>
-
-            <div class='clear'></div>
+            <div id='calendar'></div>
         </div>
-
-        <div id='calendar'></div>
-
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+    <div class="modal-layer" id="addScheduleModal">
+        <div class="modal-wrapper">
+            <form action="" method="">
+                <div class="modal-content">
+                    <div class="select01">
+                        <p class="text">시작시간</p>
+                        <ol>
+                            <li>
+                                <input type="radio" id="startAm" name="startTime" value="am">
+                                <label for="startAm">AM</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="startPm" name="startTime" value="pm">
+                                <label for="startPm">PM</label>
+                            </li>
+                        </ol>
+                        <select name="hour">
+                            <option value="">시간</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <select name="minute">
+                            <option value="">분</option>
+                            <option value="00">00</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                    <div>
+                        <p class="text">종료시간</p>
+                        <ol>
+                            <li>
+                                <input type="radio" id="endAm" name="endTime" value="am">
+                                <label for="endAm">AM</label>
+                            </li>
+                            <li>
+                                <input type="radio" id="endPm" name="endTime" value="pm">
+                                <label for="endPm">PM</label>
+                            </li>
+                        </ol>
+                        <select name="hour">
+                            <option value="">시간</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <select name="minute">
+                            <option value="">분</option>
+                            <option value="00">00</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                    <div>
+                        <p class="text">회원이름</p>
+                        <select name="user_name">
+                            <option value="">회원이름</option>
+                            <option value="">김영희(rladudgml)</option>
+                            <option value="">김철수(rlacjftn)</option>
+                            <option value="">이영희(dldudgml)</option>
+                            <option value="">황정민(ghkdwjdals)</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-btn-area">
+                <button type="button" class="modal-cancel" onclick="forceHideModal('#addScheduleModal')">취소</button>
+                <button type="button" class="modal-confirm" onclick="forceHideModal('#addScheduleModal')">확인</button>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -379,11 +313,7 @@
 
         function btnModify() {
             $("select[name='hour']").find("option[value='9']").prop("selected", true);
-            showModal("#addModal");
-        }
-
-        function startExercise() {
-            location.href="recordForm.html";
+            showModal("#addScheduleModal");
         }
     </script>
 </body>

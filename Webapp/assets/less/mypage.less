@@ -107,8 +107,91 @@
   }
 }
 
-#calendar {
+.calendar-wrapper {
+  #top {
+    display: none;
+  }
 
+  #calendar {
+    overflow: visible;
+
+    button.btn-primary {
+      margin: 0;
+      min-width: 0;
+      width: 80px;
+    }
+
+    button.fc-prev-button, button.fc-next-button {
+      min-width: 0;
+      width: 50px;
+    }
+
+    button.fc-today-button {
+      min-width: 0;
+      display: inline-block;
+    }
+
+    td.fc-daygrid-day {
+      position: relative;
+      &:after {
+        content: '+';
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        width: 24px;
+        height: 24px;
+        line-height: 20px;
+        text-align: center;
+        font-size: 24px;
+        color: gray;
+        opacity: 0;
+        cursor: pointer;
+        border: 1px solid gray;
+      }
+      &:hover:after {
+        transition: all ease 0.7s 0s;
+        opacity: 1;
+      }
+    }
+
+    a.fc-daygrid-day-number {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .fc-daygrid-day-events {
+      padding-top: 30px;
+    }
+
+    table tbody td.fc-day {
+      height: 180px;
+    }
+    .btn_pop {
+      position: absolute;
+      z-index: 999;
+      top: -60px;
+      right: -80px;
+      background-color: #fff;
+      border: 1px solid #292c33;
+      -webkit-transform: translate3d(0, 0, 0);
+      -o-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      .button {
+        border-radius: 0;
+        margin: 0;
+        width: 120px;
+        border: 0;
+        color: @color-gray;
+        text-decoration: none;
+        &:hover {
+          background-color: #dadde6;
+        }
+      }
+    }
+    .fc-scroller-harness {
+      overflow: visible;
+    }
+  }
 }
 
 form#addExercise,
