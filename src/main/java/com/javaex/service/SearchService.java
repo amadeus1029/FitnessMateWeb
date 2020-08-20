@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.javaex.dao.SearchDao;
 import com.javaex.vo.AddressVo;
 import com.javaex.vo.InterestFieldVo;
+import com.javaex.vo.UserVo;
 
 @Service
 public class SearchService {
@@ -44,6 +45,12 @@ public class SearchService {
 		System.out.println("SearchService:Interest list");
 		List<InterestFieldVo> fieldVo = searchDao.fieldList();
 		return fieldVo;
+	}
+
+	//검색하기
+	public void searchTr(UserVo userVo) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

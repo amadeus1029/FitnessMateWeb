@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.SearchService;
+import com.javaex.vo.UserVo;
 
 @Controller
 public class SearchController {
@@ -18,9 +20,18 @@ public class SearchController {
 	
 	
 	@RequestMapping("/search/results")
-	public String results() {
+	public String results(@RequestParam("province") String province,
+						  @RequestParam("city") String city,
+						  @RequestParam("region") String region,
+						  @ModelAttribute UserVo userVo) 
+	{
+					
+		
+		searchService.searchTr(userVo);
+		System.out.println(userVo);
+		
 				
-		return "search";
+		return "";
 	}
 	
 	

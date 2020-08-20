@@ -36,7 +36,7 @@
         <div class="wrapper">
         
         
-            <form action="${pageContext.request.contextPath}/search/results" method="post"
+            <form action="${pageContext.request.contextPath}/search/results" method="get"
             id="searchKeywordForm">
                 <ul class="search-condition clearfix">
 
@@ -77,7 +77,7 @@
                     
                     <li class="field">
                         <h3 class="title">전문분야</h3>
-                         <select>
+                         <select name="field">
                          	<option>전체</option>
 	                        <c:forEach items="${fieldVo}" var="fieldVo">
 	                         <option>${fieldVo.fieldName}</option>
@@ -89,7 +89,7 @@
                     
                     <li class="keyword">
                         <h3 class="title">검색어</h3>
-                        <input type="text" placeholder="검색어를 입력해주세요">
+                        <input name="name" type="text" placeholder="검색어를 입력해주세요">
                     </li>
                     
                 </ul>
