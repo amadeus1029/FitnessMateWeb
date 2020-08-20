@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainController {
 
-
     @RequestMapping("/main")
     public String Main() {
         return "index";
@@ -17,6 +16,7 @@ public class MainController {
     public String Search() {
         return "search";
     }
+    
     
 
 }

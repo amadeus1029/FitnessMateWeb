@@ -13,6 +13,55 @@
 		 ]]>
 	</select>
 	
+	<!-- 주소(도,광역시)가져오기 -->
+	<select id="selectAddress" resultType="String">
+		<![CDATA[
+		
+			SELECT province
+			FROM address
+			GROUP BY province
+			ORDER BY province ASC
+			
+		]]>
+	</select>
+	
+	<!-- 주소(시)가져오기 -->
+	<select id="selectCity" parameterType="String" resultType="String">
+		<![CDATA[
+		
+			SELECT city
+			FROM address
+			WHERE province = #{thisProvince}
+			GROUP BY city
+			ORDER BY city ASC
+			
+		]]>
+	</select>
+	
+	<!-- 주소(동,면,읍)가져오기 -->
+	<select id="selectRegion" parameterType="String" resultType="String">
+		<![CDATA[
+		
+			SELECT region
+			FROM address
+			WHERE city = #{thisCity}
+			GROUP BY region
+			ORDER BY region ASC
+			
+		]]>
+	</select>
+	
+	<!-- 관심분야가져오기 -->
+	<select id="selectInterestAll" resultType="com.javaex.vo.InterestVo">
+		<![CDATA[
+		
+			SELECT fieldNo, fieldName
+			FROM interest_field
+			ORDER BY fieldNo ASC
+			
+		]]>
+	</select>
+	
 	<insert id="insertUser" parameterType="com.javaex.vo.UserVo">
 		<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
 			SELECT seq_userNo.nextval FROM dual
@@ -21,7 +70,7 @@
 		<![CDATA[
 		
 			INSERT INTO users 
-			VALUES(#{userNo}, #{userId}, #{password}, #{name}, #{gender}, #{phone}, 0, #{userType}, '#{profileImg}', '', 1, '', '', '')
+			VALUES(#{userNo}, #{userId}, #{password}, #{name}, #{gender}, #{phone}, 0, #{userType}, #{profileImg}, '', 1, '', '', '')
 
 		 ]]>
 	</insert>

@@ -20,7 +20,7 @@
 	            </c:when>
 				<c:otherwise>
 					<a href="#none" class="button sub">마이페이지</a>
-		            <a href="#none" class="button main" id="btn_login">로그아웃</a>
+		            <a href="${pageContext.request.contextPath}/user/logout" class="button main" id="btn_login">로그아웃</a>
             	</c:otherwise>
             </c:choose>
         </div>
