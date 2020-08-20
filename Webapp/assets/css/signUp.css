@@ -46,6 +46,7 @@ div.imgPart {
     display: inline-block;
     padding: 10px 20px;
     margin: 10px;
+    width: 96px;
     cursor: pointer;
     color: #008526;
     border: 1px solid #008526;
@@ -61,7 +62,7 @@ input[type="radio"]:checked + label  {
     background: #008526;
     color: #ffffff;
 }
-a.button.main{
+button.main{
     width: 100%;
     margin: 20px 0px 0px 0px;
 }

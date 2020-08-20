@@ -9,7 +9,7 @@ public class UserVo {
 	private String gender; /* 성별 */
 	private String phone; /* 전화번호 */
 	private String age; /* 나이 */
-	private String userCode; /* 회원구분 */
+	private String userType; /* 회원구분 */
 	private String profileImg; /* 프로필img경로 */
 	private String introduction; /* 자기소개 */
 	private int career; /* 경력 */
@@ -18,7 +18,7 @@ public class UserVo {
 	private String price; /* 가격 */
 	
 	public UserVo() {}
-
+	
 	public int getUserNo() {
 		return userNo;
 	}
@@ -75,12 +75,12 @@ public class UserVo {
 		this.age = age;
 	}
 
-	public String getUserCode() {
-		return userCode;
+	public String getuserType() {
+		return userType;
 	}
 
-	public void setUserCode(String userCode) {
-		this.userCode = userCode;
+	public void setuserType(String userType) {
+		this.userType = userType;
 	}
 
 	public String getProfileImg() {
@@ -134,7 +134,7 @@ public class UserVo {
 	@Override
 	public String toString() {
 		return "UserVo [userNo=" + userNo + ", userId=" + userId + ", password=" + password + ", name=" + name
-				+ ", gender=" + gender + ", phone=" + phone + ", age=" + age + ", userCode=" + userCode
+				+ ", gender=" + gender + ", phone=" + phone + ", age=" + age + ", userType=" + userType
 				+ ", profileImg=" + profileImg + ", introduction=" + introduction + ", career=" + career + ", location="
 				+ location + ", company=" + company + ", price=" + price + "]";
 	}
