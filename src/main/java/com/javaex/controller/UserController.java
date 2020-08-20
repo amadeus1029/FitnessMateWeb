@@ -24,34 +24,6 @@ public class UserController {
 
 	@Autowired
 	private UserService userService; 
-	
-	/*
-	@RequestMapping("/login")
-	public String login(@ModelAttribute UserVo userVo, HttpSession session) {
-		System.out.println("/user/login");
-		
-		UserVo authUser = userService.login(userVo);
-		
-		if(authUser != null) { //로그인 성공 시
-			session.setAttribute("authUser", authUser);
-			return "redirect:/main";
-			
-		} else{ //로그인 실패 시
-			System.out.println("실패");
-			return "redirect:/user/loginForm?result=fail";
-		}
-	}
-	*/
-	
-	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
-		System.out.println("/user/logout");
-		
-		session.removeAttribute("authUser");
-		session.invalidate();
-		
-		return "redirect:/main";
-	}
 
     @RequestMapping("/signUpStart")
     public String signUpStart() {
@@ -147,4 +119,33 @@ public class UserController {
 		return regionList;
     }
     
+    @ResponseBody
+    @RequestMapping("/login")
+    public boolean login(String userId, String userPw, HttpSession session) {
+    	System.out.println("/login");
+    	
+    	UserVo authUser = userService.login(userId, userPw);
+    	
+    	if(authUser != null) { //로그인 성공 시
+    		session.setAttribute("authUser", authUser);
+    		
+    		return true;
+    	} else{ //로그인 실패 시
+    		System.out.println("실패");
+    		
+    		return false;
+    	}
+    }
+    
+    @ResponseBody
+	@RequestMapping("/logout")
+	public String logout(String msg, HttpSession session) {
+		System.out.println("/user/logout");
+		
+		session.removeAttribute("authUser");
+		session.invalidate();
+		
+		return "성공";
+	}
+
 }

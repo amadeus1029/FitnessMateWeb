@@ -110,4 +110,14 @@ public class UserService {
 			userDao.insertInterest(interestMap);
 		}
 	}
+
+	public UserVo login(String userId, String userPw) {
+		System.out.println("userService.로그인");
+		
+		UserVo userVo = new UserVo();
+		userVo.setUserId(userId);
+		userVo.setPassword(userPw);
+		
+		return userDao.selectUser(userVo);
+	}
 }

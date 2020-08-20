@@ -102,12 +102,24 @@
 		]]>
 	</insert>
 	
-		<!-- 트레이너 전문분야 리스트 -->
+	<!-- 트레이너 전문분야 리스트 -->
 	<insert id="insertCareer" parameterType="map">
 		<![CDATA[
 			insert into career_list
 			values(#{userNo}, #{career})
 		]]>
 	</insert>
+	
+	<!-- 주소(동,면,읍)가져오기 -->
+	<select id="selectUser" parameterType="com.javaex.vo.UserVo" resultType="com.javaex.vo.UserVo">
+		<![CDATA[
+		
+			SELECT userNo, userId, name, userType
+			FROM users
+			WHERE userId = #{userId}
+			AND password = #{password}
+			
+		]]>
+	</select>
 	
 </mapper>

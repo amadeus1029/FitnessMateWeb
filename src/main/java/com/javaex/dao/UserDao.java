@@ -73,4 +73,10 @@ public class UserDao {
 		sqlSession.insert("user.insertCareer", careerMap);
 		
 	}
+
+	public UserVo selectUser(UserVo userVo) {
+		System.out.println("userDao.로그인!");
+		
+		return sqlSession.selectOne("user.selectUser", userVo);
+	}
 }
