@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.UserService;
+import com.javaex.vo.AddressVo;
 import com.javaex.vo.InterestVo;
 import com.javaex.vo.UserVo;
 
@@ -69,11 +69,10 @@ public class UserController {
 
     @RequestMapping("/signUp")
     public String signUp(@ModelAttribute UserVo vo,
-    					@RequestParam("profileImage") MultipartFile profileImg,
     					Model model) {
     	System.out.println("/signUp");
     	
-    	vo = userService.signUp(vo, profileImg);
+    	vo = userService.signUp(vo);
 
     	model.addAttribute("vo", vo);
     	
@@ -95,10 +94,18 @@ public class UserController {
     
     @RequestMapping("/signUpComplete")
     public String signUpComplete(@ModelAttribute UserVo vo,
+    							@ModelAttribute AddressVo address,
     							@RequestParam("fieldNo") List<Integer> fieldList,
     							@RequestParam("careerRecord") List<String> careerList,
     							Model model) {
     	System.out.println("/signUpComplete");
+    	System.out.println(vo);
+    	System.out.println(fieldList);
+    	System.out.println(careerList);
+    	
+    	userService.signUpTrainer(vo, address, fieldList, careerList);
+    	
+    	model.addAttribute("vo", vo);
     	
     	return "user/signUpComplete";
     }

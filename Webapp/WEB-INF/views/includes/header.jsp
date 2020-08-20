@@ -16,7 +16,7 @@
         	<c:choose>
         		<c:when test="${empty authUser}">
 		            <a href="${pageContext.request.contextPath}/user/signUpStart" class="button sub">회원가입</a>
-		            <a href="#none" class="button main" id="btn_login">로그인</a>
+		            <a href="#none" class="button main" id="btn_loginModal">로그인</a>
 	            </c:when>
 				<c:otherwise>
 					<a href="#none" class="button sub">마이페이지</a>
@@ -66,7 +66,7 @@
     
 <script type="text/javascript">
 
-	$("#btn_login").on("click", function(){
+	$("#btn_loginModal").on("click", function(){
 	    // 이벤트 초기화
 	    event.preventDefault();
 	
@@ -86,6 +86,17 @@
 	    // 데이터 보내서 세션에 저장해야함
 	
 	    forceHideModal('#loginModal')
+	});
+	
+	$("#btn_login").on("click", function(){
+	    // 이벤트 초기화
+	    event.preventDefault();
+	
+	    // input 초기화
+	    $("#userId").val("");
+	    $("#userPw").val("");
+	
+	    showModal("#loginModal");
 	});
 
 </script>

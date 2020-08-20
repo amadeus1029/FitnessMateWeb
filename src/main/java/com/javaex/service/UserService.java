@@ -1,17 +1,14 @@
 package com.javaex.service;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.UserDao;
+import com.javaex.vo.AddressVo;
 import com.javaex.vo.InterestVo;
 import com.javaex.vo.UserVo;
 
@@ -27,9 +24,10 @@ public class UserService {
 		return userDao.selectSameId(id);
 	}
 	
-	public UserVo signUp(UserVo vo, MultipartFile profileImg) {
+	public UserVo signUp(UserVo vo) {
 		System.out.println("userService.signUp");
-		
+
+		/*
 		String saveDir = "C:\\javaStudy\\upload_file";
 		String saveName = "";
 		
@@ -59,6 +57,7 @@ public class UserService {
 
 		// vo에 저장
 		vo.setProfileImg(saveName);
+		*/
 		
 		return userDao.insertUser(vo);
 	}
@@ -85,5 +84,30 @@ public class UserService {
 		System.out.println("userService.관심분야가져오기");
 		
 		return userDao.selectInterestAll();
+	}
+
+	public void signUpTrainer(UserVo vo, AddressVo addressVo, List<Integer> fieldList, List<String> careerList) {
+		System.out.println("userService.트레이너 회원가입");
+		
+		String address = addressVo.getProvince()+" "+addressVo.getCity()+" "+addressVo.getRegion();
+		vo.setLocation(address);
+		
+		userDao.updateTrainerInfo(vo);
+		
+		Map<String, Integer> interestMap = new HashMap<>();
+		interestMap.put("userNo", vo.getUserNo());
+
+		for(int fieldNo : fieldList) {
+			interestMap.put("fieldNo", fieldNo);
+			userDao.insertInterest(interestMap);
+		}
+		
+		Map<String, Object> careerMap = new HashMap<>();
+		careerMap.put("userNo", vo.getUserNo());
+		
+		for(String career : careerList) {
+			careerMap.put("career", career);
+			userDao.insertInterest(interestMap);
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.javaex.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,7 @@ public class UserDao {
 	public List<String> selectCity(String thisProvince) {
 		System.out.println("userDao.도시가져오기");
 		
-		List<String> cityList = sqlSession.selectList("user.selectCity", thisProvince);
-		
-		return cityList;
+		return sqlSession.selectList("user.selectCity", thisProvince);
 	}
 
 	public List<String> selectRegion(String thisCity) {
@@ -52,7 +51,26 @@ public class UserDao {
 	public List<InterestVo> selectInterestAll() {
 		System.out.println("userDao.관심분야가져오기");
 		
-
 		return sqlSession.selectList("user.selectInterestAll");
+	}
+
+	public void updateTrainerInfo(UserVo vo) {
+		System.out.println("userDao.트레이너 정보 수정");
+		
+		sqlSession.update("user.updateTrainerInfo", vo);
+	}
+
+	public void insertInterest(Map<String, Integer> interestMap) {
+		System.out.println("userDao.전문분야 insert");
+		
+		sqlSession.insert("user.insertInterest", interestMap);
+	}
+
+	public void insertCareer(Map<String, Object> careerMap) {
+		System.out.println("userDao.경력 insert");
+		System.out.println(careerMap);
+		
+		sqlSession.insert("user.insertCareer", careerMap);
+		
 	}
 }

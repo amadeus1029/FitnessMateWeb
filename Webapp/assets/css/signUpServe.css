@@ -47,7 +47,7 @@
 #container .wrapper form select{
     display: inline-block;
     margin: 10px 0px 30px 0px;
-    width: 120px;
+    width: 130px;
     height: 40px;
 }
 #container .wrapper form textarea{
@@ -81,4 +81,9 @@
 input[type="checkbox"]:checked + label {
     background: #008526;
     color: #ffffff;
+}
+
+#container .wrapper form button[type="submit"] {
+    width: 130px;
+    margin: 30px auto 30px;
 }

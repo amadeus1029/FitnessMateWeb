@@ -38,7 +38,7 @@
     <div id="container">
         <div class="wrapper">
 
-            <form action="${pageContext.request.contextPath}/user/signUp" method="get" class="signup-form">
+            <form action="${pageContext.request.contextPath}/user/signUpComplete" method="post" class="signup-form">
                 <p class="title">추가정보 입력</p>
 
                 <!-- 경력 -->
@@ -57,7 +57,7 @@
                 <div class="form-group">    
                     <p>지역</p>
                     <select name="province">
-                    		<option>도/광역시/특별시</option>
+                    		<option>도/광역시</option>
                     		<c:forEach items="${provinceList}" var="province">
 		                        <option>${province}</option>
                     		</c:forEach>
@@ -82,8 +82,8 @@
                 <p>전문분야</p>
                     <div class="checkboxPart">
                     	<c:forEach items="${interestList}" var="interest">
-	                        <input type="checkbox" id="interest-${cate.interest.fieldNo}" value="${interest.fieldNo}" name="fieldNo">
-	                        <label for="interest-${cate.interest.fieldNo}" class="button-label">${interest.fieldName}</label>
+	                        <input type="checkbox" id="interest-${interest.fieldNo}" value="${interest.fieldNo}" name="fieldNo">
+	                        <label for="interest-${interest.fieldNo}" class="button-label">${interest.fieldName}</label>
                     	</c:forEach>
                      </div>   
                 
@@ -96,6 +96,11 @@
                     </div>
                 </div>     
 
+                <!-- 자기소개 -->
+                <div>     
+                    <p>자기소개</p>
+                    <textarea name="introduction"></textarea>
+                </div>     
 
                 <!-- 가격 -->
                 <div>     
@@ -103,13 +108,10 @@
                     <textarea name="price"></textarea>
                 </div>     
 
-                <!-- 자기소개 -->
-                <div>     
-                    <p>자기소개</p>
-                    <textarea name="introduction"></textarea>
-                </div>     
-
 				<input type="hidden" name="userNo" value="${vo.userNo}">
+				<input type="hidden" name="userId" value="${vo.userId}">
+				<input type="hidden" name="name" value="${vo.name}">
+				
 	            <button type="submit" class="button main">완료</button>
 
             </form>
@@ -141,6 +143,8 @@ $(".recordPart").on("click", "i.fa-minus-square",function(){
 
 //주소 2차 분류 가져오기
 $("select[name='province']").on("change", function(){
+	//옵션 초기화
+	$("select[name='city']").empty();
 	
 	var thisProvince = $(this).val();
 	
@@ -154,7 +158,7 @@ $("select[name='province']").on("change", function(){
 		success : function(cityList){
 			
 			/*성공시 처리해야될 코드 작성*/
-			var cityStr = '';
+			var cityStr = '<option>전체</option>';
 			for(var i in cityList){
 				cityStr += '<option>'+cityList[i]+'</option>';
 			}
@@ -171,6 +175,8 @@ $("select[name='province']").on("change", function(){
 
 //주소 3차 분류 가져오기
 $("select[name='city']").on("change", function(){
+	//옵션 초기화
+	$("select[name='region']").empty();
 	
 	var thisCity = $(this).val();
 	
@@ -184,7 +190,8 @@ $("select[name='city']").on("change", function(){
 		success : function(regionList){
 			
 			/*성공시 처리해야될 코드 작성*/
-			var regionStr = '';
+			var regionStr = '<option>전체</option>';
+			
 			for(var i in regionList){
 				regionStr += '<option>'+regionList[i]+'</option>';
 			}
