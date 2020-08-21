@@ -31,9 +31,10 @@
         </div>
         <div class="wrapper">
         
-        
-            <form action="" method="get"
-            id="searchKeywordForm">
+        	
+        	<div class id="searchKeywordForm">
+            <!-- <form action="" method="get"
+            id="searchKeywordForm"> -->
                 <ul class="search-condition clearfix">
 
                     <li class="local clearfix">
@@ -89,8 +90,9 @@
                     </li>
                     
                 </ul>
-                <button type="button" class="button key">검색</button>
-            </form>
+                <button type="submit" class="button key">검색</button>
+            <!-- </form> -->
+            </div>
             
             
             
@@ -374,7 +376,42 @@
     <script type="text/javascript">    
     
     //검색하기
-  
+   $(".button.key").on("click",function(){
+	   console.log("검색버튼");
+	   
+	   //값 추출
+	   var province = $("[name='province']").val();
+	   var city = $("[name='city']").val();
+	   var region = $("[name='region']").val();
+	   var gender = $("[name='gender']:checked").val();
+	   var field = $("[name='field']").val();
+	   var name = $("[name='name']").val();
+	   
+	   
+	   
+	   $.ajax({
+			url : "${pageContext.request.contextPath }/search/results",
+			type : "post",
+			data : {province: province,
+				    city: city,
+				    region: region,
+				    gender: gender,
+				    field: field,
+				    name: name},
+
+			dataType : "json",
+			success : function(cityList) {
+				/*성공시 처리해야될 코드 작성*/
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	  
+	   
+	   
+   });
     
     
     //구 불러오기
@@ -392,7 +429,6 @@
 
 			dataType : "json",
 			success : function(cityList) {
-				console.log(cityList);
 				/*성공시 처리해야될 코드 작성*/
 				var cityStr ='<option value="null">전체</option>';
 				for (var i in cityList ) {
@@ -424,7 +460,6 @@
 				/*성공시 처리해야될 코드 작성*/
 				var regionStr ='<option value="null">전체</option>';
 				for (var i in regionList ) {
-					console.log(regionList[i].region);
 					regionStr +='<option>'+regionList[i].region+'</option>';
 					
 				}

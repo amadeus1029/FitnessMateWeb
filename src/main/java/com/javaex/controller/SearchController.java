@@ -28,7 +28,7 @@ public class SearchController {
 						  @RequestParam(value="name",required=false) String name
 						  ) 
 	{
-					
+					System.out.println(province+city+region+gender+field+name);
 		List<UserVo> userVo  = searchService.userList(province,city,region,gender,field,name);
 		System.out.println("controller:search/results");
 		
