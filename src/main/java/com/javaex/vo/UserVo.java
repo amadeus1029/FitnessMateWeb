@@ -1,14 +1,14 @@
 package com.javaex.vo;
 
 public class UserVo {
-	
+
 	private int userNo; /* 회원번호 PK */
 	private String userId; /* 아이디 */
 	private String password; /* 패스워드 */
 	private String name; /* 이름 */
 	private String gender; /* 성별 */
 	private String phone; /* 전화번호 */
-	private String age; /* 나이 */
+	private String birthDate; /* 생년월일 */
 	private String userType; /* 회원구분 */
 	private String profileImg; /* 프로필img경로 */
 	private String introduction; /* 자기소개 */
@@ -16,9 +16,10 @@ public class UserVo {
 	private String location; /* 지역 */
 	private String company; /* 소속회사 */
 	private String price; /* 가격 */
-	
-	public UserVo() {}
-	
+
+	public UserVo() {
+	}
+
 	public int getUserNo() {
 		return userNo;
 	}
@@ -67,12 +68,12 @@ public class UserVo {
 		this.phone = phone;
 	}
 
-	public String getAge() {
-		return age;
+	public String getbirthDate() {
+		return birthDate;
 	}
 
-	public void setAge(String age) {
-		this.age = age;
+	public void setbirthDate(String birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	public String getuserType() {
@@ -134,10 +135,9 @@ public class UserVo {
 	@Override
 	public String toString() {
 		return "UserVo [userNo=" + userNo + ", userId=" + userId + ", password=" + password + ", name=" + name
-				+ ", gender=" + gender + ", phone=" + phone + ", age=" + age + ", userType=" + userType
+				+ ", gender=" + gender + ", phone=" + phone + ", birthDate=" + birthDate + ", userType=" + userType
 				+ ", profileImg=" + profileImg + ", introduction=" + introduction + ", career=" + career + ", location="
 				+ location + ", company=" + company + ", price=" + price + "]";
 	}
-	
 
 }

@@ -63,7 +63,7 @@ public class UserService {
 	}
 
 	public List<String> getAddress() {
-		System.out.println("userService.주소가져오기");
+		System.out.println("userService.주소 대분류 가져오기");
 		
 		return userDao.selectAddress();
 	}
@@ -86,11 +86,30 @@ public class UserService {
 		return userDao.selectInterestAll();
 	}
 
-	public void signUpTrainer(UserVo vo, AddressVo addressVo, List<Integer> fieldList, List<String> careerList) {
+	public void signUpTrainer(UserVo vo, AddressVo addressVo, List<Integer> fieldList, List<String> careerList, List<String> birthList) {
 		System.out.println("userService.트레이너 회원가입");
 		
-		String address = addressVo.getProvince()+" "+addressVo.getCity()+" "+addressVo.getRegion();
+		//주소 합치기
+		String address = "";
+
+		if(addressVo.getProvince().equals("") && addressVo.getCity().equals("") && addressVo.getRegion().equals("")) {
+			address = " | | ";
+		}else {
+			address = addressVo.getProvince()+"|"+addressVo.getCity()+"|"+addressVo.getRegion();
+		}
+		
 		vo.setLocation(address);
+		
+		//날짜 합치기
+		String birthDate = "";
+		
+		if(birthList == null) {
+			birthDate = "";
+		}else {
+			birthDate = birthList.get(0).substring(0, 2)+"/"+birthList.get(1)+"/"+birthList.get(2);
+		}
+		
+		vo.setbirthDate(birthDate);
 		
 		userDao.updateTrainerInfo(vo);
 		
@@ -102,13 +121,16 @@ public class UserService {
 			userDao.insertInterest(interestMap);
 		}
 		
-		Map<String, Object> careerMap = new HashMap<>();
-		careerMap.put("userNo", vo.getUserNo());
-		
-		for(String career : careerList) {
-			careerMap.put("career", career);
-			userDao.insertInterest(interestMap);
+		if(careerList != null) {
+			Map<String, Object> careerMap = new HashMap<>();
+			careerMap.put("userNo", vo.getUserNo());
+			
+			for(String career : careerList) {
+				careerMap.put("career", career);
+				userDao.insertCareer(careerMap);
+			}
 		}
+		
 	}
 
 	public UserVo login(String userId, String userPw) {
@@ -119,5 +141,17 @@ public class UserService {
 		userVo.setPassword(userPw);
 		
 		return userDao.selectUser(userVo);
+	}
+
+	public void deleteInterest(int userNo) {
+		System.out.println("userService.전문분야 초기화");
+		
+		userDao.deleteInterest(userNo);
+	}
+
+	public void deleteCareer(int careerNo) {
+		System.out.println("userService.커리어지우기");
+		
+		userDao.deleteCareer(careerNo);
 	}
 }

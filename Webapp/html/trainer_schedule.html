@@ -222,18 +222,6 @@
             opacity: 1;
         }
 
-        /*i[class="far fa-plus-square"] {
-            margin: 5px 5px 0px 0px;
-            position: absolute;
-            right: 0;
-            top: 0;
-            font-size: 20px;
-            color: gray;
-            padding: 5px 0px px 0px;
-            opacity: 0;
-            z-index: 9999;
-            cursor: pointer;
-        }*/
         .fc a.fc-daygrid-day-number {
             position: absolute;
             top: 0;
@@ -401,68 +389,68 @@
             </ul>
         </div>
         <!-- mypage공용 -->
+        <div id='top'>
 
+            <div class='left'>
 
-    </div>
-    <div id='top'>
+                <div id='theme-system-selector' class='selector'>
+                    Theme System:
 
-        <div class='left'>
+                    <select>
+                        <option value='bootstrap' selected>Bootstrap 4</option>
+                        <option value='standard'>unthemed</option>
+                    </select>
+                </div>
 
-            <div id='theme-system-selector' class='selector'>
-                Theme System:
+                <div data-theme-system="bootstrap" class='selector' style='display:none'>
+                    Theme Name:
 
-                <select>
-                    <option value='bootstrap' selected>Bootstrap 4</option>
-                    <option value='standard'>unthemed</option>
-                </select>
+                    <select>
+                        <option value='' selected>Default</option>
+                        <option value='cerulean'>Cerulean</option>
+                        <option value='cosmo'>Cosmo</option>
+                        <option value='cyborg'>Cyborg</option>
+                        <option value='darkly'>Darkly</option>
+                        <option value='flatly'>Flatly</option>
+                        <option value='journal'>Journal</option>
+                        <option value='litera'>Litera</option>
+                        <option value='lumen'>Lumen</option>
+                        <option value='lux'>Lux</option>
+                        <option value='materia'>Materia</option>
+                        <option value='minty'>Minty</option>
+                        <option value='pulse'>Pulse</option>
+                        <option value='sandstone'>Sandstone</option>
+                        <option value='simplex'>Simplex</option>
+                        <option value='sketchy'>Sketchy</option>
+                        <option value='slate'>Slate</option>
+                        <option value='solar'>Solar</option>
+                        <option value='spacelab'>Spacelab</option>
+                        <option value='superhero'>Superhero</option>
+                        <option value='united'>United</option>
+                        <option value='yeti'>Yeti</option>
+                    </select>
+                </div>
+
+                <span id='loading' style='display:none'>loading theme...</span>
+
             </div>
 
-            <div data-theme-system="bootstrap" class='selector' style='display:none'>
-                Theme Name:
-
-                <select>
-                    <option value='' selected>Default</option>
-                    <option value='cerulean'>Cerulean</option>
-                    <option value='cosmo'>Cosmo</option>
-                    <option value='cyborg'>Cyborg</option>
-                    <option value='darkly'>Darkly</option>
-                    <option value='flatly'>Flatly</option>
-                    <option value='journal'>Journal</option>
-                    <option value='litera'>Litera</option>
-                    <option value='lumen'>Lumen</option>
-                    <option value='lux'>Lux</option>
-                    <option value='materia'>Materia</option>
-                    <option value='minty'>Minty</option>
-                    <option value='pulse'>Pulse</option>
-                    <option value='sandstone'>Sandstone</option>
-                    <option value='simplex'>Simplex</option>
-                    <option value='sketchy'>Sketchy</option>
-                    <option value='slate'>Slate</option>
-                    <option value='solar'>Solar</option>
-                    <option value='spacelab'>Spacelab</option>
-                    <option value='superhero'>Superhero</option>
-                    <option value='united'>United</option>
-                    <option value='yeti'>Yeti</option>
-                </select>
-            </div>
-
-            <span id='loading' style='display:none'>loading theme...</span>
-
-        </div>
-
-        <div class='right'>
+            <div class='right'>
       <span class='credits' data-credit-id='bootstrap-standard' style='display:none'>
         <a href='https://getbootstrap.com/docs/3.3/' target='_blank'>Theme by Bootstrap</a>
       </span>
-            <span class='credits' data-credit-id='bootstrap-custom' style='display:none'>
+                <span class='credits' data-credit-id='bootstrap-custom' style='display:none'>
         <a href='https://bootswatch.com/' target='_blank'>Theme by Bootswatch</a>
       </span>
+            </div>
+
+            <div class='clear'></div>
         </div>
 
-        <div class='clear'></div>
+        <div id='calendar'></div>
+
     </div>
 
-    <div id='calendar'></div>
     <footer id="footer">
         <div class="wrapper">
             <ul class="agree clearfix">
@@ -500,12 +488,12 @@
                         <p class="text">시작시간</p>
                         <ol>
                             <li>
-                                <input type="radio" id="am" name="time_section" value="am">
-                                <label for="am">AM</label>
+                                <input type="radio" id="startAm" name="startTime" value="am">
+                                <label for="startAm">AM</label>
                             </li>
                             <li>
-                                <input type="radio" id="pm" name="time_section" value="pm">
-                                <label for="pm">PM</label>
+                                <input type="radio" id="startPm" name="startTime" value="pm">
+                                <label for="startPm">PM</label>
                             </li>
                         </ol>
                         <select name="hour">
@@ -537,12 +525,12 @@
                         <p class="text">종료시간</p>
                         <ol>
                             <li>
-                                <input type="radio" id="am" name="time_section" value="am">
-                                <label for="am">AM</label>
+                                <input type="radio" id="endAm" name="endTime" value="am">
+                                <label for="endAm">AM</label>
                             </li>
                             <li>
-                                <input type="radio" id="pm" name="time_section" value="pm">
-                                <label for="pm">PM</label>
+                                <input type="radio" id="endPm" name="endTime" value="pm">
+                                <label for="endPm">PM</label>
                             </li>
                         </ol>
                         <select name="hour">
@@ -580,6 +568,7 @@
                             <option value="">황정민(ghkdwjdals)</option>
                         </select>
                     </div>
+                </div>
             </form>
             <div class="modal-btn-area">
                 <button type="button" class="modal-cancel" onclick="forceHideModal('#addModal')">취소</button>

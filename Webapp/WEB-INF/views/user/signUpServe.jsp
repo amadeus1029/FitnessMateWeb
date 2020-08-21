@@ -44,9 +44,29 @@
                 <!-- 경력 -->
                 <div class="form-group number">
                     <div class="age">
-                    <label for="age">나이</label>
-                    <input type="number" name="age" value="1" id ="career">  
+                    <p>생년월일</p>
+                    <select name="birth">
+                   		<option>년도</option>
+                   		<c:forEach var="year" begin="2020" end="1960" step="-1">
+	                        <option>${year}</option>
+                   		</c:forEach>
+                    </select>
+                    
+                    <select name="birth">
+                   		<option>월</option>
+                   		<c:forEach var="month" begin="1" end="12" step="1">
+	                        <option>${month}</option>
+                   		</c:forEach>
+                    </select>
+                    
+                    <select name="birth">
+                   		<option>일</option>
+                   		<c:forEach var="date" begin="1" end="31" step="1">
+	                        <option>${date}</option>
+                   		</c:forEach>
+                    </select>
                     </div>
+                    
                     <div class="career">
                     <label for="career">경력</label>
                     <input type="number" name="career" value="1" id ="career">
@@ -136,6 +156,7 @@ $(".fa-plus-square").on("click", function(){
 
     $(this).closest(".recordPart").append(addRecord);
 });
+
 // -눌렀을 때 수상내역 삭제
 $(".recordPart").on("click", "i.fa-minus-square",function(){
     $(this).closest("div").remove();

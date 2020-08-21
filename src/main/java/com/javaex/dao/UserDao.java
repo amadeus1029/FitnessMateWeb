@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.CareerVo;
 import com.javaex.vo.InterestVo;
 import com.javaex.vo.UserVo;
 
@@ -79,4 +80,37 @@ public class UserDao {
 		
 		return sqlSession.selectOne("user.selectUser", userVo);
 	}
+
+	public UserVo selectProfile(int userNo) {
+		System.out.println("userDao.기본 프로필");
+		
+		return sqlSession.selectOne("user.selectProfile", userNo);
+	}
+
+	public List<String> selectUserInterest(int userNo) {
+		System.out.println("userDao.프로필 전문분야");
+
+		return sqlSession.selectList("user.selectUserInterest", userNo);
+	}
+
+	public List<CareerVo> selectCareerList(int userNo) {
+		System.out.println("userDao.프로필 경력상세");
+
+		return sqlSession.selectList("user.selectCareerList", userNo);
+	}
+
+	public void deleteInterest(int userNo) {
+		System.out.println("userDao.전문분야 초기화");
+
+		sqlSession.delete("user.deleteInterest", userNo);
+	}
+	
+
+	public void deleteCareer(int careerNo) {
+		System.out.println("userDao.커리어지우기");
+
+		int count = sqlSession.delete("user.deleteCareer", careerNo);
+		System.out.println(count);
+	}
+	
 }

@@ -12,22 +12,22 @@
     <title>Document</title>
 
     <!-- icon 사용을 위한 css -->
-    <link rel="stylesheet" href="../assets/css/fontawesome/all.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/fontawesome/all.css">
 
     <!-- 반드시 넣어야 하는 2가지 css -->
-    <link rel="stylesheet" href="../assets/css/reset.css">
-    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reset.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/common.css">
 
     <!-- 반드시 넣어야 하는 2가지 js -->
-    <script src="../assets/js/jquery/jquery-1.12.4.min.js"></script>
-    <script src="../assets/js/modal.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/modal.js"></script>
 
     <!-- slide -->
-    <link href="../assets/js/swiper-4.2.6/dist/css/swiper.min.css" rel="stylesheet">
-    <script src="../assets/js/swiper-4.2.6/dist/js/swiper.min.js"></script>
+    <link href="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/css/swiper.min.css" rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/js/swiper.min.js"></script>
 
     <!-- 해당 페이지 css -->
-	<link rel="stylesheet" href="../assets/css/signUpComplete.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/signUpComplete.css">
 </head>
 <body>
     
@@ -36,8 +36,8 @@
         
         <div class="wrapper clearfix">
             <h1 class="logo">
-                <a href="../html/index.html">
-                    <img src="../assets/image/logoB.jpeg" title="logo" alt="logo">
+            	<a href="${pageContext.request.contextPath}/main">
+                    <img src="${pageContext.request.contextPath}/assets/image/logoB.jpeg" title="logo" alt="logo">
                 </a>
             </h1>
         </div>

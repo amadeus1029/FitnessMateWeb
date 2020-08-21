@@ -69,18 +69,26 @@ public class UserController {
     							@ModelAttribute AddressVo address,
     							@RequestParam("fieldNo") List<Integer> fieldList,
     							@RequestParam("careerRecord") List<String> careerList,
+    							@RequestParam("birth") List<String> birthList,
     							Model model) {
     	System.out.println("/signUpComplete");
-    	System.out.println(vo);
-    	System.out.println(fieldList);
-    	System.out.println(careerList);
     	
-    	userService.signUpTrainer(vo, address, fieldList, careerList);
+    	userService.signUpTrainer(vo, address, fieldList, careerList, birthList);
     	
     	model.addAttribute("vo", vo);
     	
     	return "user/signUpComplete";
     }
+    
+	@RequestMapping("/logout")
+	public String logout(String msg, HttpSession session) {
+		System.out.println("/user/logout");
+		
+		session.removeAttribute("authUser");
+		session.invalidate();
+		
+		return "redirect:/main";
+	}
     
 
     //API controller
@@ -131,21 +139,21 @@ public class UserController {
     		
     		return true;
     	} else{ //로그인 실패 시
-    		System.out.println("실패");
     		
     		return false;
     	}
     }
     
     @ResponseBody
-	@RequestMapping("/logout")
-	public String logout(String msg, HttpSession session) {
-		System.out.println("/user/logout");
-		
-		session.removeAttribute("authUser");
-		session.invalidate();
-		
-		return "성공";
-	}
+    @RequestMapping("/deleteCareer")
+    public String deleteCareer(int careerNo) {
+    	System.out.println("/deleteCareer");
+    	
+    	userService.deleteCareer(careerNo);
+    	
+    	return "";
+    }
+    
+
 
 }
