@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,20 +18,22 @@ public class SearchController {
 	@Autowired
 	private SearchService searchService;
 	
-	
+	@ResponseBody
 	@RequestMapping("/search/results")
-	public String results(@RequestParam("province") String province,
-						  @RequestParam("city") String city,
-						  @RequestParam("region") String region,
-						  @ModelAttribute UserVo userVo) 
+	public List<UserVo> results(@RequestParam(value="province",required=false) String province,
+						  @RequestParam(value="city",required=false) String city,
+						  @RequestParam(value="region",required=false) String region,
+						  @RequestParam(value="gender",required=false) String gender,
+						  @RequestParam(value="field",required=false) String field,
+						  @RequestParam(value="name",required=false) String name
+						  ) 
 	{
 					
-		
-		searchService.searchTr(userVo);
-		System.out.println(userVo);
+		List<UserVo> userVo  = searchService.userList(province,city,region,gender,field,name);
+		System.out.println("controller:search/results");
 		
 				
-		return "";
+		return null;
 	}
 	
 	

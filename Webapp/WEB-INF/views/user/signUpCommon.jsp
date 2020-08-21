@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -31,39 +31,26 @@
 	
 </head>
 <body>
-    <header id="header">
-        <div class="wrapper clearfix">
-            <h1 class="logo">
-                <a href="${pageContext.request.contextPath}/html/index.html">
-                    <img src="${pageContext.request.contextPath}/assets/image/logoB.jpeg" title="logo" alt="logo">
-                </a>
-            </h1>
-            <a href="${pageContext.request.contextPath}/html/search.html" class="search-link"><i class="fas fa-search"></i></a>
-            <nav id="nav">
-            </nav>
-            <div class="btn-area clearfix">
-                <a href="#none" class="button sub">회원가입</a>
-                <a href="#none" class="button main" id="btn_login">로그인</a>
-            </div>
-        </div>
-    </header>
+
+    <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
     <!-- header가 필요한 페이지에서 사용 -->
 
     <div id="container">
        
         <div class="wrapper">
-            <form action="${pageContext.request.contextPath}/user/signUp" method="get" enctype="multipart/form-data">
-                <p class="title">기본정보 입력 - 트레이너</p>
+            <form action="${pageContext.request.contextPath}/user/signUp" method="post" enctype="multipart/form-data">
+                <p class="title">기본정보 입력</p>
                 <p>아이디</p>
                 <input type="text" name="userId" placeholder="id">
                 <p class="errMsg">이미 사용 중인 아이디 입니다.</p>
                 <p class="emtMsg">사용 불가한 아이디 입니다.</p>
                 <p class="okMsg">사용 가능한 아이디 입니다.</p>
+                
                 <button type="button" id="idCheck">중복 확인</button>
                 <p>비밀번호</p>
-                <input type="password" name="password" placeholder="********">
+                <input type="password" id="pw" name="password" placeholder="********">
                 <p>비밀번호 확인</p>
-                <input type="password" id="pw" placeholder="********">
+                <input type="password" id="pwCheck" placeholder="********">
                 <p>이름</p>
                 <input type="text" name="name" placeholder="김이름">
                 <p>휴대전화 번호</p>
@@ -76,11 +63,11 @@
                 <p>프로필 이미지</p>
                 <img id="proImg" src="${pageContext.request.contextPath}/assets/image/unnamed.jpg">
                 <input type="file" id="imgPreview" name="profileImage">
+          		<input type="hidden" name="userType" value="${param.userType}">
                 
 				<c:choose>
                 	<c:when test="${param.userType eq 'trainer'}">
                 		<button type="submit" class="button main">다음</button>
-                		<input type="hidden" name="userType" value="${param.userType}">
                 	</c:when>
                 	<c:otherwise>
                 		<button type="submit" class="button main">완료</button>
@@ -92,32 +79,7 @@
         </div>
     </div>
 
-    <footer id="footer">
-        <div class="wrapper">
-            <ul class="agree clearfix">
-                <li><a href="#none">개인정보처리방침</a></li>
-                <li><a href="#none">이용약관</a></li>
-                <li><a href="#none">이메일무단수집거부</a></li>
-                <li><a href="#none">뉴스레터신청</a></li>
-                <li><a href="#none">사이트맵</a></li>
-            </ul>
-            <address>
-                <p>
-                    <span>피트니스메이트(주)</span>
-                    <span>사업자 등록번호 231-81-24552</span>
-                    <span>대표이사 황예지, 김주혜</span>
-                    <span>주소 서울특별시 동대문구 천호대로 26 (신설동) 효정빌딩</span>
-                </p>
-                <p>
-                    <span class="on">제품관련 고객상담 080-000-0000</span>
-                    <span class="on">웹사이트문의 02-2222-2222</span>
-                    <span>상담시간 평일 09:00~17:30(토, 일요일, 공휴일 휴무)</span>
-                    <span>개인정보 관리책임자 이웅희</span>
-                </p>
-            </address>
-            <p class="right"><span>COPYRIGHT 하이미디어 풀스택과정 C팀.</span> ALL RIGHTS RESERVED.</p>
-        </div>
-    </footer>
+    <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     <!-- footer가 필요한 페이지에서 사용 -->
 
 
@@ -190,6 +152,8 @@
     });
     
     $("button.main").on("click", function(){
+    	console.log("아이디"+$("input[name='userId']").val());
+    	
 		//아이디를 입력해 주세요
 		if($("input[name='userId']").val() == ""){
 			alert("아이디를 입력해주세요");
@@ -203,7 +167,7 @@
 		}
 		
 		//패스워드를 입력해 주세요
-		if($("input[name='password']").val() == ""){
+		if($("#pw").val() == ""){
 			alert("패스워드를 입력해주세요");
 			return false;
 		}
@@ -215,7 +179,7 @@
 		}
 
 		//패스워드가 일치하지 않습니다
-		if($("input[name='password']").val() != $("#pw").val()){
+		if($("#pw").val() != $("#pwCheck").val()){
 			alert("패스워드가 일치하지 않습니다");
 			return false;
 		}

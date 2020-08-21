@@ -16,8 +16,31 @@ public class UserVo {
 	private String location; /* 지역 */
 	private String company; /* 소속회사 */
 	private String price; /* 가격 */
+	private String fieldNo; /* 전문분야 고유넘버 */
+	private String fieldName;/* 전문분야  */
+	
 	
 	public UserVo() {}
+	public UserVo(String fieldNo, String fieldName) {
+		super();
+		this.fieldNo = fieldNo;
+		this.fieldName = fieldName;
+	}
+
+	
+	
+	public String getFieldNo() {
+		return fieldNo;
+	}
+	public void setFieldNo(String fieldNo) {
+		this.fieldNo = fieldNo;
+	}
+	public String getFieldName() {
+		return fieldName;
+	}
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
+	}
 	
 	public int getUserNo() {
 		return userNo;
@@ -130,14 +153,18 @@ public class UserVo {
 	public void setPrice(String price) {
 		this.price = price;
 	}
-
+	
+	
 	@Override
 	public String toString() {
 		return "UserVo [userNo=" + userNo + ", userId=" + userId + ", password=" + password + ", name=" + name
 				+ ", gender=" + gender + ", phone=" + phone + ", age=" + age + ", userType=" + userType
 				+ ", profileImg=" + profileImg + ", introduction=" + introduction + ", career=" + career + ", location="
-				+ location + ", company=" + company + ", price=" + price + "]";
+				+ location + ", company=" + company + ", price=" + price + ", fieldNo=" + fieldNo + ", fieldName="
+				+ fieldName + "]";
 	}
+
+	
 	
 
 }

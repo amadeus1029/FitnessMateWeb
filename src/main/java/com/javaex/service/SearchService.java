@@ -1,6 +1,8 @@
 package com.javaex.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,7 @@ public class SearchService {
 		return regionList;
 	}
 
+	//////////////////////////////////////////////////
 	
 	//전문분야 불러오기
 	public List<InterestFieldVo> addField() {
@@ -47,10 +50,30 @@ public class SearchService {
 		return fieldVo;
 	}
 
-	//검색하기
-	public void searchTr(UserVo userVo) {
-		// TODO Auto-generated method stub
+	
+	//////////////////////////////////////////////////
+	
+	//검색하기,트레이너 리스트
+	public List<UserVo> userList(String province, String city, String region, String gender, String field,
+			String name) {
+		System.out.println("SearchService:userList");
 		
+		Map<String,Object> listMap = new HashMap<>();
+		
+		listMap.put("province",province);
+		listMap.put("city",city);
+		listMap.put("region",region);
+		listMap.put("field",field);
+		listMap.put("gender",gender);
+		listMap.put("name",name);
+		
+		
+		System.out.println(listMap.toString());
+		
+		List<UserVo> userVo = searchDao.userList(listMap);
+		
+		
+		return userVo;
 	}
 	
 	

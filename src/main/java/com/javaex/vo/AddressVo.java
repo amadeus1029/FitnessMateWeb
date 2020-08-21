@@ -2,6 +2,7 @@ package com.javaex.vo;
 
 public class AddressVo {
 	
+
 	//필드
 	private String province; //시,도
 	private String city;	//구
@@ -50,9 +51,7 @@ public class AddressVo {
 		return "AddressVo [province=" + province + ", city=" + city + ", region=" + region + "]";
 	}
 	
-	
-	
-	
+
 	
 
 }

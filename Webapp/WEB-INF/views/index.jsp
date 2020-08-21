@@ -30,7 +30,10 @@
 
 </head>
 <body>
+
 	<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+	<!-- header -->
+	
 	<div id="container">
         <section id="mainBanner">
             <div class="swiper-wrapper">

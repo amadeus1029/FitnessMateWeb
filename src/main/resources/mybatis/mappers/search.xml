@@ -37,13 +37,44 @@
 	</select>
 	
 	<!--전문분야 정보 불러오기 -->
-	<select id="fieldname" resultType="com.javaex.vo.InterestFieldVo">
+	<select id="fieldname" resultType="com.javaex.vo.UserVo">
 	<![CDATA[
 	SELECT fieldno,fieldname
 	FROM interest_field
 	]]>
 	</select>
 	
+	
+	<!--트레이너 리스트 불러오기 -->
+	<select id="userList" parameterType="map"
+	resultType="com.javaex.vo.UserVo">
+	<![CDATA[
+	SELECT u.userno as "userNo",
+       u.userid as "userId",
+       u.password,u.name,u.gender,u.phone,u.age,
+       u.usertype as "userType",
+       u.profileimg as "profileImg",
+       u.introduction,u.career,
+       u.location,u.company,u.price,
+       li.fieldno as "fieldNo",
+       fi.fieldname as "fieldName"
+	FROM users u,interest_field fi,interest_list li
+	WHERE fi.fieldno = li.fieldno
+	AND u.userno = li.userno
+	AND userType = 'trainer'
+	]]>
+	
+	<if test = "gender !='' and gender !=null">
+	  <![CDATA[
+	AND u.gender = #{gender}
+	]]>
+	</if>
+	
+	
+	
+	
+	
+	</select>
 	
 	
 </mapper>

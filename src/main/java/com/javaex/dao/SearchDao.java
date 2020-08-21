@@ -1,6 +1,7 @@
 package com.javaex.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.AddressVo;
 import com.javaex.vo.InterestFieldVo;
+import com.javaex.vo.UserVo;
 
 @Repository
 public class SearchDao {
@@ -46,6 +48,20 @@ public class SearchDao {
 	public List<InterestFieldVo> fieldList() {
 		System.out.println("searchDao:field list");
 		return sqlSession.selectList("search.fieldname");
+	}
+
+	
+	
+	///////////////////////////////////////////////////////
+	
+	public List<UserVo> userList(Map<String, Object> listMap) {
+		System.out.println("searchDao:userList");
+		System.out.println(listMap.toString());
+		
+		List<UserVo> print = sqlSession.selectList("search.userList",listMap);
+		System.out.println(print);
+		
+		return print;
 	}
 	
 	

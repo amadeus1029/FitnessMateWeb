@@ -13,6 +13,56 @@
 		 ]]>
 	</select>
 	
+	<!-- 주소(도,광역시)가져오기 -->
+	<select id="selectAddress" resultType="String">
+		<![CDATA[
+		
+			SELECT province
+			FROM address
+			GROUP BY province
+			ORDER BY province ASC
+			
+		]]>
+	</select>
+	
+	<!-- 주소(시)가져오기 -->
+	<select id="selectCity" parameterType="String" resultType="String">
+		<![CDATA[
+		
+			SELECT city
+			FROM address
+			WHERE province = #{thisProvince}
+			GROUP BY city
+			ORDER BY city ASC
+			
+		]]>
+	</select>
+	
+	<!-- 주소(동,면,읍)가져오기 -->
+	<select id="selectRegion" parameterType="String" resultType="String">
+		<![CDATA[
+		
+			SELECT region
+			FROM address
+			WHERE city = #{thisCity}
+			GROUP BY region
+			ORDER BY region ASC
+			
+		]]>
+	</select>
+	
+	<!-- 관심분야가져오기 -->
+	<select id="selectInterestAll" resultType="com.javaex.vo.InterestVo">
+		<![CDATA[
+		
+			SELECT fieldNo, fieldName
+			FROM interest_field
+			ORDER BY fieldNo ASC
+			
+		]]>
+	</select>
+	
+	<!-- 회원 등록 -->
 	<insert id="insertUser" parameterType="com.javaex.vo.UserVo">
 		<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
 			SELECT seq_userNo.nextval FROM dual
@@ -21,9 +71,55 @@
 		<![CDATA[
 		
 			INSERT INTO users 
-			VALUES(#{userNo}, #{userId}, #{password}, #{name}, #{gender}, #{phone}, 0, #{userType}, '#{profileImg}', '', 1, '', '', '')
+			VALUES(#{userNo}, #{userId}, #{password}, #{name}, #{gender}, #{phone}, 0, #{userType}, '', '', 1, '', '', '')
 
 		 ]]>
 	</insert>
+	
+	<!-- 트레이너 정보 수정 -->
+	<update id="updateTrainerInfo" parameterType="com.javaex.vo.UserVo">
+		<![CDATA[
+		
+			UPDATE users
+			SET age = #{age},
+			    introduction = #{introduction},
+			    career = #{career},
+			    location = #{location},
+			    company = #{company},
+			    price = #{price}
+			WHERE userNo = #{userNo}
+	
+		]]>
+	</update>
+	
+	<!-- 트레이너 전문분야 리스트 -->
+	<insert id="insertInterest" parameterType="map">
+		<![CDATA[
+		
+			INSERT into interest_list
+			VALUES(#{userNo}, #{fieldNo})
+			
+		]]>
+	</insert>
+	
+	<!-- 트레이너 전문분야 리스트 -->
+	<insert id="insertCareer" parameterType="map">
+		<![CDATA[
+			insert into career_list
+			values(#{userNo}, #{career})
+		]]>
+	</insert>
+	
+	<!-- 주소(동,면,읍)가져오기 -->
+	<select id="selectUser" parameterType="com.javaex.vo.UserVo" resultType="com.javaex.vo.UserVo">
+		<![CDATA[
+		
+			SELECT userNo, userId, name, userType
+			FROM users
+			WHERE userId = #{userId}
+			AND password = #{password}
+			
+		]]>
+	</select>
 	
 </mapper>

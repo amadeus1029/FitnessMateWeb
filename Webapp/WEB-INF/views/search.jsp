@@ -32,7 +32,7 @@
         <div class="wrapper">
         
         
-            <form action="${pageContext.request.contextPath}/search/results" method="get"
+            <form action="" method="get"
             id="searchKeywordForm">
                 <ul class="search-condition clearfix">
 
@@ -42,7 +42,7 @@
                         <h3 class="title">지역</h3>
                         <!--지역 고르기 -->
                         <select name="province">
-                        	<option>전체</option>
+                        	<option value="null">전체</option>
                          <c:forEach items="${addVo}" var="addVo">
                             <option >${addVo.province}</option>
                          </c:forEach>
@@ -74,7 +74,7 @@
                     <li class="field">
                         <h3 class="title">전문분야</h3>
                          <select name="field">
-                         	<option>전체</option>
+                         	<option value="null">전체</option>
 	                        <c:forEach items="${fieldVo}" var="fieldVo">
 	                         <option>${fieldVo.fieldName}</option>
 	                        </c:forEach>
@@ -89,25 +89,27 @@
                     </li>
                     
                 </ul>
-                <button type="submit" class="button">검색</button>
+                <button type="button" class="button key">검색</button>
             </form>
             
             
             
             
             <ul class="search-list clearfix">
+            
+            	<c:forEach items="${userVo}" var="userVo" varStatus = "status">
                 <li class="search-result" onclick="showProfileModal($(this))">
                     <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');">
                     </div>
                     <div class="content-area">
-                        <p class="name">강호동</p>
-                        <p class="gym">하이미디어</p>
-                        <p class="comment">국가의 세입·세출의 결산, 국가 및 법률이 정한 단체의 회계검사와 행정기관 및 공무원의 직무에 관한 감찰을 하기 위하여 대통령 소속하에
-                            감사원을 둔다. 국정의 중요한 사항에 관한 대통령의 자문에 응하기 위하여 국가원로로 구성되는 국가원로자문회의를 둘 수 있다. 모든 국민은 거주·이전의 자유를
-                            가진다.</p>
+                        <p class="name">${userVo.name}</p>
+                        <p class="gym">${userVo.company}</p>
+                        <p class="comment">${userVo.introduction}</p>
                         <p class="score">평점 4.7</p>
                     </div>
                 </li>
+                </c:forEach>
+                
                 <li class="search-result" onclick="showProfileModal($(this))">
                     <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Lee-Kwang-soo.jpg');">
                     </div>
@@ -371,6 +373,10 @@
     
     <script type="text/javascript">    
     
+    //검색하기
+  
+    
+    
     //구 불러오기
     $("select[name='province']").on("change",function(){
     	console.log("지역선택");
@@ -388,7 +394,7 @@
 			success : function(cityList) {
 				console.log(cityList);
 				/*성공시 처리해야될 코드 작성*/
-				var cityStr ='<option>전체</option>';
+				var cityStr ='<option value="null">전체</option>';
 				for (var i in cityList ) {
 					cityStr +='<option>'+cityList[i].city+'</option>';
 					
@@ -416,7 +422,7 @@
 			dataType : "json",
 			success : function(regionList) {
 				/*성공시 처리해야될 코드 작성*/
-				var regionStr ='<option>전체</option>';
+				var regionStr ='<option value="null">전체</option>';
 				for (var i in regionList ) {
 					console.log(regionList[i].region);
 					regionStr +='<option>'+regionList[i].region+'</option>';

@@ -18,7 +18,6 @@ public class MainController {
 	@Autowired
 	private SearchService searchService;
 
-
     @RequestMapping("/main")
     public String Main() {
         return "index";
@@ -40,6 +39,7 @@ public class MainController {
     	    	
         return "search";
     }
+    
     
 
 }
