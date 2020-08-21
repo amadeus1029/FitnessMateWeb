@@ -29,12 +29,14 @@
 	<div id="container">
         <div class="test-background" style="background-color: #dadde6;height: 350px;">
         </div>
-        <div class="wrapper">
         
-        	
-        	<div class id="searchKeywordForm">
-            <!-- <form action="" method="get"
-            id="searchKeywordForm"> -->
+        
+        <div class="wrapper">
+                	
+            
+            <!--  <form action="${pageContext.request.contextPath}/search/results" method="get"
+            id="searchKeywordForm">-->
+            <div id="searchKeywordForm">
                 <ul class="search-condition clearfix">
 
                     <li class="local clearfix">
@@ -43,7 +45,7 @@
                         <h3 class="title">지역</h3>
                         <!--지역 고르기 -->
                         <select name="province">
-                        	<option value="null">전체</option>
+                        	<option value="">전체</option>
                          <c:forEach items="${addVo}" var="addVo">
                             <option >${addVo.province}</option>
                          </c:forEach>
@@ -75,7 +77,7 @@
                     <li class="field">
                         <h3 class="title">전문분야</h3>
                          <select name="field">
-                         	<option value="null">전체</option>
+                         	<option value="">전체</option>
 	                        <c:forEach items="${fieldVo}" var="fieldVo">
 	                         <option>${fieldVo.fieldName}</option>
 	                        </c:forEach>
@@ -92,13 +94,14 @@
                 </ul>
                 <button type="submit" class="button key">검색</button>
             <!-- </form> -->
-            </div>
+           </div>
             
             
             
             
             <ul class="search-list clearfix">
             
+            <!--
             	<c:forEach items="${userVo}" var="userVo" varStatus = "status">
                 <li class="search-result" onclick="showProfileModal($(this))">
                     <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');">
@@ -110,92 +113,15 @@
                         <p class="score">평점 4.7</p>
                     </div>
                 </li>
-                </c:forEach>
+                </c:forEach>-->
                 
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Lee-Kwang-soo.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">이광수</p>
-                        <p class="gym">러닝맨</p>
-                        <p class="comment">정부는 회계연도마다 예산안을 편성하여 회계연도 개시 90일전까지 국회에 제출하고, 국회는 회계연도 개시 30일전까지 이를 의결하여야 한다.
-                            대통령후보자가 1인일 때에는 그 득표수가 선거권자 총수의 3분의 1 이상이 아니면 대통령으로 당선될 수 없다.</p>
-                        <p class="score">평점 4.2</p>
-                    </div>
-                </li>
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">이효리</p>
-                        <p class="gym">제주도</p>
-                        <p class="comment">모든 국민은 거주·이전의 자유를 가진다. 헌법에 의하여 체결·공포된 조약과 일반적으로 승인된 국제법규는 국내법과 같은 효력을 가진다.
-                            국가는 전통문화의 계승·발전과 민족문화의 창달에 노력하여야 한다.
-
-                        </p>
-                        <p class="score">평점 4.9</p>
-                    </div>
-                </li>
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Yoo-Jae-Suk.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">유재석</p>
-                        <p class="gym">무한도전</p>
-                        <p class="comment">행정각부의 설치·조직과 직무범위는 법률로 정한다. 대통령은 국가의 독립·영토의 보전·국가의 계속성과 헌법을 수호할 책무를 진다. 선거와
-                            국민투표의 공정한 관리 및 정당에 관한 사무를 처리하기 위하여 선거관리위원회를 둔다.</p>
-                        <p class="score">평점 4.5</p>
-                    </div>
-                </li>
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Jeongjae-Lee.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">이정재</p>
-                        <p class="gym">골드문</p>
-                        <p class="comment">감사원은 세입·세출의 결산을 매년 검사하여 대통령과 차년도국회에 그 결과를 보고하여야 한다. 모든 국민은 사생활의 비밀과 자유를 침해받지
-                            아니한다.</p>
-                        <p class="score">평점 3.8</p>
-                    </div>
-                </li>
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Yang-Se-chan.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">양세찬</p>
-                        <p class="gym">아 모르겠다</p>
-                        <p class="comment">국가는 대외무역을 육성하며, 이를 규제·조정할 수 있다. 모든 국민은 법률이 정하는 바에 의하여 국가기관에 문서로 청원할 권리를 가진다.
-                            군인은 현역을 면한 후가 아니면 국무위원으로 임명될 수 없다.
-                        </p>
-                        <p class="score">평점 4.2</p>
-                    </div>
-                </li>
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Park-Myung- Soo.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">박명수</p>
-                        <p class="gym">무한도전</p>
-                        <p class="comment">대통령은 조약을 체결·비준하고, 외교사절을 신임·접수 또는 파견하며, 선전포고와 강화를 한다. 국가는 농지에 관하여 경자유전의 원칙이
-                            달성될 수 있도록 노력하여야 하며, 농지의 소작제도는 금지된다.
-                        </p>
-                        <p class="score">평점 2.8</p>
-                    </div>
-                </li>
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/JungWooSung.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">정우성</p>
-                        <p class="gym">비트</p>
-                        <p class="comment">정당은 그 목적·조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에 참여하는데 필요한 조직을 가져야 한다. 법관은 탄핵 또는 금고
-                            이상의 형의 선고에 의하지 아니하고는 파면되지 아니하며, 징계처분에 의하지 아니하고는 정직·감봉 기타 불리한 처분을 받지 아니한다.</p>
-                        <p class="score">평점 3.5</p>
-                    </div>
-                </li>
             </ul>
-        </div>
-    </div>
+            
+        </div> <!-- wrapper-->
+        
+    </div> <!--container-->
+    
+    
     <div class="modal-layer" id="profileModal">
         <div class="modal-wrapper">
             <button type="button" class="close-btn" onclick="forceHideModal('#profileModal')">X</button>
@@ -374,34 +300,47 @@
     
     
     <script type="text/javascript">    
-    
-    //검색하기
-   $(".button.key").on("click",function(){
+    //검색
+    $(".button.key").on("click",function(){
 	   console.log("검색버튼");
 	   
 	   //값 추출
-	   var province = $("[name='province']").val();
-	   var city = $("[name='city']").val();
-	   var region = $("[name='region']").val();
-	   var gender = $("[name='gender']:checked").val();
-	   var field = $("[name='field']").val();
-	   var name = $("[name='name']").val();
-	   
+	   var user ={province:$("[name='province']").val(),
+			      city:$("[name='city']").val(),
+			      region:$("[name='region']").val(),
+			      gender:$("[name='gender']:checked").val(),
+			      field:$("[name='field']").val(),
+			      name:$("[name='name']").val()}
+		
+	   console.log(user);
 	   
 	   
 	   $.ajax({
 			url : "${pageContext.request.contextPath }/search/results",
 			type : "post",
-			data : {province: province,
-				    city: city,
-				    region: region,
-				    gender: gender,
-				    field: field,
-				    name: name},
+			data : user,
 
-			dataType : "json",
-			success : function(cityList) {
+			dataType : "",
+			success : function(userVo) {
 				/*성공시 처리해야될 코드 작성*/
+				console.log();
+				var userStr = "";
+				
+				for (var i in userVo ) {
+					userStr += "<li class='search-result' onclick='showProfileModal($(this))'>";
+					userStr += "<div class='image-area' style='background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');'>;"
+					userStr += "</div>";
+					userStr += "<div class='content-area'>";
+					userStr += "<p class='name'>"+$(userVo.Name)+"</p>";
+					userStr += "<p class='gym'>"+userVo.company+"</p>";
+					userStr += "<p class='comment'>"+userVo.introduction+"</p>";
+					userStr += " <p class='score'>평점 4.7</p>";
+					userStr += "</div>";
+					userStr += "</li>";
+				}
+					
+			
+				$("ul.search-list").append(userStr);
 				
 			},
 			error : function(XHR, status, error) {
@@ -409,10 +348,8 @@
 			}
 		});
 	  
-	   
-	   
-   });
-    
+  
+    });
     
     //구 불러오기
     $("select[name='province']").on("change",function(){

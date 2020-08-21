@@ -32,8 +32,9 @@ public class SearchController {
 		List<UserVo> userVo  = searchService.userList(province,city,region,gender,field,name);
 		System.out.println("controller:search/results");
 		
+		
 				
-		return null;
+		return userVo;
 	}
 	
 	
