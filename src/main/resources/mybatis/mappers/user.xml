@@ -71,7 +71,7 @@
 		<![CDATA[
 		
 			INSERT INTO users 
-			VALUES(#{userNo}, #{userId}, #{password}, #{name}, #{gender}, #{phone}, 0, #{userType}, '', '', 1, '', '', '')
+			VALUES(#{userNo}, #{userId}, #{password}, #{name}, #{gender}, #{phone}, '', #{userType}, '', '', 1, '', '', '')
 
 		 ]]>
 	</insert>

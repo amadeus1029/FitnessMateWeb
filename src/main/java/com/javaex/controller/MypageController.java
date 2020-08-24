@@ -29,22 +29,41 @@ public class MypageController {
 	private UserService userService; 
 	
     @RequestMapping("/schedule")
-    public String Schedule() {
-    	System.out.println("/마이페이지/스케쥴");
+    public String Schedule(HttpSession session) {
+        UserVo user = (UserVo) session.getAttribute("authUser");
+
+        if("trainer".equals(user.getUserType())) {
+            System.out.println("트레이너 마이페이지 스케쥴 이동");
+
+        }else {
+            System.out.println("일반회원 마이페이지 스케쥴 이동");
+        }
     	
         return "mypage/schedule";
     }
     
     @RequestMapping("/manageTraining")
-    public String ManageTraining() {
-    	System.out.println("/마이페이지/운동관리");
+    public String ManageTraining(HttpSession session) {
+        UserVo user = (UserVo) session.getAttribute("authUser");
+
+        if("trainer".equals(user.getUserType())) {
+            System.out.println("트레이너 운동관리 이동");
+        }else {
+            System.out.println("일반회원은 여기 오면 안돼요");
+        }
     	
         return "mypage/manageTraining";
     }
     
     @RequestMapping("/manageUser")
-    public String ManageUser() {
-       	System.out.println("/마이페이지/회원관리");
+    public String ManageUser(HttpSession session) {
+        UserVo user = (UserVo) session.getAttribute("authUser");
+
+        if("trainer".equals(user.getUserType())) {
+            System.out.println("트레이너 운동관리 이동");
+        }else {
+            System.out.println("일반회원은 여기 오면 안돼요");
+        }
     	
         return "mypage/manageUser";
     }
@@ -64,7 +83,7 @@ public class MypageController {
     }
     
     @RequestMapping("/recordEx")
-    public String RecordEx() {
+    public String RecordEx(HttpSession session) {
        	System.out.println("/마이페이지/운동기록");
     	
         return "mypage/recordEx";
