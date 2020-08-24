@@ -30,8 +30,10 @@
 </head>
 <body>
     <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+    
     <div id="container">
         <c:import url="/WEB-INF/views/mypage/includes/menu.jsp"></c:import>
+        
         <div class="wrapper">
             <form id="userSearchForm" class="clearfix">
                 <h3 class="title">회원 검색</h3>
@@ -41,18 +43,20 @@
                     <input type="radio" id="formerMember" name="member" value="former">
                     <label for="formerMember" onclick="showUserList($(this));">이전회원</label>
                 </div>
-                <input type="text" id="searchKeyword" name="searchKeyword" placeholder="이름 혹은 아이디를 입력해주세요"
-                       onkeyup="searchByKeyword($(this));">
+                <input type="text" id="searchKeyword" name="searchKeyword" placeholder="이름 혹은 아이디를 입력해주세요" onkeyup="searchByKeyword($(this));">
                 <button type="button" id="addUserBtn" class="button main" onclick="showAddUserModal();">회원 추가</button>
             </form>
+            
             <ul class="user-list now clearfix">
+            	<!-- 반복 -->
                 <li class="user clearfix" onclick="showUser();">
-                    <img src="${pageContext.request.contextPath}/assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">
+                    <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
                     <p class="info">
                         <span class="name">이광수</span>
                         <span class="id">kslee0421</span>
                     </p>
                 </li>
+                <!-- 반복 끝 -->
                 <li class="user clearfix" onclick="showUser();">
                     <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
                     <p class="info">

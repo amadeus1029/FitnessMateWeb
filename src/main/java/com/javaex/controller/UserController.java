@@ -82,18 +82,8 @@ public class UserController {
     	return "user/signUpComplete";
     }
     
-	@RequestMapping("/logout")
-	public String logout(String msg, HttpSession session) {
-		System.out.println("/user/logout");
-		
-		session.removeAttribute("authUser");
-		session.invalidate();
-		
-		return "redirect:/main";
-	}
-    
 
-    //API controller
+  //API controller
     @ResponseBody
     @RequestMapping("/idCheck")
     public boolean idCheck(String newId) {
@@ -155,7 +145,4 @@ public class UserController {
     	
     	return "";
     }
-    
-
-
 }
