@@ -83,7 +83,7 @@ public class UserController {
     }
     
 
-    //API controller
+  //API controller
     @ResponseBody
     @RequestMapping("/idCheck")
     public boolean idCheck(String newId) {
@@ -97,6 +97,26 @@ public class UserController {
 		}
 		
 		return result;
+    }
+    
+    @ResponseBody
+    @RequestMapping("/getCity")
+    public List<String> getCity(String thisProvince) {
+    	System.out.println("/getCity");
+    	
+    	List<String> cityList = userService.getCityList(thisProvince);
+		
+		return cityList;
+    }
+    
+    @ResponseBody
+    @RequestMapping("/getRegion")
+    public List<String> getRegion(String thisCity) {
+    	System.out.println("/getCity");
+    	
+    	List<String> regionList = userService.getRegionList(thisCity);
+		
+		return regionList;
     }
     
     @ResponseBody
@@ -114,5 +134,15 @@ public class UserController {
     		
     		return false;
     	}
+    }
+    
+    @ResponseBody
+    @RequestMapping("/deleteCareer")
+    public String deleteCareer(int careerNo) {
+    	System.out.println("/deleteCareer");
+    	
+    	userService.deleteCareer(careerNo);
+    	
+    	return "";
     }
 }

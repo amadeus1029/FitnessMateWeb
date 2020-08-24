@@ -19,7 +19,7 @@
                     <a href="${pageContext.request.contextPath}/user/signUpStart" class="button sub">회원가입</a>
 	            </c:when>
 				<c:otherwise>
-		            <a href="${pageContext.request.contextPath}/user/logout" class="button main" id="btn_logout">로그아웃</a>
+		            <a href="${pageContext.request.contextPath}/main/logout" class="button main" id="btn_logout">로그아웃</a>
                     <a href="${pageContext.request.contextPath}/mypage/schedule" class="button sub">마이페이지</a>
                 </c:otherwise>
             </c:choose>

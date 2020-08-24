@@ -7,7 +7,7 @@ public class PtVo {
 	private String userId;
 	private String name;
 	private String profileImg;
-	private String endDate;
+	private int endDate;
 	private int regCount;
 	private int scheduleCount;
 	private boolean proceed;
@@ -62,11 +62,11 @@ public class PtVo {
 		this.profileImg = profileImg;
 	}
 
-	public String getEndDate() {
+	public int getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(int endDate) {
 		this.endDate = endDate;
 	}
 

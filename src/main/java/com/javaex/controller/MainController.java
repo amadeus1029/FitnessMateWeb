@@ -26,7 +26,7 @@ public class MainController {
     }
     
 	@RequestMapping("/logout")
-	public String logout(String msg, HttpSession session) {
+	public String logout(HttpSession session) {
 		System.out.println("/user/logout");
 		
 		session.removeAttribute("authUser");
@@ -34,7 +34,7 @@ public class MainController {
 		
 		return "redirect:/main";
 	}
-    
+	
     @RequestMapping("/search")
     public String Search(Model model) {
     	
