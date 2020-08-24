@@ -26,7 +26,10 @@ public class MypageService {
 		
 		//주소 자르기
 		String[] splitAddress = vo.getLocation().split("[|]");
-		System.out.println(splitAddress);
+		
+		//생년월일 자르기
+		String[] splitbirthDate = vo.getBirthDate().split("[/]");
+		System.out.println(splitbirthDate);
 		
 		//전문분야
 		List<String> userInterest = userDao.selectUserInterest(userNo);
@@ -34,7 +37,7 @@ public class MypageService {
 		//경력상세
 		List<CareerVo> careerList = userDao.selectCareerList(userNo);
 		
-		//기본적으로 깔려있는 정보들 우앙 쓔빠빠 젼내많아
+		//기본적으로 깔려있는 정보들 우앙 짱많아
 		List<String> provinceList = userDao.selectAddress();
 		List<String> cityList = userDao.selectCity(splitAddress[0]);
 		List<String> regionList = userDao.selectRegion(splitAddress[1]);
@@ -44,6 +47,7 @@ public class MypageService {
 		Map<String, Object> proMap = new HashMap<>();
 		proMap.put("userVo", vo);
 		proMap.put("splitAddress", splitAddress);
+		proMap.put("splitbirthDate", splitbirthDate);
 		proMap.put("userInterest", userInterest);
 		proMap.put("careerList", careerList);
 		

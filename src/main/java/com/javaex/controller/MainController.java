@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.javaex.service.SearchService;
 import com.javaex.vo.AddressVo;
 import com.javaex.vo.InterestFieldVo;
-import com.javaex.vo.UserVo;
 
 @Controller
 public class MainController {
@@ -25,6 +24,16 @@ public class MainController {
     	
         return "index";
     }
+    
+	@RequestMapping("/logout")
+	public String logout(String msg, HttpSession session) {
+		System.out.println("/user/logout");
+		
+		session.removeAttribute("authUser");
+		session.invalidate();
+		
+		return "redirect:/main";
+	}
     
     @RequestMapping("/search")
     public String Search(Model model) {
