@@ -41,21 +41,4 @@ public class MainController {
 
         return "search";
     }
-
-    @RequestMapping("/mypage")
-    public String mypage(HttpSession session) {
-    	UserVo user = (UserVo) session.getAttribute("authUser");
-    	
-    	if("trainer".equals(user.getUserType())) {
-    		System.out.println("트레이너 마이페이지 이동");
-    		
-    		return "mypage/schedule";
-    		
-    	}else {
-    		System.out.println("일반회원 마이페이지 이동");
-    		
-    		return "";
-    	}
-    }
-
 }
