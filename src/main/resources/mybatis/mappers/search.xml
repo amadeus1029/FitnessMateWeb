@@ -59,12 +59,27 @@
 	WHERE userType = 'trainer'
 	]]>
 	
+	<if test = "name!='' and  name!=null" >
+	  <![CDATA[
+	AND u.name like '%'||#{name}||'%'
+	]]>
+	</if>
 	
-
+	<if test = "gender!='' and  gender!=null" >
+	  <![CDATA[
+	AND u.gender = #{gender}
+	]]>
+	</if>
+	
+	<if test = "location !=''">
+	<![CDATA[
+	AND u.location LIKE '%'||#{location}||'%'
+	]]>
+	</if>
+	
 	</select>
 	
-	
-	
+
 	
 	<!--트레이너 검색(전문분야) -->
 	<select id="userList_Sea" parameterType="map"

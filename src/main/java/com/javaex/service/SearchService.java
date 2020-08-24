@@ -72,15 +72,12 @@ public class SearchService {
 		
 		Map<String,Object> listMap = new HashMap<>();
 		
-		listMap.put("province",province);
-		listMap.put("city",city);
-		listMap.put("region",region);
+		listMap.put("location",province+"|"+city+"|"+region);
 		listMap.put("field",field);
 		listMap.put("gender",gender);
 		listMap.put("name",name);
 		
 		
-		System.out.println(listMap.toString());
 		
 		List<UserVo> userVo = searchDao.interestList(listMap);
 		
