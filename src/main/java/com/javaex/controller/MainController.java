@@ -2,8 +2,6 @@ package com.javaex.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,8 +38,9 @@ public class MainController {
     	model.addAttribute("fieldVo", fieldVo);
     	
     	//트레이너 정보 불러오기
+    	List<UserVo> userVo  = searchService.userList();
     	//트레이너 리스트 받기
-    	
+    	model.addAttribute("userVo", userVo);
     	
 
         return "search";

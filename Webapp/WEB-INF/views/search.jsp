@@ -101,7 +101,7 @@
             
             <ul class="search-list clearfix">
             
-            <!--
+            
             	<c:forEach items="${userVo}" var="userVo" varStatus = "status">
                 <li class="search-result" onclick="showProfileModal($(this))">
                     <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');">
@@ -113,7 +113,7 @@
                         <p class="score">평점 4.7</p>
                     </div>
                 </li>
-                </c:forEach>-->
+                </c:forEach>
                 
             </ul>
             
@@ -304,6 +304,8 @@
     $(".button.key").on("click",function(){
 	   console.log("검색버튼");
 	   
+	  
+	   
 	   //값 추출
 	   var user ={province:$("[name='province']").val(),
 			      city:$("[name='city']").val(),
@@ -331,9 +333,9 @@
 					userStr += "<div class='image-area' style='background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');'>;"
 					userStr += "</div>";
 					userStr += "<div class='content-area'>";
-					userStr += "<p class='name'>"+userVo+"</p>";
-					userStr += "<p class='gym'>"+userVo+"</p>";
-					userStr += "<p class='comment'>"+userVo+"</p>";
+					userStr += "<p class='name'>"+userVo[i].name+"</p>";
+					userStr += "<p class='gym'>"+userVo[i].company+"</p>";
+					userStr += "<p class='comment'>"+userVo[i].introduction+"</p>";
 					userStr += " <p class='score'>평점 4.7</p>";
 					userStr += "</div>";
 					userStr += "</li>";

@@ -54,6 +54,16 @@ public class SearchService {
 	//////////////////////////////////////////////////
 	
 	//트레이너 리스트
+	public List<UserVo> userList() {
+		System.out.println("SearchService:userList");
+		
+		List<UserVo> userVo = searchDao.userList();
+		
+		return userVo;
+	}
+	
+	
+	//트레이너 리스트/검색
 	public List<UserVo> userList(String province, String city, String region, String gender, String field,
 			String name) {
 		System.out.println("SearchService:userList");
