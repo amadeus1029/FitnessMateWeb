@@ -25,11 +25,13 @@ public class UserController {
 	@Autowired
 	private UserService userService; 
 
+
     @RequestMapping("/signUpStart")
     public String signUpStart() {
     	System.out.println("/signUpStart");
-    	
+
         return "user/signUp";
+
     }
  
     @RequestMapping("/signUpForm")

@@ -2,12 +2,25 @@ package com.javaex.vo;
 
 public class AddressVo {
 	
-	private String province;
-	private String city;
-	private String region;
-	
-	public AddressVo() {}
 
+	//필드
+	private String province; //시,도
+	private String city;	//구
+	private String region;	//동
+	
+	//생성자
+	public AddressVo() {}
+	
+	
+	public AddressVo(String province, String city, String region) {
+		super();
+		this.province = province;
+		this.city = city;
+		this.region = region;
+	}
+
+	
+	//g/s
 	public String getProvince() {
 		return province;
 	}
@@ -32,10 +45,13 @@ public class AddressVo {
 		this.region = region;
 	}
 
+	//toString
 	@Override
 	public String toString() {
 		return "AddressVo [province=" + province + ", city=" + city + ", region=" + region + "]";
 	}
+	
+
 	
 
 }

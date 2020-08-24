@@ -3,6 +3,7 @@ package com.javaex.vo;
 public class UserVo {
 
 	private int userNo; /* 회원번호 PK */
+	private int career; /* 경력 */
 	private String userId; /* 아이디 */
 	private String password; /* 패스워드 */
 	private String name; /* 이름 */
@@ -12,12 +13,15 @@ public class UserVo {
 	private String userType; /* 회원구분 */
 	private String profileImg; /* 프로필img경로 */
 	private String introduction; /* 자기소개 */
-	private int career; /* 경력 */
 	private String location; /* 지역 */
 	private String company; /* 소속회사 */
 	private String price; /* 가격 */
-
+	private String fieldNo; /* 전문분야 고유넘버 */
+	private String fieldName;/* 전문분야  */
+	
+	
 	public UserVo() {
+
 	}
 
 	public int getUserNo() {
@@ -26,6 +30,14 @@ public class UserVo {
 
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
+	}
+
+	public int getCareer() {
+		return career;
+	}
+
+	public void setCareer(int career) {
+		this.career = career;
 	}
 
 	public String getUserId() {
@@ -68,19 +80,19 @@ public class UserVo {
 		this.phone = phone;
 	}
 
-	public String getbirthDate() {
+	public String getBirthDate() {
 		return birthDate;
 	}
 
-	public void setbirthDate(String birthDate) {
+	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 
-	public String getuserType() {
+	public String getUserType() {
 		return userType;
 	}
 
-	public void setuserType(String userType) {
+	public void setUserType(String userType) {
 		this.userType = userType;
 	}
 
@@ -98,14 +110,6 @@ public class UserVo {
 
 	public void setIntroduction(String introduction) {
 		this.introduction = introduction;
-	}
-
-	public int getCareer() {
-		return career;
-	}
-
-	public void setCareer(int career) {
-		this.career = career;
 	}
 
 	public String getLocation() {
@@ -132,12 +136,41 @@ public class UserVo {
 		this.price = price;
 	}
 
-	@Override
-	public String toString() {
-		return "UserVo [userNo=" + userNo + ", userId=" + userId + ", password=" + password + ", name=" + name
-				+ ", gender=" + gender + ", phone=" + phone + ", birthDate=" + birthDate + ", userType=" + userType
-				+ ", profileImg=" + profileImg + ", introduction=" + introduction + ", career=" + career + ", location="
-				+ location + ", company=" + company + ", price=" + price + "]";
+	public String getFieldNo() {
+		return fieldNo;
 	}
 
+	public void setFieldNo(String fieldNo) {
+		this.fieldNo = fieldNo;
+	}
+
+	public String getFieldName() {
+		return fieldName;
+	}
+
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
+	}
+
+	@Override
+	public String toString() {
+		return "UserVo{" +
+				"userNo=" + userNo +
+				", career=" + career +
+				", userId='" + userId + '\'' +
+				", password='" + password + '\'' +
+				", name='" + name + '\'' +
+				", gender='" + gender + '\'' +
+				", phone='" + phone + '\'' +
+				", birthDate='" + birthDate + '\'' +
+				", userType='" + userType + '\'' +
+				", profileImg='" + profileImg + '\'' +
+				", introduction='" + introduction + '\'' +
+				", location='" + location + '\'' +
+				", company='" + company + '\'' +
+				", price='" + price + '\'' +
+				", fieldNo='" + fieldNo + '\'' +
+				", fieldName='" + fieldName + '\'' +
+				'}';
+	}
 }

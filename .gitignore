@@ -1,2 +1,5 @@
-target
+/target/
+/build/
 FitenessMate.iml
+applicationContext.xml
+spring-servlet.xml
