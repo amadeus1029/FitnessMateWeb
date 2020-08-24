@@ -17,6 +17,7 @@ public class SearchController {
 	@Autowired
 	private SearchService searchService;
 	
+	//검색하기
 	@ResponseBody
 	@RequestMapping("/search/results")
 	public List<UserVo> results(@RequestParam(value="province",required=false) String province,
@@ -26,8 +27,7 @@ public class SearchController {
 						  @RequestParam(value="field",required=false) String field,
 						  @RequestParam(value="name",required=false) String name
 						  ) 
-	{
-					System.out.println("controller"+province+city+region+gender+field+name);
+	{   System.out.println("controller"+province+city+region+gender+field+name);
 		List<UserVo> userVo  = searchService.userList(province,city,region,gender,field,name);
 		System.out.println("controller:search/results");
 				
@@ -54,6 +54,8 @@ public class SearchController {
 
 		return reg;
 	}
+	
+	
 	
 	
 }

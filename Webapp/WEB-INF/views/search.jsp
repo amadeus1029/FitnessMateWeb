@@ -111,6 +111,7 @@
                         <p class="gym">${userVo.company}</p>
                         <p class="comment">${userVo.introduction}</p>
                         <p class="score">평점 4.7</p>
+                        <input type="hidden" value="${userVo.userNo}">
                     </div>
                 </li>
                 </c:forEach>
@@ -299,13 +300,17 @@
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     
     
-    <script type="text/javascript">    
+    <script type="text/javascript">  
+    $(".search-result").on("click",function(){
+    	 console.log("트레이너 세부");
+    });
+    
+    
+    
+   
     //검색
     $(".button.key").on("click",function(){
 	   console.log("검색버튼");
-	   
-	   
-	   
 	   //값 추출
 	   var user ={province:$("[name='province']").val(),
 			      city:$("[name='city']").val(),
@@ -315,8 +320,7 @@
 			      name:$("[name='name']").val()}
 		
 	   console.log(user);
-	   
-	   
+	   	   
 	   $.ajax({
 			url : "${pageContext.request.contextPath }/search/results",
 			type : "post",
@@ -341,7 +345,6 @@
 					userStr += "</div>";
 					userStr += "</li>";
 				}
-					
 			
 				$("ul.search-list").append(userStr);
 				
@@ -350,9 +353,8 @@
 				console.error(status + " : " + error);
 			}
 		});
-	  
-  
     });
+    
     
     //구 불러오기
     $("select[name='province']").on("change",function(){
@@ -370,7 +372,7 @@
 			dataType : "json",
 			success : function(cityList) {
 				/*성공시 처리해야될 코드 작성*/
-				var cityStr ='<option  value="">전체</option>';
+				var cityStr ='<option value="" >전체</option>';
 				for (var i in cityList ) {
 					cityStr +='<option>'+cityList[i].city+'</option>';
 					
@@ -413,7 +415,7 @@
     
     
     
-    
+    //별점 반영하기
     function showProfileModal(obj) {
             //다른 버튼 on 제거
             $("#profileModal .label-wrapper .label-btn").removeClass("on");
@@ -439,7 +441,8 @@
             $("#profileModal").find("." + targetTab + "-wrapper").addClass("on");
 
         }
-
+		
+        //별점 선택
         $('#star_grade i').click(function(){
             $(this).parent().children("i").removeClass("on");  /* 별점의 on 클래스 전부 제거 */ 
             $(this).addClass("on").prevAll("i").addClass("on"); /* 클릭한 별과, 그 앞 까지 별점에 on 클래스 추가 */
