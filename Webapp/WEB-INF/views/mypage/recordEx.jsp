@@ -78,14 +78,6 @@
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     <script type="text/javascript">
-
-        $(document).ready(function () {
-            $("a#testMenu").click(function(event){
-                event.preventDefault();
-                $(this).find(".menu").toggle();
-            });
-        });//레디함수종료
-
         //두번째 리스트 보여주기
         $("#first_select ol li").on("click", function(){
             //리스트 리셋

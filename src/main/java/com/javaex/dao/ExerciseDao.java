@@ -13,12 +13,20 @@ public class ExerciseDao {
     @Autowired
     private SqlSession sqlSession;
 
+    public List<ExerciseVo> showList() {
+        return sqlSession.selectList("exercise.showList");
+    }
+
     public List<ExerciseVo> getList(int trainerNo) {
         return sqlSession.selectList("exercise.getList", trainerNo);
     }
 
-    public Boolean insert(ExerciseVo exVo) {
-        return sqlSession.insert("exercise.insert", exVo) == 1;
+    public ExerciseVo selectByNo(int exNo) {
+        return sqlSession.selectOne("exercise.selectByNo", exNo);
+    }
+
+    public void insert(ExerciseVo exVo) {
+        sqlSession.insert("exercise.insertSelectKey", exVo);
     }
 
     public Boolean delete(ExerciseVo exVo) {

@@ -68,9 +68,14 @@ public class MypageService {
 	public List<ExerciseVo> getExList(int trainerNo) {
 		return  exerciseDao.getList(trainerNo);
 	}
+	public List<ExerciseVo> showList() {
+		return  exerciseDao.showList();
+	}
 
-	public Boolean addExercise(ExerciseVo exVo) {
-		return  exerciseDao.insert(exVo);
+	public ExerciseVo addExercise(ExerciseVo exVo) {
+		exerciseDao.insert(exVo);
+		int exNo = exVo.getExNo();
+		return exerciseDao.selectByNo(exNo);
 	}
 
 	public Boolean deleteExercise(ExerciseVo exVo) {

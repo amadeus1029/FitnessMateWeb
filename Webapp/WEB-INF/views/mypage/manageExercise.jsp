@@ -38,19 +38,9 @@
                 <div class="input-box">
                     <h3 class="title">부위</h3>
                     <select name="exercisePart">
-                        <option selected>전신</option>
-                        <option>상체</option>
-                        <option>승모</option>
-                        <option>어깨</option>
-                        <option>가슴</option>
-                        <option>삼두</option>
-                        <option>이두</option>
-                        <option>전완</option>
-                        <option>등</option>
-                        <option>복부</option>
-                        <option>코어</option>
-                        <option>엉덩이</option>
-                        <option>하체</option>
+                        <c:forEach items="${showList}" var="exPart" varStatus="index">
+                            <option ${index.count eq 1 ? 'selected' : ''} value="${exPart.exPartNo}">${exPart.exPartName}</option>
+                        </c:forEach>
                     </select>
                 </div>
                 <div class="input-box">
@@ -76,7 +66,7 @@
                     <div class="exercise">
                         <h4 class="title">${exercise.exName}</h4>
                         <p class="detail">
-                            <span class="part">운동부위 : ${exercise.exPart}</span><span class="amount">기록단위 : ${exercise.amount}</span>
+                            <span class="part">운동부위 : ${exercise.exPartName}</span><span class="amount">기록단위 : ${exercise.amount}</span>
                         </p>
                         <button type="button" class="delete-btn" onclick="deleteExercise($(this),${exercise.exNo});"><i
                                 class="fas fa-times"></i></button>
@@ -90,18 +80,18 @@
         function addExercise() {
             var result = true;
             var form = $("form#addExercise");
-            var part = form.find("select[name='exercisePart']").find("option:selected").text();
-            var name = form.find("input[name='exerciseName']").val();
+            var exPartNo = form.find("select[name='exercisePart']").find("option:selected").val();
+            var exName = form.find("input[name='exerciseName']").val();
             var amount = form.find("input[name='amount']:checked").next("label").text();
             var exVo = {
-                exName : name,
-                exPart : part,
+                exName : exName,
+                exPartNo : exPartNo,
                 amount : amount
             }
-
-            if (name === "" || name == null) {
+            console.log(exPartNo);
+            if (exName === "" || exName == null) {
                 result = false;
-                alert("이름을 입력해주세요");
+                alert("운동이름을 입력해주세요");
             }
             if (!result) {
                 return result;
@@ -113,16 +103,16 @@
                 contentType: "application/json",
                 data: JSON.stringify(exVo),
                 dataType: "json",
-                success: function (boolean) {
-                    if(boolean) {
+                success: function (result) {
+                    if(result) {
                         $("#exerciseList").append(
                             "<div class='exercise'>" +
-                            "<h4 class='title'>" + name + "</h4>" +
+                            "<h4 class='title'>" + result.exName + "</h4>" +
                             "<p class='detail'>" +
-                            "<span class='part'>운동부위 : " + part + "</span>" +
-                            "<span class='amount'>기록단위 : " + amount + "</span>" +
+                            "<span class='part'>운동부위 : " + result.exPartName + "</span>" +
+                            "<span class='amount'>기록단위 : " + result.amount + "</span>" +
                             "</p>" +
-                            "<button type='button' class='delete-btn' onclick='deleteExercise($(this))'>" +
+                            "<button type='button' class='delete-btn' onclick='deleteExercise($(this),"+ result.exNo + ")'>" +
                             "<i class='fas fa-times'></i>" +
                             "</button>" +
                             "</div>"

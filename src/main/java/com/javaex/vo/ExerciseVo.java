@@ -1,17 +1,18 @@
 package com.javaex.vo;
 
 public class ExerciseVo {
-    private int exNo, trainerNo;
-    private String exName, exPart, amount;
+    private int exNo, trainerNo, exPartNo;
+    private String exName, exPartName, amount;
 
     public ExerciseVo() {
     }
 
-    public ExerciseVo(int exNo, int trainerNo, String exName, String exPart, String amount) {
+    public ExerciseVo(int exNo, int trainerNo, int exPartNo, String exName, String exPartName, String amount) {
         this.exNo = exNo;
         this.trainerNo = trainerNo;
+        this.exPartNo = exPartNo;
         this.exName = exName;
-        this.exPart = exPart;
+        this.exPartName = exPartName;
         this.amount = amount;
     }
 
@@ -31,6 +32,14 @@ public class ExerciseVo {
         this.trainerNo = trainerNo;
     }
 
+    public int getExPartNo() {
+        return exPartNo;
+    }
+
+    public void setExPartNo(int exPartNo) {
+        this.exPartNo = exPartNo;
+    }
+
     public String getExName() {
         return exName;
     }
@@ -39,12 +48,12 @@ public class ExerciseVo {
         this.exName = exName;
     }
 
-    public String getExPart() {
-        return exPart;
+    public String getExPartName() {
+        return exPartName;
     }
 
-    public void setExPart(String exPart) {
-        this.exPart = exPart;
+    public void setExPartName(String exPartName) {
+        this.exPartName = exPartName;
     }
 
     public String getAmount() {
@@ -60,8 +69,9 @@ public class ExerciseVo {
         return "ExerciseVo{" +
                 "exNo=" + exNo +
                 ", trainerNo=" + trainerNo +
+                ", exPartNo=" + exPartNo +
                 ", exName='" + exName + '\'' +
-                ", exPart='" + exPart + '\'' +
+                ", exPartName='" + exPartName + '\'' +
                 ", amount='" + amount + '\'' +
                 '}';
     }

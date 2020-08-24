@@ -45,9 +45,11 @@ public class MypageController {
         UserVo user = (UserVo) session.getAttribute("authUser");
 
         if("trainer".equals(user.getUserType())) {
+            List<ExerciseVo> showList = mypageService.showList();
             int trainerNo = user.getUserNo();
             List<ExerciseVo> exList = mypageService.getExList(trainerNo);
-            System.out.println(exList);
+
+            model.addAttribute("showList", showList);
             model.addAttribute("exList", exList);
         }else {
             System.out.println("일반회원은 여기 오면 안돼요");
@@ -58,7 +60,7 @@ public class MypageController {
 
     @ResponseBody
     @RequestMapping("/addExercise")
-    public boolean addExercise(HttpSession session, @RequestBody ExerciseVo exVo) {
+    public ExerciseVo addExercise(HttpSession session, @RequestBody ExerciseVo exVo) {
         UserVo user = (UserVo) session.getAttribute("authUser");
         exVo.setTrainerNo(user.getUserNo());
         return mypageService.addExercise(exVo);
@@ -69,8 +71,6 @@ public class MypageController {
     public boolean deleteExercise(HttpSession session, @RequestBody ExerciseVo exVo) {
         UserVo user = (UserVo) session.getAttribute("authUser");
         exVo.setTrainerNo(user.getUserNo());
-        System.out.println("deleteExercise get:");
-        System.out.println(exVo);
         return mypageService.deleteExercise(exVo);
     }
     
