@@ -323,7 +323,7 @@
 			dataType : "",
 			success : function(userVo) {
 				/*성공시 처리해야될 코드 작성*/
-				console.log();
+				console.log(userVo);
 				var userStr = "";
 				
 				for (var i in userVo ) {
@@ -331,9 +331,9 @@
 					userStr += "<div class='image-area' style='background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');'>;"
 					userStr += "</div>";
 					userStr += "<div class='content-area'>";
-					userStr += "<p class='name'>"+$(userVo.Name)+"</p>";
-					userStr += "<p class='gym'>"+userVo.company+"</p>";
-					userStr += "<p class='comment'>"+userVo.introduction+"</p>";
+					userStr += "<p class='name'>"+userVo+"</p>";
+					userStr += "<p class='gym'>"+userVo+"</p>";
+					userStr += "<p class='comment'>"+userVo+"</p>";
 					userStr += " <p class='score'>평점 4.7</p>";
 					userStr += "</div>";
 					userStr += "</li>";

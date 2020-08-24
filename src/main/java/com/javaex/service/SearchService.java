@@ -53,7 +53,7 @@ public class SearchService {
 	
 	//////////////////////////////////////////////////
 	
-	//검색하기,트레이너 리스트
+	//트레이너 리스트
 	public List<UserVo> userList(String province, String city, String region, String gender, String field,
 			String name) {
 		System.out.println("SearchService:userList");

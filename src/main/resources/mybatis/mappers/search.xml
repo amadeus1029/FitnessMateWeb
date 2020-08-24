@@ -51,7 +51,7 @@
 	<![CDATA[
 	SELECT u.userno as "userNo",
        u.userid as "userId",
-       u.password,u.name,u.gender,u.phone,u.age,
+       u.password,u.name,u.gender,u.phone,u.birthdate,
        u.usertype as "userType",
        u.profileimg as "profileImg",
        u.introduction,u.career,
@@ -63,17 +63,7 @@
 	AND u.userno = li.userno
 	AND userType = 'trainer'
 	]]>
-	
-	<if test = "gender !='' and gender !=null">
-	  <![CDATA[
-	AND u.gender = #{gender}
-	]]>
-	</if>
-	
-	
-	
-	
-	
+
 	</select>
 	
 	

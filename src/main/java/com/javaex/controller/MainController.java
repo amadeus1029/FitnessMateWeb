@@ -38,6 +38,11 @@ public class MainController {
     	List<InterestFieldVo> fieldVo = searchService.addField();
     	//전문분야 받기
     	model.addAttribute("fieldVo", fieldVo);
+    	
+    	//트레이너 정보 불러오기
+    	//트레이너 리스트 받기
+    	
+    	
 
         return "search";
     }
