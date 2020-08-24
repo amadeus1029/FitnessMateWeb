@@ -44,7 +44,7 @@
 	]]>
 	</select>
 	
-	<!--트레이너 리스트 불러오기 -->
+	<!--트레이너 리스트 불러오기(이름,성별검색) -->
 	<select id="userList" 
 	resultType="com.javaex.vo.UserVo">
 	<![CDATA[
@@ -71,11 +71,12 @@
 	]]>
 	</if>
 	
-	<if test = "location !=''">
-	<![CDATA[
-	AND u.location LIKE '%'||#{location}||'%'
+	<if test = "location!='' and  location!=null" >
+	 <![CDATA[
+	AND u.location = '%'||#{location}||'%'
 	]]>
 	</if>
+	
 	
 	</select>
 	

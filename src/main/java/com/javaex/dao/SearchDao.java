@@ -66,15 +66,19 @@ public class SearchDao {
 	
 	
 	
-	//전문분야 검색
+	//검색
 	public List<UserVo> interestList(Map<String, Object> listMap) {
 		System.out.println("searchDao:userList");
 		
-		
-		if(listMap.get("name") != null 
-		   || listMap.get("gender") != null 
-		   || listMap.get("location") != null) {
+		//이름,성별,지역 검색
+		if(listMap.get("name") != null || listMap.get("gender") != null 
+			|| listMap.get("location") != null) {
+			
+			//지역값 확인용 
+			System.out.println("다오:"+listMap.get("location"));
+			
 			List<UserVo> print = sqlSession.selectList("search.userList",listMap);
+			
 			return print;
 		} 
 		

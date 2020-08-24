@@ -70,9 +70,20 @@ public class SearchService {
 			String name) {
 		System.out.println("SearchService:userList");
 		
+		
+		
+		//map에 받은 파라미터 값 담기
 		Map<String,Object> listMap = new HashMap<>();
 		
-		listMap.put("location",province+"|"+city+"|"+region);
+		//지역 정보 담기
+		if(region!="") {
+			listMap.put("location",province+"|"+city+"|"+region);
+		} else if(city!="") {
+			listMap.put("location",province+"|"+city);
+		} else { listMap.put("location",province);}
+		
+		
+		//전공,성별,이름담기
 		listMap.put("field",field);
 		listMap.put("gender",gender);
 		listMap.put("name",name);

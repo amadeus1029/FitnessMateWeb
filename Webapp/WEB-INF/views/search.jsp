@@ -370,7 +370,7 @@
 			dataType : "json",
 			success : function(cityList) {
 				/*성공시 처리해야될 코드 작성*/
-				var cityStr ='<option value="null">전체</option>';
+				var cityStr ='<option  value="">전체</option>';
 				for (var i in cityList ) {
 					cityStr +='<option>'+cityList[i].city+'</option>';
 					
@@ -398,7 +398,7 @@
 			dataType : "json",
 			success : function(regionList) {
 				/*성공시 처리해야될 코드 작성*/
-				var regionStr ='<option value="null">전체</option>';
+				var regionStr ='<option value="">전체</option>';
 				for (var i in regionList ) {
 					regionStr +='<option>'+regionList[i].region+'</option>';
 					
