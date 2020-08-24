@@ -27,9 +27,13 @@
 
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css">
+
 </head>
 <body>
+
 	<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+	<!-- header -->
+	
 	<div id="container">
         <section id="mainBanner">
             <div class="swiper-wrapper">
@@ -60,29 +64,6 @@
                 delay: 3000,
                 disableOnInteraction: false
             }
-        });
-
-        $("#btn_login").on("click", function(){
-            // 이벤트 초기화
-            event.preventDefault();
-            $(".errMsg").hide();
-
-            // input 초기화
-            $("#userId").val("");
-            $("#userPw").val("");
-
-            showModal("#loginModal");
-        });
-
-        $(".modal-cancel").on("click", function(){
-            forceHideModal('#loginModal')
-        });
-
-        $(".modal-confirm").on("click", function(){
-
-            // 데이터 보내서 세션에 저장해야함
-
-            forceHideModal('#loginModal')
         });
 
 

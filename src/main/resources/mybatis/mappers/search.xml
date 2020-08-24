@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="search">
+
+	<!--지역 정보 불러오기 -->
+	<select id="addressProvince" resultType="com.javaex.vo.AddressVo">
+	<![CDATA[
+	SELECT province
+	FROM address
+	GROUP by province
+	ORDER BY province ASC
+	]]>
+	</select>
+	
+	<!--구 정보 불러오기 -->
+	<select id="addressCity" parameterType="String"
+	resultType="com.javaex.vo.AddressVo">
+	<![CDATA[
+	SELECT city
+	FROM address
+	WHERE province = #{province}
+	GROUP by city
+	ORDER BY city ASC
+	]]>
+	</select>
+	
+	<!--동 정보 불러오기 -->
+	<select id="addressRegion" parameterType="String"
+	resultType="com.javaex.vo.AddressVo">
+	<![CDATA[
+	SELECT region
+	FROM address
+	WHERE city like #{city}
+	ORDER BY region ASC
+	]]>
+	</select>
+	
+	<!--전문분야 정보 불러오기 -->
+	<select id="fieldname" resultType="com.javaex.vo.UserVo">
+	<![CDATA[
+	SELECT fieldno,fieldname
+	FROM interest_field
+	]]>
+	</select>
+	
+	
+	<!--트레이너 리스트 불러오기 -->
+	<select id="userList" parameterType="map"
+	resultType="com.javaex.vo.UserVo">
+	<![CDATA[
+	SELECT u.userno as "userNo",
+       u.userid as "userId",
+       u.password,u.name,u.gender,u.phone,u.age,
+       u.usertype as "userType",
+       u.profileimg as "profileImg",
+       u.introduction,u.career,
+       u.location,u.company,u.price,
+       li.fieldno as "fieldNo",
+       fi.fieldname as "fieldName"
+	FROM users u,interest_field fi,interest_list li
+	WHERE fi.fieldno = li.fieldno
+	AND u.userno = li.userno
+	AND userType = 'trainer'
+	]]>
+	
+	<if test = "gender !='' and gender !=null">
+	  <![CDATA[
+	AND u.gender = #{gender}
+	]]>
+	</if>
+	
+	
+	
+	
+	
+	</select>
+	
+	
+</mapper>

@@ -157,6 +157,55 @@
   opacity: 0.5;
   pointer-events: none;
 }
+#loginModal .modal-wrapper {
+  width: 380px;
+}
+#loginModal .modal-wrapper .modal-content p {
+  font-size: 24px;
+  font-weight: 600;
+}
+#loginModal .modal-wrapper .modal-btn-area table {
+  margin-bottom: 10px;
+}
+#loginModal .modal-wrapper .modal-btn-area table tr th {
+  padding-right: 10px;
+  text-align: right;
+}
+#addScheduleModal .modal-wrapper {
+  width: 400px;
+  text-align: left;
+}
+#addScheduleModal .modal-wrapper .modal-content {
+  padding-bottom: 0;
+}
+#addScheduleModal .modal-wrapper select {
+  width: 80px;
+  height: 35px;
+  display: inline-block !important;
+}
+#addScheduleModal .modal-wrapper select[name="user_name"] {
+  width: 200px;
+  margin-left: 30px;
+}
+#addScheduleModal .modal-wrapper .text {
+  font-size: 20px;
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+#addScheduleModal .modal-wrapper ol {
+  margin: 0 30px 0 30px;
+  float: left;
+}
+#addScheduleModal .modal-wrapper select[name="hour"],
+#addScheduleModal .modal-wrapper select[name="minute"] {
+  margin-top: 10px;
+}
+#addScheduleModal .modal-wrapper p.text {
+  margin-left: 30px;
+}
+#addScheduleModal .modal-wrapper .modal-btn-area button {
+  margin-top: 30px;
+}
 /* import/variable { */
 .clearfix:after {
   content: '';
@@ -266,6 +315,87 @@
   font-weight: 700;
   line-height: 60px;
 }
+.calendar-wrapper {
+  padding-bottom: 70px;
+}
+.calendar-wrapper #top {
+  display: none;
+}
+.calendar-wrapper #calendar {
+  overflow: visible;
+}
+.calendar-wrapper #calendar button.btn-primary {
+  margin: 0;
+  min-width: 0;
+  width: 80px;
+}
+.calendar-wrapper #calendar button.fc-prev-button,
+.calendar-wrapper #calendar button.fc-next-button {
+  min-width: 0;
+  width: 50px;
+}
+.calendar-wrapper #calendar button.fc-today-button {
+  min-width: 0;
+  display: inline-block;
+}
+.calendar-wrapper #calendar td.fc-daygrid-day {
+  position: relative;
+}
+.calendar-wrapper #calendar td.fc-daygrid-day:after {
+  content: '+';
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 24px;
+  height: 24px;
+  line-height: 20px;
+  text-align: center;
+  font-size: 24px;
+  color: gray;
+  opacity: 0;
+  cursor: pointer;
+  border: 1px solid gray;
+}
+.calendar-wrapper #calendar td.fc-daygrid-day:hover:after {
+  transition: all ease 0.7s 0s;
+  opacity: 1;
+}
+.calendar-wrapper #calendar a.fc-daygrid-day-number {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.calendar-wrapper #calendar .fc-daygrid-day-events {
+  padding-top: 30px;
+}
+.calendar-wrapper #calendar table tbody td.fc-day {
+  height: 180px;
+}
+.calendar-wrapper #calendar .btn_pop {
+  position: absolute;
+  z-index: 999;
+  top: 0px;
+  right: -80px;
+  background-color: #fff;
+  border: 1px solid #292c33;
+  -webkit-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.calendar-wrapper #calendar .btn_pop .button {
+  border-radius: 0;
+  margin: 0;
+  width: 120px;
+  border: 0;
+  color: #292c33;
+  text-decoration: none;
+}
+.calendar-wrapper #calendar .btn_pop .button:hover {
+  background-color: #dadde6;
+}
+.calendar-wrapper #calendar .fc-scroller-harness {
+  overflow: visible;
+}
 form#addExercise,
 #exerciseList {
   width: 550px;
@@ -296,7 +426,8 @@ form#addExercise button.add-exercise {
 }
 #exerciseList {
   float: right;
-  min-height: 492px;
+  height: 492px;
+  overflow-y: scroll;
 }
 #exerciseList .exercise {
   position: relative;
@@ -618,6 +749,7 @@ ul.user-list li.user p.info span.id {
 }
 #addUserModal .modal-wrapper .modal-content .search-result div.user p.info {
   float: left;
+  text-align: left;
 }
 #addUserModal .modal-wrapper .modal-content .search-result div.user p.info span.name {
   display: block;
@@ -631,4 +763,32 @@ ul.user-list li.user p.info span.id {
   line-height: 30px;
   font-size: 16px;
   color: #45474d;
+}
+#addUserModal .modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper {
+  float: right;
+  margin-top: 10px;
+  position: relative;
+}
+#addUserModal .modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper .schedule-input {
+  float: left;
+  width: 70px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 24px;
+  text-align: center;
+  text-indent: 0;
+}
+#addUserModal .modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper .schedule-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#addUserModal .modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper span.mark {
+  display: block;
+  float: left;
+  margin-left: 10px;
+  height: 40px;
+  color: #292c33;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 40px;
 }

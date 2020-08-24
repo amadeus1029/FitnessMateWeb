@@ -13,11 +13,33 @@
         <nav id="nav">
         </nav>
         <div class="btn-area clearfix">
-            <a href="${pageContext.request.contextPath}/user/signUp" class="button sub">회원가입</a>
-            <a href="#none" class="button main" id="btn_login">로그인</a>
+        	<c:choose>
+        		<c:when test="${empty authUser}">
+
+		            <a href="${pageContext.request.contextPath}/user/signUpStart" class="button sub">회원가입</a>
+
+
+                    <a href="${pageContext.request.contextPath}/mypage/schedule" class="button sub">접근용 버튼</a>
+		           
+		            <a href="#none" class="button main" id="btn_login">로그인</a>
+
+		            <a href="#none" class="button main" id="btn_loginModal">로그인</a>
+
+	            </c:when>
+				<c:otherwise>
+
+					<a href="${pageContext.request.contextPath}/mypage/schedule" class="button sub">마이페이지</a>
+		            <a href="#none" class="button main" id="btn_login">로그아웃</a>
+
+					<a href="#none" class="button sub">마이페이지</a>
+		            <a href="${pageContext.request.contextPath}/user/logout" class="button main" id="btn_logout">로그아웃</a>
+
+            	</c:otherwise>
+            </c:choose>
         </div>
     </div>
 </header>
+
 <!-- 모달임미다 -->
     <div class="modal-layer" id="loginModal">
         <div class="modal-wrapper">
@@ -29,26 +51,99 @@
                     <colgroup>
                       <col style="width: 100px;">
                       <col style="">
-                  </colgroup>
+                  	</colgroup>
                     <tr>
-                        <td><label for="userId">아이디</label></td>
+                        <th><label for="userId">아이디</label></th>
                         <td><input id="userId" type="text" name="id"></td>
                     </tr>
                     <tr>
-                        <td><label for="userPw">패스워드</label> </td>
+                        <th><label for="userPw">패스워드</label></th>
                         <td><input id="userPw" type="password" name="password"></td>   
                                        
                     </tr> 
                     <tr>
-                        <c:if test="${param.result eq 'fail'}">
-                            <td colspan="2" colspan="2">
-                                <span class="errMsg">아이디 또는 비번을 확인해 주세요.</span>
-                            </td>
-                        </c:if>
+	                    <td colspan="2" colspan="2">
+	                        <span class="errMsg">아이디 또는 비번을 확인해 주세요.</span>
+	                    </td>
                     </tr> 
                 </table>
                 <button type="button" class="modal-cancel" onclick="forceHideModal('#testModal')">취소</button>
-                <button type="button" class="modal-confirm">로그인</button>
+                <button type="button" class="modal-confirm" id="btn_login">로그인</button>
             </div>
         </div>
     </div>
+
+    
+    
+<script type="text/javascript">
+
+	$("#btn_loginModal").on("click", function(){
+	    // 이벤트 초기화
+	    event.preventDefault();
+	
+	    // input 초기화
+	    $("#userId").val("");
+	    $("#userPw").val("");
+	    $(".errMsg").hide();
+	
+	    showModal("#loginModal");
+	});
+	
+	/* 모달-로그인버튼 */
+	$("#btn_login").on("click", function(){
+		// 이벤트 초기화
+	    event.preventDefault();
+		
+		var userId = $("#userId").val();
+		var userPw = $("#userPw").val();
+	    
+		$.ajax({
+			
+			url : "${pageContext.request.contextPath}/user/login",		
+			type : "post",
+			data : {userId: userId, userPw: userPw},
+
+			dataType : "json",
+			success : function(result){
+				console.log(result);
+				
+				/*성공시 처리해야될 코드 작성*/
+				if(result == true){
+					location.reload(true);
+					
+					forceHideModal('#loginModal');
+					
+				}else {
+					$(".errMsg").show();
+				}
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			} 
+		})
+	});
+	
+	/* 로그아웃 */
+	$("#btn_logout").on("click", function(){
+	    
+		$.ajax({
+			
+			url : "${pageContext.request.contextPath}/user/logout",		
+			type : "post",
+			data : {msg: 'logout'},
+
+			dataType : "json",
+			success : function(result){
+				
+				/*성공시 처리해야될 코드 작성*/
+					location.reload(true);
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			} 
+		})
+	});
+
+</script>

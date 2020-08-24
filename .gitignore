@@ -1,2 +1,7 @@
-target
+/build/
+/target/
+
+#ignore setting xml
+applicationContext.xml
+spring-servlet.xml
 FitenessMate.iml

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -26,26 +27,37 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/signUp.css">
 </head>
 <body>
-	<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+
+    <header id="header">
+        
+        <div class="wrapper clearfix">
+            <h1 class="logo">
+                <a href="${pageContext.request.contextPath}/html/index.html">
+                    <img src="${pageContext.request.contextPath}/assets/image/logoB.jpeg" title="logo" alt="logo">
+                </a>
+            </h1>
+        </div>
+
+    </header>
 	<div id="container">
         <div class="signUpPart">
 
             <p class="bold">회원가입</p>
             <p>가입하고자 하는 유형을<br>
             아래에서 선택해주세요</p>
-            <form>
-            <div class="buttonPart">
-                <input type="radio" id="trainee" name="userType">
-                <label for="trainee" class="button-label lable_trainee">
-                    일반회원
-                </label>
-                <p>or</p>
-                <input type="radio" id="trainer" name="userType">
-                <label for="trainer" class="button-label lable_trainer">
-                    트레이너 회원
-                </label>
-            </div>
-            <a href="#none" class="button main">회원가입</a>
+            <form action="${pageContext.request.contextPath}/user/signUpForm" method="get">
+	            <div class="buttonPart">
+	                <input type="radio" id="trainee" name="userType" value="normal">
+	                <label for="trainee" class="button-label lable_trainee">
+	                    일반회원
+	                </label>
+	                <p>or</p>
+	                <input type="radio" id="trainer" name="userType" value="trainer">
+	                <label for="trainer" class="button-label lable_trainer">
+	                    트레이너 회원
+	                </label>
+	            </div>
+	            <button type="submit" class="button main">회원가입</button>
             </form>
 
         </div>
@@ -55,4 +67,20 @@
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 </body>
+
+<script type="text/javascript">
+    
+    //회원유형 체크 안된 경우
+    $("button.main").on("click", function(){
+        var userType = $("input[name='userType']").is(":checked");
+
+        if(userType == false){ 
+            alert("회원유형을 선택해주세요");
+            return false;
+        }
+    });
+
+
+</script>
+
 </html>

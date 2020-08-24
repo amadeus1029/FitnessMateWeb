@@ -21,10 +21,6 @@
     <script src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/modal.js"></script>
 
-    <!-- slide -->
-    <link href="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/css/swiper.min.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/js/swiper.min.js"></script>
-
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css">
 </head>
@@ -33,158 +29,99 @@
 	<div id="container">
         <div class="test-background" style="background-color: #dadde6;height: 350px;">
         </div>
+        
+        
         <div class="wrapper">
-            <form id="searchKeywordForm">
+                	
+            
+            <!--  <form action="${pageContext.request.contextPath}/search/results" method="get"
+            id="searchKeywordForm">-->
+            <div id="searchKeywordForm">
                 <ul class="search-condition clearfix">
 
                     <li class="local clearfix">
+                    
+                    
                         <h3 class="title">지역</h3>
-                        <select>
-                            <option selected>전체</option>
-                            <option>서울특별시</option>
-                            <option>부산광역시</option>
-                            <option>광주강역시</option>
-                            <option>경기도</option>
+                        <!--지역 고르기 -->
+                        <select name="province">
+                        	<option value="">전체</option>
+                         <c:forEach items="${addVo}" var="addVo">
+                            <option >${addVo.province}</option>
+                         </c:forEach>
                         </select>
-                        <select>
-                            <option selected>전체</option>
-                            <option>송파구</option>
-                            <option>구로구</option>
-                            <option>서초구</option>
-                            <option>영구</option>
+                        
+                        <!--구 고르기 -->
+                        <select name="city" >
                         </select>
-                        <select>
-                            <option selected>전체</option>
-                            <option>송내동</option>
-                            <option>가리봉동</option>
-                            <option>홍길동</option>
+                        
+                        <!--동 고르기 -->
+                        <select name="region">
                         </select>
+                        
+                        
+                        
                     </li>
                     <li class="gender">
                         <h3 class="title">성별</h3>
                         <div class="radio-wrapper clearfix">
-                            <input type="radio" id="genderMale" name="gender" value="male" checked>
+                            <input type="radio" id="genderMale" name="gender" value="male">
                             <label for="genderMale">남성</label>
                             <input type="radio" id="genderFemale" name="gender" value="female">
                             <label for="genderFemale">여성</label>
                         </div>
                     </li>
+                    
+                    
+                    
                     <li class="field">
                         <h3 class="title">전문분야</h3>
-                        <select>
-                            <option selected>다이어트</option>
-                            <option>재활</option>
-                            <option>기초체력 향상</option>
-                            <option>근력 향상</option>
-                            <option>프로필 촬영</option>
-                            <option>대회 준비</option>
-                            <option>체형 교정</option>
+                         <select name="field">
+                         	<option value="">전체</option>
+	                        <c:forEach items="${fieldVo}" var="fieldVo">
+	                         <option>${fieldVo.fieldName}</option>
+	                        </c:forEach>
                         </select>
                     </li>
+                    
+                    
+                    
                     <li class="keyword">
                         <h3 class="title">검색어</h3>
-                        <input type="text" placeholder="검색어를 입력해주세요">
+                        <input name="name" type="text" placeholder="검색어를 입력해주세요">
                     </li>
+                    
                 </ul>
-                <button type="submit" class="button">검색</button>
-            </form>
+                <button type="submit" class="button key">검색</button>
+            <!-- </form> -->
+           </div>
+            
+            
+            
+            
             <ul class="search-list clearfix">
+            
+            <!--
+            	<c:forEach items="${userVo}" var="userVo" varStatus = "status">
                 <li class="search-result" onclick="showProfileModal($(this))">
                     <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');">
                     </div>
                     <div class="content-area">
-                        <p class="name">강호동</p>
-                        <p class="gym">하이미디어</p>
-                        <p class="comment">국가의 세입·세출의 결산, 국가 및 법률이 정한 단체의 회계검사와 행정기관 및 공무원의 직무에 관한 감찰을 하기 위하여 대통령 소속하에
-                            감사원을 둔다. 국정의 중요한 사항에 관한 대통령의 자문에 응하기 위하여 국가원로로 구성되는 국가원로자문회의를 둘 수 있다. 모든 국민은 거주·이전의 자유를
-                            가진다.</p>
+                        <p class="name">${userVo.name}</p>
+                        <p class="gym">${userVo.company}</p>
+                        <p class="comment">${userVo.introduction}</p>
                         <p class="score">평점 4.7</p>
                     </div>
                 </li>
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Lee-Kwang-soo.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">이광수</p>
-                        <p class="gym">러닝맨</p>
-                        <p class="comment">정부는 회계연도마다 예산안을 편성하여 회계연도 개시 90일전까지 국회에 제출하고, 국회는 회계연도 개시 30일전까지 이를 의결하여야 한다.
-                            대통령후보자가 1인일 때에는 그 득표수가 선거권자 총수의 3분의 1 이상이 아니면 대통령으로 당선될 수 없다.</p>
-                        <p class="score">평점 4.2</p>
-                    </div>
-                </li>
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">이효리</p>
-                        <p class="gym">제주도</p>
-                        <p class="comment">모든 국민은 거주·이전의 자유를 가진다. 헌법에 의하여 체결·공포된 조약과 일반적으로 승인된 국제법규는 국내법과 같은 효력을 가진다.
-                            국가는 전통문화의 계승·발전과 민족문화의 창달에 노력하여야 한다.
-
-                        </p>
-                        <p class="score">평점 4.9</p>
-                    </div>
-                </li>
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Yoo-Jae-Suk.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">유재석</p>
-                        <p class="gym">무한도전</p>
-                        <p class="comment">행정각부의 설치·조직과 직무범위는 법률로 정한다. 대통령은 국가의 독립·영토의 보전·국가의 계속성과 헌법을 수호할 책무를 진다. 선거와
-                            국민투표의 공정한 관리 및 정당에 관한 사무를 처리하기 위하여 선거관리위원회를 둔다.</p>
-                        <p class="score">평점 4.5</p>
-                    </div>
-                </li>
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Jeongjae-Lee.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">이정재</p>
-                        <p class="gym">골드문</p>
-                        <p class="comment">감사원은 세입·세출의 결산을 매년 검사하여 대통령과 차년도국회에 그 결과를 보고하여야 한다. 모든 국민은 사생활의 비밀과 자유를 침해받지
-                            아니한다.</p>
-                        <p class="score">평점 3.8</p>
-                    </div>
-                </li>
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Yang-Se-chan.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">양세찬</p>
-                        <p class="gym">아 모르겠다</p>
-                        <p class="comment">국가는 대외무역을 육성하며, 이를 규제·조정할 수 있다. 모든 국민은 법률이 정하는 바에 의하여 국가기관에 문서로 청원할 권리를 가진다.
-                            군인은 현역을 면한 후가 아니면 국무위원으로 임명될 수 없다.
-                        </p>
-                        <p class="score">평점 4.2</p>
-                    </div>
-                </li>
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Park-Myung- Soo.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">박명수</p>
-                        <p class="gym">무한도전</p>
-                        <p class="comment">대통령은 조약을 체결·비준하고, 외교사절을 신임·접수 또는 파견하며, 선전포고와 강화를 한다. 국가는 농지에 관하여 경자유전의 원칙이
-                            달성될 수 있도록 노력하여야 하며, 농지의 소작제도는 금지된다.
-                        </p>
-                        <p class="score">평점 2.8</p>
-                    </div>
-                </li>
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/JungWooSung.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">정우성</p>
-                        <p class="gym">비트</p>
-                        <p class="comment">정당은 그 목적·조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에 참여하는데 필요한 조직을 가져야 한다. 법관은 탄핵 또는 금고
-                            이상의 형의 선고에 의하지 아니하고는 파면되지 아니하며, 징계처분에 의하지 아니하고는 정직·감봉 기타 불리한 처분을 받지 아니한다.</p>
-                        <p class="score">평점 3.5</p>
-                    </div>
-                </li>
+                </c:forEach>-->
+                
             </ul>
-        </div>
-    </div>
+            
+        </div> <!-- wrapper-->
+        
+    </div> <!--container-->
+    
+    
     <div class="modal-layer" id="profileModal">
         <div class="modal-wrapper">
             <button type="button" class="close-btn" onclick="forceHideModal('#profileModal')">X</button>
@@ -360,7 +297,120 @@
         </div>
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
-    <script type="text/javascript">
+    
+    
+    <script type="text/javascript">    
+    //검색
+    $(".button.key").on("click",function(){
+	   console.log("검색버튼");
+	   
+	   //값 추출
+	   var user ={province:$("[name='province']").val(),
+			      city:$("[name='city']").val(),
+			      region:$("[name='region']").val(),
+			      gender:$("[name='gender']:checked").val(),
+			      field:$("[name='field']").val(),
+			      name:$("[name='name']").val()}
+		
+	   console.log(user);
+	   
+	   
+	   $.ajax({
+			url : "${pageContext.request.contextPath }/search/results",
+			type : "post",
+			data : user,
+
+			dataType : "",
+			success : function(userVo) {
+				/*성공시 처리해야될 코드 작성*/
+				console.log();
+				var userStr = "";
+				
+				for (var i in userVo ) {
+					userStr += "<li class='search-result' onclick='showProfileModal($(this))'>";
+					userStr += "<div class='image-area' style='background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');'>;"
+					userStr += "</div>";
+					userStr += "<div class='content-area'>";
+					userStr += "<p class='name'>"+$(userVo.Name)+"</p>";
+					userStr += "<p class='gym'>"+userVo.company+"</p>";
+					userStr += "<p class='comment'>"+userVo.introduction+"</p>";
+					userStr += " <p class='score'>평점 4.7</p>";
+					userStr += "</div>";
+					userStr += "</li>";
+				}
+					
+			
+				$("ul.search-list").append(userStr);
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	  
+  
+    });
+    
+    //구 불러오기
+    $("select[name='province']").on("change",function(){
+    	console.log("지역선택");
+    	$("select[name='city']").empty();
+    	$("select[name='region']").empty();
+    	
+    	var province = $(this).val();
+    	
+    	$.ajax({
+			url : "${pageContext.request.contextPath }/search/getCity",
+			type : "post",
+			data : {province: province},
+
+			dataType : "json",
+			success : function(cityList) {
+				/*성공시 처리해야될 코드 작성*/
+				var cityStr ='<option value="null">전체</option>';
+				for (var i in cityList ) {
+					cityStr +='<option>'+cityList[i].city+'</option>';
+					
+				}
+				$("select[name='city']").append(cityStr);
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+    });
+    
+  	//동면리 불러오기
+    $("select[name='city']").on("change",function(){
+    	console.log("도시선택");
+    	$("select[name='region']").empty();
+    	
+    	var city = $(this).val();
+    	
+    	$.ajax({
+			url : "${pageContext.request.contextPath }/search/getRegion",
+			type : "post",
+			data : {city: city},
+
+			dataType : "json",
+			success : function(regionList) {
+				/*성공시 처리해야될 코드 작성*/
+				var regionStr ='<option value="null">전체</option>';
+				for (var i in regionList ) {
+					regionStr +='<option>'+regionList[i].region+'</option>';
+					
+				}
+				$("select[name='region']").append(regionStr);
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+    });
+    
+    
+    
+    
     function showProfileModal(obj) {
             //다른 버튼 on 제거
             $("#profileModal .label-wrapper .label-btn").removeClass("on");

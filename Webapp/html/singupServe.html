@@ -50,12 +50,18 @@
         
 
             <form class="signup-form" action="#" method="get">
-                <p class="title">추가정보</p>
+                <p class="title">추가정보 입력</p>
 
                 <!-- 경력 -->
-                <div class="form-group">     
+                <div class="form-group number">
+                    <div class="age">
+                    <label for="age">나이</label>
+                    <input type="number" name="age" value="1" id ="career">  
+                    </div>
+                    <div class="career">
                     <label for="career">경력</label>
-                    <input type="number" name="career" value="1" id ="career" placeholder="경력을 입력하세요">
+                    <input type="number" name="career" value="1" id ="career">
+                    </div>
                 </div>    
 
                 <!-- 지역 -->
@@ -86,40 +92,43 @@
                 <!-- 소속회사 -->
                 <div class="form-group">                    
                     <p>소속회사</p>
-                    <input type="text" value=""  name="una" placeholder="소속회사를 입력하세요">
+                    <input type="text" name="company" placeholder="소속회사를 입력하세요">
                 </div>     
                 
                 <!-- 전문분야 -->
                 <p>전문분야</p>
                     <div class="checkboxPart">     
                         
-                        <input type="checkbox" id="physicalPlus" value="physicalPlus" name="field" placeholder="">
+                        <input type="checkbox" id="physicalPlus" value="physicalPlus" name="field">
                         <label for="physicalPlus" class="button-label">기초체력향상</label>
 
-                        <input type="checkbox" id="musclePlus" value="musclePlus" name="field" placeholder="">
+                        <input type="checkbox" id="musclePlus" value="musclePlus" name="field">
                         <label for="musclePlus" class="button-label">근력향상</label>
 
-                        <input type="checkbox" id="loseWeight" value="loseWeight" name="field" placeholder="">
+                        <input type="checkbox" id="loseWeight" value="loseWeight" name="field">
                         <label for="loseWeight" class="button-label">체중감량</label>
 
-                        <input type="checkbox" id="contest" value="contest" name="field" placeholder="">
+                        <input type="checkbox" id="contest" value="contest" name="field">
                         <label for="contest" class="button-label">대회준비</label>
 
-                        <input type="checkbox" id="profile" value="profile" name="field" placeholder="">
+                        <input type="checkbox" id="profile" value="profile" name="field">
                         <label for="profile" class="button-label">프로필촬영</label>
 
-                        <input type="checkbox" id="bodyShape" value="bodyShape" name="field" placeholder="">
+                        <input type="checkbox" id="bodyShape" value="bodyShape" name="field">
                         <label for="bodyShape" class="button-label">체형교정</label>
 
-                        <input type="checkbox" id="rehabilitation" value="rehabilitation" name="field" placeholder="">
+                        <input type="checkbox" id="rehabilitation" value="rehabilitation" name="field">
                         <label for="rehabilitation" class="button-label">재활</label>
 
                 </div>   
                 
-                <!-- 수상경력 -->
-                <div>     
-                    <p>수상경력</p>
-                    <textarea name=""></textarea>
+                <!-- 수상내역 -->
+                <div class="recordPart">     
+                    <p>수상내역 / 이수이력</p>
+                    <div>
+                        <input type="text" name="careerRecord" placeholder="대회명(교육명) / 상세내용 ">
+                        <i class="far fa-plus-square"></i>
+                    </div>
                 </div>     
 
 
@@ -172,4 +181,25 @@
 
     
 </body>
+<script>
+
+// +눌렀을 때 수상내역 추가
+$(".fa-plus-square").on("click", function(){
+    var addRecord = '';
+    addRecord += '<div>';
+    addRecord += '    <input type="text" name="careerRecord" placeholder="대회명(교육명) / 상세내용 ">';
+    addRecord += '    <i class="far fa-minus-square"></i>';
+    addRecord += '</div>';
+
+    $(this).closest(".recordPart").append(addRecord);
+});
+// -눌렀을 때 수상내역 삭제
+$(".recordPart").on("click", "i.fa-minus-square",function(){
+    $(this).closest("div").remove();
+});
+
+
+
+
+</script>
 </html>
