@@ -22,6 +22,20 @@
             order by ex.exerciseNo asc
         ]]>
     </select>
+    <select id="partList" parameterType="int" resultType="ExVo">
+        <![CDATA[
+            select  exp.exPartNo as exPartNo,
+                    p.partName as exPartName
+            from    ex_part p, (select  exPartNo,
+                                        count(*)
+                                from    (select e.exercisepart as exPartNo
+                                        from    exercise e, ex_part p
+                                        where   e.exercisepart = p.partno and e.trainerno = #{trainerNo})
+                                group by exPartNo
+                                order by exPartNo) exp
+            where   p.partNo = exp.expartno
+        ]]>
+    </select>
     <select id="selectByNo" parameterType="int" resultType="ExVo">
         <![CDATA[
             select  ex.exerciseNo as exNo,

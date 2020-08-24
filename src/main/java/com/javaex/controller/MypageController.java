@@ -104,8 +104,16 @@ public class MypageController {
     }
     
     @RequestMapping("/recordEx")
-    public String RecordEx(HttpSession session) {
-       	System.out.println("/마이페이지/운동기록");
+    public String RecordEx(HttpSession session, Model model) {
+        UserVo user = (UserVo) session.getAttribute("authUser");
+
+        if("trainer".equals(user.getUserType())) {
+            List<ExerciseVo> partList = mypageService.partList(user.getUserNo());
+
+            model.addAttribute("partList", partList);
+        }else {
+            System.out.println("일반회원은 여기 오면 안돼요");
+        }
     	
         return "mypage/recordEx";
     }

@@ -72,6 +72,10 @@ public class MypageService {
 		return  exerciseDao.showList();
 	}
 
+	public List<ExerciseVo> partList(int trainerNo) {
+		return  exerciseDao.partList(trainerNo);
+	}
+
 	public ExerciseVo addExercise(ExerciseVo exVo) {
 		exerciseDao.insert(exVo);
 		int exNo = exVo.getExNo();
@@ -79,8 +83,6 @@ public class MypageService {
 	}
 
 	public Boolean deleteExercise(ExerciseVo exVo) {
-		System.out.println("mypageservice get:");
-		System.out.println(exVo);
 		return exerciseDao.delete(exVo);
 	}
 

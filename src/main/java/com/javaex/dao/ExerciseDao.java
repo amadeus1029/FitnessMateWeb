@@ -21,6 +21,10 @@ public class ExerciseDao {
         return sqlSession.selectList("exercise.getList", trainerNo);
     }
 
+    public List<ExerciseVo> partList(int trainerNo) {
+        return sqlSession.selectList("exercise.partList", trainerNo);
+    }
+
     public ExerciseVo selectByNo(int exNo) {
         return sqlSession.selectOne("exercise.selectByNo", exNo);
     }
@@ -30,8 +34,6 @@ public class ExerciseDao {
     }
 
     public Boolean delete(ExerciseVo exVo) {
-        boolean result = sqlSession.delete("exercise.delete", exVo) == 1;
-        System.out.println(result);
-        return result;
+        return sqlSession.delete("exercise.delete", exVo) == 1;
     }
 }

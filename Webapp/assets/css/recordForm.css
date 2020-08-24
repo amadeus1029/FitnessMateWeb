@@ -22,7 +22,7 @@
 	line-height: 180%;
 	text-align: center;
 }
-.wrapper ol li:hover {
+.wrapper ul li:hover {
 	background-color: #979dac;
 	cursor: pointer;
 }

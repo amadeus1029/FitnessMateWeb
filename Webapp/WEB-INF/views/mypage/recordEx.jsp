@@ -39,31 +39,20 @@
 
                 <div id="first_select" class="box_color">
                     <p>운동 부위</p>
-                    <ol>
-                        <li>전신</li>
-                        <li>상체</li>
-                        <li>승모근</li>
-                        <li>어깨</li>
-                        <li>가슴</li>
-                        <li>삼두</li>
-                        <li>이두</li>
-                        <li>전완</li>
-                        <li>복부</li>
-                        <li>등</li>
-                        <li>코어</li>
-                        <li>엉덩이</li>
-                        <li>하체</li>
-                        <li>종아리</li>
-                    </ol>
+                    <ul>
+                        <c:forEach items="${partList}" var="part">
+                            <li onclick="showEx(${part.exPartNo})">${part.exPartName}</li>
+                        </c:forEach>
+                    </ul>
                 </div>
 
                 <div class="fir-arrow"><i class="fas fa-arrow-circle-right"></i></div>
 
                 <div id="second_select" class="box_color">
                     <p>운동 이름</p>
-                    <ol>
+                    <ul>
 
-                    </ol>
+                    </ul>
                 </div>
 
                 <div class="sec-arrow"><i class="fas fa-arrow-circle-right"></i></div>
@@ -91,12 +80,12 @@
             secondList += '<li>스윙</li>';
             secondList += '<li>쓰러스터</li>';
 
-            $("#second_select ol").html(secondList);
+            $("#second_select ul").html(secondList);
 
         });
 
         //운동 기록 창 보여주기
-        $("#second_select ol").on("click", "li", function(){
+        $("#second_select ul").on("click", "li", function(){
             //운동명 가져오기
             //식별번호/ajax 사용해서 name값 가져오는 걸로 수정 해야함
             var exerciseName = $(this).text();;
