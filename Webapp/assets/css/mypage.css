@@ -371,11 +371,12 @@
 .calendar-wrapper #calendar table tbody td.fc-day {
   height: 180px;
 }
+.calendar-wrapper #calendar .fc-scroller-harness {
+  overflow: visible;
+}
 .calendar-wrapper #calendar .btn_pop {
   position: absolute;
   z-index: 999;
-  top: 0px;
-  right: -80px;
   background-color: #fff;
   border: 1px solid #292c33;
   -webkit-transform: translate3d(0, 0, 0);
@@ -392,9 +393,6 @@
 }
 .calendar-wrapper #calendar .btn_pop .button:hover {
   background-color: #dadde6;
-}
-.calendar-wrapper #calendar .fc-scroller-harness {
-  overflow: visible;
 }
 form#addExercise,
 #exerciseList {
@@ -522,12 +520,9 @@ form#editProfileForm .info-wrapper .info:not(:last-of-type) {
 }
 form#editProfileForm .info-wrapper .category-info,
 form#editProfileForm .info-wrapper .award-info {
-  width: 55%;
+  width: 50%;
   float: left;
   text-align: left;
-}
-form#editProfileForm .info-wrapper .award-info{
-  width: 45%;	
 }
 form#editProfileForm .info-wrapper .category-info .category,
 form#editProfileForm .info-wrapper .award-info .category,
@@ -794,50 +789,4 @@ ul.user-list li.user p.info span.id {
   font-size: 20px;
   font-weight: 700;
   line-height: 40px;
-}
-
-/* 체크박스 */
-.checkboxPart{
-    width: 70%;
-    margin: 10px 0px 30px -10px;
-    line-height: 45px;
-    word-break: keep-all;
-    text-align: center;
-}
-.checkboxPart input{
-	display: none;
-}
-.button-label {
-    padding: 5px 10px;
-    margin: 10px;
-    background: #dbf2e1;
-    cursor: pointer;
-    border-radius: 25px;
-    transition: 0.3s;
-    user-select: none;
-}
-.button-label:active {
-    transform: translateY(2px);
-}
-input[type="checkbox"]:checked + label {
-    background: #008526;
-    color: #ffffff;
-}
-
-div.award-info div{
-    position: relative;
-    width: 52%;
-}
-div.award-info i.far{
-    font-size: 18px;
-    cursor: pointer;
-}
-div.award-info > p.award > i.fa-minus-square{
-	color: #629c73 ;
-	margin: 6px 2px 0px 3px;
-}
-div.award-info > div > i.fa-minus-square {
-    position: absolute;
-    top: 5px;
-    right: 0px;
 }

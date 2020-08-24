@@ -47,7 +47,7 @@
                     <p>생년월일</p>
                     <select name="birth">
                    		<option>년도</option>
-                   		<c:forEach var="year" begin="2020" end="1960" step="-1">
+                   		<c:forEach var="year" begin="1960" end="2020" step="1">
 	                        <option>${year}</option>
                    		</c:forEach>
                     </select>
