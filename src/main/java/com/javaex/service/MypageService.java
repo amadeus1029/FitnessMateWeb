@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.javaex.dao.ExerciseDao;
+import com.javaex.vo.ExerciseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class MypageService {
 	
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private ExerciseDao exerciseDao;
 
 	public Map<String, Object> getProfile(int userNo) {
 		System.out.println("/마이페이지 서비스/프로필 수정");
@@ -60,8 +65,18 @@ public class MypageService {
 		return proMap;
 	}
 
+	public List<ExerciseVo> getExList(int trainerNo) {
+		return  exerciseDao.getList(trainerNo);
+	}
 
-	
-	
+	public Boolean addExercise(ExerciseVo exVo) {
+		return  exerciseDao.insert(exVo);
+	}
+
+	public Boolean deleteExercise(ExerciseVo exVo) {
+		System.out.println("mypageservice get:");
+		System.out.println(exVo);
+		return exerciseDao.delete(exVo);
+	}
 
 }
