@@ -53,7 +53,7 @@
                 <input type="password" id="pwCheck" placeholder="********">
                 <p>이름</p>
                 <input type="text" name="name" placeholder="김이름">
-                <p>휴대전화 번호</p>
+                <p>휴대전화번호</p>
                 <input type="text" name="phone" placeholder="010-0000-1111">
                 <p>성별</p>
                 <input type="radio" id="male" name="gender" value="male">

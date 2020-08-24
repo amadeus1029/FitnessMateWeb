@@ -47,22 +47,22 @@
                     <p>생년월일</p>
                     <select name="birth">
                    		<option>년도</option>
-                   		<c:forEach var="year" begin="2020" end="1960" step="-1">
-	                        <option>${year}</option>
+                   		<c:forEach var="year" begin="1960" end="2020" step="1">
+	                        <option value="${year}">${year}년</option>
                    		</c:forEach>
                     </select>
                     
                     <select name="birth">
                    		<option>월</option>
                    		<c:forEach var="month" begin="1" end="12" step="1">
-	                        <option>${month}</option>
+	                        <option value="${month}">${month}</option>
                    		</c:forEach>
                     </select>
                     
                     <select name="birth">
                    		<option>일</option>
                    		<c:forEach var="date" begin="1" end="31" step="1">
-	                        <option>${date}</option>
+	                        <option value="${date}">${date}</option>
                    		</c:forEach>
                     </select>
                     </div>
@@ -171,7 +171,7 @@ $("select[name='province']").on("change", function(){
 	
 	$.ajax({
 		
-		url : "${pageContext.request.contextPath}/user/getCity",		
+		url : "${pageContext.request.contextPath}/api/getCity",		
 		type : "post",
 		data : {thisProvince: thisProvince},
 
@@ -203,7 +203,7 @@ $("select[name='city']").on("change", function(){
 	
 	$.ajax({
 		
-		url : "${pageContext.request.contextPath}/user/getRegion",		
+		url : "${pageContext.request.contextPath}/api/getRegion",		
 		type : "post",
 		data : {thisCity: thisCity},
 
