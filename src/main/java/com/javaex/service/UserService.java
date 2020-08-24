@@ -109,7 +109,7 @@ public class UserService {
 			birthDate = birthList.get(0).substring(0, 2)+"/"+birthList.get(1)+"/"+birthList.get(2);
 		}
 		
-		vo.setbirthDate(birthDate);
+		vo.setBirthDate(birthDate);
 		
 		userDao.updateTrainerInfo(vo);
 		

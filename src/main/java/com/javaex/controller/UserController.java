@@ -51,7 +51,7 @@ public class UserController {
     	model.addAttribute("vo", vo);
     	
     	
-    	if(vo.getuserType().equals("trainer")) {
+    	if(vo.getUserType().equals("trainer")) {
     		List<String> provinceList = userService.getAddress();
     		model.addAttribute("provinceList", provinceList);
     		
