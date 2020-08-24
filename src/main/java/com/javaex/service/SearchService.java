@@ -60,10 +60,12 @@ public class SearchService {
 		List<UserVo> userVo = searchDao.userList();
 		
 		return userVo;
+		
 	}
 	
 	
-	//트레이너 리스트/검색
+	
+	//트레이너 검색
 	public List<UserVo> userList(String province, String city, String region, String gender, String field,
 			String name) {
 		System.out.println("SearchService:userList");
@@ -80,7 +82,7 @@ public class SearchService {
 		
 		System.out.println(listMap.toString());
 		
-		List<UserVo> userVo = searchDao.userList(listMap);
+		List<UserVo> userVo = searchDao.interestList(listMap);
 		
 		
 		return userVo;

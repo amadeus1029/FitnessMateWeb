@@ -304,7 +304,7 @@
     $(".button.key").on("click",function(){
 	   console.log("검색버튼");
 	   
-	  
+	   
 	   
 	   //값 추출
 	   var user ={province:$("[name='province']").val(),
@@ -325,12 +325,13 @@
 			dataType : "",
 			success : function(userVo) {
 				/*성공시 처리해야될 코드 작성*/
+				$("ul.search-list").empty();
 				console.log(userVo);
 				var userStr = "";
 				
 				for (var i in userVo ) {
 					userStr += "<li class='search-result' onclick='showProfileModal($(this))'>";
-					userStr += "<div class='image-area' style='background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');'>;"
+					userStr += '<div class="image-area" style="background-image:url("${pageContext.request.contextPath}\\assets\\image\\face\\Gangho-dong.jpg");">;'
 					userStr += "</div>";
 					userStr += "<div class='content-area'>";
 					userStr += "<p class='name'>"+userVo[i].name+"</p>";
@@ -462,7 +463,7 @@
             $(".review-list").prepend(
                 "<li class='review-line'>"+
                 " <div class='user-profile ff'>"+
-                "   <img class='user-profile-img' src='${pageContext.request.contextPath}/assets/image/review-test2.jpg' );>"+
+                "   <img class='user-profile-img' src=('${pageContext.request.contextPath}/assets/image/review-test2.jpg' );>"+
                 "   <div class='user-profile-info'>"+
                 "     <div class='user-profile-name'>"+name+"</div>"+
                 "     <div class='user-profile-date'>"+date+"</div>"+

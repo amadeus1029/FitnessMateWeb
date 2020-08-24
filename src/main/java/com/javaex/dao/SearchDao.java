@@ -54,6 +54,7 @@ public class SearchDao {
 	
 	///////////////////////////////////////////////////////
 	
+	//트레이너 리스트
 	public List<UserVo> userList() {
 		System.out.println("searchDao:userList");
 		
@@ -65,11 +66,13 @@ public class SearchDao {
 	
 	
 	
-	public List<UserVo> userList(Map<String, Object> listMap) {
+	//전문분야 검색
+	public List<UserVo> interestList(Map<String, Object> listMap) {
 		System.out.println("searchDao:userList");
 		System.out.println(listMap.toString());
 		
-		List<UserVo> print = sqlSession.selectList("search.userList",listMap);
+		
+		List<UserVo> print = sqlSession.selectList("search.userList_Sea",listMap);
 		System.out.println(print);
 		
 		return print;
