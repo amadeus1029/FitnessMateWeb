@@ -5,13 +5,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.javaex.vo.ExerciseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.javaex.service.MypageService;
 import com.javaex.service.UserService;
@@ -42,17 +40,38 @@ public class MypageController {
         return "mypage/schedule";
     }
     
-    @RequestMapping("/manageTraining")
-    public String ManageTraining(HttpSession session) {
+    @RequestMapping("/manageExercise")
+    public String ManageTraining(HttpSession session, Model model) {
         UserVo user = (UserVo) session.getAttribute("authUser");
 
         if("trainer".equals(user.getUserType())) {
-            System.out.println("트레이너 운동관리 이동");
+            int trainerNo = user.getUserNo();
+            List<ExerciseVo> exList = mypageService.getExList(trainerNo);
+            System.out.println(exList);
+            model.addAttribute("exList", exList);
         }else {
             System.out.println("일반회원은 여기 오면 안돼요");
         }
     	
-        return "mypage/manageTraining";
+        return "mypage/manageExercise";
+    }
+
+    @ResponseBody
+    @RequestMapping("/addExercise")
+    public boolean addExercise(HttpSession session, @RequestBody ExerciseVo exVo) {
+        UserVo user = (UserVo) session.getAttribute("authUser");
+        exVo.setTrainerNo(user.getUserNo());
+        return mypageService.addExercise(exVo);
+    }
+
+    @ResponseBody
+    @RequestMapping("/deleteExercise")
+    public boolean deleteExercise(HttpSession session, @RequestBody ExerciseVo exVo) {
+        UserVo user = (UserVo) session.getAttribute("authUser");
+        exVo.setTrainerNo(user.getUserNo());
+        System.out.println("deleteExercise get:");
+        System.out.println(exVo);
+        return mypageService.deleteExercise(exVo);
     }
     
     @RequestMapping("/manageUser")

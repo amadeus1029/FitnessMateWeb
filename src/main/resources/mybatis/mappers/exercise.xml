@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="test">
+<mapper namespace="exercise">
+    <select id="getList" parameterType="int" resultType="ExVo">
+        <![CDATA[
+            select  exerciseNo as exNo,
+                    exerciseName as exName,
+                    exercisePart as exPart,
+                    amount as amount
+            from    exercise
+            where   trainerNo = #{trainerNo}
+        ]]>
+    </select>
+    <insert id="insert" parameterType="ExVo">
+        <![CDATA[
+            insert into exercise
+            values(seq_exerciseNo.nextVal, #{trainerNo}, #{exName}, #{exPart}, #{amount})
+        ]]>
+    </insert>
+    <delete id="delete" parameterType="ExVo">
+        <![CDATA[
+            delete exercise
+            where exerciseNo = #{exNo} and trainerNo = #{trainerNo}
+        ]]>
+    </delete>
     <!-- <insert id="insert" parameterType="UserVo">
         <![CDATA[
             insert into blog

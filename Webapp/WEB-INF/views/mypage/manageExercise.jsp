@@ -37,7 +37,7 @@
                 <h2>운동 추가하기</h2>
                 <div class="input-box">
                     <h3 class="title">부위</h3>
-                    <select name="part">
+                    <select name="exercisePart">
                         <option selected>전신</option>
                         <option>상체</option>
                         <option>승모</option>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="input-box">
                     <h3 class="title">운동명</h3>
-                    <input type="text" name="name" placeholder="운동명을 입력해주세요">
+                    <input type="text" name="exerciseName" placeholder="운동명을 입력해주세요">
                 </div>
                 <div class="input-box">
                     <h3 class="title">단위</h3>
@@ -72,42 +72,16 @@
             </form>
             <div id="exerciseList">
                 <h2>운동 목록</h2>
-                <div class="exercise">
-                    <h4 class="title">데드리프트</h4>
-                    <p class="detail">
-                        <span class="part">운동부위 : 코어</span>
-                        <span class="amount">기록단위 : 킬로그램</span>
-                    </p>
-                    <button type="button" class="delete-btn" onclick="deleteExercise($(this));"><i
-                            class="fas fa-times"></i></button>
-                </div>
-                <div class="exercise">
-                    <h4 class="title">벤치프레스</h4>
-                    <p class="detail">
-                        <span class="part">운동부위 : 가슴</span>
-                        <span class="amount">기록단위 : 파운드</span>
-                    </p>
-                    <button type="button" class="delete-btn"
-                            onclick="deleteExercise($(this));"><i class="fas fa-times"></i></button>
-                </div>
-                <div class="exercise">
-                    <h4 class="title">스쿼트</h4>
-                    <p class="detail">
-                        <span class="part">운동부위 : 하체</span>
-                        <span class="amount">기록단위 : 킬로그램</span>
-                    </p>
-                    <button type="button" class="delete-btn" onclick="deleteExercise($(this));"><i class="fas fa-times"
-                    ></i></button>
-                </div>
-                <div class="exercise">
-                    <h4 class="title">매달리기</h4>
-                    <p class="detail">
-                        <span class="part">운동부위 : 등</span>
-                        <span class="amount">기록단위 : 시간(초)</span>
-                    </p>
-                    <button type="button" class="delete-btn" onclick="deleteExercise($(this));"><i class="fas fa-times"
-                    ></i></button>
-                </div>
+                <c:forEach items="${exList}" var="exercise">
+                    <div class="exercise">
+                        <h4 class="title">${exercise.exName}</h4>
+                        <p class="detail">
+                            <span class="part">운동부위 : ${exercise.exPart}</span><span class="amount">기록단위 : ${exercise.amount}</span>
+                        </p>
+                        <button type="button" class="delete-btn" onclick="deleteExercise($(this),${exercise.exNo});"><i
+                                class="fas fa-times"></i></button>
+                    </div>
+                </c:forEach>
             </div>
         </div>
     </div>
@@ -116,9 +90,14 @@
         function addExercise() {
             var result = true;
             var form = $("form#addExercise");
-            var part = form.find("select[name='part']").find("option:selected").text();
-            var name = form.find("input[name='name']").val();
+            var part = form.find("select[name='exercisePart']").find("option:selected").text();
+            var name = form.find("input[name='exerciseName']").val();
             var amount = form.find("input[name='amount']:checked").next("label").text();
+            var exVo = {
+                exName : name,
+                exPart : part,
+                amount : amount
+            }
 
             if (name === "" || name == null) {
                 result = false;
@@ -128,22 +107,61 @@
                 return result;
             }
 
-            $("#exerciseList").append(
-                "<div class='exercise'>" +
-                "<h4 class='title'>" + name + "</h4>" +
-                "<p class='detail'>" +
-                "<span class='part'>운동부위 : " + part + "</span>" +
-                "<span class='amount'>기록단위 : " + amount + "</span>" +
-                "</p>" +
-                "<button type='button' class='delete-btn' onclick='deleteExercise($(this))'>" +
-                "<i class='fas fa-times'></i>" +
-                "</button>" +
-                "</div>"
-            );
+            $.ajax({
+                url: "${pageContext.request.contextPath}/mypage/addExercise",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify(exVo),
+                dataType: "json",
+                success: function (boolean) {
+                    if(boolean) {
+                        $("#exerciseList").append(
+                            "<div class='exercise'>" +
+                            "<h4 class='title'>" + name + "</h4>" +
+                            "<p class='detail'>" +
+                            "<span class='part'>운동부위 : " + part + "</span>" +
+                            "<span class='amount'>기록단위 : " + amount + "</span>" +
+                            "</p>" +
+                            "<button type='button' class='delete-btn' onclick='deleteExercise($(this))'>" +
+                            "<i class='fas fa-times'></i>" +
+                            "</button>" +
+                            "</div>"
+                        );
+                        form.find("input[name='exerciseName']").val("");
+                    } else {
+                        alert("Fail to add Exercise!")
+                    }
+                },
+                error: function (XHR, status, error) {
+                    console.error(status + ":" + error);
+                }
+            });
+
+
         }
 
-        function deleteExercise(target) {
-            target.parent("div.exercise").remove();
+        function deleteExercise(target,number) {
+            var exVo = {
+                exNo : number
+            };
+            $.ajax({
+                url: "${pageContext.request.contextPath}/mypage/deleteExercise",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify(exVo),
+                dataType: "json",
+                success: function (boolean) {
+                    if(boolean) {
+                        target.parent("div.exercise").remove();
+                        alert("삭제하였습니다");
+                    } else {
+                        alert("Fail to remove Exercise!")
+                    }
+                },
+                error: function (XHR, status, error) {
+                    console.error(status + ":" + error);
+                }
+            });
         }
     </script>
 </body>

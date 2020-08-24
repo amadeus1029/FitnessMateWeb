@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.javaex.dao.ExerciseDao;
+import com.javaex.vo.ExerciseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,9 @@ public class MypageService {
 	@Autowired
 	private UserDao userDao;
 
+	@Autowired
+	private ExerciseDao exerciseDao;
+
 	public Map<String, Object> getProfile(int userNo) {
 		System.out.println("/마이페이지 서비스/프로필 수정");
 		
@@ -26,7 +31,10 @@ public class MypageService {
 		
 		//주소 자르기
 		String[] splitAddress = vo.getLocation().split("[|]");
-		System.out.println(splitAddress);
+		
+		//생년월일 자르기
+		String[] splitbirthDate = vo.getBirthDate().split("[/]");
+		System.out.println(splitbirthDate);
 		
 		//전문분야
 		List<String> userInterest = userDao.selectUserInterest(userNo);
@@ -34,7 +42,7 @@ public class MypageService {
 		//경력상세
 		List<CareerVo> careerList = userDao.selectCareerList(userNo);
 		
-		//기본적으로 깔려있는 정보들 우앙 쓔빠빠 젼내많아
+		//기본적으로 깔려있는 정보들 우앙 짱많아
 		List<String> provinceList = userDao.selectAddress();
 		List<String> cityList = userDao.selectCity(splitAddress[0]);
 		List<String> regionList = userDao.selectRegion(splitAddress[1]);
@@ -44,6 +52,7 @@ public class MypageService {
 		Map<String, Object> proMap = new HashMap<>();
 		proMap.put("userVo", vo);
 		proMap.put("splitAddress", splitAddress);
+		proMap.put("splitbirthDate", splitbirthDate);
 		proMap.put("userInterest", userInterest);
 		proMap.put("careerList", careerList);
 		
@@ -56,8 +65,18 @@ public class MypageService {
 		return proMap;
 	}
 
+	public List<ExerciseVo> getExList(int trainerNo) {
+		return  exerciseDao.getList(trainerNo);
+	}
 
-	
-	
+	public Boolean addExercise(ExerciseVo exVo) {
+		return  exerciseDao.insert(exVo);
+	}
+
+	public Boolean deleteExercise(ExerciseVo exVo) {
+		System.out.println("mypageservice get:");
+		System.out.println(exVo);
+		return exerciseDao.delete(exVo);
+	}
 
 }

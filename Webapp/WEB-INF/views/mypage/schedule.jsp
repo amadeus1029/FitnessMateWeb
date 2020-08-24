@@ -43,12 +43,12 @@
                 init: function (themeSystem) {
                     calendar = new FullCalendar.Calendar(calendarEl, {
                         themeSystem: themeSystem,
+                        locales: 'ko',
                         headerToolbar: {
                             left: 'prev,next today',
                             center: 'title',
                             right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
                         },
-                        initialDate: '2020-08-12',
                         weekNumbers: false,
                         navLinks: true, // can click day/week names to navigate views
                         editable: false,
@@ -65,12 +65,20 @@
                             //TODO - 일정 클릭시 발생 이벤트
                             event.stopPropagation();
                             $(".btn_pop").remove();
-                            $(info.el).append(
+
+                            var target = $(info.el);
+                            var left = target.offset().left + 100;
+                            var top = target.offset().top - 60;
+                            $("#calendar").append(
                                 "<div class='btn_pop'>" +
                                 "<button type='button' class='button btn_modify' onclick='btnModify();'>스케쥴변경</button>" +
                                 "<a href='${pageContext.request.contextPath}/mypage/recordEx' class='button'>운동시작</a>" +
                                 "<div>"
                             );
+                            $(".btn_pop").css({
+                                left: left,
+                                top: top
+                            })
                         },
                         height: 'auto',
                         events: [
@@ -109,6 +117,42 @@
                             {
                                 title: '김영희 님',
                                 start: '2020-08-05T09:00'
+                            },
+                            {
+                                title: '김길동 님',
+                                start: '2020-08-06T09:00'
+                            },
+                            {
+                                title: '김길동 님',
+                                start: '2020-08-06T09:00'
+                            },
+                            {
+                                title: '김길동 님',
+                                start: '2020-08-06T09:00'
+                            },
+                            {
+                                title: '김길동 님',
+                                start: '2020-08-06T09:00'
+                            },
+                            {
+                                title: '김길동 님',
+                                start: '2020-08-06T09:00'
+                            },
+                            {
+                                title: '김길동 님',
+                                start: '2020-08-06T09:00'
+                            },
+                            {
+                                title: '김길동 님',
+                                start: '2020-08-06T09:00'
+                            },
+                            {
+                                title: '김길동 님',
+                                start: '2020-08-06T09:00'
+                            },
+                            {
+                                title: '김길동 님',
+                                start: '2020-08-06T09:00'
                             },
                             {
                                 title: '김영희 님',
