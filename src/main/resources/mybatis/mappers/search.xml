@@ -44,14 +44,50 @@
 	]]>
 	</select>
 	
-	
-	<!--트레이너 리스트 불러오기 -->
-	<select id="userList" parameterType="map"
+	<!--트레이너 리스트 불러오기(지역,이름,성별검색) -->
+	<select id="userList" 
 	resultType="com.javaex.vo.UserVo">
 	<![CDATA[
 	SELECT u.userno as "userNo",
        u.userid as "userId",
-       u.password,u.name,u.gender,u.phone,u.age,
+       u.password,u.name,u.gender,u.phone,u.birthdate,
+       u.usertype as "userType",
+       u.profileimg as "profileImg",
+       u.introduction,u.career,
+       u.location,u.company,u.price
+	FROM users u
+	WHERE userType = 'trainer'
+	]]>
+	
+	<if test = "location !='' and  location!=null" >
+	 <![CDATA[
+	AND u.location like '%'||#{location}||'%'
+	]]>
+	</if>
+	
+	<if test = "name!='' and  name!=null" >
+	  <![CDATA[
+	AND u.name like '%'||#{name}||'%'
+	]]>
+	</if>
+	
+	<if test = "gender!='' and  gender!=null" >
+	  <![CDATA[
+	AND u.gender = #{gender}
+	]]>
+	</if>
+	
+	</select>
+	
+
+	
+	<!--트레이너 검색(전문분야) -->
+	<select id="interestList" parameterType="map"
+	resultType="com.javaex.vo.UserVo">
+	<![CDATA[
+	SELECT u.userno as "userNo",
+       u.userid as "userId",
+       u.password,u.name,u.gender,u.phone,u.birthdate,
        u.usertype as "userType",
        u.profileimg as "profileImg",
        u.introduction,u.career,
@@ -64,17 +100,37 @@
 	AND userType = 'trainer'
 	]]>
 	
-	<if test = "gender !='' and gender !=null">
+	<if test = "field!='' and  field!=null" >
+	  <![CDATA[
+	AND fi.fieldname = #{field}
+	
+	]]>
+	</if>
+	
+	<if test = "location !='' and  location!=null" >
+	 <![CDATA[
+	AND u.location like '%'||#{location}||'%'
+	]]>
+	</if>
+	
+	<if test = "name!='' and  name!=null" >
+	  <![CDATA[
+	AND u.name like '%'||#{name}||'%'
+	]]>
+	</if>
+	
+	<if test = "gender!='' and  gender!=null" >
 	  <![CDATA[
 	AND u.gender = #{gender}
 	]]>
 	</if>
 	
 	
-	
-	
-	
 	</select>
+	
+	
+	
+	
 	
 	
 </mapper>

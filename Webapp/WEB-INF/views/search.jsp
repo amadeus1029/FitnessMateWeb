@@ -101,7 +101,7 @@
             
             <ul class="search-list clearfix">
             
-            <!--
+            
             	<c:forEach items="${userVo}" var="userVo" varStatus = "status">
                 <li class="search-result" onclick="showProfileModal($(this))">
                     <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');">
@@ -111,9 +111,10 @@
                         <p class="gym">${userVo.company}</p>
                         <p class="comment">${userVo.introduction}</p>
                         <p class="score">평점 4.7</p>
+                        <input type="hidden" value="${userVo.userNo}">
                     </div>
                 </li>
-                </c:forEach>-->
+                </c:forEach>
                 
             </ul>
             
@@ -299,11 +300,17 @@
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     
     
-    <script type="text/javascript">    
+    <script type="text/javascript">  
+    $(".search-result").on("click",function(){
+    	 console.log("트레이너 세부");
+    });
+    
+    
+    
+   
     //검색
     $(".button.key").on("click",function(){
 	   console.log("검색버튼");
-	   
 	   //값 추출
 	   var user ={province:$("[name='province']").val(),
 			      city:$("[name='city']").val(),
@@ -313,8 +320,7 @@
 			      name:$("[name='name']").val()}
 		
 	   console.log(user);
-	   
-	   
+	   	   
 	   $.ajax({
 			url : "${pageContext.request.contextPath }/search/results",
 			type : "post",
@@ -323,22 +329,22 @@
 			dataType : "",
 			success : function(userVo) {
 				/*성공시 처리해야될 코드 작성*/
-				console.log();
+				$("ul.search-list").empty();
+				console.log(userVo);
 				var userStr = "";
 				
 				for (var i in userVo ) {
 					userStr += "<li class='search-result' onclick='showProfileModal($(this))'>";
-					userStr += "<div class='image-area' style='background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');'>;"
+					userStr += '<div class="image-area" style="background-image:url("${pageContext.request.contextPath}\\assets\\image\\face\\Gangho-dong.jpg");">;'
 					userStr += "</div>";
 					userStr += "<div class='content-area'>";
-					userStr += "<p class='name'>"+$(userVo.Name)+"</p>";
-					userStr += "<p class='gym'>"+userVo.company+"</p>";
-					userStr += "<p class='comment'>"+userVo.introduction+"</p>";
+					userStr += "<p class='name'>"+userVo[i].name+"</p>";
+					userStr += "<p class='gym'>"+userVo[i].company+"</p>";
+					userStr += "<p class='comment'>"+userVo[i].introduction+"</p>";
 					userStr += " <p class='score'>평점 4.7</p>";
 					userStr += "</div>";
 					userStr += "</li>";
 				}
-					
 			
 				$("ul.search-list").append(userStr);
 				
@@ -347,9 +353,8 @@
 				console.error(status + " : " + error);
 			}
 		});
-	  
-  
     });
+    
     
     //구 불러오기
     $("select[name='province']").on("change",function(){
@@ -367,7 +372,7 @@
 			dataType : "json",
 			success : function(cityList) {
 				/*성공시 처리해야될 코드 작성*/
-				var cityStr ='<option value="null">전체</option>';
+				var cityStr ='<option value="" >전체</option>';
 				for (var i in cityList ) {
 					cityStr +='<option>'+cityList[i].city+'</option>';
 					
@@ -395,7 +400,7 @@
 			dataType : "json",
 			success : function(regionList) {
 				/*성공시 처리해야될 코드 작성*/
-				var regionStr ='<option value="null">전체</option>';
+				var regionStr ='<option value="">전체</option>';
 				for (var i in regionList ) {
 					regionStr +='<option>'+regionList[i].region+'</option>';
 					
@@ -410,7 +415,7 @@
     
     
     
-    
+    //별점 반영하기
     function showProfileModal(obj) {
             //다른 버튼 on 제거
             $("#profileModal .label-wrapper .label-btn").removeClass("on");
@@ -436,7 +441,8 @@
             $("#profileModal").find("." + targetTab + "-wrapper").addClass("on");
 
         }
-
+		
+        //별점 선택
         $('#star_grade i').click(function(){
             $(this).parent().children("i").removeClass("on");  /* 별점의 on 클래스 전부 제거 */ 
             $(this).addClass("on").prevAll("i").addClass("on"); /* 클릭한 별과, 그 앞 까지 별점에 on 클래스 추가 */
@@ -460,7 +466,7 @@
             $(".review-list").prepend(
                 "<li class='review-line'>"+
                 " <div class='user-profile ff'>"+
-                "   <img class='user-profile-img' src='${pageContext.request.contextPath}/assets/image/review-test2.jpg' );>"+
+                "   <img class='user-profile-img' src=('${pageContext.request.contextPath}/assets/image/review-test2.jpg' );>"+
                 "   <div class='user-profile-info'>"+
                 "     <div class='user-profile-name'>"+name+"</div>"+
                 "     <div class='user-profile-date'>"+date+"</div>"+

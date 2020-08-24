@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.javaex.service.SearchService;
 import com.javaex.vo.AddressVo;
 import com.javaex.vo.InterestFieldVo;
+import com.javaex.vo.UserVo;
 
 @Controller
 public class MainController {
@@ -47,6 +48,12 @@ public class MainController {
     	List<InterestFieldVo> fieldVo = searchService.addField();
     	//전문분야 받기
     	model.addAttribute("fieldVo", fieldVo);
+    	
+    	//트레이너 정보 불러오기
+    	List<UserVo> userVo  = searchService.userList();
+    	//트레이너 리스트 받기
+    	model.addAttribute("userVo", userVo);
+    	
 
         return "search";
     }

@@ -53,27 +53,52 @@ public class SearchService {
 	
 	//////////////////////////////////////////////////
 	
-	//검색하기,트레이너 리스트
+	//트레이너 리스트
+	public List<UserVo> userList() {
+		System.out.println("SearchService:userList");
+		
+		List<UserVo> userVo = searchDao.userList();
+		
+		return userVo;
+		
+	}
+	
+	
+	
+	//트레이너 검색
 	public List<UserVo> userList(String province, String city, String region, String gender, String field,
 			String name) {
 		System.out.println("SearchService:userList");
 		
+		
+		
+		//map에 받은 파라미터 값 담기
 		Map<String,Object> listMap = new HashMap<>();
 		
-		listMap.put("province",province);
-		listMap.put("city",city);
-		listMap.put("region",region);
+		//지역 정보 담기
+		if(region!="") {
+			listMap.put("location",province+"|"+city+"|"+region);
+		} else if(city!="") {
+			listMap.put("location",province+"|"+city);
+		} else { listMap.put("location",province);}
+		
+		
+		//전공,성별,이름담기
 		listMap.put("field",field);
 		listMap.put("gender",gender);
 		listMap.put("name",name);
 		
 		
-		System.out.println(listMap.toString());
-		
-		List<UserVo> userVo = searchDao.userList(listMap);
-		
-		
+		if("".equals(listMap.get("field") )){
+		List<UserVo> userVo = searchDao.searchList(listMap);
 		return userVo;
+		} //전문분야
+		else {
+			List<UserVo> userVo = searchDao.interestList(listMap);
+			return userVo;
+		}
+		
+		
 	}
 	
 	

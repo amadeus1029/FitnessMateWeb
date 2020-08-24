@@ -54,15 +54,32 @@ public class SearchDao {
 	
 	///////////////////////////////////////////////////////
 	
-	public List<UserVo> userList(Map<String, Object> listMap) {
+	//트레이너 리스트
+	public List<UserVo> userList() {
 		System.out.println("searchDao:userList");
-		System.out.println(listMap.toString());
 		
-		List<UserVo> print = sqlSession.selectList("search.userList",listMap);
+		List<UserVo> print = sqlSession.selectList("search.userList");
 		System.out.println(print);
 		
 		return print;
 	}
+	
+	
+	
+	//검색(전문분야제외)
+	public List<UserVo> searchList(Map<String, Object> listMap) {
+		System.out.println("searchDao:userList");
+			List<UserVo> print = sqlSession.selectList("search.userList",listMap);
+			return print;	
+		}
+	
+	
+	//검색(전문분야)
+		public List<UserVo> interestList(Map<String, Object> listMap) {
+			System.out.println("searchDao:userList");
+				List<UserVo> print = sqlSession.selectList("search.interestList",listMap);
+				return print;	
+			}
 	
 	
 

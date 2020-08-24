@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +17,7 @@ public class SearchController {
 	@Autowired
 	private SearchService searchService;
 	
+	//검색하기
 	@ResponseBody
 	@RequestMapping("/search/results")
 	public List<UserVo> results(@RequestParam(value="province",required=false) String province,
@@ -27,12 +27,9 @@ public class SearchController {
 						  @RequestParam(value="field",required=false) String field,
 						  @RequestParam(value="name",required=false) String name
 						  ) 
-	{
-					System.out.println(province+city+region+gender+field+name);
+	{   System.out.println("controller"+province+city+region+gender+field+name);
 		List<UserVo> userVo  = searchService.userList(province,city,region,gender,field,name);
 		System.out.println("controller:search/results");
-		
-		
 				
 		return userVo;
 	}
@@ -57,6 +54,8 @@ public class SearchController {
 
 		return reg;
 	}
+	
+	
 	
 	
 }
