@@ -89,11 +89,16 @@ public class SearchService {
 		listMap.put("name",name);
 		
 		
-		
-		List<UserVo> userVo = searchDao.interestList(listMap);
-		
-		
+		if("".equals(listMap.get("field") )){
+		List<UserVo> userVo = searchDao.searchList(listMap);
 		return userVo;
+		} //전문분야
+		else {
+			List<UserVo> userVo = searchDao.interestList(listMap);
+			return userVo;
+		}
+		
+		
 	}
 	
 	
