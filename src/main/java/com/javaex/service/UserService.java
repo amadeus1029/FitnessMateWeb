@@ -106,7 +106,7 @@ public class UserService {
 		if(birthList == null) {
 			birthDate = "";
 		}else {
-			birthDate = birthList.get(0).substring(0, 2)+"/"+birthList.get(1)+"/"+birthList.get(2);
+			birthDate = birthList.get(0).substring(2)+"/"+birthList.get(1)+"/"+birthList.get(2);
 		}
 		
 		vo.setBirthDate(birthDate);

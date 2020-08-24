@@ -82,16 +82,6 @@ public class UserController {
     	return "user/signUpComplete";
     }
     
-	@RequestMapping("/logout")
-	public String logout(String msg, HttpSession session) {
-		System.out.println("/user/logout");
-		
-		session.removeAttribute("authUser");
-		session.invalidate();
-		
-		return "redirect:/main";
-	}
-    
 
     //API controller
     @ResponseBody
@@ -110,26 +100,6 @@ public class UserController {
     }
     
     @ResponseBody
-    @RequestMapping("/getCity")
-    public List<String> getCity(String thisProvince) {
-    	System.out.println("/getCity");
-    	
-    	List<String> cityList = userService.getCityList(thisProvince);
-		
-		return cityList;
-    }
-    
-    @ResponseBody
-    @RequestMapping("/getRegion")
-    public List<String> getRegion(String thisCity) {
-    	System.out.println("/getCity");
-    	
-    	List<String> regionList = userService.getRegionList(thisCity);
-		
-		return regionList;
-    }
-    
-    @ResponseBody
     @RequestMapping("/login")
     public boolean login(String userId, String userPw, HttpSession session) {
     	System.out.println("/login");
@@ -145,17 +115,4 @@ public class UserController {
     		return false;
     	}
     }
-    
-    @ResponseBody
-    @RequestMapping("/deleteCareer")
-    public String deleteCareer(int careerNo) {
-    	System.out.println("/deleteCareer");
-    	
-    	userService.deleteCareer(careerNo);
-    	
-    	return "";
-    }
-    
-
-
 }

@@ -73,7 +73,8 @@ public class MypageController {
         System.out.println(exVo);
         return mypageService.deleteExercise(exVo);
     }
-    
+
+    /*
     @RequestMapping("/manageUser")
     public String ManageUser(HttpSession session) {
         UserVo user = (UserVo) session.getAttribute("authUser");
@@ -86,6 +87,7 @@ public class MypageController {
     	
         return "mypage/manageUser";
     }
+    */
     
     @RequestMapping("/profile")
     public String profile(HttpSession session, Model model) {

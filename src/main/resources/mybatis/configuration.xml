@@ -10,5 +10,6 @@
         <mapper resource="mybatis/mappers/exercise.xml" />
     	<mapper resource="mybatis/mappers/search.xml" />
     	<mapper resource="mybatis/mappers/user.xml" />
+    	    	<mapper resource="mybatis/mappers/pt.xml" />
     </mappers>
 </configuration>

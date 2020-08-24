@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+
+	<select id="selectSameId" parameterType="int" resultType="com.javaex.vo.PtVo">
+		<![CDATA[
+		
+			SELECT
+			    pt.ptNo, u.userNo, u.userId, u.name, u.profileimg, to_char(pt.endDate, 'yyyymmdd') endDate, pt.regcount, pt.schedulecount
+			FROM
+			    users u,
+			    (SELECT
+			        p.ptNo,
+			        p.userNo,
+			        p.endDate,
+			        p.regCount,
+			        s.schedulecount
+			    FROM pt p,
+			            (SELECT ptNo, COUNT(scheduleNo) scheduleCount
+			            FROM schedule
+			            GROUP BY ptNo) s
+			    WHERE p.ptno = s.ptno
+			    AND p.trainerno = #{userNo}) pt
+			WHERE u.userNo = pt.userno
+
+		 ]]>
+	</select>
+	
+
+	
+</mapper>
