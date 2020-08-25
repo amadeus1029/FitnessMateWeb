@@ -108,8 +108,13 @@ public class SearchService {
 	public UserVo trainerInfo(int no) {
 		System.out.println("SearchService:trainerInfo");
 		
+		UserVo uVo = searchDao.readTrainer(no);
 		
-		return searchDao.readTrainer(no);
+		
+		
+		System.out.println(uVo);
+		
+		return uVo;
 	}
 	
 	

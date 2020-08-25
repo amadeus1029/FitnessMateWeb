@@ -63,8 +63,11 @@ public class SearchController {
 	@RequestMapping("/search/trainerInfo")
 	public UserVo trainerInfo(@RequestParam("no") int no) {
 		System.out.println("controller:/search/trainerInfo");
-				
-		return searchService.trainerInfo(no);
+		
+		UserVo uVo = searchService.trainerInfo(no);
+		
+		
+		return uVo;
 		
 	}
 	

@@ -47,7 +47,7 @@ public class SearchDao {
 		System.out.println("searchDao:field list");
 		return sqlSession.selectList("search.fieldname");
 	}
-
+	
 	///////////////////////////////////////////////////////
 
 	// 트레이너 리스트
@@ -81,7 +81,14 @@ public class SearchDao {
 		System.out.println("searchDao:readTrainer");
 		
 		UserVo uVo = sqlSession.selectOne("search.readTrainer",no);
-		System.out.println(uVo);
+		
+		
+		return uVo;
+	}
+
+	public UserVo userField(int no) {
+		
+		UserVo uVo = sqlSession.selectOne("search.readField",no);
 		
 		return uVo;
 	}

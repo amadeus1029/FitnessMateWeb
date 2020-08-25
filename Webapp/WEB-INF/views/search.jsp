@@ -135,9 +135,9 @@
                     <div class="summary-wrapper clearfix">
                         <img src="${pageContext.request.contextPath}/assets/image/face/Park-Myung- Soo.jpg" class="profile-img">
                         <div class="summary">
-                        <input type="text" name="no" value="" id="delNo">
-                            <p class="name">박명수</p>
-                            <p class="belong">무한도전 피트니스짐</p>
+                        <input type="hidden" name="no" value="" id="delNo">
+                            <p class="name info"></p>
+                            <p class="belong"></p>
                         </div>
                         <div class="score">
                             <p class="head">평점</p>
@@ -151,19 +151,19 @@
                     <div class="info-wrapper clearfix">
                         <div class="info">
                             <h3 class="title">나이</h3>
-                            <p class="content">42세</p>
+                            <p class="content age"></p>
                         </div>
                         <div class="info">
                             <h3 class="title">성별</h3>
-                            <p class="content">남성</p>
+                            <p class="content gender"></p>
                         </div>
                         <div class="info">
                             <h3 class="title">지역</h3>
-                            <p class="content">서울특별시 강남구 압구정동</p>
+                            <p class="content location"></p>
                         </div>
                         <div class="info">
                             <h3 class="title">트레이너 경력</h3>
-                            <p class="content">12년</p>
+                            <p class="content career"></p>
                         </div>
                     </div>
                     <div class="info-wrapper clearfix">
@@ -183,12 +183,11 @@
                     </div>
                     <div class="pay-wrapper">
                         <h3 class="title">비용</h3>
-                        <p class="content">10회 이상 신청시 회당 5만원<br>20회 이상 신청시 회당 4만원<br>30회 이상 신청 시 회당 3만원</p>
+                        <p class="content price"></p>
                     </div>
                     <div class="comment-wrapper">
                         <h3 class="title">트레이너 메세지</h3>
-                        <p class="content">정당은 그 목적·조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에 참여하는데 필요한 조직을 가져야 한다. 법관은 탄핵 또는 금고
-                            이상의 형의 선고에 의하지 아니하고는 파면되지 아니하며, 징계처분에 의하지 아니하고는 정직·감봉 기타 불리한 처분을 받지 아니한다.</p>
+                        <p class="content introduction"></p>
                     </div>
                 </div>
                 <div class="label-tab review-wrapper">
@@ -417,14 +416,15 @@
     	var no = userNo;
     	console.log("no "+no);
     	$("#delNo").val(no);
+    	
 
-            //다른 버튼 on 제거
-            $("#profileModal .label-wrapper .label-btn").removeClass("on");
-            $("#profileModal .label-wrapper .profile-btn").addClass("on");
-            //다른 탭 on 제거
-            $("#profileModal .label-tab").removeClass("on");
-            $("#profileModal .profile-wrapper").addClass("on");
-            
+    	 //다른 버튼 on 제거
+    	 $("#profileModal .label-wrapper .label-btn").removeClass("on");
+    	 $("#profileModal .label-wrapper .profile-btn").addClass("on");
+    	 //다른 탭 on 제거
+    	 $("#profileModal .label-tab").removeClass("on");
+    	 $("#profileModal .profile-wrapper").addClass("on");
+
             
           //데이터전송
         	$.ajax({
@@ -435,9 +435,19 @@
 
         			dataType : "json",
         			success : function(vo) {
-        			
-        					
-        				}
+        				var loca = vo.location.replace( /[|]/gi, ' ');
+        				//정보넣기
+        				$(".name.info").html(vo.name); //이름
+        				$(".belong").html(vo.company); //회사
+        				
+        				//성별 
+        				if(vo.gender =='female')
+        				{$(".content.gender").html("여자"); 
+        				} else{$(".content.gender").html("남자");}
+        				$(".content.location").html(loca); //지역
+        				$(".content.career").html(vo.career+"년"); //경력
+        				$(".content.price").html(vo.price); //가격
+        				$(".content.introduction").html(vo.introduction); //자기소개
         				
         			},
         			error : function(XHR, status, error) {
