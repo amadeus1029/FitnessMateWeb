@@ -27,7 +27,6 @@ public class Mypage2Service {
 		int today = Integer.parseInt(""+year+month+day);
 		
 		List<PtVo> ptList = ptDao.selectTraineeList(userNo);
-		System.out.println(ptList);
 		
 		for(PtVo ptVo: ptList) {
 			
@@ -37,8 +36,6 @@ public class Mypage2Service {
 				ptVo.setProceed(true);
 			}
 		}
-		
-		System.out.println(ptList);
 		
 		return ptList;
 	}

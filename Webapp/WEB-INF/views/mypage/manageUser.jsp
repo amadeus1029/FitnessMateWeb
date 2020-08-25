@@ -49,50 +49,19 @@
             
             <ul class="user-list now clearfix">
             	<!-- 반복 -->
-                <li class="user clearfix" onclick="showUser();">
-                    <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
-                    <p class="info">
-                        <span class="name">이광수</span>
-                        <span class="id">kslee0421</span>
-                    </p>
-                </li>
+            	<c:forEach items="${ptList}" var="pt">
+	                <li class="user clearfix" onclick="showUser();">
+	                    <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
+	                    <p class="info">
+	                        <span class="name">${pt.name}</span>
+	                        <span class="id">${pt.userId}</span>
+	                    </p>
+	                </li>
+                </c:forEach>
+
                 <!-- 반복 끝 -->
-                <li class="user clearfix" onclick="showUser();">
-                    <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
-                    <p class="info">
-                        <span class="name">이효리</span>
-                        <span class="id">dqwhdwqj1232</span>
-                    </p>
-                </li>
-                <li class="user clearfix" onclick="showUser();">
-                    <img src="${pageContext.request.contextPath}/assets/image/face/Yang-Se-chan.jpg" alt="profile image" title="profile image">
-                    <p class="info">
-                        <span class="name">양세찬</span>
-                        <span class="id">yangcyangc</span>
-                    </p>
-                </li>
-                <li class="user clearfix" onclick="showUser();">
-                    <img src="${pageContext.request.contextPath}/assets/image/face/JungWooSung.jpg" alt="profile image" title="profile image">
-                    <p class="info">
-                        <span class="name">정우성</span>
-                        <span class="id">jsw9232</span>
-                    </p>
-                </li>
-                <li class="user clearfix" onclick="showUser();">
-                    <img src="${pageContext.request.contextPath}/assets/image/face/Yoo-Jae-Suk.jpg" alt="profile image" title="profile image">
-                    <p class="info">
-                        <span class="name">유재석</span>
-                        <span class="id">yoosansle</span>
-                    </p>
-                </li>
-                <li class="user clearfix" onclick="showUser();">
-                    <img src="${pageContext.request.contextPath}/assets/image/face/Jeongjae-Lee.jpg" alt="profile image" title="profile image">
-                    <p class="info">
-                        <span class="name">이정재</span>
-                        <span class="id">imking2302</span>
-                    </p>
-                </li>
             </ul>
+            
             <ul class="user-list former clearfix off">
                 <li class="user clearfix" onclick="showUser();">
                     <img src="${pageContext.request.contextPath}/assets/image/face/JungWooSung.jpg" alt="profile image" title="profile image">
