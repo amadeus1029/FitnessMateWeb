@@ -49,10 +49,10 @@
                 <button type="button" id="addUserBtn" class="button main" onclick="showAddUserModal();">회원 추가</button>
             </form>
             
-            <ul class="user-list now clearfix">
+            <ul class="user-list clearfix">
             	<!-- 반복 -->
             	<c:forEach items="${ptList}" var="pt">
-	                <li class="user clearfix" onclick="showUser(${pt.ptNo});">
+	                <li class="user clearfix ${pt.proceed eq true ? 'former off':'now'}" onclick="showUser(${pt.ptNo});">
 	                    <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
 	                    <p class="info">
 	                        <span class="name">${pt.name}</span>
@@ -60,53 +60,7 @@
 	                    </p>
 	                </li>
                 </c:forEach>
-
                 <!-- 반복 끝 -->
-            </ul>
-            
-            <ul class="user-list former clearfix off">
-                <li class="user clearfix" onclick="showUser();">
-                    <img src="${pageContext.request.contextPath}/assets/image/face/JungWooSung.jpg" alt="profile image" title="profile image">
-                    <p class="info">
-                        <span class="name">정우성</span>
-                        <span class="id">jsw9232</span>
-                    </p>
-                </li>
-                <li class="user clearfix" onclick="showUser();">
-                    <img src="${pageContext.request.contextPath}/assets/image/face/Yoo-Jae-Suk.jpg" alt="profile image" title="profile image">
-                    <p class="info">
-                        <span class="name">유재석</span>
-                        <span class="id">yoosansle</span>
-                    </p>
-                </li>
-                <li class="user clearfix" onclick="showUser();">
-                    <img src="${pageContext.request.contextPath}/assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">
-                    <p class="info">
-                        <span class="name">이광수</span>
-                        <span class="id">kslee0421</span>
-                    </p>
-                </li>
-                <li class="user clearfix" onclick="showUser();">
-                    <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
-                    <p class="info">
-                        <span class="name">이효리</span>
-                        <span class="id">dqwhdwqj1232</span>
-                    </p>
-                </li>
-                <li class="user clearfix" onclick="showUser();">
-                    <img src="${pageContext.request.contextPath}/assets/image/face/Yang-Se-chan.jpg" alt="profile image" title="profile image">
-                    <p class="info">
-                        <span class="name">양세찬</span>
-                        <span class="id">yangcyangc</span>
-                    </p>
-                </li>
-                <li class="user clearfix" onclick="showUser();">
-                    <img src="${pageContext.request.contextPath}/assets/image/face/Jeongjae-Lee.jpg" alt="profile image" title="profile image">
-                    <p class="info">
-                        <span class="name">이정재</span>
-                        <span class="id">imking2302</span>
-                    </p>
-                </li>
             </ul>
         </div>
     </div>
@@ -179,7 +133,7 @@
             </div>
             <div class="modal-btn-area">
                 <button type="button" class="modal-cancel" onclick="forceHideModal('#addUserModal')">취소</button>
-                <button type="button" class="modal-confirm main" onclick="addUser();">추가</button>
+                <button type="button" class="modal-confirm main off" onclick="addUser();">추가</button>
             </div>
         </div>
     </div>
@@ -209,9 +163,9 @@
 					result += '    <span class="id">'+userVo.userId+'</span>';
 					result += '</p>';
 					result += '<div class="schedule-input-wrapper clearfix">';
-					result += '    <input class="schedule-input" type="number" name="period" placeholder="1" max="60">';
+					result += '    <input class="schedule-input" type="number" name="period" placeholder="1" max="60" onkeyup="checkEmpty();">';
 					result += '    <span class="mark">개월</span>';
-					result += '    <input class="schedule-input" type="number" name="regCount" placeholder="0" max="999">';
+					result += '    <input class="schedule-input" type="number" name="regCount" placeholder="0" max="999" onkeyup="checkEmpty();">';
 					result += '    <span class="mark">회</span>';
 					result += '    <input type="hidden" name="userNo" value="'+userVo.userNo+'">';
 					result += '</div>';
@@ -248,10 +202,9 @@
 
         function showUserList(target) {
             var targetType = target.prev("input[type='radio']").val();
-            $("ul.user-list").addClass("off");
             $("input#searchKeyword").val("");
-            $("ul.user-list li").show();
-            $("ul.user-list." + targetType).removeClass("off");
+            $("ul.user-list li").addClass("off");
+            $("ul.user-list li." + targetType).removeClass("off");
         }
 
         function showUser(ptNo) {
@@ -302,6 +255,7 @@
         	$("p.errMsg").hide();
         	$("p.defaultMsg").show();
         	$("input[name='keyword']").val("");
+            $("#addUserModal").find(".modal-confirm").addClass("off");
         	
             showModal("#addUserModal");
         }
@@ -372,6 +326,17 @@
     			}
     		})
         	
+        }
+
+        function checkEmpty() {
+            var period = $("#addUserModal").find("input[name='period']").val();
+            var regCount = $("#addUserModal").find("input[name='regCount']").val();
+
+            if(period === "" || period == null || regCount === "" || regCount == null) {
+                $("#addUserModal").find(".modal-confirm").addClass("off");
+            } else {
+                $("#addUserModal").find(".modal-confirm").removeClass("off");
+            }
         }
     </script>
 </body>

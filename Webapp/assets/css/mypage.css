@@ -470,6 +470,11 @@ form#editProfileForm {
   padding: 30px;
   margin-bottom: 100px;
 }
+form#editProfileForm select {
+  width: 25%;
+  float: left;
+  margin-right: 15px;
+}
 form#editProfileForm .main-info .main-info-wrapper {
   float: left;
   width: 240px;
@@ -514,9 +519,7 @@ form#editProfileForm .info-wrapper {
 form#editProfileForm .info-wrapper .info {
   float: left;
   text-align: left;
-}
-form#editProfileForm .info-wrapper .info:not(:last-of-type) {
-  margin-right: 100px;
+  width: 30%;
 }
 form#editProfileForm .info-wrapper .category-info,
 form#editProfileForm .info-wrapper .award-info {
@@ -596,9 +599,7 @@ form#userSearchForm button#addUserBtn {
 }
 ul.user-list {
   margin-top: 50px;
-}
-ul.user-list.off {
-  display: none;
+  min-height: 110px;
 }
 ul.user-list li.user {
   float: left;
@@ -617,6 +618,9 @@ ul.user-list li.user:not( :nth-child(4n)) {
 ul.user-list li.user:hover {
   background-color: rgba(0, 138, 38, 0.5);
   transition: 0.5s;
+}
+ul.user-list li.user.off {
+  display: none;
 }
 ul.user-list li.user img {
   float: left;

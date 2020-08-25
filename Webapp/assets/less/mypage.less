@@ -270,6 +270,13 @@ form#editProfileForm {
   border: 1px solid #dadde6;
   padding: 30px;
   margin-bottom: 100px;
+
+  select {
+    width: 25%;
+    float: left;
+    margin-right: 15px;
+  }
+
   .main-info {
     .main-info-wrapper {
       float: left;
@@ -321,10 +328,7 @@ form#editProfileForm {
     .info {
       float: left;
       text-align: left;
-
-      &:not(:last-of-type) {
-        margin-right: 100px;
-      }
+      width: 30%;
     }
 
     .category-info,
@@ -404,9 +408,7 @@ form#userSearchForm {
 }
 ul.user-list {
   margin-top: 50px;
-  &.off {
-    display: none;
-  }
+  min-height: 110px;
   li.user {
     float: left;
     width: ~"calc((100% - 90px) / 4)";
@@ -423,6 +425,9 @@ ul.user-list {
     &:hover {
       background-color: rgba(0, 138, 38, 0.5);
       transition: 0.5s;
+    }
+    &.off {
+      display: none;
     }
     img {
       float: left;
