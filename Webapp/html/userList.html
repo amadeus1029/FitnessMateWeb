@@ -24,10 +24,28 @@
 
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="../assets/css/mypage.css">
-    <style>
+<style>
 
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper{
+    padding: 0px;
+}
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper img{
+    float: left;
+    width: 400px;
+    height: 400px;
+}
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div{
+    padding-left: 430px;
+    text-align: left;
+    line-height: 180%;
+}
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div p.label {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 10px;
+}
 
-    </style>
+</style>
 
     <title>write record</title>
 
@@ -121,8 +139,7 @@
                     <input type="radio" id="formerMember" name="member" value="former">
                     <label for="formerMember" onclick="showUserList($(this));">이전회원</label>
                 </div>
-                <input type="text" id="searchKeyword" name="searchKeyword" placeholder="이름 혹은 아이디를 입력해주세요"
-                       onkeyup="searchByKeyword($(this));">
+                <input type="text" id="searchKeyword" name="searchKeyword" placeholder="이름 혹은 아이디를 입력해주세요" onkeyup="searchByKeyword($(this));">
                 <button type="button" id="addUserBtn" class="button main" onclick="showAddUserModal();">회원 추가</button>
             </form>
             <ul class="user-list now clearfix">
@@ -218,6 +235,7 @@
     </div>
 
 
+
     <footer id="footer">
         <div class="wrapper">
             <ul class="agree clearfix">
@@ -248,21 +266,33 @@
         <div class="modal-wrapper">
             <button type="button" class="close-btn" onclick="forceHideModal('#userInfoModal')">X</button>
             <div class="label-wrapper clearfix">
-                <button type="button" class="label-btn profile-btn on" data-tab="profile" onclick="showTab($(this))">
-                    프로필
-                </button>
-                <button type="button" class="label-btn review-btn" data-tab="inbody" onclick="showTab($(this))">인바디
-                </button>
-                <button type="button" class="label-btn location-btn" data-tab="exercise" onclick="showTab($(this))">
-                    운동기록
-                </button>
+                <button type="button" class="label-btn profile-btn on" data-tab="profile" onclick="showTab($(this))">프로필</button>
+                <button type="button" class="label-btn review-btn" data-tab="inbody" onclick="showTab($(this))">인바디</button>
+                <button type="button" class="label-btn location-btn" data-tab="exercise" onclick="showTab($(this))">운동기록</button>
             </div>
             <div class="modal-content">
                 <div class="label-tab profile-wrapper on">
-                    프로필 내역이 들어옵니다
+                    <img src="../assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
+                    <div>
+                        <p class="label">· 회원 이름</p>
+                        <p>&nbsp; 김회원 (male)</p>
+                        <p class="label">· ID</p>
+                        <p>&nbsp; id01</p>
+                        <p class="label">· 연락처</p>
+                        <p>&nbsp; 010-0000-0000</p>
+                        <p class="label">· 등록기간</p>
+                        <p>&nbsp; 2020/08/25 ~ 2020/09/25</p>
+                        <p class="label">· 잔여횟수</p>
+                        <p>&nbsp; 3 / 4</p>
+                        <form action="">
+                            <p class="label">· 메모</p>
+                            <textarea name="memo">메모메모메모</textarea>
+                            <button type="button">메모 수정</button>
+                        </form>
+                    </div>
                 </div>
                 <div class="label-tab inbody-wrapper">
-                    인바디 내역이 들어옵니다
+                   인바디 내역이 들어옵니다
                 </div>
                 <div class="label-tab exercise-wrapper">
                     운동기록 내역이 들어옵니다
@@ -272,28 +302,22 @@
     </div>
     <div class="modal-layer" id="addUserModal">
         <div class="modal-wrapper">
+            <button type="button" class="close-btn" onclick="forceHideModal('#userInfoModal')">X</button>
             <div class="modal-content">
-                <p class="title">회원 추가</p>
-                <div class="search-wrapper clearfix">
-                    <input type="text" name="keyword" placeholder="ID를 입력해주세요">
-                    <button type="button" class="button search">검색</button>
-                </div>
-                <div class="search-result">
-                    <div class="user clearfix">
-                        <img src="../assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">
-                        <p class="info">
-                            <span class="name">이광수</span>
-                            <span class="id">kslee0421</span>
-                        </p>
+                <form id="addUserForm">
+                    <p class="title">회원 추가</p>
+                    <div class="search-wrapper">
+
                     </div>
-                </div>
+                </form>
             </div>
             <div class="modal-btn-area">
                 <button type="button" class="modal-cancel" onclick="forceHideModal('#addUserModal')">취소</button>
-                <button type="button" class="modal-confirm off main" onclick="addUser();">추가</button>
+                <button type="button" class="modal-confirm off" onclick="addUser();">추가</button>
             </div>
         </div>
     </div>
+    <!-- footer가 필요한 페이지에서 사용 -->
     <script type="text/javascript">
 
         function showTab(target) {
@@ -311,15 +335,14 @@
             $("#userInfoModal").find("." + targetTab + "-wrapper").addClass("on");
 
         }
-
         function showUserList(target) {
             var targetType = target.prev("input[type='radio']").val();
             $("ul.user-list").addClass("off");
             $("input#searchKeyword").val("");
             $("ul.user-list li").show();
-            $("ul.user-list." + targetType).removeClass("off");
+            $("ul.user-list."+targetType).removeClass("off");
         }
-
+        
         function showUser() {
             showModal("#userInfoModal");
         }
@@ -329,10 +352,10 @@
 
             $("ul.user-list li").hide();
 
-            $("span.name:contains('" + keyword + "')").parents("li").show();
-            $("span.id:contains('" + keyword + "')").parents("li").show();
+            $("span.name:contains('"+keyword+"')").parents("li").show();
+            $("span.id:contains('"+keyword+"')").parents("li").show();
         }
-
+        
         function showAddUserModal() {
             showModal("#addUserModal");
         }

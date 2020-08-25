@@ -187,8 +187,7 @@
 						</h3>
 						<c:forEach items="${profile.careerList}" var="career">
 							<p class="award">${career.recordInfo}
-								<i class="far fa-minus-square delEach"
-									data-careerno="${career.careerNo}"></i>
+								<i class="far fa-minus-square delEach" data-careerno="${career.careerNo}"></i>
 							</p>
 						</c:forEach>
 					</div>
