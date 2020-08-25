@@ -27,6 +27,8 @@
 
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage2.css">
+        
 </head>
 <body>
     <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
@@ -50,7 +52,7 @@
             <ul class="user-list now clearfix">
             	<!-- 반복 -->
             	<c:forEach items="${ptList}" var="pt">
-	                <li class="user clearfix" onclick="showUser();">
+	                <li class="user clearfix" onclick="showUser(${pt.ptNo});">
 	                    <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
 	                    <p class="info">
 	                        <span class="name">${pt.name}</span>
@@ -124,16 +126,38 @@
             </div>
             <div class="modal-content">
                 <div class="label-tab profile-wrapper on">
-                    프로필 내역이 들어옵니다
-                </div>
-                <div class="label-tab inbody-wrapper">
-                    인바디 내역이 들어옵니다
-                </div>
-                <div class="label-tab exercise-wrapper">
-                    운동기록 내역이 들어옵니다
-                </div>
-            </div>
-        </div>
+					<img src="../assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
+                    <div>
+                        <p class="label">· 회원 이름</p>
+                        <p id="userName"></p>
+                        
+                        <p class="label">· ID</p>
+                        <p id="userId"></p>
+                        
+                        <p class="label">· 연락처</p>
+                        <p id="phone"></p>
+                        
+                        <p class="label">· 등록기간</p>
+                        <p id="period"></p>
+                        
+                        <p class="label">· 잔여횟수</p>
+                        <p id="count"></p>
+                        <form action="">
+                            <p class="label">· 메모</p>
+                            <textarea name="memo" value=""></textarea>
+                            <button type="button">메모 수정</button>
+                            <p>&nbsp; 메모가 수정되었습니다.</p>
+                        </form>
+                	</div>
+	                <div class="label-tab inbody-wrapper">
+	                    인바디 내역이 들어옵니다
+	                </div>
+	                <div class="label-tab exercise-wrapper">
+	                    운동기록 내역이 들어옵니다
+	                </div>
+	            </div>
+	        </div>
+    	</div>
     </div>
     <div class="modal-layer" id="addUserModal">
         <div class="modal-wrapper">
@@ -147,15 +171,8 @@
                     <%--TODO 정확히 아이디를 입력해서 검색했을 때 추가할 유저가 보이게 됩니다--%>
                     <%--TODO 검색해서 회원이 나타나고 스케쥴 횟수에 수치를 입력했을 때만 추가버튼이 활성화되게 할게요--%>
                     <div class="user clearfix">
-                        <img src="${pageContext.request.contextPath}/assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">
-                        <p class="info">
-                            <span class="name">이광수</span>
-                            <span class="id">kslee0421</span>
-                        </p>
-                        <div class="schedule-input-wrapper clearfix">
-                            <input class="schedule-input" type="number" name="schedule" placeholder="0" max="999">
-                            <span class="mark">회</span>
-                        </div>
+                        <p class="defaultMsg">아이디로 회원을 검색해주세요.</p>
+                        <p class="errMsg">검색 결과가 없습니다.</p>
                     </div>
                 </div>
             </div>
@@ -166,7 +183,51 @@
         </div>
     </div>
     <script type="text/javascript">
-
+    
+    	$("button.search").on("click", function(){
+    		
+    		var keyword = $("input[name='keyword']").val();
+    		
+    		//데이터 전송
+    		$.ajax({
+    			//보낼 때 옵션
+    			url : "${pageContext.request.contextPath}/mypage2/searchUser",
+    			type : "post",
+    			data : {keyword: keyword},
+    					
+    			//받을 때 옵션
+    			dataType : "json",
+    			success : function(userVo) {
+    				
+    				$("p.defaultMsg").hide();
+    				
+					var result = '';
+					result += '<img src="${pageContext.request.contextPath}/assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">';
+					result += '<p class="info">';
+					result += '    <span class="name">'+userVo.name+'</span>';
+					result += '    <span class="id">'+userVo.userId+'</span>';
+					result += '</p>';
+					result += '<div class="schedule-input-wrapper clearfix">';
+					result += '	<input class="schedule-input" type="number" name="period" placeholder="1" max="60">';
+					result += '    <span class="mark">개월</span>';
+					result += '    <input class="schedule-input" type="number" name="regCount" placeholder="0" max="999">';
+					result += '    <span class="mark">회</span>';
+					result += '</div>';
+					
+					$("div.user").append(result);
+    				
+    			},
+    			error : function(XHR, status, error) {
+    				$("p.defaultMsg").hide();
+    				$("p.errMsg").show();
+    				
+    				console.error(status + " : " + error);
+    			}
+    		})
+    		
+    	});
+    
+    	
         function showTab(target) {
             var targetTab = target.attr("data-tab");
 
@@ -191,7 +252,36 @@
             $("ul.user-list." + targetType).removeClass("off");
         }
 
-        function showUser() {
+        function showUser(ptNo) {
+        	
+    		//현재 로그인한 트레이너 no 읽어오기
+    		var trainerNo = ${authUser.userNo}
+    		
+    		//데이터 전송
+    		$.ajax({
+    			//보낼 때 옵션
+    			url : "${pageContext.request.contextPath}/mypage2/ptInfo",
+    			type : "post",
+    			data : {ptNo: ptNo,
+    					trainerNo: trainerNo},
+    					
+    			//받을 때 옵션
+    			dataType : "json",
+    			success : function(ptInfo) {
+    				
+    				$("#userName").text("\u00A0 "+ptInfo.name+" ("+ptInfo.gender+")");
+    				$("p#userId").text("\u00A0 "+ptInfo.userId);
+    				$("#phone").text("\u00A0 "+ptInfo.phone);
+    				$("#period").text("\u00A0 "+ptInfo.startDate+" ~ "+ptInfo.endDate);
+    				$("#count").text("\u00A0 "+ptInfo.scheduleCount+" / "+ptInfo.regCount);
+    				$("textarea[name='memo']").text(ptInfo.memo);
+    				
+    			},
+    			error : function(XHR, status, error) {
+    				console.error(status + " : " + error);
+    			}
+    		})
+        	
             showModal("#userInfoModal");
         }
 
@@ -205,6 +295,10 @@
         }
 
         function showAddUserModal() {
+        	$("p.errMsg").hide();
+        	$("p.defaultMsg").show();
+        	$("input[name='keyword']").val("");
+        	
             showModal("#addUserModal");
         }
 

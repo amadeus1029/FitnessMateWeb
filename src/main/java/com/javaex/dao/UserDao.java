@@ -112,5 +112,6 @@ public class UserDao {
 		int count = sqlSession.delete("user.deleteCareer", careerNo);
 		System.out.println(count);
 	}
+
 	
 }

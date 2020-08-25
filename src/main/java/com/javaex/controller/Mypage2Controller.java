@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.Mypage2Service;
 import com.javaex.vo.PtVo;
@@ -26,7 +27,7 @@ public class Mypage2Controller {
     	
         UserVo user = (UserVo) session.getAttribute("authUser");
         List<PtVo> ptList = mypageService.getTraineeList(user.getUserNo());
-
+        
         if("trainer".equals(user.getUserType())) {
             System.out.println("트레이너 운동관리 이동");
             
@@ -37,4 +38,28 @@ public class Mypage2Controller {
         }
         return "mypage/manageUser";
     }
+    
+    //API
+    @ResponseBody
+    @RequestMapping("/ptInfo")
+    public PtVo getPtInfo(int ptNo, int trainerNo) {
+    	System.out.println("마이페이지 컨트롤러 ptInfo");
+
+    	PtVo ptInfo = mypageService.getPtInfo(trainerNo, ptNo);
+
+    	return ptInfo;
+    }
+    
+    @ResponseBody
+    @RequestMapping("/searchUser")
+    public UserVo searchUser(String keyword) {
+    	System.out.println("마이페이지 컨트롤러 searchUser");
+    	
+    	UserVo userVo = mypageService.getUserInfo(keyword);
+    	
+    	return userVo;
+    }
+    	
+    
+    
 }

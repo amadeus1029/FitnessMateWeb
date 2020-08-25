@@ -18,10 +18,47 @@
 			            FROM schedule
 			            group by ptNo) s
 			    ON p.ptno = s.ptno
-			    AND p.trainerno = #{userNo}) pt
+			    AND p.trainerno = #{trainerNo}) pt
 			WHERE u.userNo = pt.userno
 
 		 ]]>
+	</select>
+	
+		<select id="selectPtInfo" parameterType="map" resultType="com.javaex.vo.PtVo">
+		<![CDATA[
+		
+			SELECT
+			    pt.ptNo, u.userNo, u.userId, u.name, u.gender, u.phone,
+			    to_char(pt.endDate, 'yyyymmdd') intEndDate,
+			    to_char(pt.startdate, 'yyyy-mm-dd') startDate,
+			    to_char(pt.endDate, 'yyyy-mm-dd') endDate,
+			    pt.regcount, NVL(pt.schedulecount, 0) schdulecount, pt.memo
+			FROM
+			    users u,
+			    (SELECT
+			        p.ptNo, p.userNo, p.startdate,
+			        p.endDate, p.regCount, s.schedulecount, p.memo
+			    FROM pt p LEFT OUTER JOIN
+			            (SELECT ptNo, COUNT(scheduleNo) scheduleCount
+			            FROM schedule
+			            group by ptNo) s
+			    ON p.ptno = s.ptno
+			    AND p.trainerno = #{trainerNo}) pt
+			WHERE u.userNo = pt.userno
+			and pt.ptno = #{ptNo}
+
+		 ]]>
+	</select>
+	
+	<!-- 회원검색 -->
+	<select id="selectUserInfo" parameterType="String" resultType="com.javaex.vo.UserVo">
+		<![CDATA[
+		
+			SELECT userNo, userId, name
+			FROM users
+			where userId = #{userId}
+			
+		]]>
 	</select>
 	
 

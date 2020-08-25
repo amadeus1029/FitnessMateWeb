@@ -6,10 +6,15 @@ public class PtVo {
 	private int userNo;
 	private String userId;
 	private String name;
+	private String gender;
+	private String phone;
 	private String profileImg;
-	private int endDate;
+	private String startDate;
+	private String endDate;	
+	private int intEndDate;
 	private int regCount;
 	private int scheduleCount;
+	private String memo;
 	private boolean proceed;
 
 	public PtVo() {}
@@ -20,14 +25,6 @@ public class PtVo {
 
 	public void setPtNo(int ptNo) {
 		this.ptNo = ptNo;
-	}
-
-	public boolean isProceed() {
-		return proceed;
-	}
-
-	public void setProceed(boolean proceed) {
-		this.proceed = proceed;
 	}
 
 	public int getUserNo() {
@@ -54,6 +51,22 @@ public class PtVo {
 		this.name = name;
 	}
 
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public String getProfileImg() {
 		return profileImg;
 	}
@@ -62,12 +75,28 @@ public class PtVo {
 		this.profileImg = profileImg;
 	}
 
-	public int getEndDate() {
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(int endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public int getIntEndDate() {
+		return intEndDate;
+	}
+
+	public void setIntEndDate(int intEndDate) {
+		this.intEndDate = intEndDate;
 	}
 
 	public int getRegCount() {
@@ -84,8 +113,31 @@ public class PtVo {
 
 	public void setScheduleCount(int scheduleCount) {
 		this.scheduleCount = scheduleCount;
-	};
-	
-	
-	
+	}
+
+	public boolean isProceed() {
+		return proceed;
+	}
+
+	public void setProceed(boolean proceed) {
+		this.proceed = proceed;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
+	@Override
+	public String toString() {
+		return "PtVo [ptNo=" + ptNo + ", userNo=" + userNo + ", userId=" + userId + ", name=" + name + ", gender="
+				+ gender + ", phone=" + phone + ", profileImg=" + profileImg + ", startDate=" + startDate + ", endDate="
+				+ endDate + ", intEndDate=" + intEndDate + ", regCount=" + regCount + ", scheduleCount=" + scheduleCount
+				+ ", memo=" + memo + ", proceed=" + proceed + "]";
+	}
+
+
 }
