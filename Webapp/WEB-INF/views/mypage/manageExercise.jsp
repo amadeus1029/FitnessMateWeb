@@ -50,12 +50,12 @@
                 <div class="input-box">
                     <h3 class="title">단위</h3>
                     <div class="radio-wrapper">
-                        <input type="radio" id="amountKG" name="amount" value="kg" checked>
-                        <label for="amountKG">킬로그렘</label>
-                        <input type="radio" id="amountPound" name="amount" value="pound">
-                        <label for="amountPound">파운드</label>
-                        <input type="radio" id="amountTime" name="amount" value="time">
-                        <label for="amountTime">시간(초)</label>
+                        <input type="radio" id="unitKG" name="unit" value="kg" checked>
+                        <label for="unitKG">kg</label>
+                        <input type="radio" id="unitPound" name="unit" value="lbs">
+                        <label for="unitPound">lbs</label>
+                        <input type="radio" id="unitTime" name="unit" value="sec">
+                        <label for="unitTime">sec</label>
                     </div>
                 </div>
                 <button type="button" class="button main add-exercise" onclick="addExercise();">추가</button>
@@ -66,7 +66,7 @@
                     <div class="exercise">
                         <h4 class="title">${exercise.exName}</h4>
                         <p class="detail">
-                            <span class="part">운동부위 : ${exercise.exPartName}</span><span class="amount">기록단위 : ${exercise.amount}</span>
+                            <span class="part">운동부위 : ${exercise.exPartName}</span><span class="unit">기록단위 : ${exercise.unit}</span>
                         </p>
                         <button type="button" class="delete-btn" onclick="deleteExercise($(this),${exercise.exNo});"><i
                                 class="fas fa-times"></i></button>
@@ -82,11 +82,11 @@
             var form = $("form#addExercise");
             var exPartNo = form.find("select[name='exercisePart']").find("option:selected").val();
             var exName = form.find("input[name='exerciseName']").val();
-            var amount = form.find("input[name='amount']:checked").next("label").text();
+            var unit = form.find("input[name='unit']:checked").next("label").text();
             var exVo = {
                 exName : exName,
                 exPartNo : exPartNo,
-                amount : amount
+                unit : unit
             }
             console.log(exPartNo);
             if (exName === "" || exName == null) {
@@ -110,7 +110,7 @@
                             "<h4 class='title'>" + result.exName + "</h4>" +
                             "<p class='detail'>" +
                             "<span class='part'>운동부위 : " + result.exPartName + "</span>" +
-                            "<span class='amount'>기록단위 : " + result.amount + "</span>" +
+                            "<span class='unit'>기록단위 : " + result.unit + "</span>" +
                             "</p>" +
                             "<button type='button' class='delete-btn' onclick='deleteExercise($(this),"+ result.exNo + ")'>" +
                             "<i class='fas fa-times'></i>" +

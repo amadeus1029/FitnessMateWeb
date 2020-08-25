@@ -35,103 +35,105 @@
         <c:import url="/WEB-INF/views/mypage/includes/menu.jsp"></c:import>
         <div class="wrapper">
             <p>운동 기록 | August 13, 2020</p>
-            <form action="" method="">
+            <div id="first_select" class="box_color">
+                <p>운동 부위</p>
+                <ul>
+                    <c:forEach items="${partList}" var="part">
+                        <li onclick="showEx(${part.exPartNo})">${part.exPartName}</li>
+                    </c:forEach>
+                </ul>
+            </div>
 
-                <div id="first_select" class="box_color">
-                    <p>운동 부위</p>
-                    <ul>
-                        <c:forEach items="${partList}" var="part">
-                            <li onclick="showEx(${part.exPartNo})">${part.exPartName}</li>
-                        </c:forEach>
-                    </ul>
-                </div>
+            <div class="fir-arrow"><i class="fas fa-arrow-circle-right"></i></div>
 
-                <div class="fir-arrow"><i class="fas fa-arrow-circle-right"></i></div>
+            <div id="second_select" class="box_color">
+                <p>운동 이름</p>
+                <ul>
 
-                <div id="second_select" class="box_color">
-                    <p>운동 이름</p>
-                    <ul>
+                </ul>
+            </div>
 
-                    </ul>
-                </div>
+            <div class="sec-arrow"><i class="fas fa-arrow-circle-right"></i></div>
 
-                <div class="sec-arrow"><i class="fas fa-arrow-circle-right"></i></div>
+            <div class="third_record">
 
-                <div class="third_record">
-
-                </div>
-                <button type="button" class="button sub btn_save">저장</button>
-
-            </form>
+            </div>
+            <button type="button" class="button sub btn_save" onclick="saveRecord();">저장</button>
         </div>
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     <script type="text/javascript">
         //두번째 리스트 보여주기
-        $("#first_select ol li").on("click", function(){
-            //리스트 리셋
-            $("#second_select ol").html('');
+        function showEx(exPartNo) {
+            var exVo = {
+                exPartNo : exPartNo
+            };
+            $.ajax({
+                url: "${pageContext.request.contextPath}/mypage/showExPart",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify(exVo),
+                dataType: "json",
+                success: function (exList) {
+                    $("#second_select ul").html("");
+                    if(exList) {
+                        for (i = 0; i < exList.length; i++) {
+                            $("#second_select ul").append(
+                                "<li onclick='addExForm("+exList[i].exNo+",$(this));'>" +
+                                "<span class='name'>"+ exList[i].exName +"</span>" +
+                                "(단위: <span class='unit'>"+ exList[i].unit +"</span>)" +
+                                "</li>"
+                            );
+                        }
+                    } else {
+                        alert("Fail to show Exercise!")
+                    }
+                },
+                error: function (XHR, status, error) {
+                    console.error(status + ":" + error);
+                }
+            });
+        }
 
-            // 데이터 받아와서 리스트 만들어야함
-            var secondList = '';
-            secondList += '<li>플랭크</li>';
-            secondList += '<li>버피</li>';
-            secondList += '<li>스내치</li>';
-            secondList += '<li>스윙</li>';
-            secondList += '<li>쓰러스터</li>';
+        function addExForm(exNo,target) {
+            var exName = target.find("span.name").text();
+            var unit = target.find("span.unit").text();
 
-            $("#second_select ul").html(secondList);
+            $(".third_record").append(
+                "<div class='box_color each' data-no='"+exNo+"'>" +
+                    "<div class='float_wrap'>" +
+                            "<p>"+ exName +"("+ unit +")"+"</p>" +
+                            "<p class='btn_toggle'><i class='fas fa-caret-up'></i></p>"+
+                            "<i class='far fa-minus-square setDelete' onclick='deleteExBox($(this))'></i>"+
+                    "</div>"+
+                    "<div class='setPart'>"+
+                        "<div class='record-box'>"+
+                            "<input type='number' name='count' placeholder=''> "+
+                            "<input type='number' name='amount' placeholder=''> "+
+                            "<i class='far fa-plus-square' onclick='addExSet($(this))'></i>" +
+                        "</div>"+
+                    "</div>"+
+                "</div>"
+            );
+        }
 
-        });
+        function deleteExBox(target) {
+            target.parents(".each").remove();
+        }
 
-        //운동 기록 창 보여주기
-        $("#second_select ul").on("click", "li", function(){
-            //운동명 가져오기
-            //식별번호/ajax 사용해서 name값 가져오는 걸로 수정 해야함
-            var exerciseName = $(this).text();;
+        function addExSet(target) {
+            target.parents(".setPart").append(
+                "<div class='record-box'>" +
+                    "<input type='number' name='count' placeholder=''> "+
+                    "<input type='number' name='amount' placeholder=''> "+
+                    "<i class='far fa-minus-square' onclick='deleteExSet($(this))'></i>"+
+                "</div>"
+            );
+        }
 
-            var recordBox = '';
-            recordBox += '<div class="box_color each">';
-            recordBox += '    <div class="float_wrap">';
-            recordBox += '        <p>'+exerciseName+'</p>';
-            recordBox += '        <p class="btn_toggle"><i class="fas fa-caret-up"></i></p>';
-            recordBox += '        <i class="far fa-minus-square setDelete"></i>';
-            recordBox += '    </div>';
-            recordBox += '    <div class="setPart">';
-            recordBox += '        <div>';
-            recordBox += '            <input type="text" name="weight" placeholder="무게">';
-            recordBox += '            <input type="text" name="count" placeholder="횟수">';
-            recordBox += '            <i class="far fa-plus-square"></i>';
-            recordBox += '        </div>';
-            recordBox += '    </div>';
-            recordBox += '</div>';
-
-            $(".third_record").append(recordBox);
-
-        });
-        //-버튼 눌렀을 때 운동 기록창 삭제
-        $(".third_record").on("click", "i.setDelete", function(){
-            $(this).closest("div.each").remove();
-        });
-
-        //+버튼 눌렀을 때 세트 추가
-        $(".third_record").on("click", "i.fa-plus-square", function(){
-
-            var addSet = '';
-            addSet += '<div>';
-            addSet += '    <input type="text" name="weight" placeholder="무게">';
-            addSet += '    <input type="text" name="count" placeholder="횟수">';
-            addSet += '    <i class="far fa-minus-square delSet"></i>';
-            addSet += '</div>';
-
-            $(this).closest(".setPart").append(addSet);
-
-        });
-
-        //-버튼 눌렀을 때 세트 삭제
-        $(".third_record").on("click", "i.delSet", function(){
-            $(this).closest("div").remove();
-        });
+        function deleteExSet(target) {
+            target.parent('.record-box').remove();
+        }
 
         //입력창 접기
         $(".third_record").on("click", "i.fa-caret-up", function(){
@@ -147,7 +149,35 @@
             $(this).addClass("fa-caret-up");
         });
 
+        function saveRecord() {
+            var recordArray = [];
+            $(".record-box").each(function() {
+                var scheduleNo = ${param.scheduleNo};
+                var exNo = $(this).parents(".each").attr("data-no");
+                var count = $(this).find("input[name='count']").val();
+                var amount = $(this).find("input[name='amount']").val();
+                var recordVo = {
+                    scheduleNo : scheduleNo,
+                    exNo : exNo,
+                    count : count,
+                    amount : amount
+                }
+                recordArray.push(recordVo);
+            });
+            $.ajax({
+                url: "${pageContext.request.contextPath}/mypage/addRecord",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify(recordArray),
+                dataType: "json",
+                success: function (result) {
 
+                },
+                error: function (XHR, status, error) {
+                    console.error(status + ":" + error);
+                }
+            });
+        }
     </script>
 </body>
 </html>

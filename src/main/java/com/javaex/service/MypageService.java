@@ -5,14 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.javaex.dao.ExerciseDao;
-import com.javaex.vo.ExerciseVo;
+import com.javaex.dao.RecordDao;
+import com.javaex.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaex.dao.UserDao;
-import com.javaex.vo.CareerVo;
-import com.javaex.vo.InterestVo;
-import com.javaex.vo.UserVo;
 
 @Service
 public class MypageService {
@@ -22,6 +20,9 @@ public class MypageService {
 
 	@Autowired
 	private ExerciseDao exerciseDao;
+
+	@Autowired
+	private RecordDao recordDao;
 
 	public Map<String, Object> getProfile(int userNo) {
 		System.out.println("/마이페이지 서비스/프로필 수정");
@@ -84,6 +85,14 @@ public class MypageService {
 
 	public Boolean deleteExercise(ExerciseVo exVo) {
 		return exerciseDao.delete(exVo);
+	}
+
+	public int recordExcercise(List<RecordVo> recordList) {
+		return recordDao.insertRecordList(recordList);
+	}
+
+	public List<ExerciseVo> showExPart(ExerciseVo exVo) {
+		return exerciseDao.showExPart(exVo);
 	}
 
 }

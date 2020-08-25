@@ -122,25 +122,23 @@ p.btn_toggle {
 	background-color: #292c33;
 }
 
-input[type="text"] {
-	display: inline-block;
-	width: 80px;
-	margin-left: 0px;
-	margin-right: 0px;
-}
-
 .float_wrap {
 	height: 40px;
 }
 
 button.btn_save {
 	position: absolute;
-	top: 0px;
+	top: 0;
 	right: 100px;
 }
 
+.setPart div {
+	margin-bottom: 10px;
+}
+
 .setPart div input{
-	margin-left: 0px;
-	margin-right: 0px;
+	display: inline-block;
+	width: 80px;
+	margin: 0;
 }
 
