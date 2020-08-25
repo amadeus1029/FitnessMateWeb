@@ -55,7 +55,18 @@ public class SearchController {
 		return reg;
 	}
 	
+	///////////////////////////////////////////////////////////////////////////
 	
+	
+	//트레이너 세부정보 불러오기
+	@ResponseBody
+	@RequestMapping("/search/trainerInfo")
+	public UserVo trainerInfo(@RequestParam("no") int no) {
+		System.out.println("controller:/search/trainerInfo");
+				
+		return searchService.trainerInfo(no);
+		
+	}
 	
 	
 }

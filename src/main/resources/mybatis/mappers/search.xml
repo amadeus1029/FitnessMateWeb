@@ -44,6 +44,7 @@
 	]]>
 	</select>
 	
+	
 	<!--트레이너 리스트 불러오기(지역,이름,성별검색) -->
 	<select id="userList" 
 	resultType="com.javaex.vo.UserVo">
@@ -80,7 +81,6 @@
 	</select>
 	
 
-	
 	<!--트레이너 검색(전문분야) -->
 	<select id="interestList" parameterType="map"
 	resultType="com.javaex.vo.UserVo">
@@ -127,6 +127,9 @@
 	
 	
 	</select>
+	
+	
+	
 	
 	
 	

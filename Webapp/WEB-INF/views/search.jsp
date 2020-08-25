@@ -103,16 +103,15 @@
             
             
             	<c:forEach items="${userVo}" var="userVo" varStatus = "status">
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">${userVo.name}</p>
-                        <p class="gym">${userVo.company}</p>
-                        <p class="comment">${userVo.introduction}</p>
-                        <p class="score">평점 4.7</p>
-                        <input type="hidden" value="${userVo.userNo}">
-                    </div>
+                <li class="search-result" onclick="showProfileModal($(this), ${userVo.userNo})">
+	                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');">
+	                    </div>
+	                    <div class="content-area">
+	                        <p class="name">${userVo.name}</p>
+	                        <p class="gym">${userVo.company}</p>
+	                        <p class="comment">${userVo.introduction}</p>
+	                        <p class="score">평점 4.7</p>
+	                    </div>
                 </li>
                 </c:forEach>
                 
@@ -136,6 +135,7 @@
                     <div class="summary-wrapper clearfix">
                         <img src="${pageContext.request.contextPath}/assets/image/face/Park-Myung- Soo.jpg" class="profile-img">
                         <div class="summary">
+                        <input type="text" name="no" value="" id="delNo">
                             <p class="name">박명수</p>
                             <p class="belong">무한도전 피트니스짐</p>
                         </div>
@@ -299,14 +299,9 @@
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     
-    
-    <script type="text/javascript">  
-    $(".search-result").on("click",function(){
-    	 console.log("트레이너 세부");
-    });
-    
-    
-    
+   
+    <script type="text/javascript"> 
+
    
     //검색
     $(".button.key").on("click",function(){
@@ -334,14 +329,14 @@
 				var userStr = "";
 				
 				for (var i in userVo ) {
-					userStr += "<li class='search-result' onclick='showProfileModal($(this))'>";
+					userStr += "<li class='search-result' onclick='showProfileModal($(this),"+userVo[i].userNo+")'>";
 					userStr += '<div class="image-area" style="background-image:url("${pageContext.request.contextPath}\\assets\\image\\face\\Gangho-dong.jpg");">;'
 					userStr += "</div>";
 					userStr += "<div class='content-area'>";
 					userStr += "<p class='name'>"+userVo[i].name+"</p>";
 					userStr += "<p class='gym'>"+userVo[i].company+"</p>";
 					userStr += "<p class='comment'>"+userVo[i].introduction+"</p>";
-					userStr += " <p class='score'>평점 4.7</p>";
+					userStr += "<p class='score'>평점 4.7</p>";
 					userStr += "</div>";
 					userStr += "</li>";
 				}
@@ -415,16 +410,44 @@
     
     
     
-    //별점 반영하기
-    function showProfileModal(obj) {
+    //트레이너 상세정보,별점 반영하기
+    function showProfileModal(obj, userNo) {
+    	
+    	//트레이너 넘버 추출
+    	var no = userNo;
+    	console.log("no "+no);
+    	$("#delNo").val(no);
+
             //다른 버튼 on 제거
             $("#profileModal .label-wrapper .label-btn").removeClass("on");
             $("#profileModal .label-wrapper .profile-btn").addClass("on");
             //다른 탭 on 제거
             $("#profileModal .label-tab").removeClass("on");
             $("#profileModal .profile-wrapper").addClass("on");
-            showModal("#profileModal");
+            
+            
+          //데이터전송
+        	$.ajax({
+        			url : "${pageContext.request.contextPath }/search/trainerInfo",
+        			type : "post",
+        			//contentType : "application/json",
+        			data : {no: no},
+
+        			dataType : "json",
+        			success : function(vo) {
+        			
+        					
+        				}
+        				
+        			},
+        			error : function(XHR, status, error) {
+        				console.error(status + " : " + error);
+        			}
+        		});
+            
+        	showModal("#profileModal");
         }
+    
 
         function showTab(target) {
             var targetTab = target.attr("data-tab");
