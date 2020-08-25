@@ -86,12 +86,19 @@ public class SearchDao {
 		return uVo;
 	}
 
-	public UserVo userField(int no) {
+	public List<Object> userField(int no) {
 		
-		UserVo uVo = sqlSession.selectOne("search.readField",no);
+		List<Object> uVo = sqlSession.selectList("search.readField",no);
 		
 		return uVo;
 	}
+
+	public List<Object> userRecord(int no) {
+		List<Object> uVo = sqlSession.selectList("search.readCareer",no);
+		return uVo;
+	}
+
+	
 	
 
 }

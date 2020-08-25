@@ -157,17 +157,10 @@
                     </div>
                     <div class="info-wrapper clearfix">
                         <div class="category-info">
-                            <h3 class="title">전문분야</h3>
-                            <span class="category">다이어트</span>
-                            <span class="category">재활</span>
-                            <span class="category">프로필 촬영</span>
+                            <h3 class="title field">전문분야</h3>
                         </div>
                         <div class="award-info">
                             <h3 class="title">입상경력</h3>
-                            <span class="award">머슬마니아 3위</span>
-                            <span class="award">전국체전 우수상</span>
-                            <span class="award">체육관 개근상</span>
-                            <span class="award">무사고 12년</span>
                         </div>
                     </div>
                     <div class="pay-wrapper">
@@ -321,7 +314,7 @@
 				
 				for (var i in userVo ) {
 					userStr += "<li class='search-result' onclick='showProfileModal($(this),"+userVo[i].userNo+")'>";
-					userStr += '<div class="image-area" style="background-image:url("${pageContext.request.contextPath}\\assets\\image\\face\\Gangho-dong.jpg");">;'
+					userStr += '<div class="image-area" style="background-image:url("${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg");">;'
 					userStr += "</div>";
 					userStr += "<div class='content-area'>";
 					userStr += "<p class='name'>"+userVo[i].name+"</p>";
@@ -409,7 +402,6 @@
     	console.log("no "+no);
     	$("#delNo").val(no);
     	
-
     	 //다른 버튼 on 제거
     	 $("#profileModal .label-wrapper .label-btn").removeClass("on");
     	 $("#profileModal .label-wrapper .profile-btn").addClass("on");
@@ -427,6 +419,10 @@
 
         			dataType : "json",
         			success : function(vo) {
+        				
+        				trainerField();//전문분야
+        				trainerRecord();//수상경력
+  
         				var loca = vo.location.replace( /[|]/gi, ' ');//지역 사이의 | 지우기
         				
         				//만나이 계산
@@ -469,7 +465,75 @@
         	showModal("#profileModal");
         }
     
+    //전문분야 불러오기 함수
+    function trainerField(){
+    	
+    	var fieldNo = $("#delNo").val();
+    	$(".category").remove();
+    	
+    	$.ajax({
 
+			url : "${pageContext.request.contextPath }/search/fieldInfo",
+			type : "post",
+			//contentType : "application/json",
+			data : {no: fieldNo},
+
+			dataType : "json",
+			success : function(fieldList) {
+				
+				
+				var fieldStr ='';
+				for (var i in fieldList ) {
+					
+					fieldStr +='<span class="category">'+fieldList[i].fieldName+'</span>';
+					
+				}
+				$(".category-info").append(fieldStr);
+			
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		    	}
+    	
+	  //수상경력 불러오기 함수
+	    function trainerRecord(){
+	    	
+	    	var recordNo = $("#delNo").val();
+	    	$(".award").remove();
+	    	
+	    	$.ajax({
+	
+				url : "${pageContext.request.contextPath }/search/recordInfo",
+				type : "post",
+				//contentType : "application/json",
+				data : {no: recordNo},
+	
+				dataType : "json",
+				success : function(recordList) {
+					console.log(recordList);
+					
+					var recordStr ='';
+					for (var i in recordList ) {
+						
+						recordStr +='<span class="award">'+recordList[i].recordInfo+'</span>';
+						
+					}
+					$(".award-info").append(recordStr);
+				
+					
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			    	}
+    	
+
+	  
+	  //////////////////////////////
         function showTab(target) {
             var targetTab = target.attr("data-tab");
 
