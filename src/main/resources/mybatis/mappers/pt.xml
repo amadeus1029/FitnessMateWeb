@@ -32,7 +32,7 @@
 			    to_char(pt.endDate, 'yyyymmdd') intEndDate,
 			    to_char(pt.startdate, 'yyyy-mm-dd') startDate,
 			    to_char(pt.endDate, 'yyyy-mm-dd') endDate,
-			    pt.regcount, NVL(pt.schedulecount, 0) schdulecount, pt.memo
+			    pt.regcount, NVL(pt.schedulecount, 0) schdulecount, NVL(pt.memo, ' ') memo
 			FROM
 			    users u,
 			    (SELECT
@@ -56,11 +56,32 @@
 		
 			SELECT userNo, userId, name
 			FROM users
-			where userId = #{userId}
+			WHERE usertype = 'normal'
+			AND userId = #{userId}
 			
 		]]>
 	</select>
 	
-
+	<!-- pt등록 -->
+	<insert id="insertPt" parameterType="map">
+		<![CDATA[
+		
+			INSERT INTO pt
+			VALUES(SEQ_PTNO.nextval, #{userNo}, #{trainerNo}, SYSDATE, ADD_MONTHS(SYSDATE, #{period}), #{regCount}, '')
+	
+		]]>
+	</insert>
+	
+	<!-- 메모수정 -->
+	<update id="updateMemo" parameterType="map">
+		<![CDATA[
+		
+			UPDATE pt
+			SET memo = #{memo}
+			WHERE ptNo = #{ptNo}
+		
+		]]>
+	</update>
+	
 	
 </mapper>

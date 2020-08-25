@@ -46,6 +46,7 @@ public class Mypage2Controller {
     	System.out.println("마이페이지 컨트롤러 ptInfo");
 
     	PtVo ptInfo = mypageService.getPtInfo(trainerNo, ptNo);
+    	System.out.println(ptInfo);
 
     	return ptInfo;
     }
@@ -59,7 +60,27 @@ public class Mypage2Controller {
     	
     	return userVo;
     }
+    
+    @ResponseBody
+    @RequestMapping("/addPt")
+    public String addPt(int userNo, int period, int regCount, int trainerNo) {
+    	System.out.println("마이페이지 컨트롤러 pt등록");
     	
+    	mypageService.addPt(userNo, period, regCount, trainerNo);
+    	
+    	return "success";
+    }
+    
+    @ResponseBody
+    @RequestMapping("/modifyMemo")
+    public String modifyMemo(int ptNo, String memo) {
+    	System.out.println("마이페이지 컨트롤러 pt등록");
+    	System.out.println("memo-"+memo+"ptNo-"+ptNo);
+    	
+    	mypageService.modifyMemo(ptNo, memo);
+    	
+    	return "success";
+    }
     
     
 }

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaex.dao.PtDao;
-import com.javaex.dao.UserDao;
 import com.javaex.vo.PtVo;
 import com.javaex.vo.UserVo;
 
@@ -70,6 +69,27 @@ public class Mypage2Service {
 		return userVo;
 	}
 	
+	public void addPt(int userNo, int period, int regCount, int trainerNo) {
+		System.out.println("service pt 추가");
+		
+		Map<String, Integer> regMap = new HashMap<>();
+		regMap.put("userNo", userNo);
+		regMap.put("period", period);
+		regMap.put("regCount", regCount);
+		regMap.put("trainerNo", trainerNo);
+		
+		ptDao.insertPt(regMap);
+	}
+	
+	public void modifyMemo(int ptNo, String memo) {
+		System.out.println("service 메모 수정");
+		
+		Map<String, Object> memoMap = new HashMap<>();
+		memoMap.put("ptNo", ptNo);
+		memoMap.put("memo", memo);
+		
+		ptDao.updateMemo(memoMap);
+	}
 	
 	
 	
@@ -84,5 +104,6 @@ public class Mypage2Service {
 		
 		return today;
 	}
+
 
 }

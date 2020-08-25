@@ -142,12 +142,11 @@
                         
                         <p class="label">· 잔여횟수</p>
                         <p id="count"></p>
-                        <form action="">
-                            <p class="label">· 메모</p>
-                            <textarea name="memo" value=""></textarea>
-                            <button type="button">메모 수정</button>
-                            <p>&nbsp; 메모가 수정되었습니다.</p>
-                        </form>
+                        
+                        <p class="label">· 메모</p>
+                        <textarea id="memo"></textarea>
+                        <input type="hidden" id="modifyPtNo" value="">
+                        <button type="button" onclick="modifyMemo($('textarea#memo').val(), $('input#modifyPtNo').val());">메모 수정</button>
                 	</div>
 	                <div class="label-tab inbody-wrapper">
 	                    인바디 내역이 들어옵니다
@@ -168,24 +167,26 @@
                     <button type="button" class="button search">검색</button>
                 </div>
                 <div class="search-result">
+					<p class="defaultMsg">아이디로 회원을 검색해주세요.</p>
+					<p class="errMsg">검색 결과가 없습니다.</p>
                     <%--TODO 정확히 아이디를 입력해서 검색했을 때 추가할 유저가 보이게 됩니다--%>
                     <%--TODO 검색해서 회원이 나타나고 스케쥴 횟수에 수치를 입력했을 때만 추가버튼이 활성화되게 할게요--%>
+                    <%--TODO 위에 메모 구현해주세여!!!!!!!!!!!!!!!!!!!!!!!--%>
                     <div class="user clearfix">
-                        <p class="defaultMsg">아이디로 회원을 검색해주세요.</p>
-                        <p class="errMsg">검색 결과가 없습니다.</p>
+                    	<!-- 검색결과나오는 부분 -->
                     </div>
                 </div>
             </div>
             <div class="modal-btn-area">
                 <button type="button" class="modal-cancel" onclick="forceHideModal('#addUserModal')">취소</button>
-                <button type="button" class="modal-confirm off main" onclick="addUser();">추가</button>
+                <button type="button" class="modal-confirm main" onclick="addUser();">추가</button>
             </div>
         </div>
     </div>
     <script type="text/javascript">
     
     	$("button.search").on("click", function(){
-    		
+    		$("div.user").empty();
     		var keyword = $("input[name='keyword']").val();
     		
     		//데이터 전송
@@ -198,7 +199,7 @@
     			//받을 때 옵션
     			dataType : "json",
     			success : function(userVo) {
-    				
+    				$("p.errMsg").hide();
     				$("p.defaultMsg").hide();
     				
 					var result = '';
@@ -208,13 +209,14 @@
 					result += '    <span class="id">'+userVo.userId+'</span>';
 					result += '</p>';
 					result += '<div class="schedule-input-wrapper clearfix">';
-					result += '	<input class="schedule-input" type="number" name="period" placeholder="1" max="60">';
+					result += '    <input class="schedule-input" type="number" name="period" placeholder="1" max="60">';
 					result += '    <span class="mark">개월</span>';
 					result += '    <input class="schedule-input" type="number" name="regCount" placeholder="0" max="999">';
 					result += '    <span class="mark">회</span>';
+					result += '    <input type="hidden" name="userNo" value="'+userVo.userNo+'">';
 					result += '</div>';
 					
-					$("div.user").append(result);
+					$("div.user").prepend(result);
     				
     			},
     			error : function(XHR, status, error) {
@@ -274,7 +276,8 @@
     				$("#phone").text("\u00A0 "+ptInfo.phone);
     				$("#period").text("\u00A0 "+ptInfo.startDate+" ~ "+ptInfo.endDate);
     				$("#count").text("\u00A0 "+ptInfo.scheduleCount+" / "+ptInfo.regCount);
-    				$("textarea[name='memo']").text(ptInfo.memo);
+    				$("textarea#memo").text(ptInfo.memo);
+    				$("input#modifyPtNo").val(ptInfo.ptNo);
     				
     			},
     			error : function(XHR, status, error) {
@@ -295,16 +298,80 @@
         }
 
         function showAddUserModal() {
+    		$("div.user").empty();
         	$("p.errMsg").hide();
         	$("p.defaultMsg").show();
         	$("input[name='keyword']").val("");
         	
             showModal("#addUserModal");
         }
+        
+        //메모 수정하기
+        function modifyMemo(memo, ptNo){
+        	
+        	//데이터 전송
+    		$.ajax({
+    			//보낼 때 옵션
+    			url : "${pageContext.request.contextPath}/mypage2/modifyMemo",
+    			type : "post",
+    			data : {ptNo: ptNo,
+    					memo: memo},
+    					
+    			//받을 때 옵션
+    			dataType : "json",
+    			success : function(result) {
+					alert("메모가 저장되었습니다.");
+    				
+    			},
+    			error : function(XHR, status, error) {
+    				console.error(status + " : " + error);
+    			}
+    		})
+        }
 
         function addUser() {
-            <%--TODO 유저 추가는 이곳에서 ajax로 작동되게 하면 좋을거 같습니다--%>
-            forceHideModal('#addUserModal');
+        	/* input, 회원 비엇을 때 버튼 막아야함 */
+        	var userNo = $("input[name='userNo']").val();
+        	
+        	var period = $("input[name='period']").val();
+        	
+        	var regCount = $("input[name='regCount']").val();
+        	
+        	var trainerNo = ${authUser.userNo};
+        	
+        	if(!period || !regCount){
+        		alert("입력 정보를 다시 확인해주세요.");
+        		return;
+        	}
+        	
+        	//데이터 전송
+    		$.ajax({
+    			//보낼 때 옵션
+    			url : "${pageContext.request.contextPath}/mypage2/addPt",
+    			type : "post",
+    			data : {userNo: userNo,
+    					period: period,
+    					regCount: regCount,
+    					trainerNo: trainerNo},
+    					
+    			//받을 때 옵션
+    			dataType : "json",
+    			success : function(result) {
+
+		        	alert("PT 정보가 추가되었습니다.");
+
+		        	forceHideModal('#addUserModal');
+		        	
+		        	location.reload(true);
+
+    			},
+    			error : function(XHR, status, error) {
+    				alert("입력 정보를 다시 확인해주세요.");
+    				
+    				console.error(status + " : " + error);
+    			}
+    		})
+        	
         }
     </script>
 </body>

@@ -39,6 +39,18 @@ public class PtDao {
 		
 		return userVo;
 	}
+
+	public void insertPt(Map<String, Integer> regMap) {
+		System.out.println("dao pt 추가");
+		
+		sqlSession.insert("pt.insertPt", regMap);
+	}
+
+	public void updateMemo(Map<String, Object> memoMap) {
+		System.out.println("dao 메모 수정");
+		
+		sqlSession.update("pt.updateMemo", memoMap);
+	}
 	
 	
 	
