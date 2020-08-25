@@ -435,7 +435,25 @@
 
         			dataType : "json",
         			success : function(vo) {
-        				var loca = vo.location.replace( /[|]/gi, ' ');
+        				var loca = vo.location.replace( /[|]/gi, ' ');//지역 사이의 | 지우기
+        				
+        				//만나이 계산
+        				var birthday = new Date(vo.birthDate);
+        				console.log(birthday);
+        				var today = new Date();
+        				var years = today.getFullYear() - birthday.getFullYear();
+        				console.log(years);
+        				// Reset birthday to the current year.
+        				birthday.setFullYear(today.getFullYear());
+        				 
+        				// If the user's birthday has not occurred yet this year, subtract 1.
+        				if (today < birthday)
+        				{
+        				    years--;
+        				}
+        				//만나이 계산
+        				
+        				
         				//정보넣기
         				$(".name.info").html(vo.name); //이름
         				$(".belong").html(vo.company); //회사
@@ -448,6 +466,7 @@
         				$(".content.career").html(vo.career+"년"); //경력
         				$(".content.price").html(vo.price); //가격
         				$(".content.introduction").html(vo.introduction); //자기소개
+        				$(".content.age").html("만"+years+"세");
         				
         			},
         			error : function(XHR, status, error) {

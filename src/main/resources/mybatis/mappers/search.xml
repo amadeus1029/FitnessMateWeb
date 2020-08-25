@@ -135,7 +135,8 @@
 	<![CDATA[
 	SELECT u.userno as "userNo",
        u.userid as "userId",
-       u.password,u.name,u.gender,u.phone,u.birthdate,
+       u.password,u.name,u.gender,u.phone,
+       u.birthdate AS birthDate,
        u.usertype as "userType",
        u.profileimg as "profileImg",
        u.introduction,u.career,
@@ -159,6 +160,16 @@
 	
 	</select>
 	
+	<!--트레이너 상세정보 불러오기(수상경력) -->
+	<select id="readCareer" parameterType="int"
+	resultType="com.javaex.vo.CareerVo">
+	<![CDATA[
+	SELECT recordinfo as "recordInfo"
+	FROM career_list
+	where userno= #{no}
+	]]>
+	
+	</select>
 	
 	
 	
