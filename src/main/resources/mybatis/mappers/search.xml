@@ -136,7 +136,7 @@
 	SELECT u.userno as "userNo",
        u.userid as "userId",
        u.password,u.name,u.gender,u.phone,
-       u.birthdate AS birthDate,
+       nvl(u.birthdate,sysdate) AS birthDate,
        u.usertype as "userType",
        u.profileimg as "profileImg",
        u.introduction,u.career,
