@@ -33,17 +33,14 @@
         
         <div class="wrapper">
                 	
-            
+             <!-- 검색-->
             <!--  <form action="${pageContext.request.contextPath}/search/results" method="get"
             id="searchKeywordForm">-->
             <div id="searchKeywordForm">
                 <ul class="search-condition clearfix">
-
                     <li class="local clearfix">
-                    
-                    
                         <h3 class="title">지역</h3>
-                        <!--지역 고르기 -->
+                       <!--지역 고르기 -->
                         <select name="province">
                         	<option value="">전체</option>
                          <c:forEach items="${addVo}" var="addVo">
@@ -51,15 +48,13 @@
                          </c:forEach>
                         </select>
                         
-                        <!--구 고르기 -->
+                       <!--구 고르기 -->
                         <select name="city" >
                         </select>
                         
                         <!--동 고르기 -->
                         <select name="region">
                         </select>
-                        
-                        
                         
                     </li>
                     <li class="gender">
@@ -72,8 +67,6 @@
                         </div>
                     </li>
                     
-                    
-                    
                     <li class="field">
                         <h3 class="title">전문분야</h3>
                          <select name="field">
@@ -84,8 +77,6 @@
                         </select>
                     </li>
                     
-                    
-                    
                     <li class="keyword">
                         <h3 class="title">검색어</h3>
                         <input name="name" type="text" placeholder="검색어를 입력해주세요">
@@ -95,13 +86,11 @@
                 <button type="submit" class="button key">검색</button>
             <!-- </form> -->
            </div>
+             <!-- 검색-->
             
             
-            
-            
+            <!-- 트레이너목록-->
             <ul class="search-list clearfix">
-            
-            
             	<c:forEach items="${userVo}" var="userVo" varStatus = "status">
                 <li class="search-result" onclick="showProfileModal($(this), ${userVo.userNo})">
 	                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');">
@@ -114,8 +103,8 @@
 	                    </div>
                 </li>
                 </c:forEach>
-                
             </ul>
+            <!-- 트레이너목록-->
             
         </div> <!-- wrapper-->
         
@@ -190,6 +179,9 @@
                         <p class="content introduction"></p>
                     </div>
                 </div>
+                
+                
+                
                 <div class="label-tab review-wrapper">
 
                     <div class="reviewWrite">
