@@ -42,7 +42,9 @@
 	SELECT fieldno,fieldname
 	FROM interest_field
 	]]>
+	
 	</select>
+	
 	
 	<!--트레이너 리스트 불러오기(지역,이름,성별검색) -->
 	<select id="userList" 
@@ -80,7 +82,6 @@
 	</select>
 	
 
-	
 	<!--트레이너 검색(전문분야) -->
 	<select id="interestList" parameterType="map"
 	resultType="com.javaex.vo.UserVo">
@@ -125,6 +126,48 @@
 	]]>
 	</if>
 	
+	
+	</select>
+	
+	<!--트레이너 상세정보 불러오기 -->
+	<select id="readTrainer" parameterType="int"
+	resultType="com.javaex.vo.UserVo">
+	<![CDATA[
+	SELECT u.userno as "userNo",
+       u.userid as "userId",
+       u.password,u.name,u.gender,u.phone,
+       u.birthdate AS birthDate,
+       u.usertype as "userType",
+       u.profileimg as "profileImg",
+       u.introduction,u.career,
+       u.location,u.company,u.price
+	FROM users u
+	where userType = 'trainer'
+    and u.userno = #{no}
+	]]>
+	
+	</select>
+	
+	<!--트레이너 상세정보 불러오기(전문분야) -->
+	<select id="readField" parameterType="int"
+	resultType="com.javaex.vo.UserVo">
+	<![CDATA[
+	SELECT fi.fieldname as "fieldName"
+	FROM interest_list li,interest_field fi
+	where li.fieldno = fi.fieldno
+	and li.userno = #{no}
+	]]>
+	
+	</select>
+	
+	<!--트레이너 상세정보 불러오기(수상경력) -->
+	<select id="readCareer" parameterType="int"
+	resultType="com.javaex.vo.CareerVo">
+	<![CDATA[
+	SELECT recordinfo as "recordInfo"
+	FROM career_list
+	where userno= #{no}
+	]]>
 	
 	</select>
 	

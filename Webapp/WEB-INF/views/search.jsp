@@ -103,16 +103,15 @@
             
             
             	<c:forEach items="${userVo}" var="userVo" varStatus = "status">
-                <li class="search-result" onclick="showProfileModal($(this))">
-                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');">
-                    </div>
-                    <div class="content-area">
-                        <p class="name">${userVo.name}</p>
-                        <p class="gym">${userVo.company}</p>
-                        <p class="comment">${userVo.introduction}</p>
-                        <p class="score">평점 4.7</p>
-                        <input type="hidden" value="${userVo.userNo}">
-                    </div>
+                <li class="search-result" onclick="showProfileModal($(this), ${userVo.userNo})">
+	                    <div class="image-area" style="background-image: url('${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg');">
+	                    </div>
+	                    <div class="content-area">
+	                        <p class="name">${userVo.name}</p>
+	                        <p class="gym">${userVo.company}</p>
+	                        <p class="comment">${userVo.introduction}</p>
+	                        <p class="score">평점 4.7</p>
+	                    </div>
                 </li>
                 </c:forEach>
                 
@@ -136,8 +135,9 @@
                     <div class="summary-wrapper clearfix">
                         <img src="${pageContext.request.contextPath}/assets/image/face/Park-Myung- Soo.jpg" class="profile-img">
                         <div class="summary">
-                            <p class="name">박명수</p>
-                            <p class="belong">무한도전 피트니스짐</p>
+                        <input type="hidden" name="no" value="" id="delNo">
+                            <p class="name info"></p>
+                            <p class="belong"></p>
                         </div>
                         <div class="score">
                             <p class="head">평점</p>
@@ -151,19 +151,19 @@
                     <div class="info-wrapper clearfix">
                         <div class="info">
                             <h3 class="title">나이</h3>
-                            <p class="content">42세</p>
+                            <p class="content age"></p>
                         </div>
                         <div class="info">
                             <h3 class="title">성별</h3>
-                            <p class="content">남성</p>
+                            <p class="content gender"></p>
                         </div>
                         <div class="info">
                             <h3 class="title">지역</h3>
-                            <p class="content">서울특별시 강남구 압구정동</p>
+                            <p class="content location"></p>
                         </div>
                         <div class="info">
                             <h3 class="title">트레이너 경력</h3>
-                            <p class="content">12년</p>
+                            <p class="content career"></p>
                         </div>
                     </div>
                     <div class="info-wrapper clearfix">
@@ -183,12 +183,11 @@
                     </div>
                     <div class="pay-wrapper">
                         <h3 class="title">비용</h3>
-                        <p class="content">10회 이상 신청시 회당 5만원<br>20회 이상 신청시 회당 4만원<br>30회 이상 신청 시 회당 3만원</p>
+                        <p class="content price"></p>
                     </div>
                     <div class="comment-wrapper">
                         <h3 class="title">트레이너 메세지</h3>
-                        <p class="content">정당은 그 목적·조직과 활동이 민주적이어야 하며, 국민의 정치적 의사형성에 참여하는데 필요한 조직을 가져야 한다. 법관은 탄핵 또는 금고
-                            이상의 형의 선고에 의하지 아니하고는 파면되지 아니하며, 징계처분에 의하지 아니하고는 정직·감봉 기타 불리한 처분을 받지 아니한다.</p>
+                        <p class="content introduction"></p>
                     </div>
                 </div>
                 <div class="label-tab review-wrapper">
@@ -299,14 +298,9 @@
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     
-    
-    <script type="text/javascript">  
-    $(".search-result").on("click",function(){
-    	 console.log("트레이너 세부");
-    });
-    
-    
-    
+   
+    <script type="text/javascript"> 
+
    
     //검색
     $(".button.key").on("click",function(){
@@ -334,14 +328,14 @@
 				var userStr = "";
 				
 				for (var i in userVo ) {
-					userStr += "<li class='search-result' onclick='showProfileModal($(this))'>";
+					userStr += "<li class='search-result' onclick='showProfileModal($(this),"+userVo[i].userNo+")'>";
 					userStr += '<div class="image-area" style="background-image:url("${pageContext.request.contextPath}\\assets\\image\\face\\Gangho-dong.jpg");">;'
 					userStr += "</div>";
 					userStr += "<div class='content-area'>";
 					userStr += "<p class='name'>"+userVo[i].name+"</p>";
 					userStr += "<p class='gym'>"+userVo[i].company+"</p>";
 					userStr += "<p class='comment'>"+userVo[i].introduction+"</p>";
-					userStr += " <p class='score'>평점 4.7</p>";
+					userStr += "<p class='score'>평점 4.7</p>";
 					userStr += "</div>";
 					userStr += "</li>";
 				}
@@ -415,16 +409,74 @@
     
     
     
-    //별점 반영하기
-    function showProfileModal(obj) {
-            //다른 버튼 on 제거
-            $("#profileModal .label-wrapper .label-btn").removeClass("on");
-            $("#profileModal .label-wrapper .profile-btn").addClass("on");
-            //다른 탭 on 제거
-            $("#profileModal .label-tab").removeClass("on");
-            $("#profileModal .profile-wrapper").addClass("on");
-            showModal("#profileModal");
+    //트레이너 상세정보,별점 반영하기
+    function showProfileModal(obj, userNo) {
+    	
+    	//트레이너 넘버 추출
+    	var no = userNo;
+    	console.log("no "+no);
+    	$("#delNo").val(no);
+    	
+
+    	 //다른 버튼 on 제거
+    	 $("#profileModal .label-wrapper .label-btn").removeClass("on");
+    	 $("#profileModal .label-wrapper .profile-btn").addClass("on");
+    	 //다른 탭 on 제거
+    	 $("#profileModal .label-tab").removeClass("on");
+    	 $("#profileModal .profile-wrapper").addClass("on");
+
+            
+          //데이터전송
+        	$.ajax({
+        			url : "${pageContext.request.contextPath }/search/trainerInfo",
+        			type : "post",
+        			//contentType : "application/json",
+        			data : {no: no},
+
+        			dataType : "json",
+        			success : function(vo) {
+        				var loca = vo.location.replace( /[|]/gi, ' ');//지역 사이의 | 지우기
+        				
+        				//만나이 계산
+        				var birthday = new Date(vo.birthDate);
+        				console.log(birthday);
+        				var today = new Date();
+        				var years = today.getFullYear() - birthday.getFullYear();
+        				console.log(years);
+        				// Reset birthday to the current year.
+        				birthday.setFullYear(today.getFullYear());
+        				 
+        				// If the user's birthday has not occurred yet this year, subtract 1.
+        				if (today < birthday)
+        				{
+        				    years--;
+        				}
+        				//만나이 계산
+        				
+        				
+        				//정보넣기
+        				$(".name.info").html(vo.name); //이름
+        				$(".belong").html(vo.company); //회사
+        				
+        				//성별 
+        				if(vo.gender =='female')
+        				{$(".content.gender").html("여자"); 
+        				} else{$(".content.gender").html("남자");}
+        				$(".content.location").html(loca); //지역
+        				$(".content.career").html(vo.career+"년"); //경력
+        				$(".content.price").html(vo.price); //가격
+        				$(".content.introduction").html(vo.introduction); //자기소개
+        				$(".content.age").html("만"+years+"세");
+        				
+        			},
+        			error : function(XHR, status, error) {
+        				console.error(status + " : " + error);
+        			}
+        		});
+            
+        	showModal("#profileModal");
         }
+    
 
         function showTab(target) {
             var targetTab = target.attr("data-tab");

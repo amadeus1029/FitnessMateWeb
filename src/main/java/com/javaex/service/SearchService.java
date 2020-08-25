@@ -102,6 +102,22 @@ public class SearchService {
 	}
 	
 	
+	//////////////////////////////////////////////////////////
+
+	//트레이너 세부정보 가져오기
+	public UserVo trainerInfo(int no) {
+		System.out.println("SearchService:trainerInfo");
+		
+		UserVo uVo = searchDao.readTrainer(no);
+		
+		
+		
+		System.out.println(uVo);
+		
+		return uVo;
+	}
+	
+	
 	
 
 }
