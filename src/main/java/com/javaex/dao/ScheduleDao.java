@@ -20,4 +20,16 @@ public class ScheduleDao {
     public List<ScheduleVo> getScheduleList(int trainerNo) {
         return sqlSession.selectList("schedule.selectList", trainerNo);
     }
+
+    public ScheduleVo getSchedule(ScheduleVo scheduleVo) {
+        return sqlSession.selectOne("schedule.selectByVo", scheduleVo);
+    }
+
+    public boolean modifySchedule(ScheduleVo scheduleVo) {
+        return sqlSession.update("schedule.update", scheduleVo) == 1;
+    }
+
+    public boolean deleteSchedule(ScheduleVo scheduleVo) {
+        return sqlSession.delete("schedule.delete", scheduleVo) == 1;
+    }
 }

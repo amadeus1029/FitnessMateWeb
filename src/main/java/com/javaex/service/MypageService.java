@@ -107,4 +107,16 @@ public class MypageService {
 		return scheduleDao.getScheduleList(trainerNo);
 	}
 
+	public ScheduleVo getSchedule(ScheduleVo scheduleVo) {
+		return scheduleDao.getSchedule(scheduleVo);
+	}
+
+	public boolean modifySchedule(ScheduleVo scheduleVo) {
+		return scheduleDao.modifySchedule(scheduleVo);
+	}
+
+	public boolean deleteSchedule(ScheduleVo scheduleVo) {
+		return scheduleDao.deleteSchedule(scheduleVo);
+	}
+
 }

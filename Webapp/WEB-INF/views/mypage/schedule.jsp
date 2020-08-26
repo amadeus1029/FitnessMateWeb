@@ -93,7 +93,8 @@
                                 }
                             },
                             </c:forEach>
-                        ]
+                        ],
+                        eventDisplay: 'list-item'
                     });
                     calendar.render();
                 }
@@ -226,6 +227,66 @@
             </div>
         </div>
     </div>
+    <div class="modal-layer hide-off" id="modifyScheduleModal">
+        <div class="modal-wrapper">
+            <div class="modal-content">
+                <div class="">
+                    <input type="hidden" name="date">
+                    <p class="text">시작시간</p>
+                    <ol>
+                        <li>
+                            <input type="radio" id="modifyStartAm" name="startTime" value="am" checked>
+                            <label for="modifyStartAm">AM</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="modifyStartPm" name="startTime" value="pm">
+                            <label for="modifyStartPm">PM</label>
+                        </li>
+                    </ol>
+                    <select name="startHour">
+                        <option value="00" selected>0시</option>
+                        <option value="01">1시</option>
+                        <option value="02">2시</option>
+                        <option value="03">3시</option>
+                        <option value="04">4시</option>
+                        <option value="05">5시</option>
+                        <option value="06">6시</option>
+                        <option value="07">7시</option>
+                        <option value="08">8시</option>
+                        <option value="09">9시</option>
+                        <option value="10">10시</option>
+                        <option value="11">11시</option>
+                    </select>
+                    <select name="startMinute">
+                        <option value="00" selected>00분</option>
+                        <option value="10">10분</option>
+                        <option value="20">20분</option>
+                        <option value="30">30분</option>
+                        <option value="40">40분</option>
+                        <option value="50">50분</option>
+                    </select>
+                </div>
+                <div>
+                    <p class="text">소요시간(분)</p>
+                    <input type="number" name="amount" placeholder="00분" value="">
+                </div>
+                <div>
+                    <p class="text">회원이름</p>
+                    <select name="ptNo">
+                        <option disabled selected value="default">회원 선택</option>
+                        <c:forEach items="${ptList}" var="ptVo">
+                            <option value="${ptVo.ptNo}">${ptVo.name}(${ptVo.userId})</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <button type="button" class="delete-btn button main">삭제하기</button>
+            </div>
+            <div class="modal-btn-area">
+                <button type="button" class="modal-cancel" onclick="forceHideModal('#modifyScheduleModal')">취소</button>
+                <button type="button" class="modal-confirm" onclick="">확인</button>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -236,8 +297,51 @@
             });
         });//레디함수종료
 
-        function btnModify() {
-            showModal("#addScheduleModal");
+        function btnModify(scheduleNo) {
+            var modal = $("#modifyScheduleModal");
+            var date = modal.find("input[name='date']");
+            var hour = modal.find("select[name='startHour']");
+            var minute = modal.find("select[name='startMinute']");
+            var amount = modal.find("input[name='amount']");
+            var ptNo = modal.find("select[name='ptNo']");
+            var scheduleVo = {
+                scheduleNo : scheduleNo,
+                trainerNo : ${authUser.userNo}
+            }
+            $.ajax({
+                url: "${pageContext.request.contextPath}/mypage/getSchedule",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify(scheduleVo),
+                dataType: "json",
+                success: function (schedule) {
+                    var dateVal = schedule.startTime.substring(0, 10);
+                    var hourVal = schedule.startTime.substring(11, 13);
+                    var minuteVal = schedule.startTime.substring(14, 16);
+
+                    if(parseInt(hourVal) >= 12) {
+                        modal.find("input#modifyStartPm").prop("checked", true);
+                        hourVal = parseInt(hourVal) - 12;
+                        if(hourVal < 10) {
+                            hourVal = 0 + hourVal.toString();
+                        }
+                    } else {
+                        modal.find("input#modifyStartAm").prop("checked", true);
+                    }
+                    date.val(dateVal);
+                    hour.find("option[value='"+hourVal+"']").prop("selected", true);
+                    minute.find("option[value='"+minuteVal+"']").prop("selected", true);
+                    amount.val(schedule.amount);
+                    ptNo.find("option[value='"+schedule.ptNo+"']").prop("selected", true);
+
+                    modal.find(".modal-confirm").attr("onclick","modifySchedule('"+ schedule.scheduleNo +"')");
+                    modal.find(".delete-btn").attr("onclick","deleteSchedule('"+ schedule.scheduleNo +"')");
+                },
+                error: function (XHR, status, error) {
+                    console.error(status + ":" + error);
+                }
+            });
+            showModal("#modifyScheduleModal");
         }
 
         function addSchedule() {
@@ -284,10 +388,86 @@
                 data: JSON.stringify(scheduleVo),
                 dataType: "json",
                 success: function (result) {
-                    if (result) {
-                        console.log("성공");
-                    } else {
-                        console.log("실패");
+                    alert("스케쥴이 추가되었습니다.");
+                    window.location.reload();
+                },
+                error: function (XHR, status, error) {
+                    console.error(status + ":" + error);
+                }
+            });
+        }
+
+        function modifySchedule(scheduleNo) {
+            var modal = $("#modifyScheduleModal");
+            var date = modal.find("input[name='date']").val();
+            var time = modal.find("input[name='startTime']:checked").val();
+            var hour = parseInt(modal.find("select[name='startHour']").find("option:selected").val());
+            var minute = modal.find("select[name='startMinute']").find("option:selected").val();
+            var amount = modal.find("input[name='amount']").val();
+            var startTime;
+            var ptNo = modal.find("select[name='ptNo']").find("option:selected").val();
+
+            if (time === 'pm') {
+                hour += 12;
+            }
+            if (hour < 10) {
+                hour = 0 + hour.toString();
+            }
+
+            startTime = date + " " + hour + minute;
+
+
+            if (amount === "" || amount == null) {
+                alert("소요시간을 입력해주세요!");
+                return false;
+            }
+
+            if (ptNo === "default") {
+                alert("회원을 선택해주세요!");
+                return false;
+            }
+
+            var scheduleVo = {
+                startTime: startTime,
+                amount: amount,
+                ptNo: ptNo,
+                scheduleNo: scheduleNo
+            }
+
+
+            $.ajax({
+                url: "${pageContext.request.contextPath}/mypage/modifySchedule",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify(scheduleVo),
+                dataType: "json",
+                success: function (result) {
+                    if(result) {
+                        alert("스케쥴이 수정되었습니다.");
+                        window.location.reload();
+                    }
+                },
+                error: function (XHR, status, error) {
+                    console.error(status + ":" + error);
+                }
+            });
+        }
+
+        function deleteSchedule(scheduleNo) {
+            var scheduleVo = {
+                scheduleNo : scheduleNo
+            }
+
+            $.ajax({
+                url: "${pageContext.request.contextPath}/mypage/deleteSchedule",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify(scheduleVo),
+                dataType: "json",
+                success: function (result) {
+                    if(result) {
+                        alert("스케쥴이 삭제되었습니다.");
+                        window.location.reload();
                     }
                 },
                 error: function (XHR, status, error) {

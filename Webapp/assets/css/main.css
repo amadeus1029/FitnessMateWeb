@@ -171,38 +171,56 @@
   padding-right: 10px;
   text-align: right;
 }
-#addScheduleModal .modal-wrapper {
+#addScheduleModal .modal-wrapper,
+#modifyScheduleModal .modal-wrapper {
   width: 400px;
   text-align: left;
 }
-#addScheduleModal .modal-wrapper .modal-content {
+#addScheduleModal .modal-wrapper .modal-content,
+#modifyScheduleModal .modal-wrapper .modal-content {
   padding: 20px 20px 0;
 }
-#addScheduleModal .modal-wrapper select {
+#addScheduleModal .modal-wrapper button.delete-btn,
+#modifyScheduleModal .modal-wrapper button.delete-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 35px;
+  line-height: 35px;
+}
+#addScheduleModal .modal-wrapper select,
+#modifyScheduleModal .modal-wrapper select {
   width: 80px;
   height: 35px;
   display: inline-block !important;
 }
-#addScheduleModal .modal-wrapper input[name="amount"] {
+#addScheduleModal .modal-wrapper input[name="amount"],
+#modifyScheduleModal .modal-wrapper input[name="amount"] {
   width: 100px;
 }
-#addScheduleModal .modal-wrapper select[name="ptNo"] {
+#addScheduleModal .modal-wrapper select[name="ptNo"],
+#modifyScheduleModal .modal-wrapper select[name="ptNo"] {
   width: 200px;
 }
-#addScheduleModal .modal-wrapper .text {
+#addScheduleModal .modal-wrapper .text,
+#modifyScheduleModal .modal-wrapper .text {
   font-size: 20px;
   margin: 0 0 10px;
   font-weight: 700;
 }
-#addScheduleModal .modal-wrapper ol {
+#addScheduleModal .modal-wrapper ol,
+#modifyScheduleModal .modal-wrapper ol {
   margin: 0 30px 0 0;
   float: left;
 }
 #addScheduleModal .modal-wrapper select[name="hour"],
-#addScheduleModal .modal-wrapper select[name="minute"] {
+#modifyScheduleModal .modal-wrapper select[name="hour"],
+#addScheduleModal .modal-wrapper select[name="minute"],
+#modifyScheduleModal .modal-wrapper select[name="minute"] {
   margin-top: 10px;
 }
-#addScheduleModal .modal-wrapper .modal-btn-area button {
+#addScheduleModal .modal-wrapper .modal-btn-area button,
+#modifyScheduleModal .modal-wrapper .modal-btn-area button {
   margin-top: 30px;
 }
 /* import/variable { */

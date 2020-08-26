@@ -164,5 +164,26 @@ public class MypageController {
     public boolean addSchedule(@RequestBody ScheduleVo scheduleVo) {
         return mypageService.addSchedule(scheduleVo);
     }
-    
+
+
+    //단일 스케쥴 조회
+    @ResponseBody
+    @RequestMapping("/getSchedule")
+    public ScheduleVo getSchedule(@RequestBody ScheduleVo scheduleVo, HttpSession session) {
+        return mypageService.getSchedule(scheduleVo);
+    }
+
+    //스케쥴 변경
+    @ResponseBody
+    @RequestMapping("/modifySchedule")
+    public boolean modifySchedule(@RequestBody ScheduleVo scheduleVo) {
+        return mypageService.modifySchedule(scheduleVo);
+    }
+
+    //스케쥴 삭제
+    @ResponseBody
+    @RequestMapping("/deleteSchedule")
+    public boolean deleteSchedule(@RequestBody ScheduleVo scheduleVo) {
+        return mypageService.deleteSchedule(scheduleVo);
+    }
 }
