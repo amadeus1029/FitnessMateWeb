@@ -2,18 +2,18 @@ package com.javaex.vo;
 
 public class ExerciseVo {
     private int exNo, trainerNo, exPartNo;
-    private String exName, exPartName, amount;
+    private String exName, exPartName, unit;
 
     public ExerciseVo() {
     }
 
-    public ExerciseVo(int exNo, int trainerNo, int exPartNo, String exName, String exPartName, String amount) {
+    public ExerciseVo(int exNo, int trainerNo, int exPartNo, String exName, String exPartName, String unit) {
         this.exNo = exNo;
         this.trainerNo = trainerNo;
         this.exPartNo = exPartNo;
         this.exName = exName;
         this.exPartName = exPartName;
-        this.amount = amount;
+        this.unit = unit;
     }
 
     public int getExNo() {
@@ -56,12 +56,12 @@ public class ExerciseVo {
         this.exPartName = exPartName;
     }
 
-    public String getAmount() {
-        return amount;
+    public String getUnit() {
+        return unit;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ExerciseVo {
                 ", exPartNo=" + exPartNo +
                 ", exName='" + exName + '\'' +
                 ", exPartName='" + exPartName + '\'' +
-                ", amount='" + amount + '\'' +
+                ", unit='" + unit + '\'' +
                 '}';
     }
 }

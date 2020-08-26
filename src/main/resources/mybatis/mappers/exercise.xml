@@ -15,7 +15,7 @@
             select  ex.exerciseNo as exNo,
                     ex.exerciseName as exName,
                     p.partName as exPartName,
-                    ex.amount as amount
+                    ex.unit as unit
             from    exercise ex, ex_part p
             where   ex.trainerNo = #{trainerNo}
             and     ex.exercisepart = p.partNo
@@ -36,12 +36,22 @@
             where   p.partNo = exp.expartno
         ]]>
     </select>
+    <select id="selectByPart" parameterType="ExVo" resultType="ExVo">
+        <![CDATA[
+            select  e.exerciseno as exNo,
+                    e.exercisename as exName,
+                    e.unit as unit
+            from    exercise e, ex_part p
+            where   e.exercisepart = p.partNo and e.trainerNo = #{trainerNo} and e.exercisepart = #{exPartNo}
+            order by e.exerciseno asc
+        ]]>
+    </select>
     <select id="selectByNo" parameterType="int" resultType="ExVo">
         <![CDATA[
             select  ex.exerciseNo as exNo,
                     ex.exerciseName as exName,
                     p.partName as exPartName,
-                    ex.amount as amount
+                    ex.unit as unit
             from    exercise ex, ex_part p
             where   ex.exerciseNo = #{exNo}
             and     ex.exercisepart = p.partNo
@@ -55,7 +65,7 @@
         </selectKey>
         <![CDATA[
             insert into exercise
-            values(#{exNo}, #{trainerNo}, #{exName}, #{exPartNo}, #{amount})
+            values(#{exNo}, #{trainerNo}, #{exName}, #{exPartNo}, #{unit})
         ]]>
     </insert>
     <delete id="delete" parameterType="ExVo">

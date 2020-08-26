@@ -1,6 +1,7 @@
 package com.javaex.dao;
 
 import com.javaex.vo.ExerciseVo;
+import com.javaex.vo.RecordVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -35,5 +36,9 @@ public class ExerciseDao {
 
     public Boolean delete(ExerciseVo exVo) {
         return sqlSession.delete("exercise.delete", exVo) == 1;
+    }
+
+    public List<ExerciseVo> showExPart(ExerciseVo exVo) {
+        return sqlSession.selectList("exercise.selectByPart", exVo);
     }
 }

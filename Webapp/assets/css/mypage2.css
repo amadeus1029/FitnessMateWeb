@@ -14,3 +14,93 @@ div.info-wrapper div.info div.main-info-wrapper{
 div.info-wrapper div.info input[name="career"]{
 	margin-bottom: 50px;
 }
+
+/* 체크박스 */
+.checkboxPart{
+    width: 80%;
+    margin: 10px 0px 30px -10px;
+    line-height: 45px;
+    word-break: keep-all;
+    text-align: center;
+}
+.button-label {
+    padding: 5px 10px;
+    margin: 10px;
+    background: #dbf2e1;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: 0.3s;
+    user-select: none;
+}
+.button-label:active {
+    transform: translateY(2px);
+}
+input[type="checkbox"]{
+	display: none;
+}
+input[type="checkbox"]:checked + label {
+    background: #008526;
+    color: #ffffff;
+}
+
+#container .wrapper form button[type="submit"] {
+    width: 130px;
+    margin: 30px auto 30px;
+}
+div.award-info div{
+	position: relative;
+	width: 50%;
+}
+div.award-info div i.deleteNew{
+	font-size: 18px;
+	position: absolute;
+	top: 5px;
+	right: 18px;
+}
+
+/* 회원관리 */
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper{
+    padding: 0px;
+}
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper img{
+    float: left;
+    width: 405px;
+    height: 405px;
+}
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div{
+    padding-left: 430px;
+    text-align: left;
+    line-height: 180%;
+}
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div p.label {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div textarea{
+	width: 350px;
+	margin: 5px 0px 5px 5px;
+	padding: 5px;
+}
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div button{
+	background-color: #008526;
+	float: right;
+	color: #ffffff;
+	border: 1px solid #008526;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+/* 회원 등록 */
+.modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper .schedule-input{
+	width: 60px !important;
+    height: 35px !important;
+    margin-left: 5px;
+}
+.modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper{
+	margin-top: 20px !important;
+}
+.modal-wrapper .modal-content .search-result p.errMsg, p.defaultMsg{
+	float: left;
+	margin: 30px 0px 0px 45px;
+}

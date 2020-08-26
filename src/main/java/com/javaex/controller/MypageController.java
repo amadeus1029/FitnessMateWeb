@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import com.javaex.vo.ExerciseVo;
+import com.javaex.vo.RecordVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +28,7 @@ public class MypageController {
 	private UserService userService; 
 	
     @RequestMapping("/schedule")
-    public String Schedule(HttpSession session) {
+    public String schedule(HttpSession session) {
         UserVo user = (UserVo) session.getAttribute("authUser");
 
         if("trainer".equals(user.getUserType())) {
@@ -41,7 +42,7 @@ public class MypageController {
     }
     
     @RequestMapping("/manageExercise")
-    public String ManageTraining(HttpSession session, Model model) {
+    public String manageTraining(HttpSession session, Model model) {
         UserVo user = (UserVo) session.getAttribute("authUser");
 
         if("trainer".equals(user.getUserType())) {
@@ -64,6 +65,14 @@ public class MypageController {
         UserVo user = (UserVo) session.getAttribute("authUser");
         exVo.setTrainerNo(user.getUserNo());
         return mypageService.addExercise(exVo);
+    }
+
+    @ResponseBody
+    @RequestMapping("/showExPart")
+    public List<ExerciseVo> showExPart(HttpSession session, @RequestBody ExerciseVo exVo) {
+        UserVo user = (UserVo) session.getAttribute("authUser");
+        exVo.setTrainerNo(user.getUserNo());
+        return mypageService.showExPart(exVo);
     }
 
     @ResponseBody
@@ -104,7 +113,7 @@ public class MypageController {
     }
     
     @RequestMapping("/recordEx")
-    public String RecordEx(HttpSession session, Model model) {
+    public String recordEx(HttpSession session, Model model) {
         UserVo user = (UserVo) session.getAttribute("authUser");
 
         if("trainer".equals(user.getUserType())) {
@@ -117,7 +126,13 @@ public class MypageController {
     	
         return "mypage/recordEx";
     }
-    
+
+    @ResponseBody
+    @RequestMapping("/addRecord")
+    public int addRecord(@RequestBody List<RecordVo> recordList) {
+        return mypageService.recordExcercise(recordList);
+    }
+
     //프로필 수정
     @RequestMapping("/modifyProfile")
     public String modifyProfile(@ModelAttribute UserVo vo,

@@ -72,7 +72,7 @@
                             $("#calendar").append(
                                 "<div class='btn_pop'>" +
                                 "<button type='button' class='button btn_modify' onclick='btnModify();'>스케쥴변경</button>" +
-                                "<a href='${pageContext.request.contextPath}/mypage/recordEx' class='button'>운동시작</a>" +
+                                "<a href='${pageContext.request.contextPath}/mypage/recordEx?scheduleNo=1' class='button'>운동시작</a>" +
                                 "<div>"
                             );
                             $(".btn_pop").css({
