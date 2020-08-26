@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.Mypage2Service;
+import com.javaex.vo.InbodyVo;
 import com.javaex.vo.PtVo;
 import com.javaex.vo.UserVo;
 
@@ -41,14 +43,11 @@ public class Mypage2Controller {
     
     //API
     @ResponseBody
-    @RequestMapping("/ptInfo")
-    public PtVo getPtInfo(int ptNo, int trainerNo) {
+    @RequestMapping("/userInfo")
+    public Map<String, Object> getUserInfo(int ptNo, int trainerNo) {
     	System.out.println("마이페이지 컨트롤러 ptInfo");
 
-    	PtVo ptInfo = mypageService.getPtInfo(trainerNo, ptNo);
-    	System.out.println(ptInfo);
-
-    	return ptInfo;
+    	return mypageService.getUserInfo(trainerNo, ptNo);
     }
     
     @ResponseBody
@@ -56,9 +55,7 @@ public class Mypage2Controller {
     public UserVo searchUser(String keyword) {
     	System.out.println("마이페이지 컨트롤러 searchUser");
     	
-    	UserVo userVo = mypageService.getUserInfo(keyword);
-    	
-    	return userVo;
+    	return mypageService.getUserInfo(keyword);
     }
     
     @ResponseBody
@@ -75,11 +72,28 @@ public class Mypage2Controller {
     @RequestMapping("/modifyMemo")
     public String modifyMemo(int ptNo, String memo) {
     	System.out.println("마이페이지 컨트롤러 pt등록");
-    	System.out.println("memo-"+memo+"ptNo-"+ptNo);
     	
     	mypageService.modifyMemo(ptNo, memo);
     	
     	return "success";
+    }
+    
+    @ResponseBody
+    @RequestMapping("getInbodyInfo")
+    public InbodyVo getInbodyInfo(int inbodyNo) {
+    	System.out.println("마이페이지 컨트롤러 인바디 정보");
+    	
+    	InbodyVo inbodyVo = mypageService.getInbodyInfo(inbodyNo);
+    	
+    	return inbodyVo;
+    }
+    
+    @ResponseBody
+    @RequestMapping("/saveInbody")
+    public InbodyVo saveInbody(int ptNo, float weight, float percentFat, float muscleMass, float bmi) {
+    	System.out.println("마이페이지 컨트롤러 pt등록");
+    	
+    	return mypageService.saveInbody(ptNo, weight, percentFat, muscleMass, bmi);
     }
     
     

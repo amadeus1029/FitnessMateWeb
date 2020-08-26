@@ -1,6 +1,7 @@
 package com.javaex.service;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaex.dao.PtDao;
+import com.javaex.vo.InbodyVo;
 import com.javaex.vo.PtVo;
 import com.javaex.vo.UserVo;
 
@@ -39,7 +41,7 @@ public class Mypage2Service {
 		return ptList;
 	}
 
-	public PtVo getPtInfo(int trainerNo, int ptNo) {
+	public Map<String, Object> getUserInfo(int trainerNo, int ptNo) {
 		System.out.println("service 트레이니 1개 받아오기");
 		
 		Map<String, Integer> ptMap = new HashMap<>();
@@ -47,18 +49,26 @@ public class Mypage2Service {
 		ptMap.put("ptNo", ptNo);
 
 		PtVo ptVo = ptDao.selectPtInfo(ptMap);
+		List<InbodyVo> inbodyList = ptDao.selectInbodyList(ptNo);
 		
 		//오늘 날짜
 		int today = getToday();
-		
+
 		//pt진행상황 데이터 넣기
 		if(ptVo.getIntEndDate() < today || ptVo.getRegCount() < ptVo.getScheduleCount()) {
 			ptVo.setProceed(false);
+			System.out.println("끝");
 		}else {
 			ptVo.setProceed(true);
+			System.out.println("아직 안끝");
 		}
 		
-		return ptVo;
+		//화면으로 보내줄 맵
+		Map<String, Object> userInfo = new HashMap<>();
+		userInfo.put("ptInfo", ptVo); //ptInfo
+		userInfo.put("inbodyList", inbodyList);
+		
+		return userInfo;
 	}
 
 	public UserVo getUserInfo(String keyword) {
@@ -91,19 +101,37 @@ public class Mypage2Service {
 		ptDao.updateMemo(memoMap);
 	}
 	
+	public InbodyVo getInbodyInfo(int inbodyNo) {
+		System.out.println("service 인바디 가져오기");
+		
+		return ptDao.selectInbodyInfo(inbodyNo);
+	}
+	
+	public InbodyVo saveInbody(int ptNo, float weight, float percentFat, float muscleMass, float bmi) {
+		System.out.println("service 인바디 저장");
+		
+		InbodyVo inbodyVo = new InbodyVo(ptNo, weight, percentFat, muscleMass, bmi);
+		
+		ptDao.insertInbody(inbodyVo);
+		
+		String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		inbodyVo.setMeasureDate(today);
+		
+		return inbodyVo;
+	}
+
 	
 	
 	//오늘 날짜 가져오기
 	public int getToday() {
-		Calendar cal = Calendar.getInstance();
-
-		String year = Integer.toString(cal.get(Calendar.YEAR));
-		String month = Integer.toString(cal.get(Calendar.MONTH) + 1);
-		String day = Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
-		int today = Integer.parseInt(""+year+month+day);
 		
+		String localDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+		
+		int today = Integer.parseInt(localDate);
+
 		return today;
 	}
+
 
 
 }
