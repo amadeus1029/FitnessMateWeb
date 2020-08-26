@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="schedule">
+    <insert id="insert" parameterType="ScheduleVo">
+        <![CDATA[
+            insert into schedule
+            values(seq_scheduleNo.nextVal, #{ptNo}, '', '', to_date(#{startTime}, 'yyyy-mm-dd hh24:mi') , to_date(#{startTime}, 'yyyy-mm-dd hh24:mi') + #{amount}/(24*60),#{amount})
+        ]]>
+    </insert>
+    <select id="selectList" parameterType="int" resultType="ScheduleVo">
+        <![CDATA[
+            select  u.userId as userId,
+                    u.name as userName,
+                    s.scheduleNo as scheduleNo,
+                    s.ptNo as ptNo,
+                    s.memo as memo,
+                    s.state as state,
+                    to_char(s.startTime, 'yyyy-mm-dd hh24:mi') as startTime,
+                    to_char(s.endTime, 'yyyy-mm-dd hh24:mi') as endTime,
+                    round((s.endtime - s.startTime) * 1440) as amount
+            from    schedule s, pt p, users u
+            where   p.ptNo = s.ptNo and p.trainerNo = #{trainerNo} and p.userno = u.userno
+        ]]>
+    </select>
+</mapper>
+
+        <!--
+        <![CDATA[
+        ]]>
+        -->

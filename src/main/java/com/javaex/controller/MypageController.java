@@ -5,8 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import com.javaex.vo.ExerciseVo;
-import com.javaex.vo.RecordVo;
+import com.javaex.service.Mypage2Service;
+import com.javaex.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.javaex.service.MypageService;
 import com.javaex.service.UserService;
-import com.javaex.vo.AddressVo;
-import com.javaex.vo.UserVo;
 
 @Controller
 @RequestMapping("/mypage")
@@ -23,17 +21,28 @@ public class MypageController {
 	
 	@Autowired
 	private MypageService mypageService;
+
+	@Autowired
+    private Mypage2Service mypage2Service;
 	
 	@Autowired
 	private UserService userService; 
 	
     @RequestMapping("/schedule")
-    public String schedule(HttpSession session) {
+    public String schedule(HttpSession session, Model model) {
         UserVo user = (UserVo) session.getAttribute("authUser");
 
         if("trainer".equals(user.getUserType())) {
             System.out.println("트레이너 마이페이지 스케쥴 이동");
-
+            List<PtVo> ptList  = mypage2Service.getTraineeList(user.getUserNo());
+            for(PtVo ptVo: ptList) {
+                if(ptVo.isProceed()) {
+                    ptList.remove(ptVo);
+                }
+            }
+            model.addAttribute("ptList", ptList);
+            List<ScheduleVo> scheduleList = mypageService.getScheduleList(user.getUserNo());
+            model.addAttribute("scheduleList", scheduleList);
         }else {
             System.out.println("일반회원 마이페이지 스케쥴 이동");
         }
@@ -130,7 +139,7 @@ public class MypageController {
     @ResponseBody
     @RequestMapping("/addRecord")
     public int addRecord(@RequestBody List<RecordVo> recordList) {
-        return mypageService.recordExcercise(recordList);
+        return mypageService.recordExercise(recordList);
     }
 
     //프로필 수정
@@ -149,8 +158,11 @@ public class MypageController {
         return "redirect:/mypage/profile";
     }
     
-
-    
-    
+    //스케쥴 추가
+    @ResponseBody
+    @RequestMapping("/addSchedule")
+    public boolean addSchedule(@RequestBody ScheduleVo scheduleVo) {
+        return mypageService.addSchedule(scheduleVo);
+    }
     
 }

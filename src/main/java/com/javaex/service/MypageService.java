@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.javaex.dao.ExerciseDao;
 import com.javaex.dao.RecordDao;
+import com.javaex.dao.ScheduleDao;
 import com.javaex.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class MypageService {
 
 	@Autowired
 	private RecordDao recordDao;
+
+	@Autowired
+	private ScheduleDao scheduleDao;
 
 	public Map<String, Object> getProfile(int userNo) {
 		System.out.println("/마이페이지 서비스/프로필 수정");
@@ -87,12 +91,20 @@ public class MypageService {
 		return exerciseDao.delete(exVo);
 	}
 
-	public int recordExcercise(List<RecordVo> recordList) {
+	public int recordExercise(List<RecordVo> recordList) {
 		return recordDao.insertRecordList(recordList);
 	}
 
 	public List<ExerciseVo> showExPart(ExerciseVo exVo) {
 		return exerciseDao.showExPart(exVo);
+	}
+
+	public boolean addSchedule(ScheduleVo scheduleVo) {
+		return scheduleDao.insert(scheduleVo);
+	}
+
+	public List<ScheduleVo> getScheduleList(int trainerNo) {
+		return scheduleDao.getScheduleList(trainerNo);
 	}
 
 }

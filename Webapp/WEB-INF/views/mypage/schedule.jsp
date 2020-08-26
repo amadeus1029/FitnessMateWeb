@@ -29,7 +29,7 @@
     <link href='${pageContext.request.contextPath}/assets/js/calendar/main.css' rel='stylesheet'>
     <script src='${pageContext.request.contextPath}/assets/js/calendar/main.js'></script>
     <script src='${pageContext.request.contextPath}/assets/js/calendar/theme-chooser.js'></script>
-    
+
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage.css">
 
@@ -58,8 +58,9 @@
                         // showNonCurrentDates: false,
                         dateClick: function (info) {
                             //TODO - 날짜 클릭시 발생 이벤트
+                            resetModal();
+                            $("#addScheduleModal").find("input[name='date']").val(info.dateStr);
                             showModal("#addScheduleModal");
-
                         },
                         eventClick: function (info) {
                             //TODO - 일정 클릭시 발생 이벤트
@@ -67,12 +68,12 @@
                             $(".btn_pop").remove();
 
                             var target = $(info.el);
-                            var left = target.offset().left + 100;
+                            var left = target.offset().left + 120;
                             var top = target.offset().top - 60;
                             $("#calendar").append(
                                 "<div class='btn_pop'>" +
-                                "<button type='button' class='button btn_modify' onclick='btnModify();'>스케쥴변경</button>" +
-                                "<a href='${pageContext.request.contextPath}/mypage/recordEx?scheduleNo=1' class='button'>운동시작</a>" +
+                                "<button type='button' class='button btn_modify' onclick='btnModify("+info.event.extendedProps.dataId+");'>스케쥴변경</button>" +
+                                "<a href='${pageContext.request.contextPath}/mypage/recordEx?scheduleNo="+ info.event.extendedProps.dataId +"' class='button'>운동시작</a>" +
                                 "<div>"
                             );
                             $(".btn_pop").css({
@@ -82,98 +83,16 @@
                         },
                         height: 'auto',
                         events: [
+                            <c:forEach items="#{scheduleList}" var="schedule">
                             {
-                                title: '김영희 님',
-                                start: '2020-08-01T09:00'
+                                title: '${schedule.userName}(${schedule.amount}분)',
+                                start: '${schedule.startTime}',
+                                end: '${schedule.endTime}',
+                                extendedProps: {
+                                    dataId : ${schedule.scheduleNo}
+                                }
                             },
-                            {
-                                title: '김철수 님',
-                                start: '2020-08-01T11:00'
-                            },
-                            {
-                                title: '이영희 님',
-                                start: '2020-08-01T14:00'
-                            },
-                            {
-                                title: '박철민 님',
-                                start: '2020-08-01T16:00'
-                            },
-                            {
-                                title: '황정민 님',
-                                start: '2020-08-01T191:00'
-                            },
-                            {
-                                title: '김영희 님',
-                                start: '2020-08-02T09:00'
-                            },
-                            {
-                                title: '김철수 님',
-                                start: '2020-08-02T11:00'
-                            },
-                            {
-                                title: '이영희 님',
-                                start: '2020-08-02T14:00'
-                            },
-                            {
-                                title: '김영희 님',
-                                start: '2020-08-05T09:00'
-                            },
-                            {
-                                title: '김길동 님',
-                                start: '2020-08-06T09:00'
-                            },
-                            {
-                                title: '김길동 님',
-                                start: '2020-08-06T09:00'
-                            },
-                            {
-                                title: '김길동 님',
-                                start: '2020-08-06T09:00'
-                            },
-                            {
-                                title: '김길동 님',
-                                start: '2020-08-06T09:00'
-                            },
-                            {
-                                title: '김길동 님',
-                                start: '2020-08-06T09:00'
-                            },
-                            {
-                                title: '김길동 님',
-                                start: '2020-08-06T09:00'
-                            },
-                            {
-                                title: '김길동 님',
-                                start: '2020-08-06T09:00'
-                            },
-                            {
-                                title: '김길동 님',
-                                start: '2020-08-06T09:00'
-                            },
-                            {
-                                title: '김길동 님',
-                                start: '2020-08-06T09:00'
-                            },
-                            {
-                                title: '김영희 님',
-                                start: '2020-08-11T09:00'
-                            },
-                            {
-                                title: '김영희 님',
-                                start: '2020-08-17T09:00'
-                            },
-                            {
-                                title: '김철수 님',
-                                start: '2020-08-17T11:00'
-                            },
-                            {
-                                title: '이영희 님',
-                                start: '2020-08-17T14:00'
-                            },
-                            {
-                                title: '박철민 님',
-                                start: '2020-08-17T16:00'
-                            },
+                            </c:forEach>
                         ]
                     });
                     calendar.render();
@@ -248,116 +167,141 @@
         </div>
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
-    <div class="modal-layer" id="addScheduleModal">
+    <div class="modal-layer hide-off" id="addScheduleModal">
         <div class="modal-wrapper">
-            <form action="" method="">
-                <div class="modal-content">
-                    <div class="select01">
-                        <p class="text">시작시간</p>
-                        <ol>
-                            <li>
-                                <input type="radio" id="startAm" name="startTime" value="am">
-                                <label for="startAm">AM</label>
-                            </li>
-                            <li>
-                                <input type="radio" id="startPm" name="startTime" value="pm">
-                                <label for="startPm">PM</label>
-                            </li>
-                        </ol>
-                        <select name="hour">
-                            <option value="">시간</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
-                        <select name="minute">
-                            <option value="">분</option>
-                            <option value="00">00</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                            <option value="40">40</option>
-                            <option value="50">50</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p class="text">종료시간</p>
-                        <ol>
-                            <li>
-                                <input type="radio" id="endAm" name="endTime" value="am">
-                                <label for="endAm">AM</label>
-                            </li>
-                            <li>
-                                <input type="radio" id="endPm" name="endTime" value="pm">
-                                <label for="endPm">PM</label>
-                            </li>
-                        </ol>
-                        <select name="hour">
-                            <option value="">시간</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
-                        <select name="minute">
-                            <option value="">분</option>
-                            <option value="00">00</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                            <option value="40">40</option>
-                            <option value="50">50</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p class="text">회원이름</p>
-                        <select name="user_name">
-                            <option value="">회원이름</option>
-                            <option value="">김영희(rladudgml)</option>
-                            <option value="">김철수(rlacjftn)</option>
-                            <option value="">이영희(dldudgml)</option>
-                            <option value="">황정민(ghkdwjdals)</option>
-                        </select>
-                    </div>
+            <div class="modal-content">
+                <div class="">
+                    <input type="hidden" name="date">
+                    <p class="text">시작시간</p>
+                    <ol>
+                        <li>
+                            <input type="radio" id="startAm" name="startTime" value="am" checked>
+                            <label for="startAm">AM</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="startPm" name="startTime" value="pm">
+                            <label for="startPm">PM</label>
+                        </li>
+                    </ol>
+                    <select name="startHour">
+                        <option value="00" selected>0시</option>
+                        <option value="01">1시</option>
+                        <option value="02">2시</option>
+                        <option value="03">3시</option>
+                        <option value="04">4시</option>
+                        <option value="05">5시</option>
+                        <option value="06">6시</option>
+                        <option value="07">7시</option>
+                        <option value="08">8시</option>
+                        <option value="09">9시</option>
+                        <option value="10">10시</option>
+                        <option value="11">11시</option>
+                    </select>
+                    <select name="startMinute">
+                        <option value="00" selected>00분</option>
+                        <option value="10">10분</option>
+                        <option value="20">20분</option>
+                        <option value="30">30분</option>
+                        <option value="40">40분</option>
+                        <option value="50">50분</option>
+                    </select>
                 </div>
-            </form>
+                <div>
+                    <p class="text">소요시간(분)</p>
+                    <input type="number" name="amount" placeholder="00분">
+                </div>
+                <div>
+                    <p class="text">회원이름</p>
+                    <select name="ptNo">
+                        <option disabled selected value="default">회원 선택</option>
+                        <c:forEach items="${ptList}" var="ptVo">
+                            <option value="${ptVo.ptNo}">${ptVo.name}(${ptVo.userId})</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
             <div class="modal-btn-area">
                 <button type="button" class="modal-cancel" onclick="forceHideModal('#addScheduleModal')">취소</button>
-                <button type="button" class="modal-confirm" onclick="forceHideModal('#addScheduleModal')">확인</button>
+                <button type="button" class="modal-confirm" onclick="addSchedule();">확인</button>
             </div>
         </div>
     </div>
     <script type="text/javascript">
 
         $(document).ready(function () {
-
-            //화면 아무곳이나 클릭시 스케쥴 팝업 제거
-            $(window).on("click",function () {
+            //화면 아무곳이나 클릭시 팝업메뉴 제거
+            $(window).on("click", function () {
                 $(".btn_pop").remove();
 
             });
         });//레디함수종료
 
         function btnModify() {
-            $("select[name='hour']").find("option[value='9']").prop("selected", true);
             showModal("#addScheduleModal");
+        }
+
+        function addSchedule() {
+            var modal = $("#addScheduleModal");
+            var date = modal.find("input[name='date']").val();
+            var time = modal.find("input[name='startTime']:checked").val();
+            var hour = parseInt(modal.find("select[name='startHour']").find("option:selected").val());
+            var minute = modal.find("select[name='startMinute']").find("option:selected").val();
+            var amount = modal.find("input[name='amount']").val();
+            var startTime;
+            var ptNo = modal.find("select[name='ptNo']").find("option:selected").val();
+
+            if (time === 'pm') {
+                hour += 12;
+            }
+            if (hour < 10) {
+                hour = 0 + hour.toString();
+            }
+
+            startTime = date + " " + hour + minute;
+
+
+            if (amount === "" || amount == null) {
+                alert("소요시간을 입력해주세요!");
+                return false;
+            }
+
+            if (ptNo === "default") {
+                alert("회원을 선택해주세요!");
+                return false;
+            }
+
+            var scheduleVo = {
+                startTime: startTime,
+                amount: amount,
+                ptNo: ptNo
+            }
+
+
+            $.ajax({
+                url: "${pageContext.request.contextPath}/mypage/addSchedule",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify(scheduleVo),
+                dataType: "json",
+                success: function (result) {
+                    if (result) {
+                        console.log("성공");
+                    } else {
+                        console.log("실패");
+                    }
+                },
+                error: function (XHR, status, error) {
+                    console.error(status + ":" + error);
+                }
+            });
+        }
+
+        function resetModal() {
+            var modal = $("#addScheduleModal");
+            modal.find("input[name='date']").val("");
+            modal.find("select").find("option:first-child").prop("selected", true);
+            modal.find("input#startAm").prop("checked", true);
+            modal.find("input#endAm").prop("checked", true);
         }
     </script>
 </body>
