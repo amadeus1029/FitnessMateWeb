@@ -23,6 +23,12 @@
 
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css">
+    
+    <!-- 지도js -->
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=7fc75fd1ec40ee52623062dbcd6c9baa&libraries=services,clusterer,drawing"></script>
+
+
 </head>
 <body>
 	<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
@@ -157,17 +163,10 @@
                     </div>
                     <div class="info-wrapper clearfix">
                         <div class="category-info">
-                            <h3 class="title">전문분야</h3>
-                            <span class="category">다이어트</span>
-                            <span class="category">재활</span>
-                            <span class="category">프로필 촬영</span>
+                            <h3 class="title field">전문분야</h3>
                         </div>
                         <div class="award-info">
                             <h3 class="title">입상경력</h3>
-                            <span class="award">머슬마니아 3위</span>
-                            <span class="award">전국체전 우수상</span>
-                            <span class="award">체육관 개근상</span>
-                            <span class="award">무사고 12년</span>
                         </div>
                     </div>
                     <div class="pay-wrapper">
@@ -283,16 +282,23 @@
                             </div>
                         </li>
                     </ul>
+                </div> <!-- 리뷰작성페이지 -->
+                
+                <div class="label-tab location-wrapper">
+                	<div id="map"></div>
                 </div>
-                <div class="label-tab location-wrapper">위치</div>
+                
             </div>
         </div>
-    </div>
+    </div><!-- 모달 -->
+    
+    
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     
    
     <script type="text/javascript"> 
-
+    
+   
    
     //검색
     $(".button.key").on("click",function(){
@@ -321,7 +327,7 @@
 				
 				for (var i in userVo ) {
 					userStr += "<li class='search-result' onclick='showProfileModal($(this),"+userVo[i].userNo+")'>";
-					userStr += '<div class="image-area" style="background-image:url("${pageContext.request.contextPath}\\assets\\image\\face\\Gangho-dong.jpg");">;'
+					userStr += '<div class="image-area" style="background-image:url("${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg");">;'
 					userStr += "</div>";
 					userStr += "<div class='content-area'>";
 					userStr += "<p class='name'>"+userVo[i].name+"</p>";
@@ -409,13 +415,13 @@
     	console.log("no "+no);
     	$("#delNo").val(no);
     	
-
     	 //다른 버튼 on 제거
     	 $("#profileModal .label-wrapper .label-btn").removeClass("on");
     	 $("#profileModal .label-wrapper .profile-btn").addClass("on");
     	 //다른 탭 on 제거
     	 $("#profileModal .label-tab").removeClass("on");
     	 $("#profileModal .profile-wrapper").addClass("on");
+    	 
 
             
           //데이터전송
@@ -427,6 +433,10 @@
 
         			dataType : "json",
         			success : function(vo) {
+        				
+        				trainerField();//전문분야
+        				trainerRecord();//수상경력
+  
         				var loca = vo.location.replace( /[|]/gi, ' ');//지역 사이의 | 지우기
         				
         				//만나이 계산
@@ -460,6 +470,58 @@
         				$(".content.introduction").html(vo.introduction); //자기소개
         				$(".content.age").html("만"+years+"세");
         				
+        				
+        				//////////////주소검색
+        				// 주소로 좌표를 검색합니다
+        				 
+
+        				var campanyLoca = loca+' '+vo.company;
+        				
+        				
+        				console.log(campanyLoca);
+        				
+        				// 키워드로 장소를 검색합니다
+        				ps.keywordSearch(campanyLoca, placesSearchCB); 
+
+        				// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+        				function placesSearchCB (data, status, pagination) {
+        				    if (status === kakao.maps.services.Status.OK) {
+
+        				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        				        // LatLngBounds 객체에 좌표를 추가합니다
+        				        var bounds = new kakao.maps.LatLngBounds();
+
+        				        for (var i=0; i<data.length; i++) {
+        				            displayMarker(data[i]);    
+        				            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+        				        }       
+
+        				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        				        map.setBounds(bounds);
+        				    } 
+        				}  
+        				
+        				// 지도에 마커를 표시하는 함수입니다
+        				function displayMarker(place) {
+        					
+        					 var coords = new kakao.maps.LatLng(place.y, place.x);
+        				    
+        				    // 마커를 생성하고 지도에 표시합니다
+        				    var marker = new kakao.maps.Marker({
+        				        map: map,
+        				        position: coords 
+        				    });
+        				    // 인포윈도우로 장소에 대한 설명을 표시합니다
+    		    	        var infowindow = new kakao.maps.InfoWindow({
+    		    	            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+vo.company+'</div>'
+    		    	        });
+    		    	        infowindow.open(map, marker);
+    		    	     // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+    		    	        map.setCenter(coords);
+        				  
+
+        				}
+        				
         			},
         			error : function(XHR, status, error) {
         				console.error(status + " : " + error);
@@ -469,7 +531,75 @@
         	showModal("#profileModal");
         }
     
+    //전문분야 불러오기 함수
+    function trainerField(){
+    	
+    	var fieldNo = $("#delNo").val();
+    	$(".category").remove();
+    	
+    	$.ajax({
 
+			url : "${pageContext.request.contextPath }/search/fieldInfo",
+			type : "post",
+			//contentType : "application/json",
+			data : {no: fieldNo},
+
+			dataType : "json",
+			success : function(fieldList) {
+				
+				
+				var fieldStr ='';
+				for (var i in fieldList ) {
+					
+					fieldStr +='<span class="category">'+fieldList[i].fieldName+'</span>';
+					
+				}
+				$(".category-info").append(fieldStr);
+			
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		    	}
+    	
+	  //수상경력 불러오기 함수
+	    function trainerRecord(){
+	    	
+	    	var recordNo = $("#delNo").val();
+	    	$(".award").remove();
+	    	
+	    	$.ajax({
+	
+				url : "${pageContext.request.contextPath }/search/recordInfo",
+				type : "post",
+				//contentType : "application/json",
+				data : {no: recordNo},
+	
+				dataType : "json",
+				success : function(recordList) {
+					console.log(recordList);
+					
+					var recordStr ='';
+					for (var i in recordList ) {
+						
+						recordStr +='<span class="award">'+recordList[i].recordInfo+'</span>';
+						
+					}
+					$(".award-info").append(recordStr);
+				
+					
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			    	}
+    	
+
+	  
+	  //////////////////////////////
         function showTab(target) {
             var targetTab = target.attr("data-tab");
 
@@ -544,6 +674,51 @@
             $('#star_grade i').removeClass("on"); 
        
         });
+        
+        
+        
+        //지도
+        $(".label-btn.location-btn").on("click",function(){
+        	console.log("위치클릭");
+        	resizeMap();//지도크기 설정
+	    	 relayout();//지도 레이아웃위치 설정
+        
+        });
+        
+        //지도크기 설정
+        function resizeMap() {
+		    var mapContainer = document.getElementById('map');
+		    mapContainer.style.width = '800px';
+		    mapContainer.style.height = '500px'; 
+		}
+        
+        //지도 나타내기
+        var container = document.getElementById('map');
+    	var options = {
+    		center: new kakao.maps.LatLng(37.566826, 126.9786567),
+    		level: 3
+    		};
+		
+    	//지도 생성
+    	var map = new kakao.maps.Map(container, options);
+    	
+    	// 장소 검색 객체를 생성합니다
+    	var ps = new kakao.maps.services.Places(); 
+
+    	
+    	
+    	//모달창에 있는 지도는 레이아웃 재설정해줘야 함
+    	function relayout() {    
+    	    // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
+    	    // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다 
+    	    // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
+    	    map.relayout();
+    	    
+    	}
+    	
+    	
+    	
+        
     </script>
 </body>
 </html>

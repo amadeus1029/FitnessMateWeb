@@ -57,19 +57,38 @@ public class SearchController {
 	
 	///////////////////////////////////////////////////////////////////////////
 	
-	
-	//트레이너 세부정보 불러오기
+	// 트레이너 세부정보 불러오기
 	@ResponseBody
 	@RequestMapping("/search/trainerInfo")
 	public UserVo trainerInfo(@RequestParam("no") int no) {
 		System.out.println("controller:/search/trainerInfo");
-		
+
 		UserVo uVo = searchService.trainerInfo(no);
-		
-		
+
 		return uVo;
-		
+
 	}
-	
+
+	// 트레이너 세부정보 불러오기(전문분야)
+	@ResponseBody
+	@RequestMapping("/search/fieldInfo")
+	public List<Object> fieldInfo(@RequestParam("no") int no) {
+		System.out.println("controller:/search/trainerInfo");
+
+		List<Object> uVo = searchService.fieldInfo(no);
+		return uVo;
+
+	}
+
+	// 트레이너 세부정보 불러오기(수상경력)
+	@ResponseBody
+	@RequestMapping("/search/recordInfo")
+	public List<Object> recordInfo(@RequestParam("no") int no) {
+		System.out.println("controller:/search/recordInfo");
+
+		List<Object> uVo = searchService.recordInfo(no);
+		return uVo;
+
+	}
 	
 }

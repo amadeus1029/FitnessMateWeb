@@ -116,6 +116,19 @@ public class SearchService {
 		
 		return uVo;
 	}
+
+	
+	public List<Object> fieldInfo(int no) {
+		
+		List<Object> uVo = searchDao.userField(no);
+		
+		return uVo;
+	}
+
+	public List<Object> recordInfo(int no) {
+		List<Object> uVo = searchDao.userRecord(no);
+		return uVo;
+	}
 	
 	
 	
