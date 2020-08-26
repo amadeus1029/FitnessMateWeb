@@ -102,12 +102,52 @@
                         <input type="hidden" id="modifyPtNo" value="">
                         <button type="button" onclick="modifyMemo($('textarea#memo').val(), $('input#modifyPtNo').val());">메모 수정</button>
                 	</div>
-	                <div class="label-tab inbody-wrapper">
-	                    인바디 내역이 들어옵니다
-	                </div>
-	                <div class="label-tab exercise-wrapper">
-	                    운동기록 내역이 들어옵니다
-	                </div>
+                </div>
+                	
+                <div class="label-tab inbody-wrapper">
+                    <!-- 인바디 내역이 들어옵니다 -->
+                   	<div class="inbody_record">
+                        <select>
+                            <option>인바디 입력하기</option>
+                            <option value="1">2020-08-26</option>
+                            <option value="2">2020-07-26</option>
+                            <option value="3">2020-06-26</option>
+                            <option value="4">2020-05-26</option>
+                        </select>
+
+                        <form action="" method="">
+                            <table>
+                                <tr>
+                                    <th>체중 (kg)</th>
+                                    <td><input type="number" max="200" min="0"  step="0.1" placeholder="00.0"></td>
+                                </tr>
+                                <tr>
+                                    <th>체지방률 (%)</th>
+                                    <td><input type="number" max="200" min="0"  step="0.1" placeholder="00.0"></td>
+                                </tr>
+                                <tr>
+                                    <th>근육량 (%)</th>
+                                    <td><input type="number" max="200" min="0"  step="0.1" placeholder="00.0"></td>
+                                </tr>
+                                <tr>
+                                    <th>BMI (kg/m²)</th>
+                                    <td><input type="number" max="200" min="0"  step="0.1" placeholder="00.0"></td>
+                                </tr>
+                            </table>
+                            <button type="button" class="button main">저장</button>
+                            <!-- <button type="button" class="button sub">수정</button> -->
+                        </form>
+                    </div>
+
+                    <div class="graph">
+                        그래프그래프
+                        그래프가 올거에요
+
+                    </div>
+                </div>
+                <div class="label-tab exercise-wrapper">
+                    운동기록 내역이 들어옵니다
+                </div>
 	            </div>
 	        </div>
     	</div>
@@ -122,10 +162,8 @@
                 </div>
                 <div class="search-result">
 					<p class="defaultMsg">아이디로 회원을 검색해주세요.</p>
-					<p class="errMsg">검색 결과가 없습니다.</p>
-                    <%--TODO 정확히 아이디를 입력해서 검색했을 때 추가할 유저가 보이게 됩니다--%>
-                    <%--TODO 검색해서 회원이 나타나고 스케쥴 횟수에 수치를 입력했을 때만 추가버튼이 활성화되게 할게요--%>
-                    <%--TODO 위에 메모 구현해주세여!!!!!!!!!!!!!!!!!!!!!!!--%>
+                    <p class="errMsg">검색 결과가 없습니다.</p>
+                    
                     <div class="user clearfix">
                     	<!-- 검색결과나오는 부분 -->
                     </div>

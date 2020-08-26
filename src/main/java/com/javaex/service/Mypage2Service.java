@@ -1,6 +1,7 @@
 package com.javaex.service;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,12 +51,23 @@ public class Mypage2Service {
 		
 		//오늘 날짜
 		int today = getToday();
+
+		System.out.println("끝날짜: "+ptVo.getIntEndDate());
+		System.out.println("오늘 날짜: "+today);
+		
+		System.out.println("등록횟수: "+ptVo.getRegCount());
+		System.out.println("스케쥴갯수: "+ptVo.getScheduleCount());
+		
+		System.out.println(ptVo.getIntEndDate() < today);
+		System.out.println(ptVo.getRegCount() < ptVo.getScheduleCount());
 		
 		//pt진행상황 데이터 넣기
 		if(ptVo.getIntEndDate() < today || ptVo.getRegCount() < ptVo.getScheduleCount()) {
 			ptVo.setProceed(false);
+			System.out.println("끝");
 		}else {
 			ptVo.setProceed(true);
+			System.out.println("아직 안끝");
 		}
 		
 		return ptVo;
@@ -95,13 +107,11 @@ public class Mypage2Service {
 	
 	//오늘 날짜 가져오기
 	public int getToday() {
-		Calendar cal = Calendar.getInstance();
-
-		String year = Integer.toString(cal.get(Calendar.YEAR));
-		String month = Integer.toString(cal.get(Calendar.MONTH) + 1);
-		String day = Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
-		int today = Integer.parseInt(""+year+month+day);
 		
+		String localDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+		
+		int today = Integer.parseInt(localDate);
+
 		return today;
 	}
 

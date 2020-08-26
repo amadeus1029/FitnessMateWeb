@@ -104,3 +104,40 @@ div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div butt
 	float: left;
 	margin: 30px 0px 0px 45px;
 }
+
+/* 인바디 모달 */
+div.inbody_record{
+    float: left;
+}
+div.graph {
+    float: right;
+    background-color: #aaaaaa;
+    width: 500px;
+    height: 400px;
+}
+div.inbody-wrapper div.inbody_record form table tr th{
+    width: 100px;
+    height: 50px;
+    text-align: right;
+    font-weight: 600;
+}
+div.inbody-wrapper div.inbody_record form table tr td input{
+    width: 100px;
+    height: 35px;
+    margin-left: 15px;
+}
+div.inbody-wrapper div.inbody_record form table{
+    margin: 50px 0px 0px 22px;
+
+}
+div.inbody-wrapper div.inbody_record{
+    width: 290px;
+    height: 400px;
+    position: relative;
+}
+div.inbody-wrapper div.inbody_record form button{
+    position: absolute;
+    bottom: 10px;
+    right: -10px;
+
+}
