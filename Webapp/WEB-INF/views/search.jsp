@@ -26,7 +26,7 @@
     
     <!-- 지도js -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=7fc75fd1ec40ee52623062dbcd6c9baa&libraries=services"></script>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=7fc75fd1ec40ee52623062dbcd6c9baa&libraries=services,clusterer,drawing"></script>
 
 
 </head>
@@ -475,36 +475,52 @@
         				// 주소로 좌표를 검색합니다
         				 
         				
-        				var campanyLoca = loca+' '+vo.company;
+        				var campanyLoca = loca;
+        				
+        				if(vo.company!=null){campanyLoca+= ' '+vo.company; }
         				
         				console.log(campanyLoca);
         				
-        		    	geocoder.addressSearch('서울특별시 서초구 방배3동 539-10', function(result, status) {
+        				// 키워드로 장소를 검색합니다
+        				ps.keywordSearch(campanyLoca, placesSearchCB); 
 
-        		    	    // 정상적으로 검색이 완료됐으면 
-        		    	     if (status === kakao.maps.services.Status.OK) {
+        				// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+        				function placesSearchCB (data, status, pagination) {
+        				    if (status === kakao.maps.services.Status.OK) {
 
-        		    	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        		    	        
-        		    	        console.log(coords);
+        				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        				        // LatLngBounds 객체에 좌표를 추가합니다
+        				        var bounds = new kakao.maps.LatLngBounds();
 
-        		    	        // 결과값으로 받은 위치를 마커로 표시합니다
-        		    	        var marker = new kakao.maps.Marker({
-        		    	            map: map,
-        		    	            position: coords
-        		    	        });
+        				        for (var i=0; i<data.length; i++) {
+        				            displayMarker(data[i]);    
+        				            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+        				        }       
 
-        		    	        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        		    	        var infowindow = new kakao.maps.InfoWindow({
-        		    	            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+vo.company+'</div>'
-        		    	        });
-        		    	        infowindow.open(map, marker);
-        		    	        
-        		    	       
-        		    	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        		    	        map.setCenter(coords);
-        		    	    } 
-        		    	});    
+        				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        				        map.setBounds(bounds);
+        				    } 
+        				}  
+        				
+        				// 지도에 마커를 표시하는 함수입니다
+        				function displayMarker(place) {
+        					
+        					 var coords = new kakao.maps.LatLng(place.y, place.x);
+        				    
+        				    // 마커를 생성하고 지도에 표시합니다
+        				    var marker = new kakao.maps.Marker({
+        				        map: map,
+        				        position: coords 
+        				    });
+        				    // 인포윈도우로 장소에 대한 설명을 표시합니다
+    		    	        var infowindow = new kakao.maps.InfoWindow({
+    		    	            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+vo.company+'</div>'
+    		    	        });
+    		    	        infowindow.open(map, marker);
+    		    	     // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+    		    	        map.setCenter(coords);
+        				    
+        				}
         				
         			},
         			error : function(XHR, status, error) {
@@ -686,8 +702,8 @@
     	//지도 생성
     	var map = new kakao.maps.Map(container, options);
     	
-    	// 주소-좌표 변환 객체를 생성합니다
-    	var geocoder = new kakao.maps.services.Geocoder();
+    	// 장소 검색 객체를 생성합니다
+    	var ps = new kakao.maps.services.Places(); 
 
     	
     	
