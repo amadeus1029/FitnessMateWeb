@@ -52,7 +52,7 @@
             <ul class="user-list clearfix">
             	<!-- 반복 -->
             	<c:forEach items="${ptList}" var="pt">
-	                <li class="user clearfix ${pt.proceed eq true ? 'former off':'now'}" onclick="showUser(${pt.ptNo});">
+	                <li class="user clearfix ${pt.proceed eq true ? 'former off':'now'}" onclick="showUser(${pt.ptNo}, ${authUser.userNo});">
 	                    <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
 	                    <p class="info">
 	                        <span class="name">${pt.name}</span>
@@ -107,51 +107,50 @@
                 <div class="label-tab inbody-wrapper">
                     <!-- 인바디 내역이 들어옵니다 -->
                    	<div class="inbody_record">
-                        <select>
-                            <option>인바디 입력하기</option>
-                            <option value="1">2020-08-26</option>
-                            <option value="2">2020-07-26</option>
-                            <option value="3">2020-06-26</option>
-                            <option value="4">2020-05-26</option>
+                        <select name="inbodyDate">
+                            
                         </select>
 
-                        <form action="" method="">
-                            <table>
-                                <tr>
-                                    <th>체중 (kg)</th>
-                                    <td><input type="number" max="200" min="0"  step="0.1" placeholder="00.0"></td>
-                                </tr>
-                                <tr>
-                                    <th>체지방률 (%)</th>
-                                    <td><input type="number" max="200" min="0"  step="0.1" placeholder="00.0"></td>
-                                </tr>
-                                <tr>
-                                    <th>근육량 (%)</th>
-                                    <td><input type="number" max="200" min="0"  step="0.1" placeholder="00.0"></td>
-                                </tr>
-                                <tr>
-                                    <th>BMI (kg/m²)</th>
-                                    <td><input type="number" max="200" min="0"  step="0.1" placeholder="00.0"></td>
-                                </tr>
-                            </table>
-                            <button type="button" class="button main">저장</button>
-                            <!-- <button type="button" class="button sub">수정</button> -->
-                        </form>
+                        <table>
+                            <tr>
+                                <th>체중 (kg)</th>
+                                <td id="weight"><input name="weight" type="number" max="200" min="0"  step="0.1" placeholder="00.0"></td>
+                            </tr>
+                            <tr>
+                                <th>체지방률 (%)</th>
+                                <td id="percentFat"><input name="percentFat" type="number" max="200" min="0"  step="0.1" placeholder="00.0"></td>
+                            </tr>
+                            <tr>
+                                <th>골격근량 (kg)</th>
+                                <td id="muscleMass"><input name="muscleMass" type="number" max="200" min="0"  step="0.1" placeholder="00.0"></td>
+                            </tr>
+                            <tr>
+                                <th>BMI (kg/m²)</th>
+                                <td id="bmi"><input name="bmi" type="number" max="200" min="0"  step="0.1" placeholder="00.0"></td>
+                            </tr>
+                        </table>
+                        <button type="button" class="button main btnSave" data-ptno="">저장</button>
+                        
                     </div>
 
                     <div class="graph">
-                        그래프그래프
+                        그래프그래프<br>
+                        그래프그래프<br>
+                        그래프그래프<br>
+                        그래프그래프<br>
+                        그래프그래프<br>
+                        그래프그래프<br>
+                        그래프그래프<br>
                         그래프가 올거에요
-
-                    </div>
-                </div>
+					</div>
+				</div>
                 <div class="label-tab exercise-wrapper">
                     운동기록 내역이 들어옵니다
                 </div>
 	            </div>
 	        </div>
     	</div>
-    </div>
+    
     <div class="modal-layer" id="addUserModal">
         <div class="modal-wrapper">
             <div class="modal-content">
@@ -175,10 +174,111 @@
             </div>
         </div>
     </div>
+    
     <script type="text/javascript">
+    
+    	$("button.btnSave").on("click", function(){
+    		
+    		var ptNo = $(this).data("ptno");
+    		var weight = $("input[name='weight']").val();
+    		var percentFat = $("input[name='percentFat']").val();
+    		var muscleMass = $("input[name='muscleMass']").val();
+    		var bmi = $("input[name='bmi']").val();
+    		
+    		if( weight == ""){
+    			alert("체중값이 비어있어요");
+    			return false;
+    		} else if( percentFat == ""){
+    			alert("체지방값이 비어있어요");
+    			return false;
+    		} else if( muscleMass == ""){
+    			alert("골격근량값이 비어있어요");
+    			return false;
+    		} else if( bmi == ""){
+    			alert("bmi값이 비어있어요");
+    			return false;
+    		} else{
+    		
+	    		//데이터 전송
+	    		$.ajax({
+	    			//보낼 때 옵션
+	    			url : "${pageContext.request.contextPath}/mypage2/saveInbody",
+	    			type : "post",
+	    			data : {ptNo: ptNo,
+	    					weight: weight,
+	    					percentFat: percentFat,
+	    					muscleMass: muscleMass,
+	    					bmi: bmi},
+	    					
+	    			//받을 때 옵션
+	    			dataType : "json",
+	    			success : function(inbodyVo) {
+	    				
+	    				alert("인바디 값이 저장되었습니다.");
+	    				
+	    	    		$("input[name='weight']").val("");
+	    	    		$("input[name='percentFat']").val("");
+	    	    		$("input[name='muscleMass']").val("");
+	    	    		$("input[name='bmi']").val("");
+	    				
+	    				$("option[value='0']").after('<option value="'+inbodyVo.ptNo+'">'+inbodyVo.measureDate+'</option>');
+	    				
+	    			},
+	    			error : function(XHR, status, error) {
+	    				console.error(status + " : " + error);
+	    			}
+	    		})
+    		}//else 끝
+    		
+    	});
+    
+    	//인바디 모달 - 셀렉박스 선택했을 때
+    	$("select[name='inbodyDate']").on("change", function(){
+    		
+			$("td#weight").empty();
+			$("td#percentFat").empty();
+			$("td#muscleMass").empty();
+			$("td#bmi").empty();
+			$("button.btnSave").hide();
+			
+    		var inbodyNo = $(this).val();
+    		console.log("inbodyNo: "+inbodyNo);
+			
+    		if(inbodyNo == 0){
+    			$("td#weight").html('<input name="weight" type="number" max="200" min="0"  step="0.1" placeholder="00.0">');
+    			$("td#percentFat").html('<input name="percentFat" type="number" max="200" min="0"  step="0.1" placeholder="00.0">');
+    			$("td#muscleMass").html('<input name="muscleMass" type="number" max="200" min="0"  step="0.1" placeholder="00.0">');
+    			$("td#bmi").html('<input name="bmi" type="number" max="200" min="0"  step="0.1" placeholder="00.0">');
+    			$("button.btnSave").show();
+    		} else{
+    		
+	    		//데이터 전송
+	    		$.ajax({
+	    			//보낼 때 옵션
+	    			url : "${pageContext.request.contextPath}/mypage2/getInbodyInfo",
+	    			type : "post",
+	    			data : {inbodyNo: inbodyNo},
+	    					
+	    			//받을 때 옵션
+	    			dataType : "json",
+	    			success : function(inbodyInfo) {
+	    				
+	    				$("td#weight").text(inbodyInfo.weight+" kg");
+	    				$("td#percentFat").text(inbodyInfo.percentFat+" %");
+	    				$("td#muscleMass").text(inbodyInfo.muscleMass+" kg");
+	    				$("td#bmi").text(inbodyInfo.bmi+" kg/m²");
+	    				
+	    			},
+	    			error : function(XHR, status, error) {
+	    				console.error(status + " : " + error);
+	    			}
+	    		})
+    		}//else 끝
+    	})
     
     	$("button.search").on("click", function(){
     		$("div.user").empty();
+    		
     		var keyword = $("input[name='keyword']").val();
     		
     		//데이터 전송
@@ -232,7 +332,7 @@
 
             //label에 on
             target.addClass("on");
-
+            
             //tab에 on
             $("#userInfoModal").find("." + targetTab + "-wrapper").addClass("on");
 
@@ -244,31 +344,46 @@
             $("ul.user-list li").addClass("off");
             $("ul.user-list li." + targetType).removeClass("off");
         }
-
-        function showUser(ptNo) {
+		
+        function showUser(ptNo, trainerNo) {
         	
-    		//현재 로그인한 트레이너 no 읽어오기
-    		var trainerNo = ${authUser.userNo}
+        	$("select[name='inbodyDate']").empty();
+			$("button.btnSave").data("ptno", ptNo);
     		
     		//데이터 전송
     		$.ajax({
     			//보낼 때 옵션
-    			url : "${pageContext.request.contextPath}/mypage2/ptInfo",
+    			url : "${pageContext.request.contextPath}/mypage2/userInfo",
     			type : "post",
     			data : {ptNo: ptNo,
     					trainerNo: trainerNo},
     					
     			//받을 때 옵션
     			dataType : "json",
-    			success : function(ptInfo) {
+    			success : function(userInfo) {
     				
-    				$("#userName").text("\u00A0 "+ptInfo.name+" ("+ptInfo.gender+")");
-    				$("p#userId").text("\u00A0 "+ptInfo.userId);
-    				$("#phone").text("\u00A0 "+ptInfo.phone);
-    				$("#period").text("\u00A0 "+ptInfo.startDate+" ~ "+ptInfo.endDate);
-    				$("#count").text("\u00A0 "+ptInfo.scheduleCount+" / "+ptInfo.regCount);
-    				$("textarea#memo").text(ptInfo.memo);
-    				$("input#modifyPtNo").val(ptInfo.ptNo);
+    				//userInfo 넣기
+    				$("#userName").text("\u00A0 "+userInfo.ptInfo.name+" ("+userInfo.ptInfo.gender+")");
+    				$("p#userId").text("\u00A0 "+userInfo.ptInfo.userId);
+    				$("#phone").text("\u00A0 "+userInfo.ptInfo.phone);
+    				$("#period").text("\u00A0 "+userInfo.ptInfo.startDate+" ~ "+userInfo.ptInfo.endDate);
+    				$("#count").text("\u00A0 "+userInfo.ptInfo.scheduleCount+" / "+userInfo.ptInfo.regCount);
+    				$("textarea#memo").text(userInfo.ptInfo.memo);
+    				$("input#modifyPtNo").val(userInfo.ptInfo.ptNo);
+    				
+    				//인바디 인풋 초기화
+    	    		$("input[name='weight']").val("");
+    	    		$("input[name='percentFat']").val("");
+    	    		$("input[name='muscleMass']").val("");
+    	    		$("input[name='bmi']").val("");
+    				
+    		        //인바디 날짜 리스트
+    				var dateList = '<option value="0">인바디 입력하기</option>';
+    				for ( var inbody of userInfo.inbodyList ) {
+    					dateList += '<option value="'+inbody.inbodyNo+'">' + inbody.measureDate + '</option>';
+    				}
+
+    				$("select[name='inbodyDate']").append(dateList);
     				
     			},
     			error : function(XHR, status, error) {

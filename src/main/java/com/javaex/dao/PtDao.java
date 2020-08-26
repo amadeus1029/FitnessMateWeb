@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.InbodyVo;
 import com.javaex.vo.PtVo;
 import com.javaex.vo.UserVo;
 
@@ -50,6 +51,24 @@ public class PtDao {
 		System.out.println("dao 메모 수정");
 		
 		sqlSession.update("pt.updateMemo", memoMap);
+	}
+
+	public List<InbodyVo> selectInbodyList(int ptNo) {
+		System.out.println("dao 인바디 리스트");
+		
+		return sqlSession.selectList("pt.selectInbodyList", ptNo);
+	}
+
+	public InbodyVo selectInbodyInfo(int inbodyNo) {
+		System.out.println("dao 인바디 정보");
+		
+		return sqlSession.selectOne("pt.selectInbodyInfo", inbodyNo);
+	}
+
+	public void insertInbody(InbodyVo inbodyVo) {
+		System.out.println("dao 인바디 저장하기");
+		
+		sqlSession.insert("pt.insertInbody", inbodyVo);
 	}
 	
 	

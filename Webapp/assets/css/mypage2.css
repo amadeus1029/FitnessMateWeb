@@ -57,6 +57,10 @@ div.award-info div i.deleteNew{
 	top: 5px;
 	right: 18px;
 }
+div.award-info i{
+	cursor: pointer;
+}
+
 
 /* 회원관리 */
 div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper{
@@ -115,29 +119,34 @@ div.graph {
     width: 500px;
     height: 400px;
 }
-div.inbody-wrapper div.inbody_record form table tr th{
+div.inbody-wrapper div.inbody_record table tr th{
     width: 100px;
     height: 50px;
     text-align: right;
     font-weight: 600;
 }
-div.inbody-wrapper div.inbody_record form table tr td input{
+div.inbody-wrapper div.inbody_record table tr td input{
     width: 100px;
     height: 35px;
-    margin-left: 15px;
 }
-div.inbody-wrapper div.inbody_record form table{
+div.inbody-wrapper div.inbody_record table tr td{
+	padding-left: 15px;
+}
+div.inbody-wrapper div.inbody_record table{
     margin: 50px 0px 0px 22px;
-
 }
 div.inbody-wrapper div.inbody_record{
     width: 290px;
     height: 400px;
     position: relative;
 }
-div.inbody-wrapper div.inbody_record form button{
+div.inbody-wrapper div.inbody_record button{
     position: absolute;
     bottom: 10px;
     right: -10px;
 
+}
+form#editProfileForm .main-info .main-info-wrapper.secDiv,
+form#editProfileForm .info-wrapper .info.secDiv{
+	width: 35%;
 }

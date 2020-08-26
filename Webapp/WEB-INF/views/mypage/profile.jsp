@@ -55,7 +55,7 @@
 							class="profile-img">
 						<button type="button" class="button change-btn">이미지 변경</button>
 					</div>
-					<div class="main-info-wrapper">
+					<div class="main-info-wrapper secDiv">
 						<h3 class="title">생년월일</h3>
 						<select name="birth">
 							<option>년도</option>
@@ -116,7 +116,7 @@
 						</div>
 					</div>
 
-					<div class="info">
+					<div class="info secDiv">
 						<h3 class="title" style="width: 240px;">지역</h3>
 						<select name="province">
 							<c:forEach items="${profile.provinceList}" var="province">

@@ -41,12 +41,12 @@
                   	</colgroup>
                     <tr>
                         <th><label for="userId">아이디</label></th>
-                        <td><input id="userId" type="text" name="id"></td>
+                        <td><input id="userId" type="text" name="id" value="trainer01"></td>
                     </tr>
                     <tr>
                         <th><label for="userPw">패스워드</label></th>
-                        <td><input id="userPw" type="password" name="password"></td>   
-                                       
+                        <td><input id="userPw" type="password" name="password" value="1234"></td>   
+						<!-- 테스트하려고 아이디 비번 박아놈!!! JS에서 주석 풀어주세요 -->
                     </tr> 
                     <tr>
 	                    <td colspan="2" colspan="2">
@@ -69,8 +69,8 @@
 	    event.preventDefault();
 	
 	    // input 초기화
-	    $("#userId").val("");
-	    $("#userPw").val("");
+	    //$("#userId").val("");
+	    //$("#userPw").val("");
 	    $(".errMsg").hide();
 	
 	    showModal("#loginModal");

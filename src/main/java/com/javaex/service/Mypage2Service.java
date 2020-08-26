@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaex.dao.PtDao;
+import com.javaex.vo.InbodyVo;
 import com.javaex.vo.PtVo;
 import com.javaex.vo.UserVo;
 
@@ -40,7 +41,7 @@ public class Mypage2Service {
 		return ptList;
 	}
 
-	public PtVo getPtInfo(int trainerNo, int ptNo) {
+	public Map<String, Object> getUserInfo(int trainerNo, int ptNo) {
 		System.out.println("service 트레이니 1개 받아오기");
 		
 		Map<String, Integer> ptMap = new HashMap<>();
@@ -48,19 +49,11 @@ public class Mypage2Service {
 		ptMap.put("ptNo", ptNo);
 
 		PtVo ptVo = ptDao.selectPtInfo(ptMap);
+		List<InbodyVo> inbodyList = ptDao.selectInbodyList(ptNo);
 		
 		//오늘 날짜
 		int today = getToday();
 
-		System.out.println("끝날짜: "+ptVo.getIntEndDate());
-		System.out.println("오늘 날짜: "+today);
-		
-		System.out.println("등록횟수: "+ptVo.getRegCount());
-		System.out.println("스케쥴갯수: "+ptVo.getScheduleCount());
-		
-		System.out.println(ptVo.getIntEndDate() < today);
-		System.out.println(ptVo.getRegCount() < ptVo.getScheduleCount());
-		
 		//pt진행상황 데이터 넣기
 		if(ptVo.getIntEndDate() < today || ptVo.getRegCount() < ptVo.getScheduleCount()) {
 			ptVo.setProceed(false);
@@ -70,7 +63,12 @@ public class Mypage2Service {
 			System.out.println("아직 안끝");
 		}
 		
-		return ptVo;
+		//화면으로 보내줄 맵
+		Map<String, Object> userInfo = new HashMap<>();
+		userInfo.put("ptInfo", ptVo); //ptInfo
+		userInfo.put("inbodyList", inbodyList);
+		
+		return userInfo;
 	}
 
 	public UserVo getUserInfo(String keyword) {
@@ -103,6 +101,25 @@ public class Mypage2Service {
 		ptDao.updateMemo(memoMap);
 	}
 	
+	public InbodyVo getInbodyInfo(int inbodyNo) {
+		System.out.println("service 인바디 가져오기");
+		
+		return ptDao.selectInbodyInfo(inbodyNo);
+	}
+	
+	public InbodyVo saveInbody(int ptNo, float weight, float percentFat, float muscleMass, float bmi) {
+		System.out.println("service 인바디 저장");
+		
+		InbodyVo inbodyVo = new InbodyVo(ptNo, weight, percentFat, muscleMass, bmi);
+		
+		ptDao.insertInbody(inbodyVo);
+		
+		String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		inbodyVo.setMeasureDate(today);
+		
+		return inbodyVo;
+	}
+
 	
 	
 	//오늘 날짜 가져오기
@@ -114,6 +131,7 @@ public class Mypage2Service {
 
 		return today;
 	}
+
 
 
 }

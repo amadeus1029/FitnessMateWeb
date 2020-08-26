@@ -3,6 +3,7 @@
 
 <mapper namespace="pt">
 
+	<!-- 회원리스트 가져오기 -->
 	<select id="selectTraineeList" parameterType="int" resultType="com.javaex.vo.PtVo">
 		<![CDATA[
 		
@@ -20,11 +21,13 @@
 			    ON p.ptno = s.ptno
 			    AND p.trainerno = #{trainerNo}) pt
 			WHERE u.userNo = pt.userno
+			ORDER BY u.name ASC
 
 		 ]]>
 	</select>
 	
-		<select id="selectPtInfo" parameterType="map" resultType="com.javaex.vo.PtVo">
+	<!-- pt정보 가져오기 -->
+	<select id="selectPtInfo" parameterType="map" resultType="com.javaex.vo.PtVo">
 		<![CDATA[
 		
 			SELECT
@@ -82,6 +85,43 @@
 		
 		]]>
 	</update>
+	
+	<!-- 인바디 날짜 리스트 불러오기 -->
+	<select id="selectInbodyList" parameterType="int" resultType="com.javaex.vo.InbodyVo">
+		<![CDATA[
+		
+			SELECT
+			    inbodyNo, TO_CHAR(measureDate,'yyyy-mm-dd') measureDate
+			FROM inbody
+			WHERE ptNo = #{ptNo}
+			ORDER BY inbodyNo DESC
+		
+		]]>
+	</select>
+	
+	<!-- 인바디 정보 1개 불러오기 -->
+	<select id="selectInbodyInfo" parameterType="int" resultType="com.javaex.vo.InbodyVo">
+		<![CDATA[
+		
+			SELECT weight, percentFat, muscleMass, bmi
+			FROM inbody
+			WHERE inbodyNo = #{inbodyNo}
+		
+		]]>
+	</select>
+	
+	<!-- 인바디 저장하기 -->
+	<insert id="insertInbody" parameterType="com.javaex.vo.InbodyVo">
+		<selectKey keyProperty="inbodyNo" resultType="int" order="BEFORE">
+			SELECT SEQ_INBODYNO.nextval FROM dual
+		</selectKey>
+		<![CDATA[
+		
+			INSERT INTO inbody
+			VALUES(#{inbodyNo}, #{ptNo}, SYSDATE, #{weight}, #{percentFat}, #{muscleMass}, #{bmi})
+		
+		]]>
+	</insert>
 	
 	
 </mapper>
