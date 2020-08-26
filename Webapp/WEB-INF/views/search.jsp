@@ -23,6 +23,12 @@
 
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css">
+    
+    <!-- 지도js -->
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=7fc75fd1ec40ee52623062dbcd6c9baa&libraries=services"></script>
+
+
 </head>
 <body>
 	<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
@@ -276,16 +282,23 @@
                             </div>
                         </li>
                     </ul>
+                </div> <!-- 리뷰작성페이지 -->
+                
+                <div class="label-tab location-wrapper">
+                	<div id="map"></div>
                 </div>
-                <div class="label-tab location-wrapper">위치</div>
+                
             </div>
         </div>
-    </div>
+    </div><!-- 모달 -->
+    
+    
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     
    
     <script type="text/javascript"> 
-
+    
+   
    
     //검색
     $(".button.key").on("click",function(){
@@ -408,6 +421,7 @@
     	 //다른 탭 on 제거
     	 $("#profileModal .label-tab").removeClass("on");
     	 $("#profileModal .profile-wrapper").addClass("on");
+    	 
 
             
           //데이터전송
@@ -455,6 +469,42 @@
         				$(".content.price").html(vo.price); //가격
         				$(".content.introduction").html(vo.introduction); //자기소개
         				$(".content.age").html("만"+years+"세");
+        				
+        				
+        				//////////////주소검색
+        				// 주소로 좌표를 검색합니다
+        				 
+        				
+        				var campanyLoca = loca+' '+vo.company;
+        				
+        				console.log(campanyLoca);
+        				
+        		    	geocoder.addressSearch('서울특별시 서초구 방배3동 539-10', function(result, status) {
+
+        		    	    // 정상적으로 검색이 완료됐으면 
+        		    	     if (status === kakao.maps.services.Status.OK) {
+
+        		    	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        		    	        
+        		    	        console.log(coords);
+
+        		    	        // 결과값으로 받은 위치를 마커로 표시합니다
+        		    	        var marker = new kakao.maps.Marker({
+        		    	            map: map,
+        		    	            position: coords
+        		    	        });
+
+        		    	        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        		    	        var infowindow = new kakao.maps.InfoWindow({
+        		    	            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+vo.company+'</div>'
+        		    	        });
+        		    	        infowindow.open(map, marker);
+        		    	        
+        		    	       
+        		    	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        		    	        map.setCenter(coords);
+        		    	    } 
+        		    	});    
         				
         			},
         			error : function(XHR, status, error) {
@@ -608,6 +658,51 @@
             $('#star_grade i').removeClass("on"); 
        
         });
+        
+        
+        
+        //지도
+        $(".label-btn.location-btn").on("click",function(){
+        	console.log("위치클릭");
+        	resizeMap();//지도크기 설정
+	    	 relayout();//지도 레이아웃위치 설정
+        
+        });
+        
+        //지도크기 설정
+        function resizeMap() {
+		    var mapContainer = document.getElementById('map');
+		    mapContainer.style.width = '800px';
+		    mapContainer.style.height = '500px'; 
+		}
+        
+        //지도 나타내기
+        var container = document.getElementById('map');
+    	var options = {
+    		center: new kakao.maps.LatLng(37.566826, 126.9786567),
+    		level: 3
+    		};
+		
+    	//지도 생성
+    	var map = new kakao.maps.Map(container, options);
+    	
+    	// 주소-좌표 변환 객체를 생성합니다
+    	var geocoder = new kakao.maps.services.Geocoder();
+
+    	
+    	
+    	//모달창에 있는 지도는 레이아웃 재설정해줘야 함
+    	function relayout() {    
+    	    // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
+    	    // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다 
+    	    // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
+    	    map.relayout();
+    	    
+    	}
+    	
+    	
+    	
+        
     </script>
 </body>
 </html>
