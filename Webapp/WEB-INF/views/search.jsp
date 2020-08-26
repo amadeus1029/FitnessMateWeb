@@ -474,10 +474,9 @@
         				//////////////주소검색
         				// 주소로 좌표를 검색합니다
         				 
+
+        				var campanyLoca = loca+' '+vo.company;
         				
-        				var campanyLoca = loca;
-        				
-        				if(vo.company!=null){campanyLoca+= ' '+vo.company; }
         				
         				console.log(campanyLoca);
         				
@@ -519,7 +518,8 @@
     		    	        infowindow.open(map, marker);
     		    	     // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
     		    	        map.setCenter(coords);
-        				    
+        				  
+
         				}
         				
         			},
