@@ -28,44 +28,58 @@ public class MypageService {
 	@Autowired
 	private ScheduleDao scheduleDao;
 
-	public Map<String, Object> getProfile(int userNo) {
+	/* 프로필수정 페이지로 이동 */
+	public Map<String, Object> getProfile(String userType, int userNo) {
 		System.out.println("/마이페이지 서비스/프로필 수정");
 		
+		//데이터 화면으로 보내줄 맵
+		Map<String, Object> proMap = new HashMap<>();
+
 		//기본프로필
 		UserVo vo = userDao.selectProfile(userNo);
-		
-		//주소 자르기
-		String[] splitAddress = vo.getLocation().split("[|]");
-		
-		//생년월일 자르기
-		String[] splitbirthDate = vo.getBirthDate().split("[/]");
-		System.out.println(splitbirthDate);
-		
-		//전문분야
-		List<String> userInterest = userDao.selectUserInterest(userNo);
-		
-		//경력상세
-		List<CareerVo> careerList = userDao.selectCareerList(userNo);
-		
-		//기본적으로 깔려있는 정보들 우앙 짱많아
-		List<String> provinceList = userDao.selectAddress();
-		List<String> cityList = userDao.selectCity(splitAddress[0]);
-		List<String> regionList = userDao.selectRegion(splitAddress[1]);
-		List<InterestVo> interestList = userDao.selectInterestAll();
-		
-		//맵에 user 데이터 넣기
-		Map<String, Object> proMap = new HashMap<>();
 		proMap.put("userVo", vo);
-		proMap.put("splitAddress", splitAddress);
-		proMap.put("splitbirthDate", splitbirthDate);
-		proMap.put("userInterest", userInterest);
-		proMap.put("careerList", careerList);
-		
-		//맵에 기본 데이터 넣기
-		proMap.put("provinceList", provinceList);
-		proMap.put("cityList", cityList);
-		proMap.put("regionList", regionList);
-		proMap.put("interestList", interestList);
+		if("trainer".equals(userType)) {
+
+			//주소 자를 배열
+			String[] splitAddress = new String[3];
+			
+			//주소 자르기
+			if(vo.getLocation() != null) {
+				splitAddress = vo.getLocation().split("[|]");
+				proMap.put("splitAddress", splitAddress);
+			}else {
+				splitAddress = " | | ".split("[|]");
+				proMap.put("splitAddress", splitAddress);
+			}
+			
+			//생년월일 자르기
+			if(vo.getBirthDate() != null) {
+				String[] splitBirthDate = vo.getBirthDate().split("[/]");
+				proMap.put("splitBirthDate", splitBirthDate);
+			}
+			
+			//경력상세
+			List<CareerVo> careerList = userDao.selectCareerList(userNo);
+			proMap.put("careerList", careerList);
+
+			//user 선택 전문분야
+			List<String> userInterest = userDao.selectUserInterest(userNo); 
+			proMap.put("userInterest", userInterest);
+
+			//전체 전문분야 리스트
+			List<InterestVo> interestList = userDao.selectInterestAll(); 
+			proMap.put("interestList", interestList);
+			
+			//기본 주소 정보들
+			List<String> provinceList = userDao.selectAddress();
+			List<String> cityList = userDao.selectCity(splitAddress[0]);
+			List<String> regionList = userDao.selectRegion(splitAddress[1]);
+
+			//맵에 기본 데이터 넣기
+			proMap.put("provinceList", provinceList);
+			proMap.put("cityList", cityList);
+			proMap.put("regionList", regionList);
+		}
 		
 		return proMap;
 	}
@@ -118,5 +132,8 @@ public class MypageService {
 	public boolean deleteSchedule(ScheduleVo scheduleVo) {
 		return scheduleDao.deleteSchedule(scheduleVo);
 	}
-
+	
+	public void deleteCareer(int careerNo) {
+		userDao.deleteCareer(careerNo);
+	}
 }

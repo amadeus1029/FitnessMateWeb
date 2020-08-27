@@ -77,6 +77,18 @@ public class PtDao {
 		
 		sqlSession.update("pt.updatePt", extendMap);
 	}
+
+	public List<InbodyVo> selectUserInbodyList(int userNo) {
+		System.out.println("dao 개인회원 인바디리스트");
+		
+		return sqlSession.selectList("pt.selectUserInbodyList", userNo);
+	}
+
+	public InbodyVo selectRecentInbody(int userNo) {
+		System.out.println("dao 개인회원 최근 인바디");
+		
+		return sqlSession.selectOne("pt.selectRecentInbody", userNo);
+	}
 	
 	
 	

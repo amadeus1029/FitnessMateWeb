@@ -32,7 +32,7 @@
         
         <div class="wrapper clearfix">
             <h1 class="logo">
-                <a href="${pageContext.request.contextPath}/html/index.html">
+                <a href="${pageContext.request.contextPath}/main">
                     <img src="${pageContext.request.contextPath}/assets/image/logoB.jpeg" title="logo" alt="logo">
                 </a>
             </h1>

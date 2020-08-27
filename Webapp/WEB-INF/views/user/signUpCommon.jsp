@@ -151,7 +151,7 @@
 
     });
     
-    $("button.main").on("click", function(){
+    $("button.main").on("submit", function(){
     	console.log("아이디"+$("input[name='userId']").val());
     	
 		//아이디를 입력해 주세요

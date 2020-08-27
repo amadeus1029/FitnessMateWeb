@@ -19,7 +19,7 @@
 			            FROM schedule
 			            group by ptNo) s
 			    ON p.ptno = s.ptno
-			    AND p.trainerno = #{trainerNo}) pt
+			    WHERE p.trainerno = #{trainerNo}) pt
 			WHERE u.userNo = pt.userno
 			ORDER BY u.name ASC
 
@@ -88,13 +88,10 @@
 	<!-- 인바디 날짜 리스트 불러오기 -->
 	<select id="selectInbodyList" parameterType="int" resultType="com.javaex.vo.InbodyVo">
 		<![CDATA[
-		
-			SELECT
-			    inbodyNo, TO_CHAR(measureDate,'yyyy-mm-dd') measureDate, weight, percentFat, musclemass, bmi
-			FROM inbody
-			WHERE ptNo = #{ptNo}
+			SELECT	inbodyNo, TO_CHAR(measureDate,'yyyy-mm-dd') measureDate, weight, percentFat, musclemass, bmi
+			FROM 	inbody
+			WHERE 	ptNo = #{ptNo}
 			ORDER BY inbodyNo DESC
-		
 		]]>
 	</select>
 	
@@ -102,7 +99,7 @@
 	<select id="selectInbodyInfo" parameterType="int" resultType="com.javaex.vo.InbodyVo">
 		<![CDATA[
 		
-			SELECT weight, percentFat, muscleMass, bmi
+			SELECT weight, percentFat, muscleMass, bmi, TO_CHAR(measureDate, 'yyyy-mm-dd') measureDate
 			FROM inbody
 			WHERE inbodyNo = #{inbodyNo}
 		
@@ -133,6 +130,37 @@
 		
 		]]>
 	</update>
+	
+	<!-- 개인회원 인바디정보 보기 -->
+	<select id="selectUserInbodyList" parameterType="int" resultType="com.javaex.vo.InbodyVo">
+		<![CDATA[
+		
+			SELECT i.inbodyNo, TO_CHAR(i.measureDate, 'yyyy-mm-dd') measureDate
+			FROM inbody i left outer join pt p
+			ON i.ptNo = p.ptNo
+			WHERE p.userNo = #{userNo}
+			ORDER BY inbodyNo DESC
+		
+		]]>
+	</select>
+	
+	<!-- 개인회원 최근 인바디정보 -->
+	<select id="selectRecentInbody" parameterType="int" resultType="com.javaex.vo.InbodyVo">
+		<![CDATA[
+		
+			SELECT
+			    inbodyNo, to_char(measureDate, 'yyyy-mm-dd') measureDate,
+			    weight, percentFat, muscleMass, bmi
+			FROM inbody 
+			WHERE
+			    inbodyNo = (
+			        SELECT max(i.inbodyNo)
+			        FROM inbody i, pt p
+			        WHERE i.ptNo = p.ptNo
+			        AND p.userNo = #{userNo})
+		
+		]]>
+	</select>
 	
 	
 </mapper>
