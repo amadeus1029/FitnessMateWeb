@@ -19,7 +19,6 @@ public class AddressVo {
 		this.region = region;
 	}
 
-	
 	//g/s
 	public String getProvince() {
 		return province;
@@ -50,8 +49,6 @@ public class AddressVo {
 	public String toString() {
 		return "AddressVo [province=" + province + ", city=" + city + ", region=" + region + "]";
 	}
-	
-
 	
 
 }

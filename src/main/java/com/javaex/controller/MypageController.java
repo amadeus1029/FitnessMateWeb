@@ -113,12 +113,11 @@ public class MypageController {
        	
        	UserVo userVo = (UserVo)session.getAttribute("authUser");
        	
-       	Map<String, Object> proMap = mypageService.getProfile(userVo.getUserNo());
-       	System.out.println(proMap);
+       	Map<String, Object> proMap = mypageService.getProfile(userVo.getUserType(), userVo.getUserNo());
        	
        	model.addAttribute("profile", proMap);
-    	
-        return "mypage/profile";
+
+       	return "mypage/profile";
     }
     
     @RequestMapping("/recordEx")
@@ -146,18 +145,17 @@ public class MypageController {
     @RequestMapping("/modifyProfile")
     public String modifyProfile(@ModelAttribute UserVo vo,
 								@ModelAttribute AddressVo address,
-								@RequestParam("fieldNo") List<Integer> fieldList,
+								@RequestParam(value="fieldNo", required=false) List<String> fieldList,
 								@RequestParam(value="careerRecord", required=false) List<String> careerList,
-								Model model) {
+								@RequestParam(value="birth", required=false) List<String> birthList) {
     	System.out.println("/마이페이지/프로필 수정완료");
     	
-    	userService.deleteInterest(vo.getUserNo());
-    	
-    	userService.signUpTrainer(vo, address, fieldList, careerList, null);
+    	userService.updateProfile(vo, address, fieldList, careerList, birthList);
     	
         return "redirect:/mypage/profile";
     }
     
+    //api
     //스케쥴 추가
     @ResponseBody
     @RequestMapping("/addSchedule")
@@ -185,5 +183,14 @@ public class MypageController {
     @RequestMapping("/deleteSchedule")
     public boolean deleteSchedule(@RequestBody ScheduleVo scheduleVo) {
         return mypageService.deleteSchedule(scheduleVo);
+    }
+    
+    //스케쥴 삭제
+    @ResponseBody
+    @RequestMapping("/deleteCareer")
+    public boolean deleteCareer(int careerNo) {
+    	mypageService.deleteCareer(careerNo);
+    	
+        return true;
     }
 }

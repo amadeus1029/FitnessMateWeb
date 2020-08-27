@@ -61,7 +61,7 @@ public class UserDao {
 		sqlSession.update("user.updateTrainerInfo", vo);
 	}
 
-	public void insertInterest(Map<String, Integer> interestMap) {
+	public void insertInterest(Map<String, Object> interestMap) {
 		System.out.println("userDao.전문분야 insert");
 		
 		sqlSession.insert("user.insertInterest", interestMap);
@@ -109,8 +109,13 @@ public class UserDao {
 	public void deleteCareer(int careerNo) {
 		System.out.println("userDao.커리어지우기");
 
-		int count = sqlSession.delete("user.deleteCareer", careerNo);
-		System.out.println(count);
+		sqlSession.delete("user.deleteCareer", careerNo);
+	}
+
+	public void updateUserInfo(UserVo vo) {
+		System.out.println("userDao.일반유저 정보 수정");
+		
+		sqlSession.update("user.updateUserInfo", vo);
 	}
 
 	

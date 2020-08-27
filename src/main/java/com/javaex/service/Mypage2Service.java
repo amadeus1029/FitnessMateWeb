@@ -72,9 +72,7 @@ public class Mypage2Service {
 	public UserVo getUserInfo(String keyword) {
 		System.out.println("service 회원 검색");
 		
-		UserVo userVo = ptDao.selectUserInfo(keyword);
-		
-		return userVo;
+		return ptDao.selectUserInfo(keyword);
 	}
 	
 	public void addPt(int userNo, int period, int regCount, int trainerNo) {
@@ -127,6 +125,16 @@ public class Mypage2Service {
 		extendMap.put("extendCount", extendCount);
 		
 		ptDao.updatePt(extendMap);
+	}
+	
+	public Map<String, Object> getUserInbodyList(int userNo) {
+		System.out.println("service 개인회원 인바디리스트");
+		
+		Map<String, Object> inbodyInfo = new HashMap<>();
+		inbodyInfo.put("inbodyList", ptDao.selectUserInbodyList(userNo));
+		inbodyInfo.put("recentInbody", ptDao.selectRecentInbody(userNo));
+		
+		return inbodyInfo;
 	}
 
 	

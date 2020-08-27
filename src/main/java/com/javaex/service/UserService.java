@@ -1,5 +1,7 @@
 package com.javaex.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,48 +88,54 @@ public class UserService {
 		return userDao.selectInterestAll();
 	}
 
-	public void signUpTrainer(UserVo vo, AddressVo addressVo, List<Integer> fieldList, List<String> careerList, List<String> birthList) {
-		System.out.println("userService.트레이너 회원가입");
-		
-		//주소 합치기
-		String address = "";
-
-		if(addressVo.getProvince().equals("") && addressVo.getCity().equals("") && addressVo.getRegion().equals("")) {
-			address = " | | ";
-		}else {
-			address = addressVo.getProvince()+"|"+addressVo.getCity()+"|"+addressVo.getRegion();
-		}
-		
-		vo.setLocation(address);
+	public void updateProfile(UserVo vo, AddressVo addressVo, List<String> fieldList, List<String> careerList, List<String> birthList) {
+		System.out.println("userService.프로필수정");
+		System.out.println(vo);
 		
 		//날짜 합치기
-		String birthDate = "";
-		
-		if(birthList == null) {
-			birthDate = "";
-		}else {
-			birthDate = birthList.get(0).substring(2)+"/"+birthList.get(1)+"/"+birthList.get(2);
-		}
+		String birthDate = birthList.get(0).substring(2)+"/"+birthList.get(1)+"/"+birthList.get(2);
 		
 		vo.setBirthDate(birthDate);
 		
-		userDao.updateTrainerInfo(vo);
-		
-		Map<String, Integer> interestMap = new HashMap<>();
-		interestMap.put("userNo", vo.getUserNo());
-
-		for(int fieldNo : fieldList) {
-			interestMap.put("fieldNo", fieldNo);
-			userDao.insertInterest(interestMap);
-		}
-		
-		if(careerList != null) {
-			Map<String, Object> careerMap = new HashMap<>();
-			careerMap.put("userNo", vo.getUserNo());
+		if("normal".equals(vo.getUserType())) {
+			userDao.updateUserInfo(vo);
 			
-			for(String career : careerList) {
-				careerMap.put("career", career);
-				userDao.insertCareer(careerMap);
+		}else {
+			//이전 전문분야 지우기
+			userDao.deleteInterest(vo.getUserNo());
+			
+			//주소 합치기
+			String address = "";
+	
+			if(addressVo == null) {
+				address = " | | ";
+			}else {
+				address = addressVo.getProvince()+"|"+addressVo.getCity()+"|"+addressVo.getRegion();
+			}
+			
+			vo.setLocation(address);
+		
+			userDao.updateTrainerInfo(vo);
+			
+			Map<String, Object> interestMap = new HashMap<>();
+			interestMap.put("userNo", vo.getUserNo());
+	
+			if(fieldList != null) {
+	
+				for(String fieldNo : fieldList) {
+					interestMap.put("fieldNo", fieldNo);
+					userDao.insertInterest(interestMap);
+				}
+			}
+			
+			if(careerList != null) {
+				Map<String, Object> careerMap = new HashMap<>();
+				careerMap.put("userNo", vo.getUserNo());
+				
+				for(String career : careerList) {
+					careerMap.put("career", career);
+					userDao.insertCareer(careerMap);
+				}
 			}
 		}
 		
@@ -141,12 +149,6 @@ public class UserService {
 		userVo.setPassword(userPw);
 		
 		return userDao.selectUser(userVo);
-	}
-
-	public void deleteInterest(int userNo) {
-		System.out.println("userService.전문분야 초기화");
-		
-		userDao.deleteInterest(userNo);
 	}
 
 	public void deleteCareer(int careerNo) {

@@ -20,8 +20,6 @@ public class InbodyVo {
 		this.bmi = bmi;
 	}
 
-
-
 	public int getInbodyNo() {
 		return inbodyNo;
 	}
