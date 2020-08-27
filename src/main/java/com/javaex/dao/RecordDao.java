@@ -15,4 +15,8 @@ public class RecordDao {
     public int insertRecordList(List<RecordVo> recordList) {
         return sqlSession.insert("record.insertRecordList",recordList);
     }
+
+    public List<RecordVo> getRecordList(int ptNo) {
+        return sqlSession.selectList("record.getList", ptNo);
+    }
 }

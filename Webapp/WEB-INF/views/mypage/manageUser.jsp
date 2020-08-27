@@ -641,6 +641,9 @@
                     //인바디 그래프 그리기
                     drawChart(userInfo.inbodyList);
 
+                    //운동내역 출력
+                    writeRecords(userInfo.recordList);
+
                 },
                 error: function (XHR, status, error) {
                     console.error(status + " : " + error);
@@ -832,6 +835,22 @@
                     }
                 }
             });
+        }
+        function writeRecords(recordList) {
+            var targetTab =$("#userInfoModal").find(".exercise-wrapper");
+            targetTab.html("");
+
+            for (var i = 0; i < recordList.length; i++) {
+                targetTab.append(
+                    "<p>"+
+                        "<span>"+recordList[i].exPart+"</span>"+
+                        "<span>"+recordList[i].exName+"</span>"+
+                        "<span>"+recordList[i].amount+"</span>"+
+                        "<span>"+recordList[i].unit+"</span>"+
+                        "<span>"+recordList[i].count+"</span>"+
+                    "</p>"
+                );
+            }
         }
     </script>
 </body>
