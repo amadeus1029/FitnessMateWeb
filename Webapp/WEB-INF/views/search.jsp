@@ -285,8 +285,9 @@
                 </div> <!-- 리뷰작성페이지 -->
                 
                 <div class="label-tab location-wrapper">
-                	<div id="map" style="width:800px;height:500px;"></div>
-                	<div id="mapInfo"></div>
+                	<div id="mapInfo"></div><br>
+                	<div id="map" style="width:800px;height:500px;" ></div>
+                	
                 </div>
                 
             </div>
@@ -443,10 +444,8 @@
         				
         				//만나이 계산
         				var birthday = new Date(vo.birthDate);
-        				console.log(birthday);
         				var today = new Date();
         				var years = today.getFullYear() - birthday.getFullYear();
-        				console.log(years);
         				// Reset birthday to the current year.
         				birthday.setFullYear(today.getFullYear());
         				 
@@ -471,7 +470,6 @@
         				$(".content.price").html(vo.price); //가격
         				$(".content.introduction").html(vo.introduction); //자기소개
         				$(".content.age").html("만"+years+"세");
-        				
         				
         				
         			},
@@ -632,12 +630,13 @@
         //지도
         $(".label-btn.location-btn").on("click",function(){
         	
+        	
+        	
         	//트레이너 넘버 추출
         	var no = $("#delNo").val();
         	console.log("지도no "+no);
         	
-        	
-	        relayout();//지도 레이아웃위치 설정
+        	 
         	
         	//데이터전송
         	$.ajax({
@@ -649,6 +648,10 @@
         			dataType : "json",
         			success : function(vo) {
         				
+        				
+        		        
+        		        
+        		       
         				var loca = vo.location.replace( /[|]/gi, ' ');//지역 사이의 | 지우기
         				
         				//정보확인
@@ -659,11 +662,10 @@
         				// 주소로 좌표를 검색합니다
         				 
         				//직장이름 not null일 경우
-						if(vo.company != null){
-							
-					       
-							
 							 
+        				if(vo.company != null){	
+        					relayout();//지도 레이아웃위치 설정
+        					
 	        				var campanyLoca = loca+' '+vo.company;
 	        				
 	        				// 키워드로 장소를 검색합니다
@@ -709,14 +711,26 @@
 	        				
 	        				
 	        				$("#mapInfo").empty();
-        				
-						}//직장이름 not null일 경우
-						else{
-							
-							
-							$("#mapInfo").append("<span>직장정보가 없습니다</spen>");
-							
-						}
+	        			
+	        				
+        				}
+        			
+        				else{
+        					relayout();//지도 레이아웃위치 설정
+        					
+        					geocoder.addressSearch(loca, function(result, status) {
+        					    // 정상적으로 검색이 완료됐으면 
+        					     if (status === kakao.maps.services.Status.OK) {
+        					        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        					        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        					        map.setCenter(coords);
+        					    } 
+        					});    
+        						     
+        					
+        					
+        				}
+						
         				
         			},
         			error : function(XHR, status, error) {
@@ -726,14 +740,12 @@
             
         
         });
-        
-        
-  
+                  
         //지도크기 설정
         //function resizeMap() {
 		    //var mapContainer = document.getElementById('map');
-		   // mapContainer.style.width = '800px';
-		    //mapContainer.style.height = '500px'; 
+		    //mapContainer.style.width = '800px';
+		   // mapContainer.style.height = '500px'; 
 		//}
         
         //지도 나타내기
@@ -748,7 +760,9 @@
     	
     	// 장소 검색 객체를 생성합니다
     	var ps = new kakao.maps.services.Places(); 
-
+    	
+    	// 주소-좌표 변환 객체를 생성합니다
+    	var geocoder = new kakao.maps.services.Geocoder();
     	
     	
     	//모달창에 있는 지도는 레이아웃 재설정해줘야 함
