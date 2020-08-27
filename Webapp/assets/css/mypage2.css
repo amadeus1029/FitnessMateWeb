@@ -121,7 +121,7 @@ div.inbody-wrapper div.inbody_record table{
     margin: 50px 0px 0px 22px;
 }
 div.inbody-wrapper div.inbody_record{
-    width: 290px;
+    width: 250px;
     height: 400px;
     position: relative;
 }
@@ -134,4 +134,8 @@ div.inbody-wrapper div.inbody_record button{
 form#editProfileForm .main-info .main-info-wrapper.secDiv,
 form#editProfileForm .info-wrapper .info.secDiv{
 	width: 35%;
+}
+
+#canvas {
+    float: left;
 }
