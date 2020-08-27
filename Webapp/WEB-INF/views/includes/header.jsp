@@ -20,7 +20,14 @@
 	            </c:when>
 				<c:otherwise>
 		            <a href="${pageContext.request.contextPath}/logout" class="button main" id="btn_logout">로그아웃</a>
-                    <a href="${pageContext.request.contextPath}/mypage/schedule" class="button sub">마이페이지</a>
+                    <c:choose>
+                        <c:when test="${authUser.userType eq 'trainer'}">
+                            <a href="${pageContext.request.contextPath}/mypage/schedule" class="button sub">마이페이지</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="${pageContext.request.contextPath}/mypage/profile" class="button sub">마이페이지</a>
+                        </c:otherwise>
+                    </c:choose>
                 </c:otherwise>
             </c:choose>
         </div>
