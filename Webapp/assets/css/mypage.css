@@ -494,8 +494,7 @@ form#editProfileForm select {
 }
 form#editProfileForm .main-info .main-info-wrapper {
   float: left;
-  width: 240px;
-  margin-right: 100px;
+  width: 30%;
 }
 form#editProfileForm .main-info .main-info-wrapper img.profile-img {
   width: 80px;
@@ -531,7 +530,6 @@ form#editProfileForm .main-info div.summary p.belong {
 }
 form#editProfileForm .info-wrapper {
   margin-top: 40px;
-  min-height: 110px;
 }
 form#editProfileForm .info-wrapper .info {
   float: left;
