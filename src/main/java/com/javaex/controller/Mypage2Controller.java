@@ -44,10 +44,10 @@ public class Mypage2Controller {
     //API
     @ResponseBody
     @RequestMapping("/userInfo")
-    public Map<String, Object> getUserInfo(int ptNo, int trainerNo) {
+    public Map<String, Object> getUserInfo(int ptNo) {
     	System.out.println("마이페이지 컨트롤러 ptInfo");
 
-    	return mypageService.getUserInfo(trainerNo, ptNo);
+    	return mypageService.getUserInfo(ptNo);
     }
     
     @ResponseBody
@@ -91,10 +91,23 @@ public class Mypage2Controller {
     @ResponseBody
     @RequestMapping("/saveInbody")
     public InbodyVo saveInbody(int ptNo, float weight, float percentFat, float muscleMass, float bmi) {
-    	System.out.println("마이페이지 컨트롤러 pt등록");
+    	System.out.println("마이페이지 컨트롤러 인바디 저장");
     	
     	return mypageService.saveInbody(ptNo, weight, percentFat, muscleMass, bmi);
     }
     
+    @ResponseBody
+    @RequestMapping("/extendPt")
+    public Map<String, Object> extendPt(int ptNo, int extendMonth, int extendCount) {
+    	System.out.println("마이페이지 컨트롤러 pt추가");
+    	System.out.println("ptNo : "+ ptNo);
+    	System.out.println("extendMonth : "+ extendMonth);
+    	System.out.println("extendCount : "+ extendCount);
+    	
+    	mypageService.extendPt(ptNo, extendMonth, extendCount);
+    	
+    	//변경된 정보 가져오기
+    	return mypageService.getUserInfo(ptNo);
+    }
     
 }

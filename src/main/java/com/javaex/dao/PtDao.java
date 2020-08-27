@@ -25,10 +25,11 @@ public class PtDao {
 		return ptList;
 	}
 
-	public PtVo selectPtInfo(Map<String, Integer> ptMap) {
+	public PtVo selectPtInfo(int ptNo) {
 		System.out.println("dao 트레이니 인포");
 		
-		PtVo ptVo = sqlSession.selectOne("pt.selectPtInfo", ptMap);
+		PtVo ptVo = sqlSession.selectOne("pt.selectPtInfo", ptNo);
+		System.out.println(ptVo);
 		
 		return ptVo;
 	}
@@ -69,6 +70,12 @@ public class PtDao {
 		System.out.println("dao 인바디 저장하기");
 		
 		sqlSession.insert("pt.insertInbody", inbodyVo);
+	}
+
+	public void updatePt(Map<String, Integer> extendMap) {
+		System.out.println("dao pt 연장");
+		
+		sqlSession.update("pt.updatePt", extendMap);
 	}
 	
 	

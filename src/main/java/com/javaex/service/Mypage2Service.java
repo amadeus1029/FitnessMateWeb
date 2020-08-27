@@ -41,14 +41,12 @@ public class Mypage2Service {
 		return ptList;
 	}
 
-	public Map<String, Object> getUserInfo(int trainerNo, int ptNo) {
+	public Map<String, Object> getUserInfo(int ptNo) {
 		System.out.println("service 트레이니 1개 받아오기");
+		System.out.println("ptNo : "+ptNo);
 		
-		Map<String, Integer> ptMap = new HashMap<>();
-		ptMap.put("trainerNo", trainerNo);
-		ptMap.put("ptNo", ptNo);
-
-		PtVo ptVo = ptDao.selectPtInfo(ptMap);
+		PtVo ptVo = ptDao.selectPtInfo(ptNo);
+		
 		List<InbodyVo> inbodyList = ptDao.selectInbodyList(ptNo);
 		
 		//오늘 날짜
@@ -118,6 +116,17 @@ public class Mypage2Service {
 		inbodyVo.setMeasureDate(today);
 		
 		return inbodyVo;
+	}
+	
+	public void extendPt(int ptNo, int extendMonth, int extendCount) {
+		System.out.println("service pt 연장");
+		
+		Map<String, Integer> extendMap = new HashMap<>();
+		extendMap.put("ptNo", ptNo);
+		extendMap.put("extendMonth", extendMonth);
+		extendMap.put("extendCount", extendCount);
+		
+		ptDao.updatePt(extendMap);
 	}
 
 	
