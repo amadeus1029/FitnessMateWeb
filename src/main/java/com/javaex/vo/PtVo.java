@@ -18,7 +18,7 @@ public class PtVo {
 	private boolean proceed;
 
 	public PtVo() {}
-
+	
 	public int getPtNo() {
 		return ptNo;
 	}

@@ -27,7 +27,7 @@
 	</select>
 	
 	<!-- pt정보 가져오기 -->
-	<select id="selectPtInfo" parameterType="map" resultType="com.javaex.vo.PtVo">
+	<select id="selectPtInfo" parameterType="int" resultType="com.javaex.vo.PtVo">
 		<![CDATA[
 		
 			SELECT
@@ -35,7 +35,7 @@
 			    to_char(pt.endDate, 'yyyymmdd') intEndDate,
 			    to_char(pt.startdate, 'yyyy-mm-dd') startDate,
 			    to_char(pt.endDate, 'yyyy-mm-dd') endDate,
-			    pt.regcount, NVL(pt.schedulecount, 0) schdulecount, NVL(pt.memo, ' ') memo
+			    pt.regcount, NVL(pt.schedulecount, 0) scheduleCount, NVL(pt.memo, ' ') memo
 			FROM
 			    users u,
 			    (SELECT
@@ -45,8 +45,7 @@
 			            (SELECT ptNo, COUNT(scheduleNo) scheduleCount
 			            FROM schedule
 			            group by ptNo) s
-			    ON p.ptno = s.ptno
-			    AND p.trainerno = #{trainerNo}) pt
+			    ON p.ptno = s.ptno) pt
 			WHERE u.userNo = pt.userno
 			and pt.ptno = #{ptNo}
 
@@ -122,6 +121,18 @@
 		
 		]]>
 	</insert>
+	
+	<!-- pt 연장 -->
+	<update id="updatePt" parameterType="map">
+		<![CDATA[
+		
+			UPDATE pt
+			SET regcount = regcount + #{extendCount},
+			    endDate = add_months(endDate, #{extendMonth})
+			WHERE ptNo = #{ptNo}
+		
+		]]>
+	</update>
 	
 	
 </mapper>

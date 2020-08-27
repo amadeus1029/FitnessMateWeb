@@ -28,6 +28,32 @@
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=7fc75fd1ec40ee52623062dbcd6c9baa&libraries=services,clusterer,drawing"></script>
 
+	<!-- 임시 style-->
+	    <style>
+	
+	    /*별*/
+	    .reviewWrite{ text-align: left;}
+	    #star_grade{margin: 10px 0 0 0;}
+	    #star_grade i{
+	        font-size: 0 0 10px 0;
+	        text-decoration: none;
+	        color: gray;
+	    }
+	    #star_grade i.on{
+	        color: red;
+	    }/*별*/
+	    .fd{float: right;}
+	    .ff{width: 800px;}
+	
+	
+	    .reviewWrite textarea{width: 800px; height: 100px; margin: 10px 0; padding:0px;}
+	    .button.revW{margin:0 0 0 700px;}
+	
+	    </style>
+
+
+
+
 
 </head>
 <body>
@@ -103,7 +129,7 @@
 	                    </div>
 	                    <div class="content-area">
 	                        <p class="name">${userVo.name}</p>
-	                        <p class="gym">${userVo.company}</p>
+	                        <p class="gym">${fn:substring(userVo.company,0,7)}</p>
 	                        <p class="comment">${userVo.introduction}</p>
 	                        <p class="score">평점 4.7</p>
 	                    </div>
@@ -183,30 +209,27 @@
                 
                 <div class="label-tab review-wrapper">
 
+				<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
+				
                     <div class="reviewWrite">
                         <span>리뷰작성</span>
                         
-                       
                         <div id="star_grade">
                             <input type="hidden"  name="reviewScore" value="0">
-                            <i for="p1" class="fas fa-star" data-score="1"></i>
-                            <i for="p2" class="fas fa-star" data-score="2"></i>
-                            <i for="p3" class="fas fa-star" data-score="3"></i>
-                            <i for="p4" class="fas fa-star" data-score="4"></i>
-                            <i for="p5" class="fas fa-star" data-score="5"></i>
+                            <i  class="fas fa-star" data-score="1"></i>
+                            <i  class="fas fa-star" data-score="2"></i>
+                            <i  class="fas fa-star" data-score="3"></i>
+                            <i  class="fas fa-star" data-score="4"></i>
+                            <i  class="fas fa-star" data-score="5"></i>
                         </div>
-                       
                         <textarea class="content" name='content' placeholder="사용하시면서 달라진 만족도에 대한 후기를 남겨주세요(최소 10자 이상)"></textarea>
-
                         <div>
                             <input  type="file" id="file"  name="file_name" class="image_inputType_file" >
-                           
                         </div>
-                        
                         <button class="button revW" type="submit">작성</button>
-
                     </div>
-
+					
+					<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
 
                     <ul class="review-list">
                         <li class="review-line">
@@ -285,7 +308,9 @@
                 </div> <!-- 리뷰작성페이지 -->
                 
                 <div class="label-tab location-wrapper">
-                	<div id="map"></div>
+                	<div id="mapInfo"></div><br>
+                	<div id="map" style="width:800px;height:500px;" ></div>
+                	
                 </div>
                 
             </div>
@@ -299,7 +324,7 @@
     <script type="text/javascript"> 
     
    
-   
+   ////////////////////////검색 관련/////////////////////////////
     //검색
     $(".button.key").on("click",function(){
 	   console.log("검색버튼");
@@ -405,8 +430,9 @@
 		});
     });
     
-    
-    
+	////////////////////////검색 관련/////////////////////////////
+	
+	////////////////////////트레이너 모달 세부정보탭/////////////////////////////
     //트레이너 상세정보,별점 반영하기
     function showProfileModal(obj, userNo) {
     	
@@ -422,7 +448,7 @@
     	 $("#profileModal .label-tab").removeClass("on");
     	 $("#profileModal .profile-wrapper").addClass("on");
     	 
-
+    	 
             
           //데이터전송
         	$.ajax({
@@ -437,14 +463,13 @@
         				trainerField();//전문분야
         				trainerRecord();//수상경력
   
+        				
         				var loca = vo.location.replace( /[|]/gi, ' ');//지역 사이의 | 지우기
         				
         				//만나이 계산
         				var birthday = new Date(vo.birthDate);
-        				console.log(birthday);
         				var today = new Date();
         				var years = today.getFullYear() - birthday.getFullYear();
-        				console.log(years);
         				// Reset birthday to the current year.
         				birthday.setFullYear(today.getFullYear());
         				 
@@ -470,57 +495,6 @@
         				$(".content.introduction").html(vo.introduction); //자기소개
         				$(".content.age").html("만"+years+"세");
         				
-        				
-        				//////////////주소검색
-        				// 주소로 좌표를 검색합니다
-        				 
-
-        				var campanyLoca = loca+' '+vo.company;
-        				
-        				
-        				console.log(campanyLoca);
-        				
-        				// 키워드로 장소를 검색합니다
-        				ps.keywordSearch(campanyLoca, placesSearchCB); 
-
-        				// 키워드 검색 완료 시 호출되는 콜백함수 입니다
-        				function placesSearchCB (data, status, pagination) {
-        				    if (status === kakao.maps.services.Status.OK) {
-
-        				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        				        // LatLngBounds 객체에 좌표를 추가합니다
-        				        var bounds = new kakao.maps.LatLngBounds();
-
-        				        for (var i=0; i<data.length; i++) {
-        				            displayMarker(data[i]);    
-        				            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-        				        }       
-
-        				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        				        map.setBounds(bounds);
-        				    } 
-        				}  
-        				
-        				// 지도에 마커를 표시하는 함수입니다
-        				function displayMarker(place) {
-        					
-        					 var coords = new kakao.maps.LatLng(place.y, place.x);
-        				    
-        				    // 마커를 생성하고 지도에 표시합니다
-        				    var marker = new kakao.maps.Marker({
-        				        map: map,
-        				        position: coords 
-        				    });
-        				    // 인포윈도우로 장소에 대한 설명을 표시합니다
-    		    	        var infowindow = new kakao.maps.InfoWindow({
-    		    	            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+vo.company+'</div>'
-    		    	        });
-    		    	        infowindow.open(map, marker);
-    		    	     // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-    		    	        map.setCenter(coords);
-        				  
-
-        				}
         				
         			},
         			error : function(XHR, status, error) {
@@ -597,9 +571,9 @@
 			});
 			    	}
     	
-
+	////////////////////////트레이너 모달 세부정보탭/////////////////////////////
 	  
-	  //////////////////////////////
+	////////////////////////트레이너 모달 리뷰탭/////////////////////////////
         function showTab(target) {
             var targetTab = target.attr("data-tab");
 
@@ -676,21 +650,113 @@
         });
         
         
-        
+	////////////////////////트레이너 모달 리뷰탭/////////////////////////////
+	
+	////////////////////////트레이너 모달 위치탭/////////////////////////////
+	
         //지도
         $(".label-btn.location-btn").on("click",function(){
-        	console.log("위치클릭");
-        	resizeMap();//지도크기 설정
-	    	 relayout();//지도 레이아웃위치 설정
+        	//트레이너 넘버 추출
+        	var no = $("#delNo").val();
+        	console.log("지도no "+no);
+        	
+        	//데이터전송
+        	$.ajax({
+        			url : "${pageContext.request.contextPath }/search/trainerInfo",
+        			type : "post",
+        			//contentType : "application/json",
+        			data : {no: no},
+
+        			dataType : "json",
+        			success : function(vo) {
+        				
+        				var loca = vo.location.replace( /[|]/gi, ' ');//지역 사이의 | 지우기
+        				
+        				//정보확인
+        				console.log("지도 "+vo.company);
+        				console.log("지도 "+loca);
+        			
+        				//////////////주소검색
+        				// 주소로 좌표를 검색합니다
+        				 
+        				//직장이름 not null일 경우
+							 
+        				if(vo.company != null){	
+        					relayout();//지도 레이아웃위치 설정
+        					
+	        				var campanyLoca = loca+' '+vo.company;
+	        				
+	        				// 키워드로 장소를 검색합니다
+	        				ps.keywordSearch(campanyLoca, placesSearchCB); 
+	
+	        				// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+	        				function placesSearchCB (data, status, pagination) {
+	        				    if (status === kakao.maps.services.Status.OK) {
+	
+	        				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+	        				        // LatLngBounds 객체에 좌표를 추가합니다
+	        				        var bounds = new kakao.maps.LatLngBounds();
+	
+	        				        for (var i=0; i<data.length; i++) {
+	        				            displayMarker(data[i]);    
+	        				            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+	        				        }       
+	
+	        				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+	        				        map.setBounds(bounds);
+	        				    } 
+	        				   
+	        				}  
+	        				
+	        				//지도 마커표시 함수
+	        				function displayMarker(place) {
+	        					
+	        					 var coords = new kakao.maps.LatLng(place.y, place.x);
+	        				    
+	        				    // 마커를 생성하고 지도에 표시합니다
+	        				    var marker = new kakao.maps.Marker({
+	        				        map: map,
+	        				        position: coords 
+	        				    });
+	        				    // 인포윈도우로 장소에 대한 설명을 표시합니다
+	    		    	        var infowindow = new kakao.maps.InfoWindow({
+	    		    	            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+vo.company+'</div>'
+	    		    	        });
+	    		    	        infowindow.open(map, marker);
+	    		    	     // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	    		    	        map.setCenter(coords);
+	        				}//지도 마커표시 함수
+	        				$("#mapInfo").empty();
+	        				
+        				}
+        			
+        				else{
+        					relayout();//지도 레이아웃위치 설정
+        					
+        					geocoder.addressSearch(loca, function(result, status) {
+        					    // 정상적으로 검색이 완료됐으면 
+        					     if (status === kakao.maps.services.Status.OK) {
+        					        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        					        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        					        map.setCenter(coords);
+        					    } 
+        					});    
+        				}
+        			},
+        			error : function(XHR, status, error) {
+        				console.error(status + " : " + error);
+        			}
+        		});
+            
         
         });
-        
+                  
         //지도크기 설정
-        function resizeMap() {
-		    var mapContainer = document.getElementById('map');
-		    mapContainer.style.width = '800px';
-		    mapContainer.style.height = '500px'; 
-		}
+        //function resizeMap() {
+		    //var mapContainer = document.getElementById('map');
+		    //mapContainer.style.width = '800px';
+		   // mapContainer.style.height = '500px'; 
+		//}
         
         //지도 나타내기
         var container = document.getElementById('map');
@@ -704,7 +770,9 @@
     	
     	// 장소 검색 객체를 생성합니다
     	var ps = new kakao.maps.services.Places(); 
-
+    	
+    	// 주소-좌표 변환 객체를 생성합니다
+    	var geocoder = new kakao.maps.services.Geocoder();
     	
     	
     	//모달창에 있는 지도는 레이아웃 재설정해줘야 함
@@ -716,7 +784,7 @@
     	    
     	}
     	
-    	
+	////////////////////////트레이너 모달 위치탭/////////////////////////////
     	
         
     </script>
