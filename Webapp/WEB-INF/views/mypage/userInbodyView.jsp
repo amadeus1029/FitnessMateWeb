@@ -61,7 +61,7 @@
             </div>
 
             <div class="tableBox">
-                <p>${inbodyInfo.recentInbody.measureDate}</p>
+                <p class="measureDate">${inbodyInfo.recentInbody.measureDate}</p>
                 <table>
                     <tr>
                         <th>체중 (kg)</th>
@@ -94,41 +94,39 @@
 <script type="text/javascript">
 	
 	$("ol.dateList li").on("click", function(){
+		
+		$("p.measureDate").text("");
+		$("td#weight").text("");
+		$("td#percentFat").text("");
+		$("td#muscleMass").text("");
+		$("td#bmi").text("");
+		
 		var inbodyNo = $(this).data("inbodyno");
-		console.log("inbodyNo : "+inbodyNo);
-	});
-	
-	
-    //주소 3차 분류 가져오기 함수
-    function getRegion(thisCity) {
 
-        $.ajax({
+		//데이터 전송
+		$.ajax({
+			//보낼 때 옵션
+			url : "${pageContext.request.contextPath}/mypage2/getInbodyInfo",
+			type : "post",
+			data : {inbodyNo: inbodyNo},
+					
+			//받을 때 옵션
+			dataType : "json",
+			success : function(inbodyInfo) {
+				
+				$("p.measureDate").text(inbodyInfo.measureDate);
+				$("td#weight").text(inbodyInfo.weight+" kg");
+				$("td#percentFat").text(inbodyInfo.percentFat+" %");
+				$("td#muscleMass").text(inbodyInfo.muscleMass+" kg");
+				$("td#bmi").text(inbodyInfo.bmi+" kg/m²");
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
 
-            url: "${pageContext.request.contextPath}/api/getRegion",
-            type: "post",
-            data: {
-                thisCity: thisCity
-            },
-
-            dataType: "json",
-            success: function (regionList) {
-
-                /*성공시 처리해야될 코드 작성*/
-                var regionStr = '<option>전체</option>';
-
-                for (var i in regionList) {
-                    regionStr += '<option>' + regionList[i] + '</option>';
-                }
-
-                $("select[name='region']").append(regionStr);
-
-            },
-            error: function (XHR, status, error) {
-                console.error(status + " : " + error);
-            }
-        })
-
-    };
+    });
 </script>
 
 </html>

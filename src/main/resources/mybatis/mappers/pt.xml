@@ -101,7 +101,7 @@
 	<select id="selectInbodyInfo" parameterType="int" resultType="com.javaex.vo.InbodyVo">
 		<![CDATA[
 		
-			SELECT weight, percentFat, muscleMass, bmi
+			SELECT weight, percentFat, muscleMass, bmi, TO_CHAR(measureDate, 'yyyy-mm-dd') measureDate
 			FROM inbody
 			WHERE inbodyNo = #{inbodyNo}
 		

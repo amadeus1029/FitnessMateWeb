@@ -62,7 +62,7 @@
     		</c:when>
     		<c:otherwise>
 		        <li><a href="${pageContext.request.contextPath}/mypage2/exerciseRecord">운동기록</a></li>
-		        <li><a href="${pageContext.request.contextPath}/mypage2/inbodyRecord">인바디기록</a></li>
+		        <li><a href="${pageContext.request.contextPath}/mypage2/inbodyRecord">인바디내역</a></li>
 		        <li><a href="${pageContext.request.contextPath}/mypage/profile">프로필 수정</a></li>
     		</c:otherwise>
    		</c:choose>

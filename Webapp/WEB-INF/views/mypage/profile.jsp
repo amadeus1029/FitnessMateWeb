@@ -309,7 +309,7 @@
 
         $.ajax({
 
-            url: "${pageContext.request.contextPath}/api/getCity",
+            url: "${pageContext.request.contextPath}/user/getCity",
             type: "post",
             data: {
                 thisProvince: thisProvince
@@ -339,7 +339,7 @@
 
         $.ajax({
 
-            url: "${pageContext.request.contextPath}/api/getRegion",
+            url: "${pageContext.request.contextPath}/user/getRegion",
             type: "post",
             data: {
                 thisCity: thisCity
