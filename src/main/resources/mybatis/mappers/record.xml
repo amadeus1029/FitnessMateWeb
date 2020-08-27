@@ -6,7 +6,7 @@
         <foreach collection="list" item="item" index="index" separator=" " open="INSERT ALL" close="select * from dual">
             <![CDATA[
             into records(recordNo, scheduleNo, exerciseNo, count, amount)
-            values(seq_recordNo.nextVal, ${item.scheduleNo}, ${item.exNo}, ${item.count}, ${item.amount})
+            values(get_record_seq, ${item.scheduleNo}, ${item.exNo}, ${item.count}, ${item.amount})
             ]]>
         </foreach>
     </insert>
