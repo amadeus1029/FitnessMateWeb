@@ -1,20 +1,5 @@
 @charset "UTF-8";
 
-form#editProfileForm .main-info .main-info-wrapper {
-  float: left;
-  width: 30%;
-  margin-right: 0;
-}
-
-div.info-wrapper div.info div.main-info-wrapper{
-	margin-bottom: 50px;
-}
-
-
-div.info-wrapper div.info input[name="career"]{
-	margin-bottom: 50px;
-}
-
 /* 체크박스 */
 .checkboxPart{
     width: 80%;
