@@ -28,6 +28,32 @@
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=7fc75fd1ec40ee52623062dbcd6c9baa&libraries=services,clusterer,drawing"></script>
 
+	<!-- 임시 style-->
+	    <style>
+	
+	    /*별*/
+	    .reviewWrite{ text-align: left;}
+	    #star_grade{margin: 10px 0 0 0;}
+	    #star_grade i{
+	        font-size: 0 0 10px 0;
+	        text-decoration: none;
+	        color: gray;
+	    }
+	    #star_grade i.on{
+	        color: red;
+	    }/*별*/
+	    .fd{float: right;}
+	    .ff{width: 800px;}
+	
+	
+	    .reviewWrite textarea{width: 800px; height: 100px; margin: 10px 0; padding:0px;}
+	    .button.revW{margin:0 0 0 700px;}
+	
+	    </style>
+
+
+
+
 
 </head>
 <body>
@@ -103,7 +129,7 @@
 	                    </div>
 	                    <div class="content-area">
 	                        <p class="name">${userVo.name}</p>
-	                        <p class="gym">${userVo.company}</p>
+	                        <p class="gym">${fn:substring(userVo.company,0,7)}</p>
 	                        <p class="comment">${userVo.introduction}</p>
 	                        <p class="score">평점 4.7</p>
 	                    </div>
@@ -183,30 +209,27 @@
                 
                 <div class="label-tab review-wrapper">
 
+				<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
+				
                     <div class="reviewWrite">
                         <span>리뷰작성</span>
                         
-                       
                         <div id="star_grade">
                             <input type="hidden"  name="reviewScore" value="0">
-                            <i for="p1" class="fas fa-star" data-score="1"></i>
-                            <i for="p2" class="fas fa-star" data-score="2"></i>
-                            <i for="p3" class="fas fa-star" data-score="3"></i>
-                            <i for="p4" class="fas fa-star" data-score="4"></i>
-                            <i for="p5" class="fas fa-star" data-score="5"></i>
+                            <i  class="fas fa-star" data-score="1"></i>
+                            <i  class="fas fa-star" data-score="2"></i>
+                            <i  class="fas fa-star" data-score="3"></i>
+                            <i  class="fas fa-star" data-score="4"></i>
+                            <i  class="fas fa-star" data-score="5"></i>
                         </div>
-                       
                         <textarea class="content" name='content' placeholder="사용하시면서 달라진 만족도에 대한 후기를 남겨주세요(최소 10자 이상)"></textarea>
-
                         <div>
                             <input  type="file" id="file"  name="file_name" class="image_inputType_file" >
-                           
                         </div>
-                        
                         <button class="button revW" type="submit">작성</button>
-
                     </div>
-
+					
+					<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
 
                     <ul class="review-list">
                         <li class="review-line">
@@ -301,7 +324,7 @@
     <script type="text/javascript"> 
     
    
-   
+   ////////////////////////검색 관련/////////////////////////////
     //검색
     $(".button.key").on("click",function(){
 	   console.log("검색버튼");
@@ -407,8 +430,9 @@
 		});
     });
     
-    
-    
+	////////////////////////검색 관련/////////////////////////////
+	
+	////////////////////////트레이너 모달 세부정보탭/////////////////////////////
     //트레이너 상세정보,별점 반영하기
     function showProfileModal(obj, userNo) {
     	
@@ -547,9 +571,9 @@
 			});
 			    	}
     	
-
+	////////////////////////트레이너 모달 세부정보탭/////////////////////////////
 	  
-	  //////////////////////////////
+	////////////////////////트레이너 모달 리뷰탭/////////////////////////////
         function showTab(target) {
             var targetTab = target.attr("data-tab");
 
@@ -626,17 +650,15 @@
         });
         
         
-        
+	////////////////////////트레이너 모달 리뷰탭/////////////////////////////
+	
+	////////////////////////트레이너 모달 위치탭/////////////////////////////
+	
         //지도
         $(".label-btn.location-btn").on("click",function(){
-        	
-        	
-        	
         	//트레이너 넘버 추출
         	var no = $("#delNo").val();
         	console.log("지도no "+no);
-        	
-        	 
         	
         	//데이터전송
         	$.ajax({
@@ -648,10 +670,6 @@
         			dataType : "json",
         			success : function(vo) {
         				
-        				
-        		        
-        		        
-        		       
         				var loca = vo.location.replace( /[|]/gi, ' ');//지역 사이의 | 지우기
         				
         				//정보확인
@@ -708,10 +726,7 @@
 	    		    	     // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 	    		    	        map.setCenter(coords);
 	        				}//지도 마커표시 함수
-	        				
-	        				
 	        				$("#mapInfo").empty();
-	        			
 	        				
         				}
         			
@@ -726,12 +741,7 @@
         					        map.setCenter(coords);
         					    } 
         					});    
-        						     
-        					
-        					
         				}
-						
-        				
         			},
         			error : function(XHR, status, error) {
         				console.error(status + " : " + error);
@@ -774,7 +784,7 @@
     	    
     	}
     	
-    	
+	////////////////////////트레이너 모달 위치탭/////////////////////////////
     	
         
     </script>
