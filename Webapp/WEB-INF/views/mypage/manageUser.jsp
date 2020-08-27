@@ -28,6 +28,27 @@
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage2.css">
+	<style>
+	
+	#userInfoModal .modal-content .profile-wrapper div.extendForm{
+		width: 250px;
+		position: absolute;
+		bottom: 150px;
+		right: 35px;
+	}
+	#userInfoModal .modal-content .profile-wrapper #showAddCount,#btnAddCount{
+		width: 70px;
+		position: absolute;
+		bottom: 165px;
+		right: 35px;
+	}
+	
+	#userInfoModal .modal-content .profile-wrapper div.extendForm input{
+		width: 50px;
+		display: inline-block;
+	}
+	
+	</style>
         
 </head>
 <body>
@@ -52,7 +73,7 @@
             <ul class="user-list clearfix">
             	<!-- 반복 -->
             	<c:forEach items="${ptList}" var="pt">
-	                <li class="user clearfix ${pt.proceed eq true ? 'former off':'now'}" onclick="showUser(${pt.ptNo}, ${authUser.userNo});">
+	                <li class="user clearfix ${pt.proceed eq true ? 'former off':'now'}" onclick="showUser(${pt.ptNo});">
 	                    <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
 	                    <p class="info">
 	                        <span class="name">${pt.name}</span>
@@ -65,6 +86,7 @@
         </div>
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+    
     <div class="modal-layer" id="userInfoModal">
         <div class="modal-wrapper">
             <button type="button" class="close-btn" onclick="forceHideModal('#userInfoModal')">X</button>
@@ -94,8 +116,15 @@
                         <p class="label">· 등록기간</p>
                         <p id="period"></p>
                         
-                        <p class="label">· 잔여횟수</p>
+                        <p class="label">· 사용횟수</p>
                         <p id="count"></p>
+                        <div class="extendForm">
+                        	<input type="number" name="extendMonth" min="0">
+                        	<label>개월</label>
+                        	<input type="number" name="extendCount" min="0">
+                        	<label>회</label>
+                        </div>
+                        <button type="button" id="showAddCount">추가등록</button>
                         
                         <p class="label">· 메모</p>
                         <textarea id="memo"></textarea>
@@ -104,8 +133,8 @@
                 	</div>
                 </div>
                 	
+                <!-- 인바디 내역이 들어옵니다 -->
                 <div class="label-tab inbody-wrapper">
-                    <!-- 인바디 내역이 들어옵니다 -->
                    	<div class="inbody_record">
                         <select name="inbodyDate">
                             
@@ -176,7 +205,65 @@
     </div>
     
     <script type="text/javascript">
-    
+    	
+		//추가버튼 보이기
+    	$("button#showAddCount").on("click", function(){
+            $(".extendForm").show();
+            $(this).text("저장");
+            $(this).attr("id", "btnAddCount");
+            $(this).attr("onclick", "addCount();");
+    	});
+		
+		//추가 저장 버튼 누르면!
+		function addCount(){
+			console.log("asdfasdf");
+			var ptNo = $("input#modifyPtNo").val();
+			var extendMonth = $("input[name='extendMonth']").val();
+    		var extendCount = $("input[name='extendCount']").val();
+			
+			if( extendMonth == ""){
+    			alert("등록개월 란이 비어있어요");
+    			return false;
+    		} else if( extendCount == ""){
+    			alert("등록횟수 란이 비어있어요");
+    			return false;
+    		} else{
+    			
+    			//데이터 전송
+	    		$.ajax({
+	    			//보낼 때 옵션
+	    			url : "${pageContext.request.contextPath}/mypage2/extendPt",
+	    			type : "post",
+	    			data : {ptNo: ptNo,
+	    					extendMonth: extendMonth,
+	    					extendCount: extendCount},
+	    					
+	    			//받을 때 옵션
+	    			dataType : "json",
+	    			success : function(userInfo) {
+	    				
+	    				alert("PT가 추가 등록 되었습니다.");
+	    				
+	    				//userInfo 다시 넣기
+	    				$("#period").text("\u00A0 "+userInfo.ptInfo.startDate+" ~ "+userInfo.ptInfo.endDate);
+	    				$("#count").text("\u00A0 "+userInfo.ptInfo.scheduleCount+" / "+userInfo.ptInfo.regCount);
+	    				
+	    				//버튼 초기화
+	    	            $(".extendForm").hide();
+	    	            $("#btnAddCount").text("추가등록");
+	    	            $("#btnAddCount").attr("id", "showAddCount");
+	    	            $("#btnAddCount").attr("onclick", "");
+	    				
+	    			},
+	    			error : function(XHR, status, error) {
+	    				console.error(status + " : " + error);
+	    			}
+	    		})
+    			
+    		}
+		};	
+    	
+    	//인바디 저장버튼 클릭
     	$("button.btnSave").on("click", function(){
     		
     		var ptNo = $(this).data("ptno");
@@ -235,21 +322,18 @@
     	//인바디 모달 - 셀렉박스 선택했을 때
     	$("select[name='inbodyDate']").on("change", function(){
     		
-			$("td#weight").empty();
-			$("td#percentFat").empty();
-			$("td#muscleMass").empty();
-			$("td#bmi").empty();
-			$("button.btnSave").hide();
-			
     		var inbodyNo = $(this).val();
     		console.log("inbodyNo: "+inbodyNo);
 			
     		if(inbodyNo == 0){
-    			$("td#weight").html('<input name="weight" type="number" max="200" min="0"  step="0.1" placeholder="00.0">');
-    			$("td#percentFat").html('<input name="percentFat" type="number" max="200" min="0"  step="0.1" placeholder="00.0">');
-    			$("td#muscleMass").html('<input name="muscleMass" type="number" max="200" min="0"  step="0.1" placeholder="00.0">');
-    			$("td#bmi").html('<input name="bmi" type="number" max="200" min="0"  step="0.1" placeholder="00.0">');
-    			$("button.btnSave").show();
+    			 
+    			$("input[name='weight']").attr("type", "number");
+				$("input[name='percentFat']").attr("type", "number");
+				$("input[name='muscleMass']").attr("type", "number");
+				$("input[name='bmi']").attr("type", "number");
+    			 
+    			$("input[type='number']").attr("disabled", false);
+    			
     		} else{
     		
 	    		//데이터 전송
@@ -263,10 +347,17 @@
 	    			dataType : "json",
 	    			success : function(inbodyInfo) {
 	    				
-	    				$("td#weight").text(inbodyInfo.weight+" kg");
-	    				$("td#percentFat").text(inbodyInfo.percentFat+" %");
-	    				$("td#muscleMass").text(inbodyInfo.muscleMass+" kg");
-	    				$("td#bmi").text(inbodyInfo.bmi+" kg/m²");
+	    				$("input[type='number']").attr("disabled", true);
+	    				
+	    				$("input[name='weight']").attr("type", "text");
+	    				$("input[name='percentFat']").attr("type", "text");
+	    				$("input[name='muscleMass']").attr("type", "text");
+	    				$("input[name='bmi']").attr("type", "text");
+	    				
+	    				$("input[name='weight']").val(inbodyInfo.weight+" kg");
+	    				$("input[name='percentFat']").val(inbodyInfo.percentFat+" %");
+	    				$("input[name='muscleMass']").val(inbodyInfo.muscleMass+" kg");
+	    				$("input[name='bmi']").val(inbodyInfo.bmi+" kg/m²");
 	    				
 	    			},
 	    			error : function(XHR, status, error) {
@@ -275,7 +366,8 @@
 	    		})
     		}//else 끝
     	})
-    
+    	
+    	//회원추가 모달에서 검색
     	$("button.search").on("click", function(){
     		$("div.user").empty();
     		
@@ -321,7 +413,7 @@
     		
     	});
     
-    	
+    	//회원 모달 탭 눌렀을 때
         function showTab(target) {
             var targetTab = target.attr("data-tab");
 
@@ -335,7 +427,15 @@
             
             //tab에 on
             $("#userInfoModal").find("." + targetTab + "-wrapper").addClass("on");
-
+            
+            //인풋태그 초기화
+    		$("#userInfoModal input").val("");
+            
+            //추가 폼 가리기
+            $(".extendForm").hide();
+            $("#btnAddCount").text("추가등록");
+            $("#btnAddCount").attr("id", "showAddCount");
+            $("#btnAddCount").attr("onclick", "");
         }
 
         function showUserList(target) {
@@ -345,18 +445,27 @@
             $("ul.user-list li." + targetType).removeClass("off");
         }
 		
-        function showUser(ptNo, trainerNo) {
+        //회원 눌렀을 때
+        function showUser(ptNo) {
         	
         	$("select[name='inbodyDate']").empty();
 			$("button.btnSave").data("ptno", ptNo);
+			
+			//인풋태그 초기화
+    		$("#userInfoModal input").val("");
+			
+            //추가폼 가리기
+            $(".extendForm").hide();
+            $("#btnAddCount").text("추가등록");
+            $("#btnAddCount").attr("id", "showAddCount");
+            $("#btnAddCount").attr("onclick", "");
     		
     		//데이터 전송
     		$.ajax({
     			//보낼 때 옵션
     			url : "${pageContext.request.contextPath}/mypage2/userInfo",
     			type : "post",
-    			data : {ptNo: ptNo,
-    					trainerNo: trainerNo},
+    			data : {ptNo: ptNo},
     					
     			//받을 때 옵션
     			dataType : "json",
