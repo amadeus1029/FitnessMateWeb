@@ -285,7 +285,8 @@
                 </div> <!-- 리뷰작성페이지 -->
                 
                 <div class="label-tab location-wrapper">
-                	<div id="map"></div>
+                	<div id="map" style="width:800px;height:500px;"></div>
+                	<div id="mapInfo"></div>
                 </div>
                 
             </div>
@@ -422,7 +423,7 @@
     	 $("#profileModal .label-tab").removeClass("on");
     	 $("#profileModal .profile-wrapper").addClass("on");
     	 
-
+    	 
             
           //데이터전송
         	$.ajax({
@@ -437,6 +438,7 @@
         				trainerField();//전문분야
         				trainerRecord();//수상경력
   
+        				
         				var loca = vo.location.replace( /[|]/gi, ' ');//지역 사이의 | 지우기
         				
         				//만나이 계산
@@ -471,56 +473,6 @@
         				$(".content.age").html("만"+years+"세");
         				
         				
-        				//////////////주소검색
-        				// 주소로 좌표를 검색합니다
-        				 
-
-        				var campanyLoca = loca+' '+vo.company;
-        				
-        				
-        				console.log(campanyLoca);
-        				
-        				// 키워드로 장소를 검색합니다
-        				ps.keywordSearch(campanyLoca, placesSearchCB); 
-
-        				// 키워드 검색 완료 시 호출되는 콜백함수 입니다
-        				function placesSearchCB (data, status, pagination) {
-        				    if (status === kakao.maps.services.Status.OK) {
-
-        				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        				        // LatLngBounds 객체에 좌표를 추가합니다
-        				        var bounds = new kakao.maps.LatLngBounds();
-
-        				        for (var i=0; i<data.length; i++) {
-        				            displayMarker(data[i]);    
-        				            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-        				        }       
-
-        				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        				        map.setBounds(bounds);
-        				    } 
-        				}  
-        				
-        				// 지도에 마커를 표시하는 함수입니다
-        				function displayMarker(place) {
-        					
-        					 var coords = new kakao.maps.LatLng(place.y, place.x);
-        				    
-        				    // 마커를 생성하고 지도에 표시합니다
-        				    var marker = new kakao.maps.Marker({
-        				        map: map,
-        				        position: coords 
-        				    });
-        				    // 인포윈도우로 장소에 대한 설명을 표시합니다
-    		    	        var infowindow = new kakao.maps.InfoWindow({
-    		    	            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+vo.company+'</div>'
-    		    	        });
-    		    	        infowindow.open(map, marker);
-    		    	     // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-    		    	        map.setCenter(coords);
-        				  
-
-        				}
         				
         			},
         			error : function(XHR, status, error) {
@@ -679,18 +631,110 @@
         
         //지도
         $(".label-btn.location-btn").on("click",function(){
-        	console.log("위치클릭");
-        	resizeMap();//지도크기 설정
-	    	 relayout();//지도 레이아웃위치 설정
+        	
+        	//트레이너 넘버 추출
+        	var no = $("#delNo").val();
+        	console.log("지도no "+no);
+        	
+        	
+	        relayout();//지도 레이아웃위치 설정
+        	
+        	//데이터전송
+        	$.ajax({
+        			url : "${pageContext.request.contextPath }/search/trainerInfo",
+        			type : "post",
+        			//contentType : "application/json",
+        			data : {no: no},
+
+        			dataType : "json",
+        			success : function(vo) {
+        				
+        				var loca = vo.location.replace( /[|]/gi, ' ');//지역 사이의 | 지우기
+        				
+        				//정보확인
+        				console.log("지도 "+vo.company);
+        				console.log("지도 "+loca);
+        			
+        				//////////////주소검색
+        				// 주소로 좌표를 검색합니다
+        				 
+        				//직장이름 not null일 경우
+						if(vo.company != null){
+							
+					       
+							
+							 
+	        				var campanyLoca = loca+' '+vo.company;
+	        				
+	        				// 키워드로 장소를 검색합니다
+	        				ps.keywordSearch(campanyLoca, placesSearchCB); 
+	
+	        				// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+	        				function placesSearchCB (data, status, pagination) {
+	        				    if (status === kakao.maps.services.Status.OK) {
+	
+	        				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+	        				        // LatLngBounds 객체에 좌표를 추가합니다
+	        				        var bounds = new kakao.maps.LatLngBounds();
+	
+	        				        for (var i=0; i<data.length; i++) {
+	        				            displayMarker(data[i]);    
+	        				            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+	        				        }       
+	
+	        				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+	        				        map.setBounds(bounds);
+	        				    } 
+	        				   
+	        				}  
+	        				
+	        				//지도 마커표시 함수
+	        				function displayMarker(place) {
+	        					
+	        					 var coords = new kakao.maps.LatLng(place.y, place.x);
+	        				    
+	        				    // 마커를 생성하고 지도에 표시합니다
+	        				    var marker = new kakao.maps.Marker({
+	        				        map: map,
+	        				        position: coords 
+	        				    });
+	        				    // 인포윈도우로 장소에 대한 설명을 표시합니다
+	    		    	        var infowindow = new kakao.maps.InfoWindow({
+	    		    	            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+vo.company+'</div>'
+	    		    	        });
+	    		    	        infowindow.open(map, marker);
+	    		    	     // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	    		    	        map.setCenter(coords);
+	        				}//지도 마커표시 함수
+	        				
+	        				
+	        				$("#mapInfo").empty();
+        				
+						}//직장이름 not null일 경우
+						else{
+							
+							
+							$("#mapInfo").append("<span>직장정보가 없습니다</spen>");
+							
+						}
+        				
+        			},
+        			error : function(XHR, status, error) {
+        				console.error(status + " : " + error);
+        			}
+        		});
+            
         
         });
         
+        
+  
         //지도크기 설정
-        function resizeMap() {
-		    var mapContainer = document.getElementById('map');
-		    mapContainer.style.width = '800px';
-		    mapContainer.style.height = '500px'; 
-		}
+        //function resizeMap() {
+		    //var mapContainer = document.getElementById('map');
+		   // mapContainer.style.width = '800px';
+		    //mapContainer.style.height = '500px'; 
+		//}
         
         //지도 나타내기
         var container = document.getElementById('map');
