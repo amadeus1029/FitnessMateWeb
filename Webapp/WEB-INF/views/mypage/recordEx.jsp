@@ -108,7 +108,7 @@
                     "</div>"+
                     "<div class='setPart'>"+
                         "<div class='record-box'>"+
-                            "<input type='number' name='count' placeholder=''> "+
+                            "<input type='number' name='count' placeholder='횟수'> "+
                             "<input type='number' name='amount' placeholder=''> "+
                             "<i class='far fa-plus-square' onclick='addExSet($(this))'></i>" +
                         "</div>"+
