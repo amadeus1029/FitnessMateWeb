@@ -253,6 +253,9 @@
    
     <script type="text/javascript"> 
     
+    $(document).ready(function(){
+    	console.log(${authUser.userNo});
+    });
    
    ////////////////////////검색 관련/////////////////////////////
     //검색
@@ -506,7 +509,7 @@
 	
 	//리뷰리스트 불러오기
 	$(".label-btn.review-btn").on("click",function(){
-		
+		console.log(${authUser.userNo});
 		reviewList();
 		
 	});
@@ -521,6 +524,7 @@
 	function reviewList(){
 		
 		var reviewNo = $("#delNo").val();
+		
 	    console.log("리뷰페이지 트레이너 넘버"+reviewNo);
 		
 		
@@ -538,31 +542,32 @@
 				$("ul.review-list").empty();
 				var reviewStr = "";
 				
-				for (var i in reviewVo ) {
-					console.log(reviewVo[i]);
+				for (var review of reviewVo ) {
+					
 					
 					reviewStr += '<li class="review-line">';
 					reviewStr += '  <div class="user-profile ff">';
 					reviewStr += '    <img class="user-profile-img" src="${pageContext.request.contextPath}/assets/image/unnamed.jpg">';
 					reviewStr += '    <div class="user-profile-info">';
-					reviewStr += '      <div class="user-profile-name">'+reviewVo[i].name+'</div>';
-					reviewStr += '      <div class="user-profile-date">트레이닝- '+reviewVo[i].scheduleCount+'회차</div>';
-					reviewStr += '      <div class="user-profile-date">'+reviewVo[i].regDate+'</div>';
+					reviewStr += '      <div class="user-profile-name">'+review.name+'</div>';
+					reviewStr += '      <div class="user-profile-date">트레이닝- '+review.scheduleCount+'회차</div>';
+					reviewStr += '      <div class="user-profile-date">'+review.regDate+'</div>';
 					reviewStr += '    </div>';
-					reviewStr += '    <div class="user-profile-star fd">'+reviewVo[i].score+'</div>';
+					reviewStr += '    <div class="user-profile-star fd">'+review.score+'</div>';
 					reviewStr += '  </div>';
 					reviewStr += '  <div class="box">';
-					reviewStr += '    <div class="content">'+reviewVo[i].content+'</div>';
+					reviewStr += '    <div class="content">'+review.content+'</div>';
 					reviewStr += '  </div>';
 					reviewStr += '  <div class="clearfix review-btn-area">';
 					
-					
+					if(${authUser.userNo} == review.userNo ){
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">수정</button>';
-					
+					}
+					if(${authUser.userNo} == review.trainerNo ){
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">답글</button> ';
-					
+					}
 					
 					reviewStr += '  </div>';
 					reviewStr += ' </li>';
