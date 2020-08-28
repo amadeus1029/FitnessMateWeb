@@ -135,6 +135,8 @@ public class MypageController {
         return "mypage/recordEx";
     }
 
+    
+    //API controller
     @ResponseBody
     @RequestMapping("/addRecord")
     public int addRecord(@RequestBody List<RecordVo> recordList) {
@@ -155,7 +157,6 @@ public class MypageController {
         return "redirect:/mypage/profile";
     }
     
-    //api
     //스케쥴 추가
     @ResponseBody
     @RequestMapping("/addSchedule")
@@ -185,7 +186,7 @@ public class MypageController {
         return mypageService.deleteSchedule(scheduleVo);
     }
     
-    //스케쥴 삭제
+    //스케쥴 경력사항
     @ResponseBody
     @RequestMapping("/deleteCareer")
     public boolean deleteCareer(int careerNo) {

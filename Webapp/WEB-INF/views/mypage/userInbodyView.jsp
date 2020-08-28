@@ -32,6 +32,11 @@
             rel="stylesheet">
     <script
             src="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/js/swiper.min.js"></script>
+            
+    <%--차트--%>
+    <script src="${pageContext.request.contextPath}/assets/js/chart/dist/Chart.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/chart/dist/Chart.min.css">
+            
 
     <!-- 해당 페이지 css -->
     <link rel="stylesheet"
@@ -81,17 +86,103 @@
                 </table>
             </div>        
 
-
-            <div class="graphBox">
-
-            </div>
+			<canvas id="canvas" width="500" height="400">
+            </canvas>
 
         </div>
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+    
+
 </body>
 
 <script type="text/javascript">
+
+	$(document).ready(function(){
+		 
+		var weightArr = [];
+		var muscleMassArr = [];
+		var percentFatArr = [];
+		var bmiArr = [];
+		var labelArr = [];
+		
+		<c:forEach items="${inbodyInfo.inbodyList}" var="inbody">
+		 
+			weightArr.push("${inbody.weight}");
+			muscleMassArr.push("${inbody.muscleMass}");
+			percentFatArr.push("${inbody.percentFat}");
+			bmiArr.push("${inbody.bmi}");
+			labelArr.push("${inbody.measureDate}");
+	 
+		</c:forEach>
+		
+
+		var lineChartData = {
+			labels : labelArr,
+			datasets : [ {
+				label : '체중',
+				borderColor : '#cc2121',
+				backgroundColor : '#cc2121',
+				fill : false,
+				data : weightArr,
+				yAxisID : 'y-axis-1',
+			}, {
+				label : '골격근량',
+				borderColor : '#008526',
+				backgroundColor : '#008526',
+				fill : false,
+				data : muscleMassArr,
+				yAxisID : 'y-axis-1'
+			}, {
+				label : '체지방',
+				borderColor : '#ffc0cb',
+				backgroundColor : '#ffc0cb',
+				fill : false,
+				data : percentFatArr,
+				yAxisID : 'y-axis-2'
+			}, {
+				label : 'BMI',
+				borderColor : '#45474d',
+				backgroundColor : '#45474d',
+				fill : false,
+				data : bmiArr,
+				yAxisID : 'y-axis-2'
+			} ]
+		};
+		var chartCanvas = document.getElementById("canvas");
+		var myLineChart = new Chart(chartCanvas, {
+			type : 'line',
+			data : lineChartData,
+			options : {
+				responsive : false,
+				hoverMode : 'index',
+				stacked : false,
+				title : {
+					display : true,
+					text : '인바디 그래프'
+				},
+				scales : {
+					yAxes : [ {
+						type : 'linear',
+						display : true,
+						position : 'left',
+						id : 'y-axis-1',
+					}, {
+						type : 'linear',
+						display : true,
+						position : 'right',
+						id : 'y-axis-2',
+
+						// grid line settings
+						gridLines : {
+							drawOnChartArea : false
+						},
+					} ],
+				}
+			}
+		});
+
+	});
 	
 	$("ol.dateList li").on("click", function(){
 		
@@ -127,6 +218,8 @@
 		})
 
     });
+	
+
 </script>
 
 </html>

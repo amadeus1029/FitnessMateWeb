@@ -122,4 +122,5 @@ public class Mypage2Controller {
     	return mypageService.getUserInfo(ptNo);
     }
     
+    
 }

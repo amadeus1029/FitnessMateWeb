@@ -1,77 +1,94 @@
 @charset "UTF-8";
 
 /* 체크박스 */
-.checkboxPart{
-    width: 80%;
-    margin: 10px 0px 30px -10px;
-    line-height: 45px;
-    word-break: keep-all;
-    text-align: center;
+.checkboxPart {
+	width: 80%;
+	margin: 10px 0px 30px -10px;
+	line-height: 45px;
+	word-break: keep-all;
+	text-align: center;
 }
+
 .button-label {
-    padding: 5px 10px;
-    margin: 10px;
-    background: #dbf2e1;
-    cursor: pointer;
-    border-radius: 25px;
-    transition: 0.3s;
-    user-select: none;
+	padding: 5px 10px;
+	margin: 10px;
+	background: #dbf2e1;
+	cursor: pointer;
+	border-radius: 25px;
+	transition: 0.3s;
+	user-select: none;
 }
+
 .button-label:active {
-    transform: translateY(2px);
+	transform: translateY(2px);
 }
-input[type="checkbox"]{
+
+input[type="checkbox"] {
 	display: none;
 }
-input[type="checkbox"]:checked + label {
-    background: #008526;
-    color: #ffffff;
+
+input[type="checkbox"]:checked+label {
+	background: #008526;
+	color: #ffffff;
 }
 
 #container .wrapper form button[type="submit"] {
-    width: 130px;
-    margin: 30px auto 30px;
+	width: 130px;
+	margin: 30px auto 30px;
 }
-div.award-info div{
+
+div.award-info div {
 	position: relative;
 	width: 50%;
 }
-div.award-info div i.deleteNew{
+
+div.award-info div i.deleteNew {
 	font-size: 18px;
 	position: absolute;
 	top: 5px;
 	right: 18px;
 }
-div.award-info i{
+
+div.award-info i {
 	cursor: pointer;
 }
 
-
 /* 회원관리 */
-div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper{
-    padding: 0px;
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper
+	{
+	padding: 0px;
 }
-div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper img{
-    float: left;
-    width: 405px;
-    height: 405px;
+
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper img
+	{
+	float: left;
+	width: 405px;
+	height: 405px;
 }
-div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div{
-    padding-left: 430px;
-    text-align: left;
-    line-height: 180%;
+
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div
+	{
+	padding-left: 430px;
+	text-align: left;
+	line-height: 180%;
 }
-div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div p.label {
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: 10px;
+
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div p.label
+	{
+	font-size: 18px;
+	font-weight: 600;
+	margin-top: 10px;
 }
-div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div textarea{
+
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div textarea
+	{
 	width: 350px;
 	margin: 5px 0px 5px 5px;
 	padding: 5px;
 }
-div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div button{
+
+div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div button
+	{
 	background-color: #008526;
 	float: right;
 	color: #ffffff;
@@ -81,63 +98,94 @@ div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div butt
 }
 
 /* 회원 등록 */
-.modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper .schedule-input{
+.modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper .schedule-input
+	{
 	width: 60px !important;
-    height: 35px !important;
-    margin-left: 5px;
+	height: 35px !important;
+	margin-left: 5px;
 }
-.modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper{
+
+.modal-wrapper .modal-content .search-result div.user .schedule-input-wrapper
+	{
 	margin-top: 20px !important;
 }
-.modal-wrapper .modal-content .search-result p.errMsg, p.defaultMsg{
+
+.modal-wrapper .modal-content .search-result p.errMsg, p.defaultMsg {
 	float: left;
 	margin: 30px 0px 0px 45px;
 }
 
 /* 인바디 모달 */
-div.inbody_record{
-    float: left;
+div.inbody_record {
+	float: left;
 }
+
 div.graph {
-    float: right;
-    background-color: #aaaaaa;
-    width: 500px;
-    height: 400px;
+	float: right;
+	background-color: #aaaaaa;
+	width: 500px;
+	height: 400px;
 }
-div.inbody-wrapper div.inbody_record table tr th{
-    width: 100px;
-    height: 50px;
-    text-align: right;
-    font-weight: 600;
+
+div.inbody-wrapper div.inbody_record table tr th {
+	width: 100px;
+	height: 50px;
+	text-align: right;
+	font-weight: 600;
 }
-div.inbody-wrapper div.inbody_record table tr td input{
-    width: 100px;
-    height: 35px;
+
+div.inbody-wrapper div.inbody_record table tr td input {
+	width: 100px;
+	height: 35px;
 }
-div.inbody-wrapper div.inbody_record table tr td{
+
+div.inbody-wrapper div.inbody_record table tr td {
 	padding-left: 15px;
 }
-div.inbody-wrapper div.inbody_record table{
-    margin: 50px 0px 0px 22px;
-}
-div.inbody-wrapper div.inbody_record{
-    width: 250px;
-    height: 400px;
-    position: relative;
-}
-div.inbody-wrapper div.inbody_record button{
-    position: absolute;
-    bottom: 10px;
-    right: -10px;
 
+div.inbody-wrapper div.inbody_record table {
+	margin: 50px 0px 0px 22px;
 }
-form#editProfileForm .main-info .main-info-wrapper.secDiv,
-form#editProfileForm .info-wrapper .info.secDiv{
+
+div.inbody-wrapper div.inbody_record {
+	width: 250px;
+	height: 400px;
+	position: relative;
+}
+
+div.inbody-wrapper div.inbody_record button {
+	position: absolute;
+	bottom: 10px;
+	right: -10px;
+}
+
+form#editProfileForm .main-info .main-info-wrapper.secDiv, form#editProfileForm .info-wrapper .info.secDiv
+	{
 	width: 35%;
 }
 
+#userInfoModal .modal-content .profile-wrapper div.extendForm {
+	width: 250px;
+	position: absolute;
+	bottom: 150px;
+	right: 35px;
+}
+
+#userInfoModal .modal-content .profile-wrapper #showAddCount,
+	#btnAddCount {
+	width: 70px;
+	position: absolute;
+	bottom: 165px;
+	right: 35px;
+}
+
+#userInfoModal .modal-content .profile-wrapper div.extendForm input {
+	width: 50px;
+	display: inline-block;
+}
+
 #canvas {
-    float: left;
+	float: left;
 }
 /* 일반회원 인바디 보기 */
 .wrapper {
@@ -151,8 +199,9 @@ form#editProfileForm .info-wrapper .info.secDiv{
 	font-size: 25px;
 	padding-bottom: 35px;
 }
-.content-wrapper{
-    height: 550px;
+
+.content-wrapper {
+	height: 550px;
 }
 /* 선택 박스 스타일 */
 .box_color {
@@ -162,13 +211,15 @@ form#editProfileForm .info-wrapper .info.secDiv{
 	height: 450px;
 	padding: 10px;
 	line-height: 180%;
-    text-align: center;
-    float: left;
+	text-align: center;
+	float: left;
 }
-.box_color div{
-    height: 400px;
-    overflow: auto;
+
+.box_color div {
+	height: 400px;
+	overflow: auto;
 }
+
 .box_color div ol li:hover {
 	background-color: #979dac;
 	cursor: pointer;
@@ -193,38 +244,45 @@ form#editProfileForm .info-wrapper .info.secDiv{
 	border-radius: 3px;
 	background-color: #292c33;
 }
-div.tableBox{
-    margin: 1px 0px 0px 50px;
-    width: 200px;
+
+div.tableBox {
+	margin: 1px 40px 0px 40px;
+	width: 200px;
 	height: 450px;
-    padding: 10px;
-    text-align: center;
-    float: left;
+	padding: 10px;
+	text-align: center;
+	float: left;
 }
-div.graphBox{
-    width: 500px;
-    height: 400px;
-    background-color: #aaaaaa;
-    margin: 30px 0px 0px 50px;
-    float: left;
+
+div.graphBox {
+	width: 500px;
+	height: 400px;
+	background-color: #aaaaaa;
+	margin: 30px 0px 0px 50px;
+	float: left;
 }
-div.content-wrapper table{
-    margin-top: 80px;
+
+div.content-wrapper table {
+	margin-top: 80px;
 }
-div.content-wrapper table tr th{
-    width: 100px;
-    height: 50px;
-    text-align: right;
-    font-weight: 600;
+
+div.content-wrapper table tr th {
+	width: 100px;
+	height: 50px;
+	text-align: right;
+	font-weight: 600;
 }
-div.content-wrapper table tr td input{
-    width: 100px;
-    height: 35px;
+
+div.content-wrapper table tr td input {
+	width: 100px;
+	height: 35px;
 }
-div.content-wrapper table tr td{
-    padding-left: 15px;
-    text-align: left;
+
+div.content-wrapper table tr td {
+	padding-left: 15px;
+	text-align: left;
 }
+
 .tableBox p {
 	line-height: 200%;
 	font-weight: 600;
