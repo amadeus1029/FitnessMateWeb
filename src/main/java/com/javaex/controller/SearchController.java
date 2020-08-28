@@ -96,9 +96,10 @@ public class SearchController {
 	// 리뷰목록 불러오기
 	@ResponseBody
 	@RequestMapping("/search/reviewList")
-	public List<Object> reviewList() {
+	public List<Object> reviewList(@RequestParam("no") int no) {
 		System.out.println("controller:/search/reviewList");
 
+		System.out.println("넘버"+no);
 		
 		return null;
 

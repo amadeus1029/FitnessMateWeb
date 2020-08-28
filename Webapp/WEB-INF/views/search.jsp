@@ -556,13 +556,31 @@
 	////////////////////////트레이너 모달 리뷰탭/////////////////////////////
 	
 	//리뷰리스트 불러오기
+	$(".label-btn.review-btn").on("click",function(){
+		
+		reviewList();
+		
+	});
+	
+	
+	
+	
+	
+	
+	
+	
 	function reviewList(){
+		
+		var reviewNo = $("#delNo").val();
+	    console.log("리뷰페이지 트레이너 넘버"+reviewNo);
+		
+		
 		$.ajax({
 
 			url : "${pageContext.request.contextPath }/search/reviewList",
 			type : "post",
 			//contentType : "application/json",
-			//data : {name: ”홍길동"},
+			data : {no: reviewNo},
 
 			dataType : "json",
 			success : function() {
