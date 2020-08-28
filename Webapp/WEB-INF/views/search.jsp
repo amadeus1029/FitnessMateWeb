@@ -210,7 +210,7 @@
                 <div class="label-tab review-wrapper">
 
 				<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
-					<c:if test="${!empty authUser }">
+					
                     <div class="reviewWrite">
                         <span>리뷰작성</span>
                         
@@ -228,71 +228,20 @@
                         </div>
                         <button class="button revW" type="submit">작성</button>
                     </div>
-					</c:if>
+					
 					<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
 
                     <ul class="review-list">
-                        <li class="review-line">
-
-
-                            <div class="user-profile ff">
-
-                                <img class="user-profile-img" src='${pageContext.request.contextPath}/assets/image/unnamed.jpg'>
-
-                                <div class="user-profile-info">
-                                    <div class="user-profile-name">김**</div>
-                                    <div class="user-profile-date">운동기간- n개월</div>
-                                    <div class="user-profile-date">2020-08-11</div>
-                                </div>
-                                <div class="user-profile-star fd">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-
-                            </div>
-
-                            <div class="box">
-                                <div class="content">여긴 리뷰내용 쓰는 곳입니다.
-                                    리뷰내용은 쏼라쏼라쏼라입니다.<br>
-                                    가나다라마바사아자차카타파하아야어여오요우유 으이~
-                                </div>
-                            </div>
-
-                            <img class="review-imgSize" onclick="showModal('#testModal')"
-                                 src='${pageContext.request.contextPath}/assets/image/unnamed.jpg'>
-                            <img class="review-imgSize" onclick="showModal('#testModal')"
-                                 src='${pageContext.request.contextPath}/assets/image/main-test-02.jpg'>
-                            <img class="review-imgSize" onclick="showModal('#testModal')"
-                                 src='${pageContext.request.contextPath}/assets/image/review-test2.jpg'>
-                                 
-                         
-                            <div class="clearfix review-btn-area">
-                               <!--리뷰쓴 사람에게만 보임 -->   
-                              
-                                <button type="button" class="button">삭제</button>
-                                <button type="button" class="button">수정</button>
-                              
-                               <!--리뷰쓴 사람에게만 보임 -->   
-                               <!--트레이너 본인에게만 보임 -->  
-                                <button type="button" class="button">삭제</button>
-                                <button type="button" class="button">답글</button> 
-                               <!--트레이너 본인에게만 보임 -->   
-                                 
-                            </div>
-                            
-                        </li>
-                       
+                     	<span>아직 작성된 리뷰가 없습니다.</span>	
                     </ul>
                 </div> <!-- 리뷰작성페이지 -->
                 
+                <!-- 지도 페이지 -->
                 <div class="label-tab location-wrapper">
                 	<div id="mapInfo"></div><br>
                 	<div id="map" style="width:800px;height:500px;" ></div>
-                	
                 </div>
+                <!-- 지도 페이지 -->
                 
             </div>
         </div>
@@ -328,7 +277,7 @@
 			success : function(userVo) {
 				/*성공시 처리해야될 코드 작성*/
 				$("ul.search-list").empty();
-				console.log(userVo);
+				
 				var userStr = "";
 				
 				for (var i in userVo ) {
@@ -583,8 +532,43 @@
 			data : {no: reviewNo},
 
 			dataType : "json",
-			success : function() {
+			success : function(reviewVo) {
+				console.log("성공");
 				
+				$("ul.review-list").empty();
+				var reviewStr = "";
+				
+				for (var i in reviewVo ) {
+					console.log(reviewVo[i]);
+					
+					reviewStr += '<li class="review-line">';
+					reviewStr += '  <div class="user-profile ff">';
+					reviewStr += '    <img class="user-profile-img" src="${pageContext.request.contextPath}/assets/image/unnamed.jpg">';
+					reviewStr += '    <div class="user-profile-info">';
+					reviewStr += '      <div class="user-profile-name">'+reviewVo[i].name+'</div>';
+					reviewStr += '      <div class="user-profile-date">트레이닝- '+reviewVo[i].scheduleCount+'회차</div>';
+					reviewStr += '      <div class="user-profile-date">'+reviewVo[i].regDate+'</div>';
+					reviewStr += '    </div>';
+					reviewStr += '    <div class="user-profile-star fd">'+reviewVo[i].score+'</div>';
+					reviewStr += '  </div>';
+					reviewStr += '  <div class="box">';
+					reviewStr += '    <div class="content">'+reviewVo[i].content+'</div>';
+					reviewStr += '  </div>';
+					reviewStr += '  <div class="clearfix review-btn-area">';
+					
+					
+					reviewStr += '      <button type="button" class="button">삭제</button>';
+					reviewStr += '      <button type="button" class="button">수정</button>';
+					
+					reviewStr += '      <button type="button" class="button">삭제</button>';
+					reviewStr += '      <button type="button" class="button">답글</button> ';
+					
+					
+					reviewStr += '  </div>';
+					reviewStr += ' </li>';
+					
+				}
+				$("ul.review-list").append(reviewStr);
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);

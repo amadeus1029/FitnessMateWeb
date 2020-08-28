@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.AddressVo;
 import com.javaex.vo.InterestFieldVo;
+import com.javaex.vo.ReviewVo;
 import com.javaex.vo.UserVo;
 
 @Repository
@@ -94,8 +95,23 @@ public class SearchDao {
 	}
 
 	public List<Object> userRecord(int no) {
+		
+		
 		List<Object> uVo = sqlSession.selectList("search.readCareer",no);
+		
 		return uVo;
+	}
+	
+	///////////////////////////////////////////////////////
+
+	public List<ReviewVo> reviewList(int no) {
+		System.out.println("searchDao:reviewList");
+		
+		System.out.println("다오"+no);
+		List<ReviewVo> reviewVo = sqlSession.selectList("review.reviewList", no);
+		System.out.println("다오: "+reviewVo);
+		
+		return reviewVo;
 	}
 
 	

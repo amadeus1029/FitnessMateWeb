@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="review">
+
+	
+	
+	<!--리뷰 목록 불러오기 -->
+	<select id="reviewList" parameterType="int"
+	resultType="com.javaex.vo.ReviewVo">
+	<![CDATA[
+	SELECT r.reviewno,r.ptno,r.regdate,r.score,r.content,
+		    p.userno,p.trainerno,s.schedulecount,u.name
+		FROM review r,pt p,(SELECT ptNo, COUNT(scheduleNo) scheduleCount
+					            FROM schedule
+					            group by ptNo)s,users u
+		where r.ptno = p.ptno
+		and p.ptno = s.ptno
+		and u.userno = p.userno
+		and p.trainerno= #{no}
+	]]>
+	</select>
+	
+
+	
+	
+</mapper>

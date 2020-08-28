@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.SearchService;
+import com.javaex.vo.ReviewVo;
 import com.javaex.vo.UserVo;
 
 @Controller
@@ -96,12 +97,13 @@ public class SearchController {
 	// 리뷰목록 불러오기
 	@ResponseBody
 	@RequestMapping("/search/reviewList")
-	public List<Object> reviewList(@RequestParam("no") int no) {
+	public List<ReviewVo> reviewList(@RequestParam("no") int no) {
 		System.out.println("controller:/search/reviewList");
 
 		System.out.println("넘버"+no);
+		List<ReviewVo> reviewVo = searchService.reviewList(no);
 		
-		return null;
+		return reviewVo;
 
 	}
 	
