@@ -77,7 +77,6 @@
                     <div class="info">
                         <h3 class="title">생년월일</h3>
                         <select name="birth">
-                            <option>년도</option>
                             <c:forEach var="year" begin="1960" end="2020" step="1">
                                 <option value="${year}"
                                         <c:if test="${year eq profile.splitBirthDate[0]}">
@@ -87,7 +86,6 @@
                                 </option>
                             </c:forEach>
                         </select> <select name="birth">
-                            <option>월</option>
                             <c:forEach var="month" begin="1" end="12" step="1">
                             <option value="${month}"
                                     <c:if test="${month eq profile.splitBirthDate[1]}">
@@ -98,7 +96,6 @@
                         </c:forEach>
                         </select>
                         <select name="birth">
-                            <option>일</option>
                             <c:forEach var="date" begin="1" end="31" step="1">
                                 <option value="${date}"
                                         <c:if test="${date eq profile.splitBirthDate[2]}">
@@ -109,21 +106,24 @@
                             </c:forEach>
                         </select>
                     </div>
+                    
                     <div class="info">
                         <c:choose>
                             <c:when test="${authUser.userType eq 'trainer'}">
                                 <h3 class="title">트레이너 경력</h3>
-                                <input type="number" name="career"
+                                <input type="number" name="career" min="0"
                                        value="${profile.userVo.career}">
                             </c:when>
                             <c:otherwise>
                                 <h3 class="title">운동 경력</h3>
-                                <input type="number" name="career"
+                                <input type="number" name="career" min="0"
                                        value="${profile.userVo.career}">
                             </c:otherwise>
                         </c:choose>
                     </div>
+                    
                 </div>
+                
                 <c:choose>
                     <c:when test="${authUser.userType eq 'trainer'}">
                         <div class="info-wrapper clearfix">
@@ -206,23 +206,6 @@
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <div class="category-info">
-                            <h3 class="title">관심분야</h3>
-                            <div class="checkboxPart">
-                                <c:forEach items="${profile.interestList}" var="interest">
-                                    <input type="checkbox" id="interest-${interest.fieldNo}"
-                                           value="${interest.fieldNo}" name="fieldNo"
-                                    <c:forEach items="${profile.userInterest}" var="userInterest">
-                                    <c:if test="${interest.fieldName eq userInterest}">
-                                           checked
-                                    </c:if>
-                                    </c:forEach>>
-                                    <!-- input닫는괄호 -->
-                                    <label for="interest-${interest.fieldNo}"
-                                           class="button-label">${interest.fieldName}</label>
-                                </c:forEach>
-                            </div>
-                        </div>
                         <div class="comment-wrapper">
                             <h3 class="title">프로필 메세지</h3>
                             <textarea class="content" name="introduction">${profile.userVo.introduction}</textarea>
@@ -231,6 +214,7 @@
                 </c:choose>
 
                 <input type="hidden" name="userNo" value="${authUser.userNo}">
+                <input type="hidden" name="userType" value="${authUser.userType}">
                 <button type="submit" class="button main">저장하기</button>
             </form>
         </div>
@@ -239,6 +223,17 @@
 </body>
 
 <script type="text/javascript">
+	$("button[type='submit'].main").on("click", function(){
+		console.log($("input[name='career']").val());
+		
+		if($("input[name='career']").val() == ""){
+			alert("경력 란이 비어있어요!");
+			return false;
+		}
+		
+		alert("프로필이 수정되었습니다.");
+	});
+
     // + 눌렀을 때 수상내역 추가
     $(".fa-plus-square")
         .on(
@@ -266,7 +261,7 @@
 
         $.ajax({
 
-            url: "${pageContext.request.contextPath}/api/deleteCareer",
+            url: "${pageContext.request.contextPath}/mypage/deleteCareer",
             type: "post",
             data: {
                 careerNo: careerNo
@@ -314,7 +309,7 @@
 
         $.ajax({
 
-            url: "${pageContext.request.contextPath}/api/getCity",
+            url: "${pageContext.request.contextPath}/user/getCity",
             type: "post",
             data: {
                 thisProvince: thisProvince
@@ -344,7 +339,7 @@
 
         $.ajax({
 
-            url: "${pageContext.request.contextPath}/api/getRegion",
+            url: "${pageContext.request.contextPath}/user/getRegion",
             type: "post",
             data: {
                 thisCity: thisCity

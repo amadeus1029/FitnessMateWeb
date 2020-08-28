@@ -81,21 +81,33 @@
 		<![CDATA[
 		
 			UPDATE users
-			SET introduction = #{introduction},
+			SET name = #{name},
+				phone = #{phone},
+				gender = #{gender},
+			    birthDate = #{birthDate},
 			    career = #{career},
 			    location = #{location},
 			    company = #{company},
+				introduction = #{introduction},
 			    price = #{price}
-		]]>
-		
-		<if test = 'birthDate != ""'>
-			<![CDATA[
-			   , birthDate = #{birthDate}
-			]]>
-		</if>
-		
-		<![CDATA[
 			WHERE userNo = #{userNo}
+			
+		]]>
+	</update>
+	
+	<!-- 일반유저 정보 수정 -->
+	<update id="updateUserInfo" parameterType="com.javaex.vo.UserVo">
+		<![CDATA[
+		
+			UPDATE users
+			SET name = #{name},
+				phone = #{phone},
+				gender = #{gender},
+			    birthDate = #{birthDate},
+			    career = #{career},
+				introduction = #{introduction}
+			WHERE userNo = #{userNo}
+			
 		]]>
 	</update>
 	

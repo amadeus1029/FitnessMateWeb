@@ -121,7 +121,7 @@ div.inbody-wrapper div.inbody_record table{
     margin: 50px 0px 0px 22px;
 }
 div.inbody-wrapper div.inbody_record{
-    width: 290px;
+    width: 250px;
     height: 400px;
     position: relative;
 }
@@ -134,4 +134,102 @@ div.inbody-wrapper div.inbody_record button{
 form#editProfileForm .main-info .main-info-wrapper.secDiv,
 form#editProfileForm .info-wrapper .info.secDiv{
 	width: 35%;
+}
+
+#canvas {
+    float: left;
+}
+/* 일반회원 인바디 보기 */
+.wrapper {
+	padding-left: 150px;
+	position: relative;
+	margin-bottom: 50px;
+}
+
+.wrapper>p {
+	font-weight: 600;
+	font-size: 25px;
+	padding-bottom: 35px;
+}
+.content-wrapper{
+    height: 550px;
+}
+/* 선택 박스 스타일 */
+.box_color {
+	border: 1px solid #292c33;
+	border-radius: 10PX;
+	width: 200px;
+	height: 450px;
+	padding: 10px;
+	line-height: 180%;
+    text-align: center;
+    float: left;
+}
+.box_color div{
+    height: 400px;
+    overflow: auto;
+}
+.box_color div ol li:hover {
+	background-color: #979dac;
+	cursor: pointer;
+}
+/* 선택박스 헤더 스타일 */
+.box_color p {
+	line-height: 200%;
+	font-weight: 600;
+	font-size: 18px;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #292c33;
+}
+/* 스크롤 css */
+::-webkit-scrollbar {
+	width: 5px;
+	border-radius: 3px;
+	background-color: #979dac;
+}
+
+::-webkit-scrollbar-thumb {
+	border-radius: 3px;
+	background-color: #292c33;
+}
+div.tableBox{
+    margin: 1px 0px 0px 50px;
+    width: 200px;
+	height: 450px;
+    padding: 10px;
+    text-align: center;
+    float: left;
+}
+div.graphBox{
+    width: 500px;
+    height: 400px;
+    background-color: #aaaaaa;
+    margin: 30px 0px 0px 50px;
+    float: left;
+}
+div.content-wrapper table{
+    margin-top: 80px;
+}
+div.content-wrapper table tr th{
+    width: 100px;
+    height: 50px;
+    text-align: right;
+    font-weight: 600;
+}
+div.content-wrapper table tr td input{
+    width: 100px;
+    height: 35px;
+}
+div.content-wrapper table tr td{
+    padding-left: 15px;
+    text-align: left;
+}
+.tableBox p {
+	line-height: 200%;
+	font-weight: 600;
+	font-size: 18px;
+	padding-bottom: 5px;
+	margin-bottom: 13px;
+	border-bottom: 1px solid #292c33;
 }

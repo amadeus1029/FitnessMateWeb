@@ -69,13 +69,13 @@ public class UserController {
     @RequestMapping("/signUpComplete")
     public String signUpComplete(@ModelAttribute UserVo vo,
     							@ModelAttribute AddressVo address,
-    							@RequestParam("fieldNo") List<Integer> fieldList,
+    							@RequestParam("fieldNo") List<String> fieldList,
     							@RequestParam("careerRecord") List<String> careerList,
     							@RequestParam("birth") List<String> birthList,
     							Model model) {
     	System.out.println("/signUpComplete");
     	
-    	userService.signUpTrainer(vo, address, fieldList, careerList, birthList);
+    	userService.updateProfile(vo, address, fieldList, careerList, birthList);
     	
     	model.addAttribute("vo", vo);
     	

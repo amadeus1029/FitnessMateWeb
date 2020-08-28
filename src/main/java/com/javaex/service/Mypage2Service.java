@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.javaex.dao.RecordDao;
+import com.javaex.vo.RecordVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,9 @@ public class Mypage2Service {
 	
 	@Autowired
 	private PtDao ptDao;
+
+	@Autowired
+	private RecordDao recordDao;
 	
 	public List<PtVo> getTraineeList(int trainerNo) {
 		System.out.println("service 트레이니 리스트 받아오기");
@@ -48,6 +53,8 @@ public class Mypage2Service {
 		PtVo ptVo = ptDao.selectPtInfo(ptNo);
 		
 		List<InbodyVo> inbodyList = ptDao.selectInbodyList(ptNo);
+		List<RecordVo> recordList = recordDao.getRecordList(ptNo);
+		System.out.println(recordList);
 		
 		//오늘 날짜
 		int today = getToday();
@@ -65,6 +72,7 @@ public class Mypage2Service {
 		Map<String, Object> userInfo = new HashMap<>();
 		userInfo.put("ptInfo", ptVo); //ptInfo
 		userInfo.put("inbodyList", inbodyList);
+		userInfo.put("recordList", recordList);
 		
 		return userInfo;
 	}
@@ -72,9 +80,7 @@ public class Mypage2Service {
 	public UserVo getUserInfo(String keyword) {
 		System.out.println("service 회원 검색");
 		
-		UserVo userVo = ptDao.selectUserInfo(keyword);
-		
-		return userVo;
+		return ptDao.selectUserInfo(keyword);
 	}
 	
 	public void addPt(int userNo, int period, int regCount, int trainerNo) {
@@ -127,6 +133,16 @@ public class Mypage2Service {
 		extendMap.put("extendCount", extendCount);
 		
 		ptDao.updatePt(extendMap);
+	}
+	
+	public Map<String, Object> getUserInbodyList(int userNo) {
+		System.out.println("service 개인회원 인바디리스트");
+		
+		Map<String, Object> inbodyInfo = new HashMap<>();
+		inbodyInfo.put("inbodyList", ptDao.selectUserInbodyList(userNo));
+		inbodyInfo.put("recentInbody", ptDao.selectRecentInbody(userNo));
+		
+		return inbodyInfo;
 	}
 
 	

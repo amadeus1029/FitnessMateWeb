@@ -25,7 +25,7 @@
                             <a href="${pageContext.request.contextPath}/mypage/schedule" class="button sub">마이페이지</a>
                         </c:when>
                         <c:otherwise>
-                            <a href="${pageContext.request.contextPath}/mypage/profile" class="button sub">마이페이지</a>
+                            <a href="${pageContext.request.contextPath}/mypage2/inbodyRecord" class="button sub">마이페이지</a>
                         </c:otherwise>
                     </c:choose>
                 </c:otherwise>
@@ -48,7 +48,7 @@
                   	</colgroup>
                     <tr>
                         <th><label for="userId">아이디</label></th>
-                        <td><input id="userId" type="text" name="id" value="trainer01"></td>
+                        <td><input id="userId" type="text" name="id" value="id03"></td>
                     </tr>
                     <tr>
                         <th><label for="userPw">패스워드</label></th>

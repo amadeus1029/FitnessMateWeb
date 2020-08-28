@@ -10,4 +10,16 @@
             ]]>
         </foreach>
     </insert>
+    <select id="getList" parameterType="int" resultType="RecordVo">
+        <![CDATA[
+            select  exp.partname as exPart,
+                    e.exercisename as exName,
+                    r.amount as amount,
+                    e.unit as unit,
+                    r.count as count
+            from    pt p, schedule s, records r, exercise e, ex_part exp
+            where   p.ptno = #{ptNo} and p.ptno = s.ptno and s.scheduleno = r.scheduleno and r.exerciseno = e.exerciseno and e.exercisepart = exp.partno
+            order by r.recordNo asc
+        ]]>
+    </select>
 </mapper>

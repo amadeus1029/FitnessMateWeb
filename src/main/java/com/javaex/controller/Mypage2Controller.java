@@ -25,7 +25,7 @@ public class Mypage2Controller {
 	
     @RequestMapping("/manageUser")
     public String ManageUser(HttpSession session, Model model) {
-    	System.out.println("마이페이지 컨트롤러");
+    	System.out.println("마이페이지 컨트롤러 회원가져오기");
     	
         UserVo user = (UserVo) session.getAttribute("authUser");
         List<PtVo> ptList = mypageService.getTraineeList(user.getUserNo());
@@ -40,6 +40,18 @@ public class Mypage2Controller {
         }
         return "mypage/manageUser";
     }
+    
+    @RequestMapping("/inbodyRecord")
+    public String inbodyRecord(HttpSession session, Model model) {
+    	System.out.println("마이페이지 인바디보기");
+    	UserVo user = (UserVo) session.getAttribute("authUser");
+    	
+    	Map<String, Object> inbodyInfo= mypageService.getUserInbodyList(user.getUserNo());
+    	model.addAttribute("inbodyInfo", inbodyInfo);
+
+        return "mypage/userInbodyView";
+    }
+    
     
     //API
     @ResponseBody

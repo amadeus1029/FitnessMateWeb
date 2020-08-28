@@ -171,7 +171,8 @@
                 data: JSON.stringify(recordArray),
                 dataType: "json",
                 success: function (result) {
-
+                    alert("저장되었습니다!");
+                    window.location.href = '${pageContext.request.contextPath}/mypage/schedule';
                 },
                 error: function (XHR, status, error) {
                     console.error(status + ":" + error);

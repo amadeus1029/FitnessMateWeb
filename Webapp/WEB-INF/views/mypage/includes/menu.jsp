@@ -53,9 +53,18 @@
 </div>
 <div class="menu-wrapper">
     <ul class="menu clearfix">
-        <li><a href="${pageContext.request.contextPath}/mypage/schedule">스케쥴</a></li>
-        <li><a href="${pageContext.request.contextPath}/mypage/manageExercise">운동 관리</a></li>
-        <li><a href="${pageContext.request.contextPath}/mypage2/manageUser">회원 관리</a></li>
-        <li><a href="${pageContext.request.contextPath}/mypage/profile">프로필 수정</a></li>
+    	<c:choose>
+    		<c:when test="${authUser.userType eq 'trainer'}">
+		        <li><a href="${pageContext.request.contextPath}/mypage/schedule">스케쥴</a></li>
+		        <li><a href="${pageContext.request.contextPath}/mypage/manageExercise">운동 관리</a></li>
+		        <li><a href="${pageContext.request.contextPath}/mypage2/manageUser">회원 관리</a></li>
+		        <li><a href="${pageContext.request.contextPath}/mypage/profile">프로필 수정</a></li>
+    		</c:when>
+    		<c:otherwise>
+		        <li><a href="${pageContext.request.contextPath}/mypage2/exerciseRecord">운동기록</a></li>
+		        <li><a href="${pageContext.request.contextPath}/mypage2/inbodyRecord">인바디내역</a></li>
+		        <li><a href="${pageContext.request.contextPath}/mypage/profile">프로필 수정</a></li>
+    		</c:otherwise>
+   		</c:choose>
     </ul>
 </div>
