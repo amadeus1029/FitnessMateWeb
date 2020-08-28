@@ -210,7 +210,7 @@
                 <div class="label-tab review-wrapper">
 
 				<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
-				
+					<c:if test="${!empty authUser }">
                     <div class="reviewWrite">
                         <span>리뷰작성</span>
                         
@@ -228,7 +228,7 @@
                         </div>
                         <button class="button revW" type="submit">작성</button>
                     </div>
-					
+					</c:if>
 					<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
 
                     <ul class="review-list">
@@ -267,43 +267,24 @@
                                  src='${pageContext.request.contextPath}/assets/image/main-test-02.jpg'>
                             <img class="review-imgSize" onclick="showModal('#testModal')"
                                  src='${pageContext.request.contextPath}/assets/image/review-test2.jpg'>
+                                 
+                         
                             <div class="clearfix review-btn-area">
+                               <!--리뷰쓴 사람에게만 보임 -->   
+                              
                                 <button type="button" class="button">삭제</button>
                                 <button type="button" class="button">수정</button>
-                            </div>
-                        </li>
-                        <li class="review-line">
-
-                            <div class="user-profile ff">
-
-                                <img class="user-profile-img" src='${pageContext.request.contextPath}/assets/image/review-test2.jpg'>
-
-                                <div class="user-profile-info">
-                                    <div class="user-profile-name">이**</div>
-                                    <div class="user-profile-date">운동기간- n개월</div>
-                                    <div class="user-profile-date">2020-08-11</div>
-                                </div>
-                                <div class="user-profile-star fd" >
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                            </div>
-
-                            <div class="box">
-                                <div class="content">여긴 리뷰내용 쓰는 곳입니다.
-                                    리뷰내용은 쏼라쏼라쏼라입니다.<br>
-                                    이 트레이너분 맨날 하나만 더라면서 열 번 더시킵니다.<br>
-                                    완전 사기꾼이예요.
-                                </div>
-                            </div>
-                            <div class="clearfix review-btn-area">
+                              
+                               <!--리뷰쓴 사람에게만 보임 -->   
+                               <!--트레이너 본인에게만 보임 -->  
                                 <button type="button" class="button">삭제</button>
-                                <button type="button" class="button">수정</button>
+                                <button type="button" class="button">답글</button> 
+                               <!--트레이너 본인에게만 보임 -->   
+                                 
                             </div>
+                            
                         </li>
+                       
                     </ul>
                 </div> <!-- 리뷰작성페이지 -->
                 
@@ -448,7 +429,6 @@
     	 $("#profileModal .label-tab").removeClass("on");
     	 $("#profileModal .profile-wrapper").addClass("on");
     	 
-    	 
             
           //데이터전송
         	$.ajax({
@@ -574,6 +554,32 @@
 	////////////////////////트레이너 모달 세부정보탭/////////////////////////////
 	  
 	////////////////////////트레이너 모달 리뷰탭/////////////////////////////
+	
+	//리뷰리스트 불러오기
+	function reviewList(){
+		$.ajax({
+
+			url : "${pageContext.request.contextPath }/search/reviewList",
+			type : "post",
+			//contentType : "application/json",
+			//data : {name: ”홍길동"},
+
+			dataType : "json",
+			success : function() {
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+		
+		
+	}
+	
+	
+	
+	
         function showTab(target) {
             var targetTab = target.attr("data-tab");
 

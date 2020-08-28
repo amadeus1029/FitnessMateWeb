@@ -17,6 +17,7 @@ public class SearchController {
 	@Autowired
 	private SearchService searchService;
 	
+	//검색 /////////////////////////////////////////////////////////////////////////
 	//검색하기
 	@ResponseBody
 	@RequestMapping("/search/results")
@@ -55,7 +56,7 @@ public class SearchController {
 		return reg;
 	}
 	
-	///////////////////////////////////////////////////////////////////////////
+	//트레이너 정보 불러오기/////////////////////////////////////////////////////////////////////////
 	
 	// 트레이너 세부정보 불러오기
 	@ResponseBody
@@ -90,5 +91,18 @@ public class SearchController {
 		return uVo;
 
 	}
+	
+	//리뷰정보 불러오기/////////////////////////////////////////////////////////////////////////
+	// 리뷰목록 불러오기
+	@ResponseBody
+	@RequestMapping("/search/reviewList")
+	public List<Object> reviewList() {
+		System.out.println("controller:/search/reviewList");
+
+		
+		return null;
+
+	}
+	
 	
 }
