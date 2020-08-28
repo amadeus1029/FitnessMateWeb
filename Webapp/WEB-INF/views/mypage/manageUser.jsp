@@ -521,7 +521,7 @@
 
                     //인바디 날짜 리스트
                     var dateList = '<option value="0">인바디 입력하기</option>';
-                    for (var inbody in userInfo.inbodyList) {
+                    for (var inbody of userInfo.inbodyList) {
                         dateList += '<option value="' + inbody.inbodyNo + '">' + inbody.measureDate + '</option>';
                     }
 

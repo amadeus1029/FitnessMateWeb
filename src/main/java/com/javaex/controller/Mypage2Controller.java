@@ -112,9 +112,6 @@ public class Mypage2Controller {
     @RequestMapping("/extendPt")
     public Map<String, Object> extendPt(int ptNo, int extendMonth, int extendCount) {
     	System.out.println("마이페이지 컨트롤러 pt추가");
-    	System.out.println("ptNo : "+ ptNo);
-    	System.out.println("extendMonth : "+ extendMonth);
-    	System.out.println("extendCount : "+ extendCount);
     	
     	mypageService.extendPt(ptNo, extendMonth, extendCount);
     	

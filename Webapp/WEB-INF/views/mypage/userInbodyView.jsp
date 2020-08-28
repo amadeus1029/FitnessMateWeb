@@ -106,16 +106,15 @@
 		var bmiArr = [];
 		var labelArr = [];
 		
-		<c:forEach items="${inbodyInfo.inbodyList}" var="inbody">
+		<c:forEach items="${inbodyInfo.inbodyList}" var="graphInfo">
 		 
-			weightArr.push("${inbody.weight}");
-			muscleMassArr.push("${inbody.muscleMass}");
-			percentFatArr.push("${inbody.percentFat}");
-			bmiArr.push("${inbody.bmi}");
-			labelArr.push("${inbody.measureDate}");
+			weightArr.push("${graphInfo.weight}");
+			muscleMassArr.push("${graphInfo.muscleMass}");
+			percentFatArr.push("${graphInfo.percentFat}");
+			bmiArr.push("${graphInfo.bmi}");
+			labelArr.push("${graphInfo.measureDate}");
 	 
 		</c:forEach>
-		
 
 		var lineChartData = {
 			labels : labelArr,

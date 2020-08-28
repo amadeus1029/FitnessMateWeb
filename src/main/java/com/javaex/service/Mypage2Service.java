@@ -53,8 +53,8 @@ public class Mypage2Service {
 		PtVo ptVo = ptDao.selectPtInfo(ptNo);
 		
 		List<InbodyVo> inbodyList = ptDao.selectInbodyList(ptNo);
+		System.out.println(inbodyList);
 		List<RecordVo> recordList = recordDao.getRecordList(ptNo);
-		System.out.println(recordList);
 		
 		//오늘 날짜
 		int today = getToday();
