@@ -560,14 +560,14 @@
 					reviewStr += '  </div>';
 					reviewStr += '  <div class="clearfix review-btn-area">';
 					
-					if(${authUser.userNo} == review.userNo ){
+					
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">수정</button>';
-					}
-					if(${authUser.userNo} == review.trainerNo ){
+					
+					
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">답글</button> ';
-					}
+					
 					
 					reviewStr += '  </div>';
 					reviewStr += ' </li>';
