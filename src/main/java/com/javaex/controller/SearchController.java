@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.SearchService;
+import com.javaex.vo.ReviewVo;
 import com.javaex.vo.UserVo;
 
 @Controller
@@ -17,6 +18,7 @@ public class SearchController {
 	@Autowired
 	private SearchService searchService;
 	
+	//검색 /////////////////////////////////////////////////////////////////////////
 	//검색하기
 	@ResponseBody
 	@RequestMapping("/search/results")
@@ -55,7 +57,7 @@ public class SearchController {
 		return reg;
 	}
 	
-	///////////////////////////////////////////////////////////////////////////
+	//트레이너 정보 불러오기/////////////////////////////////////////////////////////////////////////
 	
 	// 트레이너 세부정보 불러오기
 	@ResponseBody
@@ -90,5 +92,20 @@ public class SearchController {
 		return uVo;
 
 	}
+	
+	//리뷰정보 불러오기/////////////////////////////////////////////////////////////////////////
+	// 리뷰목록 불러오기
+	@ResponseBody
+	@RequestMapping("/search/reviewList")
+	public List<ReviewVo> reviewList(@RequestParam("no") int no) {
+		System.out.println("controller:/search/reviewList");
+
+		System.out.println("넘버"+no);
+		List<ReviewVo> reviewVo = searchService.reviewList(no);
+		
+		return reviewVo;
+
+	}
+	
 	
 }

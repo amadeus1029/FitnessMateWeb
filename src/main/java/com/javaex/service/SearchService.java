@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.javaex.dao.SearchDao;
 import com.javaex.vo.AddressVo;
 import com.javaex.vo.InterestFieldVo;
+import com.javaex.vo.ReviewVo;
 import com.javaex.vo.UserVo;
 
 @Service
@@ -128,6 +129,18 @@ public class SearchService {
 	public List<Object> recordInfo(int no) {
 		List<Object> uVo = searchDao.userRecord(no);
 		return uVo;
+	}
+	
+	
+	//////////////////////////////////////////////////////////
+	
+	//리뷰 목록 가져오기
+	public List<ReviewVo> reviewList(int no) {
+		System.out.println("SearchService:reviewList");
+		
+		System.out.println("서비스"+no);
+		List<ReviewVo> reviewVo = searchDao.reviewList(no);
+		return reviewVo;
 	}
 	
 	
