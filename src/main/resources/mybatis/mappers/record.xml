@@ -16,7 +16,9 @@
                     e.exercisename as exName,
                     r.amount as amount,
                     e.unit as unit,
-                    r.count as count
+                    r.count as count,
+                    r.scheduleNo as scheduleNo,
+                    s.startTime as recordDate
             from    pt p, schedule s, records r, exercise e, ex_part exp
             where   p.ptno = #{ptNo} and p.ptno = s.ptno and s.scheduleno = r.scheduleno and r.exerciseno = e.exerciseno and e.exercisepart = exp.partno
             order by r.recordNo asc

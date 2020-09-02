@@ -54,22 +54,24 @@
             </form>
 
             <ul class="user-list clearfix">
-            	<!-- 반복 -->
-            	<c:forEach items="${ptList}" var="pt">
-	                <li class="user clearfix ${pt.proceed eq true ? 'former off':'now'}" onclick="showUser(${pt.ptNo});">
-	                    <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
-	                    <p class="info">
-	                        <span class="name">${pt.name}</span>
-	                        <span class="id">${pt.userId}</span>
-	                    </p>
-	                </li>
+                <!-- 반복 -->
+                <c:forEach items="${ptList}" var="pt">
+                    <li class="user clearfix ${pt.proceed eq true ? 'former off':'now'}"
+                        onclick="showUser(${pt.ptNo});">
+                        <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image"
+                             title="profile image">
+                        <p class="info">
+                            <span class="name">${pt.name}</span>
+                            <span class="id">${pt.userId}</span>
+                        </p>
+                    </li>
                 </c:forEach>
                 <!-- 반복 끝 -->
             </ul>
         </div>
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
-    
+
     <div class="modal-layer" id="userInfoModal">
         <div class="modal-wrapper">
             <button type="button" class="close-btn" onclick="forceHideModal('#userInfoModal')">X</button>
@@ -98,14 +100,14 @@
 
                         <p class="label">· 등록기간</p>
                         <p id="period"></p>
-                        
+
                         <p class="label">· 사용횟수</p>
                         <p id="count"></p>
                         <div class="extendForm">
-                        	<input type="number" name="extendMonth" min="0">
-                        	<label>개월</label>
-                        	<input type="number" name="extendCount" min="0">
-                        	<label>회</label>
+                            <input type="number" name="extendMonth" min="0">
+                            <label>개월</label>
+                            <input type="number" name="extendCount" min="0">
+                            <label>회</label>
                         </div>
                         <button type="button" id="showAddCount">추가등록</button>
                         <p class="label">· 메모</p>
@@ -117,7 +119,7 @@
                     </div>
                 </div>
                 <div class="label-tab inbody-wrapper clearfix">
-                   	<div class="inbody_record">
+                    <div class="inbody_record">
                         <select name="inbodyDate">
 
                         </select>
@@ -126,25 +128,27 @@
                             <tr>
                                 <th>체중 (kg)</th>
                                 <td id="weight">
-                                	<input name="weight" type="number" max="200" min="0" step="0.1" placeholder="00.0">
+                                    <input name="weight" type="number" max="200" min="0" step="0.1" placeholder="00.0">
                                 </td>
                             </tr>
                             <tr>
                                 <th>체지방률 (%)</th>
                                 <td id="percentFat">
-                                	<input name="percentFat" type="number" max="200" min="0" step="0.1" placeholder="00.0">
+                                    <input name="percentFat" type="number" max="200" min="0" step="0.1"
+                                           placeholder="00.0">
                                 </td>
                             </tr>
                             <tr>
                                 <th>골격근량 (kg)</th>
                                 <td id="muscleMass">
-                                	<input name="muscleMass" type="number" max="200" min="0" step="0.1" placeholder="00.0">
+                                    <input name="muscleMass" type="number" max="200" min="0" step="0.1"
+                                           placeholder="00.0">
                                 </td>
                             </tr>
                             <tr>
                                 <th>BMI (kg/m²)</th>
                                 <td id="bmi">
-                                	<input name="bmi" type="number" max="200" min="0" step="0.1" placeholder="00.0">
+                                    <input name="bmi" type="number" max="200" min="0" step="0.1" placeholder="00.0">
                                 </td>
                             </tr>
                         </table>
@@ -156,7 +160,10 @@
                     </canvas>
                 </div>
                 <div class="label-tab exercise-wrapper">
-                    운동기록 내역이 들어옵니다
+                    <select name="recordDate">
+                    </select>
+                    <ul id="recordList" class="clearfix">
+                    </ul>
                 </div>
             </div>
         </div>
@@ -188,7 +195,7 @@
 
     <script type="text/javascript">
 
-    	//인바디 저장버튼 클릭
+        //인바디 저장버튼 클릭
         $("button.btnSave").on("click", function () {
 
             var ptNo = $(this).data("ptno");
@@ -216,11 +223,13 @@
                     //보낼 때 옵션
                     url: "${pageContext.request.contextPath}/mypage2/saveInbody",
                     type: "post",
-                    data: {ptNo: ptNo,
-	                       weight: weight,
-	                       percentFat: percentFat,
-	                       muscleMass: muscleMass,
-	                       bmi: bmi},
+                    data: {
+                        ptNo: ptNo,
+                        weight: weight,
+                        percentFat: percentFat,
+                        muscleMass: muscleMass,
+                        bmi: bmi
+                    },
 
                     //받을 때 옵션
                     dataType: "json",
@@ -278,7 +287,7 @@
                         $("input[name='percentFat']").css("disabled", false);
                         $("input[name='muscleMass']").css("disabled", false);
                         $("input[name='bmi']").css("disabled", false);
-                        
+
                         $("input[name='weight']").val(inbodyInfo.weight + " kg");
                         $("input[name='percentFat']").val(inbodyInfo.percentFat + " %");
                         $("input[name='muscleMass']").val(inbodyInfo.muscleMass + " kg");
@@ -293,159 +302,168 @@
             }//else 끝
         })
 
-		//pt횟수 추가 버튼 보이기
-    	$("button#showAddCount").on("click", function(){
+        //pt횟수 추가 버튼 보이기
+        $("button#showAddCount").on("click", function () {
             $(".extendForm").show();
             $(this).text("저장");
             $(this).attr("id", "btnAddCount");
             $(this).attr("onclick", "addCount();");
-    	});
-		
-		//pt횟수 추가 저장 버튼 누르면!
-		function addCount(){
-			console.log("asdfasdf");
-			var ptNo = $("input#modifyPtNo").val();
-			var extendMonth = $("input[name='extendMonth']").val();
-    		var extendCount = $("input[name='extendCount']").val();
-			
-			if( extendMonth == ""){
-    			alert("등록개월 란이 비어있어요");
-    			return false;
-    		} else if( extendCount == ""){
-    			alert("등록횟수 란이 비어있어요");
-    			return false;
-    		} else{
-    			
-    			//데이터 전송
-	    		$.ajax({
-	    			//보낼 때 옵션
-	    			url : "${pageContext.request.contextPath}/mypage2/extendPt",
-	    			type : "post",
-	    			data : {ptNo: ptNo,
-	    					extendMonth: extendMonth,
-	    					extendCount: extendCount},
-	    					
-	    			//받을 때 옵션
-	    			dataType : "json",
-	    			success : function(userInfo) {
-	    				
-	    				alert("PT가 추가 등록 되었습니다.");
-	    				
-	    				//userInfo 다시 넣기
-	    				$("#period").text("\u00A0 "+userInfo.ptInfo.startDate+" ~ "+userInfo.ptInfo.endDate);
-	    				$("#count").text("\u00A0 "+userInfo.ptInfo.scheduleCount+" / "+userInfo.ptInfo.regCount);
-	    				
-	    				//버튼 초기화
-	    	            $(".extendForm").hide();
-	    	            $("#btnAddCount").text("추가등록");
-	    	            $("#btnAddCount").attr("id", "showAddCount");
-	    	            $("#btnAddCount").attr("onclick", "");
-	    				
-	    			},
-	    			error : function(XHR, status, error) {
-	    				console.error(status + " : " + error);
-	    			}
-	    		})
-    			
-    		}
-		};	
-    	
-    
-    	//인바디 모달 - 셀렉박스 선택했을 때
-    	$("select[name='inbodyDate']").on("change", function(){
-    		
-    		var inbodyNo = $(this).val();
-    		console.log("inbodyNo: "+inbodyNo);
-			
-    		if(inbodyNo == 0){
-    			 
-    			$("input[name='weight']").attr("type", "number");
-				$("input[name='percentFat']").attr("type", "number");
-				$("input[name='muscleMass']").attr("type", "number");
-				$("input[name='bmi']").attr("type", "number");
-    			 
-    			$("input[type='number']").attr("disabled", false);
-    			
-    		} else{
-    		
-	    		//데이터 전송
-	    		$.ajax({
-	    			//보낼 때 옵션
-	    			url : "${pageContext.request.contextPath}/mypage2/getInbodyInfo",
-	    			type : "post",
-	    			data : {inbodyNo: inbodyNo},
-	    					
-	    			//받을 때 옵션
-	    			dataType : "json",
-	    			success : function(inbodyInfo) {
-	    				
-	    				$("input[type='number']").attr("disabled", true);
-	    				
-	    				$("input[name='weight']").attr("type", "text");
-	    				$("input[name='percentFat']").attr("type", "text");
-	    				$("input[name='muscleMass']").attr("type", "text");
-	    				$("input[name='bmi']").attr("type", "text");
-	    				
-	    				$("input[name='weight']").val(inbodyInfo.weight+" kg");
-	    				$("input[name='percentFat']").val(inbodyInfo.percentFat+" %");
-	    				$("input[name='muscleMass']").val(inbodyInfo.muscleMass+" kg");
-	    				$("input[name='bmi']").val(inbodyInfo.bmi+" kg/m²");
-	    				
-	    			},
-	    			error : function(XHR, status, error) {
-	    				console.error(status + " : " + error);
-	    			}
-	    		})
-    		}//else 끝
-    	})
-    	
-    	//회원추가 모달에서 검색
-    	$("button.search").on("click", function(){
-    		$("div.user").empty();
-    		
-    		var keyword = $("input[name='keyword']").val();
-    		
-    		//데이터 전송
-    		$.ajax({
-    			//보낼 때 옵션
-    			url : "${pageContext.request.contextPath}/mypage2/searchUser",
-    			type : "post",
-    			data : {keyword: keyword},
-    					
-    			//받을 때 옵션
-    			dataType : "json",
-    			success : function(userVo) {
-    				$("p.errMsg").hide();
-    				$("p.defaultMsg").hide();
-    				
-					var result = '';
-					result += '<img src="${pageContext.request.contextPath}/assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">';
-					result += '<p class="info">';
-					result += '    <span class="name">'+userVo.name+'</span>';
-					result += '    <span class="id">'+userVo.userId+'</span>';
-					result += '</p>';
-					result += '<div class="schedule-input-wrapper clearfix">';
-					result += '    <input class="schedule-input" type="number" name="period" placeholder="1" max="60" onkeyup="checkEmpty();">';
-					result += '    <span class="mark">개월</span>';
-					result += '    <input class="schedule-input" type="number" name="regCount" placeholder="0" max="999" onkeyup="checkEmpty();">';
-					result += '    <span class="mark">회</span>';
-					result += '    <input type="hidden" name="userNo" value="'+userVo.userNo+'">';
-					result += '</div>';
-					
-					$("div.user").prepend(result);
-    				
-    			},
-    			error : function(XHR, status, error) {
-    				$("p.defaultMsg").hide();
-    				$("p.errMsg").show();
-    				
-    				console.error(status + " : " + error);
-    			}
-    		})
-    		
-    	});
-    
-    	//회원 모달 탭 눌렀을 때
+        });
+
+        //운동기록 날짜 select
+        $("select[name='recordDate']").on("change",function(){
+            var scheduleNo = $(this).find("option:selected").val();
+            $(this).siblings("ul#recordList").find("li").removeClass("on");
+            $(this).siblings("ul#recordList").find("li[data-no='"+scheduleNo+"']").addClass("on");
+        });
+
+        //pt횟수 추가 저장 버튼 누르면!
+        function addCount() {
+            console.log("asdfasdf");
+            var ptNo = $("input#modifyPtNo").val();
+            var extendMonth = $("input[name='extendMonth']").val();
+            var extendCount = $("input[name='extendCount']").val();
+
+            if (extendMonth == "") {
+                alert("등록개월 란이 비어있어요");
+                return false;
+            } else if (extendCount == "") {
+                alert("등록횟수 란이 비어있어요");
+                return false;
+            } else {
+
+                //데이터 전송
+                $.ajax({
+                    //보낼 때 옵션
+                    url: "${pageContext.request.contextPath}/mypage2/extendPt",
+                    type: "post",
+                    data: {
+                        ptNo: ptNo,
+                        extendMonth: extendMonth,
+                        extendCount: extendCount
+                    },
+
+                    //받을 때 옵션
+                    dataType: "json",
+                    success: function (userInfo) {
+
+                        alert("PT가 추가 등록 되었습니다.");
+
+                        //userInfo 다시 넣기
+                        $("#period").text("\u00A0 " + userInfo.ptInfo.startDate + " ~ " + userInfo.ptInfo.endDate);
+                        $("#count").text("\u00A0 " + userInfo.ptInfo.scheduleCount + " / " + userInfo.ptInfo.regCount);
+
+                        //버튼 초기화
+                        $(".extendForm").hide();
+                        $("#btnAddCount").text("추가등록");
+                        $("#btnAddCount").attr("id", "showAddCount");
+                        $("#btnAddCount").attr("onclick", "");
+
+                    },
+                    error: function (XHR, status, error) {
+                        console.error(status + " : " + error);
+                    }
+                })
+
+            }
+        };
+
+
+        //인바디 모달 - 셀렉박스 선택했을 때
+        $("select[name='inbodyDate']").on("change", function () {
+
+            var inbodyNo = $(this).val();
+            console.log("inbodyNo: " + inbodyNo);
+
+            if (inbodyNo == 0) {
+
+                $("input[name='weight']").attr("type", "number");
+                $("input[name='percentFat']").attr("type", "number");
+                $("input[name='muscleMass']").attr("type", "number");
+                $("input[name='bmi']").attr("type", "number");
+
+                $("input[type='number']").attr("disabled", false);
+
+            } else {
+
+                //데이터 전송
+                $.ajax({
+                    //보낼 때 옵션
+                    url: "${pageContext.request.contextPath}/mypage2/getInbodyInfo",
+                    type: "post",
+                    data: {inbodyNo: inbodyNo},
+
+                    //받을 때 옵션
+                    dataType: "json",
+                    success: function (inbodyInfo) {
+
+                        $("input[type='number']").attr("disabled", true);
+
+                        $("input[name='weight']").attr("type", "text");
+                        $("input[name='percentFat']").attr("type", "text");
+                        $("input[name='muscleMass']").attr("type", "text");
+                        $("input[name='bmi']").attr("type", "text");
+
+                        $("input[name='weight']").val(inbodyInfo.weight + " kg");
+                        $("input[name='percentFat']").val(inbodyInfo.percentFat + " %");
+                        $("input[name='muscleMass']").val(inbodyInfo.muscleMass + " kg");
+                        $("input[name='bmi']").val(inbodyInfo.bmi + " kg/m²");
+
+                    },
+                    error: function (XHR, status, error) {
+                        console.error(status + " : " + error);
+                    }
+                })
+            }//else 끝
+        })
+
+        //회원추가 모달에서 검색
+        $("button.search").on("click", function () {
+            $("div.user").empty();
+
+            var keyword = $("input[name='keyword']").val();
+
+            //데이터 전송
+            $.ajax({
+                //보낼 때 옵션
+                url: "${pageContext.request.contextPath}/mypage2/searchUser",
+                type: "post",
+                data: {keyword: keyword},
+
+                //받을 때 옵션
+                dataType: "json",
+                success: function (userVo) {
+                    $("p.errMsg").hide();
+                    $("p.defaultMsg").hide();
+
+                    var result = '';
+                    result += '<img src="${pageContext.request.contextPath}/assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">';
+                    result += '<p class="info">';
+                    result += '    <span class="name">' + userVo.name + '</span>';
+                    result += '    <span class="id">' + userVo.userId + '</span>';
+                    result += '</p>';
+                    result += '<div class="schedule-input-wrapper clearfix">';
+                    result += '    <input class="schedule-input" type="number" name="period" placeholder="1" max="60" onkeyup="checkEmpty();">';
+                    result += '    <span class="mark">개월</span>';
+                    result += '    <input class="schedule-input" type="number" name="regCount" placeholder="0" max="999" onkeyup="checkEmpty();">';
+                    result += '    <span class="mark">회</span>';
+                    result += '    <input type="hidden" name="userNo" value="' + userVo.userNo + '">';
+                    result += '</div>';
+
+                    $("div.user").prepend(result);
+
+                },
+                error: function (XHR, status, error) {
+                    $("p.defaultMsg").hide();
+                    $("p.errMsg").show();
+
+                    console.error(status + " : " + error);
+                }
+            })
+
+        });
+
+        //회원 모달 탭 눌렀을 때
         function showTab(target) {
             var targetTab = target.attr("data-tab");
 
@@ -459,10 +477,10 @@
 
             //tab에 on
             $("#userInfoModal").find("." + targetTab + "-wrapper").addClass("on");
-            
+
             //인풋태그 초기화
-    		$("#userInfoModal input").val("");
-            
+            $("#userInfoModal input").val("");
+
             //추가 폼 가리기
             $(".extendForm").hide();
             $("#btnAddCount").text("추가등록");
@@ -528,6 +546,9 @@
                     $("select[name='inbodyDate']").append(dateList);
 
                     //인바디 그래프 그리기
+                    $("#canvas").removeAttr("style");
+                    $("#canvas").attr("width", "550");
+                    $("#canvas").attr("height", "400");
                     drawChart(userInfo.inbodyList);
 
                     //운동내역 출력
@@ -537,7 +558,7 @@
                 error: function (XHR, status, error) {
                     console.error(status + " : " + error);
                 }
-    		});
+            });
             showModal("#userInfoModal");
         }
 
@@ -725,21 +746,49 @@
                 }
             });
         }
+
         function writeRecords(recordList) {
-            var targetTab =$("#userInfoModal").find(".exercise-wrapper");
-            targetTab.html("");
+            var targetTab = $("#userInfoModal").find(".exercise-wrapper");
+            var select = targetTab.find("select[name='recordDate']");
+            var ul = targetTab.find("ul#recordList");
+            select.html("");
+            ul.html("");
 
             for (var i = 0; i < recordList.length; i++) {
-                targetTab.append(
-                    "<p>"+
-                        "<span>"+recordList[i].exPart+"</span>"+
-                        "<span>"+recordList[i].exName+"</span>"+
-                        "<span>"+recordList[i].amount+"</span>"+
-                        "<span>"+recordList[i].unit+"</span>"+
-                        "<span>"+recordList[i].count+"</span>"+
-                    "</p>"
+                var recordDate = recordList[i].recordDate.substring(0,16);
+                var unit = recordList[i].unit;
+                switch (unit) {
+                    case "kg" :
+                        unit = "킬로그램";
+                        break;
+                    case "lbs" :
+                        unit = "파운드";
+                        break;
+                    case "sec" :
+                        unit = "초";
+                        break;
+                    default :
+                        unit = "";
+                }
+                if(select.find("option[value='"+recordList[i].scheduleNo+"']").length === 0) {
+                    select.prepend(
+                        "<option value='"+ recordList[i].scheduleNo +"'>"+recordDate+"</option>"
+                    );
+                }
+                ul.append(
+                    "<li data-no='"+ recordList[i].scheduleNo +"'>" +
+                    "<p class='name'>" + recordList[i].exName + "</p>" +
+                    "<p class='part'>" + recordList[i].exPart + "</p>" +
+                    "<p class='detail'>" +
+                        "<span class='amount'>"+ recordList[i].amount +"</span>"+
+                        "<span>"+ unit +"</span>"+
+                        "<span> "+recordList[i].count+"회</span>"+
+                    "</li>"
                 );
             }
+            select.prepend(
+                "<option selected disabled>날짜를 선택해주세요</option>"
+            );
         }
     </script>
 </body>

@@ -523,6 +523,56 @@ ul.user-list {
           display: block;
         }
       }
+      .exercise-wrapper {
+        box-sizing: border-box;
+        padding-left: 20px;
+        select[name='recordDate'] {
+          width: 200px;
+          margin-bottom: 20px;
+        }
+        ul {
+          li {
+            display: none;
+            float: left;
+            text-align: left;
+            width: ~"calc((100% - 80px)/4)";
+            margin: 0 20px 20px 0;
+            box-sizing: border-box;
+            border-radius: 4px;
+            border: 1px solid @color-gray-sub;
+            padding: 10px;
+            position: relative;
+            &.on {
+              display: block;
+            }
+            p.name {
+              color: @color-main;
+              font-size: 20px;
+              font-weight: bold;
+              line-height: 1;
+              letter-spacing: -0.5px;
+              margin-bottom: 15px;
+            }
+            p.part {
+              position: absolute;
+              right: 10px;
+              top: 10px;
+              color: @color-sub;
+              font-size: 14px;
+              font-weight: 400;
+              letter-spacing: -0.5px;
+              line-height: 20px;
+            }
+            p.detail {
+              color: @color-gray;
+              font-size: 16px;
+              font-weight: 500;
+              line-height: 1;
+              letter-spacing: -0.5px;
+            }
+          }
+        }
+      }
     }
   }
 }

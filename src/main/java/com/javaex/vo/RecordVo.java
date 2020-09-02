@@ -3,12 +3,12 @@ package com.javaex.vo;
 
 public class RecordVo {
     private int recordNo, scheduleNo, exNo, count, amount;
-    private String exPart, exName, unit;
+    private String exPart, exName, unit, recordDate;
 
     public RecordVo() {
     }
 
-    public RecordVo(int recordNo, int scheduleNo, int exNo, int count, int amount, String exPart, String exName, String unit) {
+    public RecordVo(int recordNo, int scheduleNo, int exNo, int count, int amount, String exPart, String exName, String unit, String recordDate) {
         this.recordNo = recordNo;
         this.scheduleNo = scheduleNo;
         this.exNo = exNo;
@@ -17,6 +17,7 @@ public class RecordVo {
         this.exPart = exPart;
         this.exName = exName;
         this.unit = unit;
+        this.recordDate = recordDate;
     }
 
     public int getRecordNo() {
@@ -83,6 +84,14 @@ public class RecordVo {
         this.unit = unit;
     }
 
+    public String getRecordDate() {
+        return recordDate;
+    }
+
+    public void setRecordDate(String recordDate) {
+        this.recordDate = recordDate;
+    }
+
     @Override
     public String toString() {
         return "RecordVo{" +
@@ -94,6 +103,7 @@ public class RecordVo {
                 ", exPart='" + exPart + '\'' +
                 ", exName='" + exName + '\'' +
                 ", unit='" + unit + '\'' +
+                ", recordDate='" + recordDate + '\'' +
                 '}';
     }
 }
