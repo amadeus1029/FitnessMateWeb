@@ -24,12 +24,12 @@
 	        <div class="schedule-wrapper">
 	            <h3 class="title">오늘의 일정</h3>
 	            <ul class="schedule-list">
-	            	<!-- 반복 -->
-	                <li class="schedule">
-	                    <span class="name">김상철 회원님</span>
-	                    <span class="time">AM 08:00 - 10:00</span>
-	                </li>
-	                <!-- 반복끝 -->
+	            	<c:forEach items="${summary.scheduleList}" var="schedule">
+		                <li class="schedule">
+		                    <span class="name">${schedule.userName} 회원님</span>
+		                    <span class="time">${schedule.startTime} - ${schedule.endTime}</span>
+		                </li>
+		                </c:forEach>
 	
 	            </ul>
 	        </div>

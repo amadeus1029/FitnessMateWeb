@@ -15,6 +15,8 @@ import com.javaex.dao.ScheduleDao;
 import com.javaex.vo.InbodyVo;
 import com.javaex.vo.PtVo;
 import com.javaex.vo.RecordVo;
+import com.javaex.vo.ScheduleVo;
+import com.javaex.vo.SummaryVo;
 import com.javaex.vo.UserVo;
 
 @Service
@@ -148,7 +150,7 @@ public class Mypage2Service {
 		
 		return inbodyInfo;
 	}
-	/*
+	
 	public Map<String, Object> summary(int userNo) {
 		//평점, 리뷰갯수 vo에 담아오기
 		SummaryVo summaryVo = scheduleDao.getReviewCount(userNo);
@@ -168,8 +170,6 @@ public class Mypage2Service {
 		
 		return summary;
 	}
-*/
-	
 	
 	//오늘 날짜 가져오기
 	public int getToday() {

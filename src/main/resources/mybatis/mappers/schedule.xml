@@ -61,10 +61,10 @@
         ]]>
     </select>
     
-	<select id="countAll" parameterType="int" resultType="int">
+	<select id="countCurrent" parameterType="int" resultType="int">
         <![CDATA[
         
-			SELECT count(p.ptNo)
+			SELECT COUNT(p.ptNo)
 			FROM pt p LEFT OUTER JOIN (SELECT ptNo, COUNT(scheduleNo) scheduleCount
 						            	FROM schedule GROUP BY ptNo) c
 			ON p.ptNo = c.ptNo
@@ -74,7 +74,7 @@
 
         ]]>
     </select>
-    
+
 	<select id="getReviewCount" parameterType="int" resultType="com.javaex.vo.SummaryVo">
         <![CDATA[
         
@@ -85,13 +85,13 @@
 			
         ]]>
     </select>
-    
-	<select id="getTodaySchedule" parameterType="int" resultType="com.javaex.vo.ScheduleVo">
+
+	<select id="getTodaySchedule" parameterType="int" resultType="ScheduleVo">
         <![CDATA[
         
-			SELECT u.name userName, info.startTime startTime
+			SELECT u.name userName, info.startTime startTime, info.endtime endtime
 			FROM users u RIGHT OUTER JOIN 
-			    (SELECT p.userNo, TO_CHAR(s.startTime, 'AM hh:mi', 'NLS_DATE_LANGUAGE=ENGLISH') startTime
+			    (SELECT p.userNo, TO_CHAR(s.startTime, 'AM hh:mi', 'NLS_DATE_LANGUAGE=ENGLISH') startTime, TO_CHAR(s.endtime, 'hh:mi') endtime
 			    FROM schedule s LEFT OUTER JOIN pt p
 			    ON s.ptno = p.ptno
 			    WHERE TO_CHAR(s.startTime, 'yy/mm/dd') = TO_CHAR(sysdate, 'yy/mm/dd')
@@ -100,7 +100,7 @@
 			
         ]]>
     </select>
-    
+     
 </mapper>
 
         <!--

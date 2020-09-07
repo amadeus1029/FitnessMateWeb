@@ -5,15 +5,24 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import com.javaex.service.Mypage2Service;
-import com.javaex.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.javaex.service.Mypage2Service;
 import com.javaex.service.MypageService;
 import com.javaex.service.UserService;
+import com.javaex.vo.AddressVo;
+import com.javaex.vo.ExerciseVo;
+import com.javaex.vo.PtVo;
+import com.javaex.vo.RecordVo;
+import com.javaex.vo.ScheduleVo;
+import com.javaex.vo.UserVo;
 
 @Controller
 @RequestMapping("/mypage")
@@ -43,6 +52,10 @@ public class MypageController {
             model.addAttribute("ptList", ptList);
             List<ScheduleVo> scheduleList = mypageService.getScheduleList(user.getUserNo());
             model.addAttribute("scheduleList", scheduleList);
+            
+            //매 페이지마다 들어가는 상단 요약정보
+            model.addAttribute("summary", mypage2Service.summary(user.getUserNo()));
+            
         }else {
             System.out.println("일반회원 마이페이지 스케쥴 이동");
         }
@@ -61,6 +74,10 @@ public class MypageController {
 
             model.addAttribute("showList", showList);
             model.addAttribute("exList", exList);
+            
+            //매 페이지마다 들어가는 상단 요약정보
+            model.addAttribute("summary", mypage2Service.summary(user.getUserNo()));
+            
         }else {
             System.out.println("일반회원은 여기 오면 안돼요");
         }
@@ -116,6 +133,13 @@ public class MypageController {
        	Map<String, Object> proMap = mypageService.getProfile(userVo.getUserType(), userVo.getUserNo());
        	
        	model.addAttribute("profile", proMap);
+       	
+       	if("trainer".equals(userVo.getUserType())) {
+       		
+            //매 페이지마다 들어가는 상단 요약정보
+            model.addAttribute("summary", mypage2Service.summary(userVo.getUserNo()));
+        }
+
 
        	return "mypage/profile";
     }
@@ -128,6 +152,10 @@ public class MypageController {
             List<ExerciseVo> partList = mypageService.partList(user.getUserNo());
 
             model.addAttribute("partList", partList);
+            
+            //매 페이지마다 들어가는 상단 요약정보
+            model.addAttribute("summary", mypage2Service.summary(user.getUserNo()));
+            
         }else {
             System.out.println("일반회원은 여기 오면 안돼요");
         }
