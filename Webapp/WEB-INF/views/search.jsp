@@ -253,9 +253,7 @@
    
     <script type="text/javascript"> 
     
-    $(document).ready(function(){
-    	console.log(${authUser.userNo});
-    });
+    
    
    ////////////////////////검색 관련/////////////////////////////
     //검색
@@ -561,6 +559,8 @@
 					reviewStr += '  <div class="clearfix review-btn-area">';
 					
 					
+					
+					
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">수정</button>';
 					
@@ -568,9 +568,9 @@
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">답글</button> ';
 					
-					
 					reviewStr += '  </div>';
 					reviewStr += ' </li>';
+					
 					
 				}
 				$("ul.review-list").append(reviewStr);
