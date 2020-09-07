@@ -52,6 +52,55 @@
             where   scheduleNo = #{scheduleNo}
         ]]>
     </delete>
+    
+    <select id="countAll" parameterType="int" resultType="int">
+        <![CDATA[
+			SELECT COUNT(ptNo)
+			FROM pt
+			WHERE trainerNo = #{trainerNo}
+        ]]>
+    </select>
+    
+	<select id="countAll" parameterType="int" resultType="int">
+        <![CDATA[
+        
+			SELECT count(p.ptNo)
+			FROM pt p LEFT OUTER JOIN (SELECT ptNo, COUNT(scheduleNo) scheduleCount
+						            	FROM schedule GROUP BY ptNo) c
+			ON p.ptNo = c.ptNo
+			WHERE p.trainerNo = #{trainerNo}
+			AND p.endDate <= SYSDATE
+			AND p.regCount >= c.scheduleCount
+
+        ]]>
+    </select>
+    
+	<select id="getReviewCount" parameterType="int" resultType="com.javaex.vo.SummaryVo">
+        <![CDATA[
+        
+			SELECT AVG(NVL(r.score, 0)) avgScore, count(r.reviewNo) reviewCount
+			FROM review r left outer join pt p
+			ON p.ptNo = r.ptno
+			WHERE trainerNo = #{trainerNo}
+			
+        ]]>
+    </select>
+    
+	<select id="getTodaySchedule" parameterType="int" resultType="com.javaex.vo.ScheduleVo">
+        <![CDATA[
+        
+			SELECT u.name userName, info.startTime startTime
+			FROM users u RIGHT OUTER JOIN 
+			    (SELECT p.userNo, TO_CHAR(s.startTime, 'AM hh:mi', 'NLS_DATE_LANGUAGE=ENGLISH') startTime
+			    FROM schedule s LEFT OUTER JOIN pt p
+			    ON s.ptno = p.ptno
+			    WHERE TO_CHAR(s.startTime, 'yy/mm/dd') = TO_CHAR(sysdate, 'yy/mm/dd')
+			    AND p.trainerNo = #{trainerNo}) info
+			ON u.userNo = info.userNo
+			
+        ]]>
+    </select>
+    
 </mapper>
 
         <!--

@@ -89,6 +89,7 @@ public class PtDao {
 		
 		return sqlSession.selectOne("pt.selectRecentInbody", userNo);
 	}
+
 	
 	
 	

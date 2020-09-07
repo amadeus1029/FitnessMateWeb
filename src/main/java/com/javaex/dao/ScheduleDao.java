@@ -1,11 +1,12 @@
 package com.javaex.dao;
 
-import com.javaex.vo.ScheduleVo;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.javaex.vo.ScheduleVo;
 
 @Repository
 public class ScheduleDao {
@@ -32,4 +33,21 @@ public class ScheduleDao {
     public boolean deleteSchedule(ScheduleVo scheduleVo) {
         return sqlSession.delete("schedule.delete", scheduleVo) == 1;
     }
+
+    public SummaryVo getReviewCount(int trainerNo) {
+    	return sqlSession.selectOne("schedule.getReviewCount", trainerNo);
+    }
+
+    public int countAll(int trainerNo) {
+		return sqlSession.selectOne("schedule.countAll", trainerNo);
+	}
+
+	public int countCurrent(int trainerNo) {
+		return sqlSession.selectOne("schedule.countCurrent", trainerNo);
+	}
+
+	public List<ScheduleVo> getTodaySchedule(int trainerNo) {
+		return sqlSession.selectList("schedule.getTodaySchedule", trainerNo);
+	}
+
 }
