@@ -81,17 +81,34 @@
 		<![CDATA[
 		
 			UPDATE users
-			SET name = #{name},
-				phone = #{phone},
-				gender = #{gender},
-			    birthDate = #{birthDate},
+			SET birthDate = #{birthDate},
 			    career = #{career},
 			    location = #{location},
 			    company = #{company},
 				introduction = #{introduction},
 			    price = #{price}
+		]]>
+		
+		<if test = "name != null" >
+		<![CDATA[   
+				,name = #{name}
+		]]>		
+		</if>
+		
+		<if test = "phone != null" >
+		<![CDATA[   
+				,phone = #{phone}
+		]]>		
+		</if>
+		
+		<if test = "gender != null" >
+		<![CDATA[   
+				,gender = #{gender}
+		]]>		
+		</if>
+		
+		<![CDATA[
 			WHERE userNo = #{userNo}
-			
 		]]>
 	</update>
 	

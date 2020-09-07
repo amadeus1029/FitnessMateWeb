@@ -1,7 +1,5 @@
 package com.javaex.service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +88,6 @@ public class UserService {
 
 	public void updateProfile(UserVo vo, AddressVo addressVo, List<String> fieldList, List<String> careerList, List<String> birthList) {
 		System.out.println("userService.프로필수정");
-		System.out.println(vo);
 		
 		//날짜 합치기
 		String birthDate = birthList.get(0).substring(2)+"/"+birthList.get(1)+"/"+birthList.get(2);

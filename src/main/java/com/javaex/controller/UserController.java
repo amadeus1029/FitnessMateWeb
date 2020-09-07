@@ -74,6 +74,11 @@ public class UserController {
     							@RequestParam("birth") List<String> birthList,
     							Model model) {
     	System.out.println("/signUpComplete");
+    	System.out.println(vo);
+    	System.out.println(address);
+    	System.out.println(fieldList);
+    	System.out.println(careerList);
+    	System.out.println(birthList);
     	
     	userService.updateProfile(vo, address, fieldList, careerList, birthList);
     	
