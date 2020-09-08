@@ -41,14 +41,14 @@ public class Mypage2Service {
 		
 		//pt진행상황 데이터 넣기
 		for(PtVo ptVo: ptList) {
-			
-			if(ptVo.getIntEndDate() < today || ptVo.getRegCount() < ptVo.getScheduleCount()) {
+			System.out.println(ptVo.getIntEndDate() < today);
+			if(ptVo.getIntEndDate() < today || ptVo.getRegCount() <= ptVo.getScheduleCount()) {
 				ptVo.setProceed(false);
 			}else {
 				ptVo.setProceed(true);
 			}
 		}
-		
+
 		return ptList;
 	}
 

@@ -8,7 +8,7 @@
 		<![CDATA[
 		
 			SELECT
-			    pt.ptNo, u.userNo, u.userId, u.name, to_char(pt.endDate, 'yyyymmdd') endDate, pt.regcount, NVL(pt.schedulecount, 0) schdulecount
+			    pt.ptNo, u.userNo, u.userId, u.name, to_char(pt.endDate, 'yyyymmdd') intEndDate, pt.regcount, NVL(pt.schedulecount, 0) schedulecount
 			FROM
 			    users u,
 			    (SELECT

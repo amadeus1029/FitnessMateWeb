@@ -56,7 +56,7 @@
             <ul class="user-list clearfix">
                 <!-- 반복 -->
                 <c:forEach items="${ptList}" var="pt">
-                    <li class="user clearfix ${pt.proceed eq true ? 'former off':'now'}"
+                    <li class="user clearfix ${pt.proceed eq false ? 'former off':'now'}"
                         onclick="showUser(${pt.ptNo});">
                         <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image"
                              title="profile image">

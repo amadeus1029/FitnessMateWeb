@@ -76,8 +76,8 @@
 	    event.preventDefault();
 	
 	    // input 초기화
-	    //$("#userId").val("");
-	    //$("#userPw").val("");
+	    $("#userId").val("");
+	    $("#userPw").val("");
 	    $(".errMsg").hide();
 	
 	    showModal("#loginModal");

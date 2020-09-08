@@ -216,7 +216,9 @@
                     <select name="ptNo">
                         <option disabled selected value="default">회원 선택</option>
                         <c:forEach items="${ptList}" var="ptVo">
-                            <option value="${ptVo.ptNo}">${ptVo.name}(${ptVo.userId})</option>
+                            <c:if test="${ptVo.proceed eq true}">
+                                <option value="${ptVo.ptNo}">${ptVo.name}(${ptVo.userId})</option>
+                            </c:if>
                         </c:forEach>
                     </select>
                 </div>

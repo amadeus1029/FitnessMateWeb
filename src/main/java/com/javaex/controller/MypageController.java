@@ -44,11 +44,6 @@ public class MypageController {
         if("trainer".equals(user.getUserType())) {
             System.out.println("트레이너 마이페이지 스케쥴 이동");
             List<PtVo> ptList  = mypage2Service.getTraineeList(user.getUserNo());
-            for(PtVo ptVo: ptList) {
-                if(ptVo.isProceed()) {
-                    ptList.remove(ptVo);
-                }
-            }
             model.addAttribute("ptList", ptList);
             List<ScheduleVo> scheduleList = mypageService.getScheduleList(user.getUserNo());
             model.addAttribute("scheduleList", scheduleList);

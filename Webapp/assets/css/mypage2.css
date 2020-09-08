@@ -188,21 +188,18 @@ form#editProfileForm .main-info .main-info-wrapper.secDiv, form#editProfileForm 
 	float: left;
 }
 /* 일반회원 인바디 보기 */
-.wrapper {
-	padding-left: 150px;
-	position: relative;
+.content-wrapper {
 	margin-bottom: 50px;
+	height: 550px;
+	position: relative;
 }
 
-.wrapper>p {
+.content-wrapper>p {
 	font-weight: 600;
 	font-size: 25px;
 	padding-bottom: 35px;
 }
 
-.content-wrapper {
-	height: 550px;
-}
 /* 선택 박스 스타일 */
 .box_color {
 	border: 1px solid #292c33;
