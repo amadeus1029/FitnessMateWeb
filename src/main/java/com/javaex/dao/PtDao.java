@@ -21,6 +21,7 @@ public class PtDao {
 		System.out.println("dao 트레이니 리스트");
 		
 		List<PtVo> ptList = sqlSession.selectList("pt.selectTraineeList", trainerNo);
+		System.out.println(ptList);
 		
 		return ptList;
 	}

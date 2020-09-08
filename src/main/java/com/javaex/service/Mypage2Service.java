@@ -180,7 +180,6 @@ public class Mypage2Service {
 
 		return today;
 	}
-
-
+	
 
 }
