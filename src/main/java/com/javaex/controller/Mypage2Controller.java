@@ -40,6 +40,7 @@ public class Mypage2Controller {
             
         }else {
             System.out.println("일반회원은 여기 오면 안돼요");
+            return "error";
         }
         return "mypage/manageUser";
     }
@@ -54,12 +55,12 @@ public class Mypage2Controller {
     		model.addAttribute("inbodyInfo", inbodyInfo);
     		
     		//매 페이지마다 들어가는 상단 요약정보
-    		model.addAttribute("summary", mypageService.summary(user.getUserNo()));
+    		model.addAttribute("summaryNormal", mypageService.summaryNormal(user.getUserNo()));
     		
     		return "mypage/userInbodyView";
     		
     	 }else {
-         	System.out.println("트레이너님 여기 오면 안돼요");
+         	System.out.println("트레이너는 여기 오면 안돼요");
              return "error";
          }
     }
