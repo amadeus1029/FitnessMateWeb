@@ -51,11 +51,12 @@ public class MypageController {
             //매 페이지마다 들어가는 상단 요약정보
             model.addAttribute("summary", mypage2Service.summary(user.getUserNo()));
             
+            return "mypage/schedule";
+
         }else {
-            System.out.println("일반회원 마이페이지 스케쥴 이동");
+        	System.out.println("일반회원은 여기 오면 안돼요");
+            return "error";
         }
-    	
-        return "mypage/schedule";
     }
     
     @RequestMapping("/manageExercise")
@@ -72,12 +73,12 @@ public class MypageController {
             
             //매 페이지마다 들어가는 상단 요약정보
             model.addAttribute("summary", mypage2Service.summary(user.getUserNo()));
+            return "mypage/manageExercise";
             
         }else {
             System.out.println("일반회원은 여기 오면 안돼요");
+            return "error";
         }
-    	
-        return "mypage/manageExercise";
     }
 
     @ResponseBody

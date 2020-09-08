@@ -49,13 +49,19 @@ public class Mypage2Controller {
     	System.out.println("마이페이지 인바디보기");
     	UserVo user = (UserVo) session.getAttribute("authUser");
     	
-    	Map<String, Object> inbodyInfo= mypageService.getUserInbodyList(user.getUserNo());
-    	model.addAttribute("inbodyInfo", inbodyInfo);
-    	
-        //매 페이지마다 들어가는 상단 요약정보
-        model.addAttribute("summary", mypageService.summary(user.getUserNo()));
-
-        return "mypage/userInbodyView";
+    	if("normal".equals(user.getUserType())) {
+    		Map<String, Object> inbodyInfo= mypageService.getUserInbodyList(user.getUserNo());
+    		model.addAttribute("inbodyInfo", inbodyInfo);
+    		
+    		//매 페이지마다 들어가는 상단 요약정보
+    		model.addAttribute("summary", mypageService.summary(user.getUserNo()));
+    		
+    		return "mypage/userInbodyView";
+    		
+    	 }else {
+         	System.out.println("트레이너님 여기 오면 안돼요");
+             return "error";
+         }
     }
     
     

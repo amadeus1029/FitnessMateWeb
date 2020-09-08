@@ -1,24 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate value="${now}" pattern="yyyy" var="year" />
+<fmt:formatDate value="${now}" pattern="MM" var="month" />
+<fmt:formatDate value="${now}" pattern="dd" var="day" />
 
 <div class="summary-wrapper">
     <div class="summary clearfix">
-        <p class="date">2020년 8월 17일</p>
+        <p class="date">${year}년 ${month}월 ${day}일</p>
+         
         <c:choose>
     		<c:when test="${authUser.userType eq 'trainer'}">
 	        <div class="statistics">
 	            <dl class="review">
 	                <dt>평점</dt>
-	                <dd>4.7점 / 38개</dd>
+	                <dd>${summary.summaryVo.avgScore}점 / ${summary.summaryVo.reviewCount}개</dd>
 	            </dl>
 	            <dl>
 	                <dt>현재 회원 수</dt>
-	                <dd>23명</dd>
+	                <dd>${summary.summaryVo.countCurrent}명</dd>
 	            </dl>
 	            <dl>
 	                <dt>누적 회원 수</dt>
-	                <dd>120명</dd>
+	                <dd>${summary.summaryVo.countAll}명</dd>
 	            </dl>
 	        </div>
 	        <div class="schedule-wrapper">
@@ -36,7 +42,33 @@
 		    </c:when>
 		    
     		<c:otherwise>
-    			무엇을 넣어야하나요
+	    		<div class="statistics">
+		            <dl class="review">
+		                <dt>등록기간</dt>
+		                <dd>2020-06-24 ~ 2020-09-24</dd>
+		            </dl>
+		            <dl>
+		                <dt>잔여횟수</dt>
+		                <dd>5 / 12</dd>
+		            </dl>
+		            <dl>
+		                <dt>내 트레이너</dt>
+		                <dd>김회원 트레이너</dd>
+		                <dd>(010-1111-1111)</dd>
+		            </dl>
+		        </div>
+		        <div class="schedule-wrapper">
+		            <h3 class="title">오늘의 일정</h3>
+		            <ul class="schedule-list">
+		            	<c:forEach items="${summary.scheduleList}" var="schedule">
+			                <li class="schedule">
+			                    <span class="name">${schedule.userName} 회원님</span>
+			                    <span class="time">${schedule.startTime} - ${schedule.endTime}</span>
+			                </li>
+			                </c:forEach>
+		
+		            </ul>
+		        </div>
     		</c:otherwise>
    		</c:choose>
     </div>
