@@ -152,7 +152,7 @@
 		<![CDATA[
 		
 			SELECT
-			    inbodyNo, to_char(measureDate, 'yyyy-mm-dd') measureDate,
+			    inbodyNo, TO_CHAR(measureDate, 'yyyy-mm-dd') measureDate,
 			    weight, percentFat, muscleMass, bmi
 			FROM inbody 
 			WHERE
@@ -163,6 +163,29 @@
 			        AND p.userNo = #{userNo})
 		
 		]]>
+	</select>
+
+	<!-- 개인회원 요약부분 -->
+	<select id="summaryNormal" parameterType="int" resultType="com.javaex.vo.PtVo">
+		<![CDATA[
+		
+			SELECT 
+			    pt.ptNo, pt.trainerNo userNo, pt.name, pt.phone, pt.startDate, pt.endDate, pt.regcount, s.scheduleCount
+			FROM
+			    (SELECT
+			       p.ptNo, p.trainerNo, u.name, u.phone, TO_CHAR(p.startdate, 'yyyy-mm-dd') startDate, TO_CHAR(p.endDate, 'yyyy-mm-dd') endDate, p.regcount
+			    FROM pt p LEFT OUTER JOIN users u
+			    ON p.trainerNo = u.userNo) pt
+			LEFT OUTER JOIN
+			    (SELECT ptNo, COUNT(scheduleNo) scheduleCount
+			    FROM schedule
+			    GROUP BY ptNo) s
+			ON pt.ptNo = s.ptNo
+			WHERE pt.ptno = (SELECT max(ptNo)
+			                    FROM pt
+			                    WHERE userNo = #{userNo})
+
+		 ]]>
 	</select>
 	
 	

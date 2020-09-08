@@ -171,6 +171,13 @@ public class Mypage2Service {
 		return summary;
 	}
 	
+	public PtVo summaryNormal(int userNo) {
+		
+		PtVo ptVo = ptDao.summaryNormal(userNo);
+		
+		return ptVo;
+	}
+	
 	//오늘 날짜 가져오기
 	public int getToday() {
 		

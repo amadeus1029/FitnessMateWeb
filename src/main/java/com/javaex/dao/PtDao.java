@@ -91,6 +91,12 @@ public class PtDao {
 		return sqlSession.selectOne("pt.selectRecentInbody", userNo);
 	}
 
+	public PtVo summaryNormal(int userNo) {
+		System.out.println("dao 개인회원 최근 인바디");
+		
+		return sqlSession.selectOne("pt.summaryNormal", userNo);
+	}
+
 	
 	
 	

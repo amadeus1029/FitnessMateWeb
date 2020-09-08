@@ -44,31 +44,30 @@
     		<c:otherwise>
 	    		<div class="statistics">
 		            <dl class="review">
+		            	<dt>다음 PT</dt>
+		                <dd>2020-06-24(PM 9:00 - PM10:00)</dd>
+		            
 		                <dt>등록기간</dt>
 		                <dd>2020-06-24 ~ 2020-09-24</dd>
 		            </dl>
 		            <dl>
 		                <dt>잔여횟수</dt>
-		                <dd>5 / 12</dd>
-		            </dl>
-		            <dl>
-		                <dt>내 트레이너</dt>
-		                <dd>김회원 트레이너</dd>
-		                <dd>(010-1111-1111)</dd>
+		                <dd>5 / 12 (진행중)</dd>
 		            </dl>
 		        </div>
+		        
 		        <div class="schedule-wrapper">
-		            <h3 class="title">오늘의 일정</h3>
-		            <ul class="schedule-list">
-		            	<c:forEach items="${summary.scheduleList}" var="schedule">
-			                <li class="schedule">
-			                    <span class="name">${schedule.userName} 회원님</span>
-			                    <span class="time">${schedule.startTime} - ${schedule.endTime}</span>
-			                </li>
-			                </c:forEach>
-		
-		            </ul>
-		        </div>
+	            <h3 class="title">내 트레이너</h3>
+	            <ul class="schedule-list">
+	                <li class="schedule">
+	                    <span class="name">김회원 트레이너</span>
+	                </li>
+	                <li class="schedule">
+	                    <span class="time">(010-1111-2222)</span>
+	                </li>
+	            </ul>
+	        </div>
+		        
     		</c:otherwise>
    		</c:choose>
     </div>
