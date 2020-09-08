@@ -208,7 +208,11 @@
                 
                 <div class="label-tab review-wrapper">
 
-				<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
+				
+					<!--로그인 유저 넘버 -->
+					<input type="text" id="loginUser" value="${authUser.userNo}" >
+					
+					<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
 					
                     <div class="reviewWrite">
                         <span>리뷰작성</span>
@@ -231,34 +235,9 @@
 					<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
 
                     <ul class="review-list">
-                     	<span>아직 작성된 리뷰가 없습니다.</span>
-                     	<c:forEach items="reviewVo" var="reviewVo" varStatus = "status">
-                     	<li class="review-line">
-						  <div class="user-profile ff">
-						    <img class="user-profile-img" src='${pageContext.request.contextPath}/assets/image/unnamed.jpg'>
-						    <div class="user-profile-info">
-						      <div class="user-profile-name">${reviewVo.name}</div>
-						      <div class="user-profile-date">트레이닝- ${reviewVo.scheduleCount}회차</div>
-						      <div class="user-profile-date">${reviewVo.regDate}</div>
-						    </div>
-						    <div class="user-profile-star fd">${reviewVo.score}</div>
-						  </div>
-						  <div class="box">
-						    <div class="content">${reviewVo.content}</div>
-						  </div>
-						  <div class="clearfix review-btn-area">					
-						    <button type="button" class="button">삭제</button>
-						    <button type="button" class="button">수정</button>
-											
-											
-						    <button type="button" class="button">삭제</button>
-						    <button type="button" class="button">답글</button>
-											
-						  </div>
-						</li>
-						
-						</c:forEach>
-                     		
+                    
+                    
+                     	
                     </ul>
                 </div> <!-- 리뷰작성페이지 -->
                 
@@ -534,7 +513,8 @@
 	//리뷰리스트 불러오기
 	$(".label-btn.review-btn").on("click",function(){
 		
-		//reviewList();
+		reviewList();
+			
 		
 	});
 	
@@ -562,8 +542,12 @@
 				$("ul.review-list").empty();
 				var reviewStr = "";
 				
+				var loginUser = $("#loginUser").val();
+				console.log("로그인유저번호 추출"+loginUser);
+				
+				
+				
 				for (var review of reviewVo ) {
-					
 					
 					reviewStr += '<li class="review-line">';
 					reviewStr += '  <div class="user-profile ff">';
@@ -586,10 +570,10 @@
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">수정</button>';
 					
-					
+					if(reviewNo = loginUser){
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">답글</button> ';
-					
+					}
 					reviewStr += '  </div>';
 					reviewStr += ' </li>';
 					

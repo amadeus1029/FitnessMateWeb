@@ -54,7 +54,6 @@ public class MainController {
     	List<UserVo> userVo  = searchService.userList();
     	//트레이너 리스트 받기
     	model.addAttribute("userVo", userVo);
-    	
 
         return "search";
     }
