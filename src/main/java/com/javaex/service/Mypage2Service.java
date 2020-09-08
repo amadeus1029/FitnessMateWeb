@@ -171,12 +171,18 @@ public class Mypage2Service {
 		return summary;
 	}
 	
-	public PtVo summaryNormal(int userNo) {
+	public Map<String, Object> summaryNormal(int userNo) {
 		
 		PtVo ptVo = ptDao.summaryNormal(userNo);
+		ScheduleVo nextPt = ptDao.nextPt(userNo);
 		
-		return ptVo;
+		Map<String, Object> summaryNormal = new HashMap<>();
+		summaryNormal.put("ptVo", ptVo);
+		summaryNormal.put("nextPt", nextPt);
+		
+		return summaryNormal;
 	}
+	
 	
 	//오늘 날짜 가져오기
 	public int getToday() {

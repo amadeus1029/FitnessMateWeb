@@ -134,6 +134,9 @@ public class MypageController {
        		
             //매 페이지마다 들어가는 상단 요약정보
             model.addAttribute("summary", mypage2Service.summary(userVo.getUserNo()));
+        }else {
+            //매 페이지마다 들어가는 상단 요약정보 - 일반
+        	model.addAttribute("summaryNormal", mypage2Service.summaryNormal(userVo.getUserNo()));
         }
 
 
