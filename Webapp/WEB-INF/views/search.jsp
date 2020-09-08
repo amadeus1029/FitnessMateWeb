@@ -26,7 +26,7 @@
     
     <!-- 지도js -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=7fc75fd1ec40ee52623062dbcd6c9baa&libraries=services,clusterer,drawing"></script>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=575e0fbd097917d59e7c28fe5976a11c&libraries=services,clusterer,drawing"></script>
 
 	<!-- 임시 style-->
 	    <style>
@@ -35,7 +35,6 @@
 	    .reviewWrite{ text-align: left;}
 	    #star_grade{margin: 10px 0 0 0;}
 	    #star_grade i{
-	        font-size: 0 0 10px 0;
 	        text-decoration: none;
 	        color: gray;
 	    }
@@ -129,7 +128,7 @@
 	                    </div>
 	                    <div class="content-area">
 	                        <p class="name">${userVo.name}</p>
-	                        <p class="gym">${fn:substring(userVo.company,0,7)}</p>
+	                        <p class="gym">${userVo.company}</p>
 	                        <p class="comment">${userVo.introduction}</p>
 	                        <p class="score">평점 4.7</p>
 	                    </div>

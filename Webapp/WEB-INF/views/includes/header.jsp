@@ -61,7 +61,7 @@
 	                    </td>
                     </tr> 
                 </table>
-                <button type="button" class="modal-cancel" onclick="forceHideModal('#testModal')">취소</button>
+                <button type="button" class="modal-cancel" onclick="forceHideModal('#loginModal')">취소</button>
                 <button type="button" class="modal-confirm" id="btn_login">로그인</button>
             </div>
         </div>
