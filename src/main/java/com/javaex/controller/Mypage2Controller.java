@@ -35,6 +35,9 @@ public class Mypage2Controller {
             
             model.addAttribute("ptList", ptList);
             
+            //매 페이지마다 들어가는 상단 요약정보
+            model.addAttribute("summary", mypageService.summary(user.getUserNo()));
+            
         }else {
             System.out.println("일반회원은 여기 오면 안돼요");
         }
@@ -48,6 +51,9 @@ public class Mypage2Controller {
     	
     	Map<String, Object> inbodyInfo= mypageService.getUserInbodyList(user.getUserNo());
     	model.addAttribute("inbodyInfo", inbodyInfo);
+    	
+        //매 페이지마다 들어가는 상단 요약정보
+        model.addAttribute("summary", mypageService.summary(user.getUserNo()));
 
         return "mypage/userInbodyView";
     }

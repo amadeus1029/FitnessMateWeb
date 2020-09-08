@@ -5,50 +5,40 @@
 <div class="summary-wrapper">
     <div class="summary clearfix">
         <p class="date">2020년 8월 17일</p>
-        <div class="statistics">
-            <dl class="review">
-                <dt>평점</dt>
-                <dd>4.7점 / 38개</dd>
-            </dl>
-            <dl>
-                <dt>현재 회원 수</dt>
-                <dd>23명</dd>
-            </dl>
-            <dl>
-                <dt>누적 회원 수</dt>
-                <dd>120명</dd>
-            </dl>
-        </div>
-        <div class="schedule-wrapper">
-            <h3 class="title">오늘의 일정</h3>
-            <ul class="schedule-list">
-                <li class="schedule">
-                    <span class="name">김상철 회원님</span>
-                    <span class="time">AM 08:00 - 10:00</span>
-                </li>
-                <li class="schedule">
-                    <span class="name">정희봉 회원님</span>
-                    <span class="time">AM 10:00 - 11:00</span>
-                </li>
-                <li class="schedule">
-                    <span class="name">홍길동 회원님</span>
-                    <span class="time">AM 11:00 - 12:00</span>
-                </li>
-                <li class="schedule">
-                    <span class="name">고구마 회원님</span>
-                    <span class="time">PM 2:00 - 3:00</span>
-                </li>
-                <li class="schedule">
-                    <span class="name">김구리 회원님</span>
-                    <span class="time">PM 3:00 - 4:00</span>
-                </li>
-                <li class="schedule">
-                    <span class="name">가나다 회원님</span>
-                    <span class="time">PM 5:00 - 6:00</span>
-                </li>
-            </ul>
-        </div>
-
+        <c:choose>
+    		<c:when test="${authUser.userType eq 'trainer'}">
+	        <div class="statistics">
+	            <dl class="review">
+	                <dt>평점</dt>
+	                <dd>4.7점 / 38개</dd>
+	            </dl>
+	            <dl>
+	                <dt>현재 회원 수</dt>
+	                <dd>23명</dd>
+	            </dl>
+	            <dl>
+	                <dt>누적 회원 수</dt>
+	                <dd>120명</dd>
+	            </dl>
+	        </div>
+	        <div class="schedule-wrapper">
+	            <h3 class="title">오늘의 일정</h3>
+	            <ul class="schedule-list">
+	            	<c:forEach items="${summary.scheduleList}" var="schedule">
+		                <li class="schedule">
+		                    <span class="name">${schedule.userName} 회원님</span>
+		                    <span class="time">${schedule.startTime} - ${schedule.endTime}</span>
+		                </li>
+		                </c:forEach>
+	
+	            </ul>
+	        </div>
+		    </c:when>
+		    
+    		<c:otherwise>
+    			무엇을 넣어야하나요
+    		</c:otherwise>
+   		</c:choose>
     </div>
 </div>
 <div class="menu-wrapper">
