@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -97,15 +98,24 @@ public class SearchController {
 	// 리뷰목록 불러오기
 	@ResponseBody
 	@RequestMapping("/search/reviewList")
-	public List<ReviewVo> reviewList(@RequestParam("no") int no) {
+	public List<ReviewVo> reviewList(@RequestParam("no") int no,Model model) {
 		System.out.println("controller:/search/reviewList");
 
 		System.out.println("넘버"+no);
 		List<ReviewVo> reviewVo = searchService.reviewList(no);
 		
+		model.addAttribute("reviewVo", reviewVo);
+		
+		
 		return reviewVo;
 
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 }
