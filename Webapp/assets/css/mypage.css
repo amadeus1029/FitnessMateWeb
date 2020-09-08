@@ -270,6 +270,7 @@
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 30px;
+  line-height: 1;
 }
 .summary-wrapper .summary .statistics,
 .summary-wrapper .summary .schedule-wrapper {
@@ -288,14 +289,22 @@
   margin-bottom: 30px;
 }
 .summary-wrapper .summary .statistics dl dt,
-.summary-wrapper .summary .schedule-wrapper dl dt {
-  font-size: 28px;
-  margin-bottom: 10px;
-  color: #fff;
-}
+.summary-wrapper .summary .schedule-wrapper dl dt,
 .summary-wrapper .summary .statistics dl dd,
 .summary-wrapper .summary .schedule-wrapper dl dd {
   color: #fff;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+}
+.summary-wrapper .summary .statistics dl dt,
+.summary-wrapper .summary .schedule-wrapper dl dt {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+.summary-wrapper .summary .statistics dl dd,
+.summary-wrapper .summary .schedule-wrapper dl dd {
+  margin-bottom: 5px;
   font-size: 24px;
 }
 .summary-wrapper .summary ul.schedule-list {
