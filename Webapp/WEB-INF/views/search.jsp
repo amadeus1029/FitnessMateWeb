@@ -210,35 +210,16 @@
 
 				
 					<!--로그인 유저 넘버 -->
-					<input type="text" id="loginUser" value="${authUser.userNo}" >
+					<input type="hidden" id="loginUser" value="${authUser.userNo}" >
 					
 					<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
-					
                     <div class="reviewWrite">
-                        <span>리뷰작성</span>
-                        
-                        <div id="star_grade">
-                            <input type="hidden"  name="reviewScore" value="0">
-                            <i  class="fas fa-star" data-score="1"></i>
-                            <i  class="fas fa-star" data-score="2"></i>
-                            <i  class="fas fa-star" data-score="3"></i>
-                            <i  class="fas fa-star" data-score="4"></i>
-                            <i  class="fas fa-star" data-score="5"></i>
-                        </div>
-                        <textarea class="content" name='content' placeholder="사용하시면서 달라진 만족도에 대한 후기를 남겨주세요(최소 10자 이상)"></textarea>
-                        <div>
-                            <input  type="file" id="file"  name="file_name" class="image_inputType_file" >
-                        </div>
-                        <button class="button revW" type="submit">작성</button>
                     </div>
-					
 					<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
 
                     <ul class="review-list">
-                    
-                    
-                     	
                     </ul>
+                    
                 </div> <!-- 리뷰작성페이지 -->
                 
                 <!-- 지도 페이지 -->
@@ -513,19 +494,71 @@
 	//리뷰리스트 불러오기
 	$(".label-btn.review-btn").on("click",function(){
 		
-		reviewList();
-			
+		reviewList();//리뷰목록
+		reviewWrite();//리뷰작성
 		
 	});
 	
+	//리뷰작성폼
+	function reviewWrite(){
+		var reviewNo = $("#delNo").val();
+	    console.log("리뷰작성용 트레이너 넘버"+reviewNo);
+	    var loginUser = $("#loginUser").val();
+		console.log("로그인유저번호 추출"+loginUser);
+
+	    
+	    $.ajax({
+
+			url : "${pageContext.request.contextPath }/search/reviewList",
+			type : "post",
+			//contentType : "application/json",
+			data : {no: reviewNo},
+
+			dataType : "json",
+			success : function(reviewVo) {
+				
+				var reviewStr = "";
+				
+				var loginUser = $("#loginUser").val();
+				console.log("로그인유저번호 추출"+loginUser);
+					
+					if(reviewVo.trainerNo == reviewNo && reviewVo.scheduleCount >=1){
+					reviewStr += '<span>리뷰작성</span>';
+					reviewStr += '<div id="star_grade">';
+					reviewStr += '  <input type="hidden"  name="reviewScore" value="0">';
+					reviewStr += '  <i  class="fas fa-star" data-score="1"></i>';
+					reviewStr += '  <i  class="fas fa-star" data-score="2"></i>';
+					reviewStr += '  <i  class="fas fa-star" data-score="3"></i>';
+					reviewStr += '  <i  class="fas fa-star" data-score="4"></i>';
+					reviewStr += '  <i  class="fas fa-star" data-score="5"></i>';
+					reviewStr += '</div>';
+					reviewStr += '<textarea class="content" name="content" placeholder="사용하시면서 달라진 만족도에 대한 후기를 남겨주세요(최소 10자 이상)"></textarea>';
+					reviewStr += '<div>';
+					reviewStr += '  <input  type="file" id="file"  name="file_name" class="image_inputType_file" >';
+					reviewStr += '</div>';
+					reviewStr += '<button class="button revW" type="submit">작성</button>';
+					}
+				
+				$(".reviewWrite").append(reviewStr);
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+	}
 	
 	
 	
+	
+		
+	//리뷰목록
 	function reviewList(){
 		
 		var reviewNo = $("#delNo").val();
 		
-	    console.log("리뷰페이지 트레이너 넘버"+reviewNo);
+	    console.log("리뷰목록 트레이너 넘버"+reviewNo);
 		
 		
 		$.ajax({
@@ -537,17 +570,17 @@
 
 			dataType : "json",
 			success : function(reviewVo) {
-				console.log("성공");
 				
+				//방명록 비우기
 				$("ul.review-list").empty();
 				var reviewStr = "";
 				
 				var loginUser = $("#loginUser").val();
 				console.log("로그인유저번호 추출"+loginUser);
-				
-				
+												
 				
 				for (var review of reviewVo ) {
+					
 					
 					reviewStr += '<li class="review-line">';
 					reviewStr += '  <div class="user-profile ff">';
@@ -564,13 +597,14 @@
 					reviewStr += '  </div>';
 					reviewStr += '  <div class="clearfix review-btn-area">';
 					
+					var writeUser = review.userNo;
+					console.log("리뷰작성 유저 추출"+writeUser);
 					
-					
-					
+					if(writeUser == loginUser){
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">수정</button>';
-					
-					if(reviewNo = loginUser){
+					}
+					if(reviewNo == loginUser){
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">답글</button> ';
 					}
@@ -580,6 +614,7 @@
 					
 				}
 				$("ul.review-list").append(reviewStr);
+				
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
