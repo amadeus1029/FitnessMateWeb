@@ -142,6 +142,13 @@ public class SearchService {
 		List<ReviewVo> reviewVo = searchDao.reviewList(no);
 		return reviewVo;
 	}
+
+	// 리뷰작성자격 확인
+	public List<ReviewVo> reviewWrite(int no) {
+		System.out.println("SearchService:reviewWrite");
+		List<ReviewVo> reviewVo = searchDao.reviewWrite(no);
+		return reviewVo;
+	}
 	
 	
 	

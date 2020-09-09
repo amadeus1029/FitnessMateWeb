@@ -114,6 +114,15 @@ public class SearchDao {
 		return reviewVo;
 	}
 
+	public List<ReviewVo> reviewWrite(int no) {
+		System.out.println("searchDao:reviewWrite");
+		
+		List<ReviewVo> reviewVo = sqlSession.selectOne("review.reviewWrite", no);
+		
+		
+		return reviewVo;
+	}
+
 	
 	
 

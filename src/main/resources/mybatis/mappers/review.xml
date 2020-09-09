@@ -21,6 +21,20 @@
 	]]>
 	</select>
 	
+	
+	<!--리뷰 작성가능 회원 분별 -->
+	<select id="reviewWrite" parameterType="int"
+	resultType="com.javaex.vo.ReviewVo">
+	<![CDATA[
+	SELECT  p.userno,p.trainerno,s.schedulecount,u.name
+		FROM pt p,(SELECT ptNo, COUNT(scheduleNo) scheduleCount
+					            FROM schedule
+					            group by ptNo)s,users u
+		where p.ptno = s.ptno
+		and u.userno = p.userno
+		and p.userno= #{no}
+	]]>
+	</select>
 
 	
 	

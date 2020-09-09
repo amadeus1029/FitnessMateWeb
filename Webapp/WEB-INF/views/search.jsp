@@ -495,7 +495,10 @@
 	$(".label-btn.review-btn").on("click",function(){
 		
 		reviewList();//리뷰목록
-		reviewWrite();//리뷰작성
+		var loginUser = $("#loginUser").val();
+		console.log("맨처음 로그인유저번호 추출"+loginUser);
+		if(loginUser !=null && loginUser !=''){reviewWrite();}
+				
 		
 	});
 	
@@ -509,20 +512,19 @@
 	    
 	    $.ajax({
 
-			url : "${pageContext.request.contextPath }/search/reviewList",
+			url : "${pageContext.request.contextPath }/search/reviewWrite",
 			type : "post",
 			//contentType : "application/json",
-			data : {no: reviewNo},
+			data : {no: loginUser},
 
 			dataType : "json",
 			success : function(reviewVo) {
-				
+				$(".reviewWrite").empty();
 				var reviewStr = "";
-				
-				var loginUser = $("#loginUser").val();
-				console.log("로그인유저번호 추출"+loginUser);
-					
-					if(reviewVo.trainerNo == reviewNo && reviewVo.scheduleCount >=1){
+								
+
+					if(reviewVo.trainerNo == reviewNo && reviewVo.scheduleCount >= 1){
+						console.log("로그인트레이너 유저 추출"+review.trainerNo);
 					reviewStr += '<span>리뷰작성</span>';
 					reviewStr += '<div id="star_grade">';
 					reviewStr += '  <input type="hidden"  name="reviewScore" value="0">';
@@ -537,7 +539,7 @@
 					reviewStr += '  <input  type="file" id="file"  name="file_name" class="image_inputType_file" >';
 					reviewStr += '</div>';
 					reviewStr += '<button class="button revW" type="submit">작성</button>';
-					}
+					} 
 				
 				$(".reviewWrite").append(reviewStr);
 				
@@ -548,9 +550,6 @@
 		});
 		
 	}
-	
-	
-	
 	
 		
 	//리뷰목록
