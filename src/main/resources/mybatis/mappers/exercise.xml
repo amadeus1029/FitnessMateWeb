@@ -74,6 +74,63 @@
             where exerciseNo = #{exNo} and trainerNo = #{trainerNo}
         ]]>
     </delete>
+    
+    <select id="selectExDate" parameterType="int" resultType="String">
+        <![CDATA[
+        
+			SELECT TO_CHAR(s.startTime, 'yyyy-mm-dd') startTime
+			FROM schedule s left outer join pt p
+			ON s.ptNo = p.ptNo
+			WHERE p.ptNo = (SELECT MAX(ptNo)
+				            FROM pt
+				            WHERE userNo = #{userNo})
+			ORDER by s.startTime desc
+
+        ]]>
+    </select>
+    
+    <select id="selectExList" parameterType="int" resultType="com.javaex.vo.RecordVo">
+        <![CDATA[
+        
+			SELECT exe.exercisename exName, exe.partName exPart, exe.unit, count.setCount
+			FROM (SELECT distinct ex.exercisename, p.partName, ex.unit, ex.exerciseno
+					FROM ex_part p
+					RIGHT OUTER JOIN (SELECT e.exerciseno, e.exercisepart, e.exercisename, e.unit
+                                        FROM records r LEFT OUTER JOIN exercise e
+                                        ON r.exerciseno = e.exerciseno
+                                        WHERE r.scheduleNo = (SELECT Max(s.scheduleNo)
+                                                            FROM schedule s left outer join pt p
+                                                            ON s.ptNo = p.ptNo
+                                                            WHERE p.ptNo = (SELECT max(ptNo)
+                                                                        FROM pt
+                                                                        WHERE userNo = #{userNo})
+                                                            AND TO_CHAR(s.startTime, 'yyyymmdd') < TO_CHAR(sysdate, 'yyyymmdd'))) ex
+			        on p.partNo = ex.exercisepart) exe, (SELECT count(exerciseNo) setCount, exerciseNo FROM records GROUP BY exerciseNo) count
+			WHERE exe.exerciseno = count.exerciseNo
+
+        ]]>
+    </select>
+    
+	<select id="selectSetList" parameterType="int" resultType="com.javaex.vo.RecordVo">
+        <![CDATA[
+        
+			SELECT ex.exercisename exName, ex.count, ex.amount
+			FROM ex_part p
+			RIGHT OUTER JOIN (SELECT e.exercisepart, e.exercisename, r.count, r.amount
+                              FROM records r LEFT OUTER JOIN exercise e
+                              ON r.exerciseno = e.exerciseno
+                              WHERE r.scheduleNo = (SELECT Max(s.scheduleNo)
+                                                  FROM schedule s LEFT OUTER JOIN pt p
+                                                  ON s.ptNo = p.ptNo
+                                                  WHERE p.ptNo = (SELECT max(ptNo)
+	                                                              FROM pt
+	                                                              WHERE userNo = #{userNo})
+                                                  AND TO_CHAR(s.startTime, 'yyyymmdd') < TO_CHAR(sysdate, 'yyyymmdd'))) ex
+			ON p.partNo = ex.exercisepart
+
+        ]]>
+    </select>
+    
 </mapper>
 
         <!--

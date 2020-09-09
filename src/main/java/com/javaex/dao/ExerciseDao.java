@@ -1,12 +1,13 @@
 package com.javaex.dao;
 
-import com.javaex.vo.ExerciseVo;
-import com.javaex.vo.RecordVo;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.javaex.vo.ExerciseVo;
+import com.javaex.vo.RecordVo;
 
 @Repository
 public class ExerciseDao {
@@ -41,4 +42,18 @@ public class ExerciseDao {
     public List<ExerciseVo> showExPart(ExerciseVo exVo) {
         return sqlSession.selectList("exercise.selectByPart", exVo);
     }
+
+	public List<String> selectExDate(int userNo) {
+		return sqlSession.selectList("exercise.selectExDate", userNo);
+	}
+
+	public List<RecordVo> selectExList(int userNo) {
+		return sqlSession.selectList("exercise.selectExList", userNo);
+	}
+
+	public List<RecordVo> selectSetList(int userNo) {
+		return sqlSession.selectList("exercise.selectSetList", userNo);
+	}
+    
+    
 }

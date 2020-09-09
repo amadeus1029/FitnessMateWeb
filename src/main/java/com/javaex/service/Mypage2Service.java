@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.javaex.dao.ExerciseDao;
 import com.javaex.dao.PtDao;
 import com.javaex.dao.RecordDao;
 import com.javaex.dao.ScheduleDao;
@@ -30,6 +31,9 @@ public class Mypage2Service {
 	
 	@Autowired
 	private ScheduleDao scheduleDao;
+	
+	@Autowired
+	private ExerciseDao exerciseDao;
 	
 	public List<PtVo> getTraineeList(int trainerNo) {
 		System.out.println("service 트레이니 리스트 받아오기");
@@ -183,6 +187,20 @@ public class Mypage2Service {
 		return summaryNormal;
 	}
 	
+	public Map<String, Object> getExRecord(int userNo) {
+		
+		List<String> exRecordDate = exerciseDao.selectExDate(userNo);
+		List<RecordVo> exTitleList = exerciseDao.selectExList(userNo);
+		List<RecordVo> exSetList = exerciseDao.selectSetList(userNo);
+		
+		Map<String, Object> exMap = new HashMap<>();
+		exMap.put("exRecordDate", exRecordDate);
+		exMap.put("exTitleList", exTitleList);
+		exMap.put("exSetList", exSetList);
+		
+		return exMap;
+	}
+
 	
 	//오늘 날짜 가져오기
 	public int getToday() {

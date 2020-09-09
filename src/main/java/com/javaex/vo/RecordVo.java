@@ -2,7 +2,7 @@
 package com.javaex.vo;
 
 public class RecordVo {
-    private int recordNo, scheduleNo, exNo, count, amount;
+    private int recordNo, scheduleNo, exNo, count, amount, setCount;
     private String exPart, exName, unit, recordDate;
 
     public RecordVo() {
@@ -92,18 +92,19 @@ public class RecordVo {
         this.recordDate = recordDate;
     }
 
-    @Override
-    public String toString() {
-        return "RecordVo{" +
-                "recordNo=" + recordNo +
-                ", scheduleNo=" + scheduleNo +
-                ", exNo=" + exNo +
-                ", count=" + count +
-                ", amount=" + amount +
-                ", exPart='" + exPart + '\'' +
-                ", exName='" + exName + '\'' +
-                ", unit='" + unit + '\'' +
-                ", recordDate='" + recordDate + '\'' +
-                '}';
-    }
+	public int getSetCount() {
+		return setCount;
+	}
+
+	public void setSetCount(int setCount) {
+		this.setCount = setCount;
+	}
+
+	@Override
+	public String toString() {
+		return "RecordVo [recordNo=" + recordNo + ", scheduleNo=" + scheduleNo + ", exNo=" + exNo + ", count=" + count
+				+ ", amount=" + amount + ", setCount=" + setCount + ", exPart=" + exPart + ", exName=" + exName + ", unit=" + unit
+				+ ", recordDate=" + recordDate + "]";
+	}
+
 }

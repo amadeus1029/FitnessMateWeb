@@ -288,3 +288,40 @@ div.content-wrapper table tr td {
 	margin-bottom: 13px;
 	border-bottom: 1px solid #292c33;
 }
+
+div.content-wrapper div.recordList{
+    float: left;
+    width: 500px;
+    border: none;
+    margin: 2px 0px 0px 35px;
+}
+
+div.content-wrapper div.recordList table{
+    margin: 20px auto 0px;
+
+}
+
+div.content-wrapper div.recordList table th{
+    background-color: #dadde6;
+    text-align: center;
+    padding-top: 5px;
+    width: 100px;
+}
+
+div.content-wrapper div.recordList table th,td{
+    padding: 4px;
+}
+
+div.content-wrapper div.recordList table td.exTitle{
+    color: #cc2121;
+    font-size: 20px;
+}
+
+div.content-wrapper div.recordList table td{
+    width: 280px;
+}
+
+.box_color ul li:hover {
+	background-color: #dadde6;
+	cursor: pointer;
+}
