@@ -521,10 +521,10 @@
 			success : function(reviewVo) {
 				$(".reviewWrite").empty();
 				var reviewStr = "";
-								
+				console.log("리뷰보확인"+reviewVo);
 
 					if(reviewVo.trainerNo == reviewNo && reviewVo.scheduleCount >= 1){
-						console.log("로그인트레이너 유저 추출"+review.trainerNo);
+					
 					reviewStr += '<span>리뷰작성</span>';
 					reviewStr += '<div id="star_grade">';
 					reviewStr += '  <input type="hidden"  name="reviewScore" value="0">';
