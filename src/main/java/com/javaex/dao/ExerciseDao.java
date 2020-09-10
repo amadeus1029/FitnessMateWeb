@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.ExerciseVo;
 import com.javaex.vo.RecordVo;
+import com.javaex.vo.ScheduleVo;
 
 @Repository
 public class ExerciseDao {
@@ -43,17 +44,25 @@ public class ExerciseDao {
         return sqlSession.selectList("exercise.selectByPart", exVo);
     }
 
-	public List<String> selectExDate(int userNo) {
+	public List<ScheduleVo> selectExDate(int userNo) {
 		return sqlSession.selectList("exercise.selectExDate", userNo);
 	}
 
-	public List<RecordVo> selectExList(int userNo) {
-		return sqlSession.selectList("exercise.selectExList", userNo);
+	public List<RecordVo> selectRecentEx(int userNo) {
+		return sqlSession.selectList("exercise.selectRecentEx", userNo);
 	}
 
-	public List<RecordVo> selectSetList(int userNo) {
-		return sqlSession.selectList("exercise.selectSetList", userNo);
+	public List<RecordVo> selectRecentSet(int userNo) {
+		return sqlSession.selectList("exercise.selectRecentSet", userNo);
 	}
-    
+
+	public List<RecordVo> selectThisEx(int scheduleNo) {
+		return sqlSession.selectList("exercise.selectThisEx", scheduleNo);
+	}
+
+	public List<RecordVo> selectThisSet(int scheduleNo) {
+		return sqlSession.selectList("exercise.selectThisSet", scheduleNo);
+
+	}
     
 }

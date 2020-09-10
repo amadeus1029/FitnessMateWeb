@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.javaex.service.Mypage2Service;
 import com.javaex.vo.InbodyVo;
 import com.javaex.vo.PtVo;
+import com.javaex.vo.RecordVo;
 import com.javaex.vo.UserVo;
 
 @Controller
@@ -149,6 +150,18 @@ public class Mypage2Controller {
     	
     	//변경된 정보 가져오기
     	return mypageService.getUserInfo(ptNo);
+    }
+    
+    @ResponseBody
+    @RequestMapping("/showExRecord")
+    public Map<String, Object> showExRecord(int scheduleNo) {
+    	System.out.println("마이페이지 컨트롤러 날짜 클릭시");
+    	System.out.println("scheduleNo: "+scheduleNo);
+    	
+    	Map<String, Object> map = mypageService.getThisRecord(scheduleNo);
+    	System.out.println(map);
+    	
+    	return map;
     }
     
     

@@ -189,18 +189,22 @@ public class Mypage2Service {
 	
 	public Map<String, Object> getExRecord(int userNo) {
 		
-		List<String> exRecordDate = exerciseDao.selectExDate(userNo);
-		List<RecordVo> exTitleList = exerciseDao.selectExList(userNo);
-		List<RecordVo> exSetList = exerciseDao.selectSetList(userNo);
-		
 		Map<String, Object> exMap = new HashMap<>();
-		exMap.put("exRecordDate", exRecordDate);
-		exMap.put("exTitleList", exTitleList);
-		exMap.put("exSetList", exSetList);
+		exMap.put("exRecordDate", exerciseDao.selectExDate(userNo));
+		exMap.put("exTitleList", exerciseDao.selectRecentEx(userNo));
+		exMap.put("exSetList", exerciseDao.selectRecentSet(userNo));
 		
 		return exMap;
 	}
 
+	public Map<String, Object> getThisRecord(int scheduleNo) {
+		
+		Map<String, Object> thisMap = new HashMap<>();
+		thisMap.put("thisExList", exerciseDao.selectThisEx(scheduleNo));
+		thisMap.put("thisSetList", exerciseDao.selectThisSet(scheduleNo));
+		
+		return thisMap;
+	}
 	
 	//오늘 날짜 가져오기
 	public int getToday() {

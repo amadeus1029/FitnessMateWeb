@@ -68,6 +68,7 @@
             values(#{exNo}, #{trainerNo}, #{exName}, #{exPartNo}, #{unit})
         ]]>
     </insert>
+    
     <delete id="delete" parameterType="ExVo">
         <![CDATA[
             delete exercise
@@ -75,43 +76,48 @@
         ]]>
     </delete>
     
-    <select id="selectExDate" parameterType="int" resultType="String">
+    <select id="selectExDate" parameterType="int" resultType="com.javaex.vo.ScheduleVo">
         <![CDATA[
         
-			SELECT TO_CHAR(s.startTime, 'yyyy-mm-dd') startTime
+			SELECT TO_CHAR(s.startTime, 'yyyy-mm-dd') startTime, s.scheduleNo
 			FROM schedule s left outer join pt p
 			ON s.ptNo = p.ptNo
-			WHERE p.ptNo = (SELECT MAX(ptNo)
-				            FROM pt
-				            WHERE userNo = #{userNo})
+			WHERE p.userNo = #{userNo}
+			AND TO_CHAR(s.startTime, 'yyyymmdd') < TO_CHAR(sysdate, 'yyyymmdd')
 			ORDER by s.startTime desc
 
         ]]>
     </select>
     
-    <select id="selectExList" parameterType="int" resultType="com.javaex.vo.RecordVo">
+    <select id="selectRecentEx" parameterType="int" resultType="com.javaex.vo.RecordVo">
         <![CDATA[
         
-			SELECT exe.exercisename exName, exe.partName exPart, exe.unit, count.setCount
+			SELECT exe.exerciseName exName, exe.partName exPart, exe.unit, countS.setCount
 			FROM (SELECT distinct ex.exercisename, p.partName, ex.unit, ex.exerciseno
-					FROM ex_part p
-					RIGHT OUTER JOIN (SELECT e.exerciseno, e.exercisepart, e.exercisename, e.unit
-                                        FROM records r LEFT OUTER JOIN exercise e
-                                        ON r.exerciseno = e.exerciseno
-                                        WHERE r.scheduleNo = (SELECT Max(s.scheduleNo)
-                                                            FROM schedule s left outer join pt p
-                                                            ON s.ptNo = p.ptNo
-                                                            WHERE p.ptNo = (SELECT max(ptNo)
-                                                                        FROM pt
-                                                                        WHERE userNo = #{userNo})
-                                                            AND TO_CHAR(s.startTime, 'yyyymmdd') < TO_CHAR(sysdate, 'yyyymmdd'))) ex
-			        on p.partNo = ex.exercisepart) exe, (SELECT count(exerciseNo) setCount, exerciseNo FROM records GROUP BY exerciseNo) count
-			WHERE exe.exerciseno = count.exerciseNo
+			        FROM ex_part p
+			        RIGHT OUTER JOIN (SELECT e.exerciseno, e.exercisepart, e.exercisename, e.unit
+			                            FROM records r LEFT OUTER JOIN exercise e
+			                            ON r.exerciseno = e.exerciseno
+			                            WHERE r.scheduleNo = (SELECT Max(s.scheduleNo)
+			                                                FROM schedule s left outer join pt p
+			                                                ON s.ptNo = p.ptNo
+			                                                WHERE p.userNo = #{userNo}
+			                                                AND TO_CHAR(s.startTime, 'yyyymmdd') < TO_CHAR(sysdate, 'yyyymmdd'))) ex
+			        ON p.partNo = ex.exercisepart) exe, (SELECT count(e.exerciseno) setCount, e.exerciseno
+			                                            FROM records r LEFT OUTER JOIN exercise e
+			                                            ON r.exerciseno = e.exerciseno
+			                                            WHERE r.scheduleNo = (SELECT Max(s.scheduleNo)
+			                                                                FROM schedule s left outer join pt p
+			                                                                ON s.ptNo = p.ptNo
+			                                                                WHERE p.userNo =  #{userNo}
+			                                                                AND TO_CHAR(s.startTime, 'yyyymmdd') < TO_CHAR(sysdate, 'yyyymmdd'))
+			                                            GROUP BY e.exerciseno) countS
+			        WHERE exe.exerciseno = counts.exerciseno
 
         ]]>
     </select>
     
-	<select id="selectSetList" parameterType="int" resultType="com.javaex.vo.RecordVo">
+	<select id="selectRecentSet" parameterType="int" resultType="com.javaex.vo.RecordVo">
         <![CDATA[
         
 			SELECT ex.exercisename exName, ex.count, ex.amount
@@ -122,14 +128,53 @@
                               WHERE r.scheduleNo = (SELECT Max(s.scheduleNo)
                                                   FROM schedule s LEFT OUTER JOIN pt p
                                                   ON s.ptNo = p.ptNo
-                                                  WHERE p.ptNo = (SELECT max(ptNo)
-	                                                              FROM pt
-	                                                              WHERE userNo = #{userNo})
+                                                  WHERE p.userNo = #{userNo}
                                                   AND TO_CHAR(s.startTime, 'yyyymmdd') < TO_CHAR(sysdate, 'yyyymmdd'))) ex
 			ON p.partNo = ex.exercisepart
 
         ]]>
     </select>
+    
+	<select id="selectThisEx" parameterType="map" resultType="com.javaex.vo.RecordVo">
+        <![CDATA[
+        
+			SELECT exe.exerciseName exName, exe.partName exPart, exe.unit, countS.setCount
+			FROM
+			(SELECT distinct ex.exerciseName, p.partName, ex.unit
+			FROM ex_part p
+			RIGHT OUTER JOIN (SELECT e.exerciseName, e.exercisePart, e.unit, e.exerciseNo
+			                    FROM exercise e
+			                    RIGHT OUTER JOIN (SELECT r.exerciseNo
+			                                        FROM records r LEFT OUTER JOIN schedule s
+			                                        ON r.scheduleno = s.scheduleno
+			                                        WHERE r.scheduleno = #{scheduleNo}) re
+			                    on e.exerciseNo = re.exerciseNo) ex
+			ON p.partNo = ex.exercisePart) exe, (select e.exerciseName, COUNT(e.exerciseName) setCount
+			                                    FROM exercise e
+			                                    RIGHT OUTER JOIN (SELECT r.exerciseNo
+			                                                        FROM records r LEFT OUTER JOIN schedule s
+			                                                        ON r.scheduleno = s.scheduleno
+			                                                        WHERE r.scheduleno = #{scheduleNo}) re
+			                                    ON e.exerciseNo = re.exerciseNo
+			                                    GROUP BY e.exerciseName) countS
+			WHERE exe.exercisename = counts.exercisename
+
+        ]]>
+    </select>
+    
+	<select id="selectThisSet" parameterType="map" resultType="com.javaex.vo.RecordVo">
+        <![CDATA[
+        
+			SELECT e.exerciseName exName, re.count, re.amount, re.startTime recordDate
+			FROM exercise e RIGHT OUTER JOIN (SELECT r.exerciseNo, r.count, r.amount, to_char(s.starttime, 'yyyy-mm-dd') startTime
+			                                FROM records r left outer join schedule s
+			                                ON r.scheduleno = s.scheduleno
+			                                WHERE r.scheduleno = #{scheduleNo}) re
+			ON e.exerciseNo = re.exerciseNo
+
+        ]]>
+    </select>
+    
     
 </mapper>
 
