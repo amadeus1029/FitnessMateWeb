@@ -502,7 +502,7 @@
 		
 	});
 	
-	//리뷰작성폼
+	//리뷰쓰기
 	function reviewWrite(){
 		var reviewNo = $("#delNo").val();
 	    console.log("리뷰작성용 트레이너 넘버"+reviewNo);
@@ -521,8 +521,8 @@
 			success : function(reviewVo) {
 				$(".reviewWrite").empty();
 				var reviewStr = "";
-				console.log("리뷰보확인"+reviewVo);
-
+					
+				
 					if(reviewVo.trainerNo == reviewNo && reviewVo.scheduleCount >= 1){
 					
 					reviewStr += '<span>리뷰작성</span>';
@@ -589,7 +589,17 @@
 					reviewStr += '      <div class="user-profile-date">트레이닝- '+review.scheduleCount+'회차</div>';
 					reviewStr += '      <div class="user-profile-date">'+review.regDate+'</div>';
 					reviewStr += '    </div>';
-					reviewStr += '    <div class="user-profile-star fd"></div>';
+					reviewStr += '    <div class="user-profile-star fd">';
+				    
+					//별점만들기
+					for(var i = 0; i<review.score; i++){
+						reviewStr +=  '<i class="fas fa-star"></i>'  
+		            }
+		            for(var i = 0; i<5-review.score; i++){
+		            	reviewStr +=   '<i class="far fa-star"></i>'  
+		            }
+					
+					reviewStr += '    </div>';
 					reviewStr += '  </div>';
 					reviewStr += '  <div class="box">';
 					reviewStr += '    <div class="content">'+review.content+'</div>';
@@ -599,10 +609,13 @@
 					var writeUser = review.userNo;
 					console.log("리뷰작성 유저 추출"+writeUser);
 					
+					//회원이 로그인한 경우
 					if(writeUser == loginUser){
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">수정</button>';
 					}
+					
+					//트레이너가 로그인한 경우
 					if(reviewNo == loginUser){
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">답글</button> ';
@@ -610,21 +623,12 @@
 					reviewStr += '  </div>';
 					reviewStr += ' </li>';
 					
-					for(var i = 0; i<review.score; i++){
-		                $(".user-profile-star fd").append(
-		                    '<i class="fas fa-star"></i>'  
-		                );
-		            }
-		            for(var i = 0; i<5-review.score; i++){
-		                $(".user-profile-star fd").append(
-		                    '<i class="far fa-star"></i>'  
-		                );
-		            }
-
 				} 
 				
 				 				
 				$("ul.review-list").append(reviewStr);
+				
+				
 				
 			},
 			error : function(XHR, status, error) {
@@ -668,7 +672,8 @@
         $(".reviewWrite").on("click",".button.revW",function(){
             console.log("클릭")
         
-            var name ='김**';
+            var name ='어떡하지';
+            console.log(name);
             var date = '트레이닝 횟수-n개월';
             var date2 = '2020-08-17';
             var star = $("input[name='reviewScore']").val();

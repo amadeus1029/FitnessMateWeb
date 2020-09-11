@@ -108,7 +108,7 @@ public class SearchController {
 
 	}
 	
-	// 리뷰작성자격 확인
+	// 리뷰작성 가능한 사람인지 확인,리뷰 작성
 	@ResponseBody
 	@RequestMapping("/search/reviewWrite")
 	public ReviewVo reviewWrite(@RequestParam("no") int no) {
