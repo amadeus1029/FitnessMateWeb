@@ -48,21 +48,13 @@ public class ExerciseDao {
 		return sqlSession.selectList("exercise.selectExDate", userNo);
 	}
 
-	public List<RecordVo> selectRecentEx(int userNo) {
-		return sqlSession.selectList("exercise.selectRecentEx", userNo);
+	public List<RecordVo> selectEx(int ScheduleNo) {
+		return sqlSession.selectList("exercise.selectEx", ScheduleNo);
 	}
 
-	public List<RecordVo> selectRecentSet(int userNo) {
-		return sqlSession.selectList("exercise.selectRecentSet", userNo);
+	public List<RecordVo> selectSet(int ScheduleNo) {
+		return sqlSession.selectList("exercise.selectSet", ScheduleNo);
 	}
 
-	public List<RecordVo> selectThisEx(int scheduleNo) {
-		return sqlSession.selectList("exercise.selectThisEx", scheduleNo);
-	}
-
-	public List<RecordVo> selectThisSet(int scheduleNo) {
-		return sqlSession.selectList("exercise.selectThisSet", scheduleNo);
-
-	}
     
 }

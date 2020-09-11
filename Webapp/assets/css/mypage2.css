@@ -212,7 +212,7 @@ form#editProfileForm .main-info .main-info-wrapper.secDiv, form#editProfileForm 
 	float: left;
 }
 
-.box_color div {
+.box_color>div {
 	height: 400px;
 	overflow: auto;
 }
@@ -291,25 +291,29 @@ div.content-wrapper table tr td {
 
 div.content-wrapper div.recordList{
     float: left;
-    width: 500px;
+    width: 600px;
     border: none;
     margin: 2px 0px 0px 35px;
 }
 
+div.content-wrapper div.recordList div.emtMsg{
+    height: auto;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
 div.content-wrapper div.recordList table{
     margin: 20px auto 0px;
-
+	border: 1px solid #dadde6;
+	border-radius: 5px;
 }
 
 div.content-wrapper div.recordList table th{
-    background-color: #dadde6;
     text-align: center;
-    padding-top: 5px;
+    vertical-align: middle;
+    padding: 10px;
     width: 100px;
-}
-
-div.content-wrapper div.recordList table th,td{
-    padding: 4px;
 }
 
 div.content-wrapper div.recordList table td.exTitle{
@@ -319,6 +323,7 @@ div.content-wrapper div.recordList table td.exTitle{
 
 div.content-wrapper div.recordList table td{
     width: 280px;
+    padding: 4px;
 }
 
 .box_color ul li:hover {

@@ -53,7 +53,7 @@
 				<div>
 					<ul>
 						<c:forEach items="${exMap.exRecordDate}" var="date">
-							<li onclick = "showDateList(${date.scheduleNo})">${date.startTime}</li>
+							<li onclick = 'showDateList(${date.scheduleNo},"${date.startTime}")'>${date.startTime}</li>
 						</c:forEach>
 
 					</ul>
@@ -63,6 +63,11 @@
 			<div id="second_select" class="box_color recordList">
 				<p class="exDate">${exMap.exRecordDate[0].startTime}</p>
 				<div>
+					<c:if test="${exMap.exTitleList.size() eq 0}">
+						<div class="emtMsg">
+							이 날 운동 기록이 없어요 :( 
+						</div>
+					</c:if>
 					<c:forEach items="${exMap.exTitleList}" var="title">
 						<table>
 							<tr>
@@ -86,7 +91,9 @@
 	<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 	<script type="text/javascript">
 	
-	function showDateList(scheduleNo){
+	function showDateList(scheduleNo, date){
+		$(".recordList>div").children().remove();
+        $("p.exDate").text(date);
 		
 		$.ajax({
                 url: "${pageContext.request.contextPath}/mypage2/showExRecord",
@@ -95,35 +102,36 @@
                 
                 dataType: "json",
                 success: function (map) {
-                	
-               	$("p.exDate").text(map.thisSetList[1].recordDate);
-				$(".recordList>div").children().remove();
 				
-                var str = '';
-               	for(i = 0; i < map.thisExList.length; i++){
-                       str += '<table>';
-                       str += '	<tr>';
-                       str += '		<th rowspan="'+(map.thisExList[i].setCount+1)+'">'+map.thisExList[i].exPart+'</th>';
-                       str += '		<td class="exTitle">'+map.thisExList[i].exName+'('+map.thisExList[i].setCount+' set)</td>';
-                       str += '	</tr>';
-                       
-                       for(j = 0; j < map.thisSetList.length; j++){
-	                       if(map.thisExList[i].exName == map.thisSetList[j].exName){
-		                 		str += '			<tr>';
-		                 		str += '				<td>'+map.thisSetList[j].amount+map.thisExList[i].unit+' '+map.thisSetList[j].count+'회</td>';
-								str += '			</tr>';
+               	if(map.thisExList.length != 0){
+	                var str = '';
+	               	for(i = 0; i < map.thisExList.length; i++){
+	                       str += '<table>';
+	                       str += '	<tr>';
+	                       str += '		<th rowspan="'+(map.thisExList[i].setCount+1)+'">'+map.thisExList[i].exPart+'</th>';
+	                       str += '		<td class="exTitle">'+map.thisExList[i].exName+'('+map.thisExList[i].setCount+' set)</td>';
+	                       str += '	</tr>';
+	                       
+	                       for(j = 0; j < map.thisSetList.length; j++){
+		                       if(map.thisExList[i].exName == map.thisSetList[j].exName){
+			                 		str += '			<tr>';
+			                 		str += '				<td>'+map.thisSetList[j].amount+map.thisExList[i].unit+' '+map.thisSetList[j].count+'회</td>';
+									str += '			</tr>';
+								}
 							}
-						}
-                		str += '</table>';
-                       		
-               	}
-				$(".recordList>div").append(str);
-                            
+	                		str += '</table>';
+	               	}
+					$(".recordList>div").append(str);
+	               	
+                }else {
+	               	$(".recordList>div").append('<div class="emtMsg"> 이 날 운동 기록이 없어요 :( </div>');
+                }
+				
             },
             error: function (XHR, status, error) {
                 console.error(status + ":" + error);
             }
-        });
+        });g
 	};
 
 

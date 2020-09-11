@@ -189,10 +189,13 @@ public class Mypage2Service {
 	
 	public Map<String, Object> getExRecord(int userNo) {
 		
+		List<ScheduleVo> dateList = exerciseDao.selectExDate(userNo);
+		int scheduleNo = dateList.get(0).getScheduleNo();
+		
 		Map<String, Object> exMap = new HashMap<>();
-		exMap.put("exRecordDate", exerciseDao.selectExDate(userNo));
-		exMap.put("exTitleList", exerciseDao.selectRecentEx(userNo));
-		exMap.put("exSetList", exerciseDao.selectRecentSet(userNo));
+		exMap.put("exRecordDate", dateList);
+		exMap.put("exTitleList", exerciseDao.selectEx(scheduleNo));
+		exMap.put("exSetList", exerciseDao.selectSet(scheduleNo));
 		
 		return exMap;
 	}
@@ -200,8 +203,8 @@ public class Mypage2Service {
 	public Map<String, Object> getThisRecord(int scheduleNo) {
 		
 		Map<String, Object> thisMap = new HashMap<>();
-		thisMap.put("thisExList", exerciseDao.selectThisEx(scheduleNo));
-		thisMap.put("thisSetList", exerciseDao.selectThisSet(scheduleNo));
+		thisMap.put("thisExList", exerciseDao.selectEx(scheduleNo));
+		thisMap.put("thisSetList", exerciseDao.selectSet(scheduleNo));
 		
 		return thisMap;
 	}
