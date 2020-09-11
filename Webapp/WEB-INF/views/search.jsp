@@ -512,7 +512,7 @@
 	    
 	    $.ajax({
 
-			url : "${pageContext.request.contextPath }/search/reviewWrite",
+			url : "${pageContext.request.contextPath}/search/reviewWrite",
 			type : "post",
 			//contentType : "application/json",
 			data : {no: loginUser},
@@ -539,7 +539,7 @@
 					reviewStr += '  <input  type="file" id="file"  name="file_name" class="image_inputType_file" >';
 					reviewStr += '</div>';
 					reviewStr += '<button class="button revW" type="submit">작성</button>';
-					} 
+					}  
 				
 				$(".reviewWrite").append(reviewStr);
 				
@@ -562,7 +562,7 @@
 		
 		$.ajax({
 
-			url : "${pageContext.request.contextPath }/search/reviewList",
+			url : "${pageContext.request.contextPath}/search/reviewList",
 			type : "post",
 			//contentType : "application/json",
 			data : {no: reviewNo},
@@ -570,17 +570,17 @@
 			dataType : "json",
 			success : function(reviewVo) {
 				
+				
 				//방명록 비우기
 				$("ul.review-list").empty();
 				var reviewStr = "";
 				
 				var loginUser = $("#loginUser").val();
 				console.log("로그인유저번호 추출"+loginUser);
-												
+						
+				//if(reviewVo == null && reviewVo == ''){reviewStr +='<span>아직 작성된 리뷰가 없습니다.</span>'; }
 				
 				for (var review of reviewVo ) {
-					
-					
 					reviewStr += '<li class="review-line">';
 					reviewStr += '  <div class="user-profile ff">';
 					reviewStr += '    <img class="user-profile-img" src="${pageContext.request.contextPath}/assets/image/unnamed.jpg">';
@@ -589,7 +589,7 @@
 					reviewStr += '      <div class="user-profile-date">트레이닝- '+review.scheduleCount+'회차</div>';
 					reviewStr += '      <div class="user-profile-date">'+review.regDate+'</div>';
 					reviewStr += '    </div>';
-					reviewStr += '    <div class="user-profile-star fd">'+review.score+'</div>';
+					reviewStr += '    <div class="user-profile-star fd"></div>';
 					reviewStr += '  </div>';
 					reviewStr += '  <div class="box">';
 					reviewStr += '    <div class="content">'+review.content+'</div>';
@@ -610,8 +610,20 @@
 					reviewStr += '  </div>';
 					reviewStr += ' </li>';
 					
-					
-				}
+					for(var i = 0; i<review.score; i++){
+		                $(".user-profile-star fd").append(
+		                    '<i class="fas fa-star"></i>'  
+		                );
+		            }
+		            for(var i = 0; i<5-review.score; i++){
+		                $(".user-profile-star fd").append(
+		                    '<i class="far fa-star"></i>'  
+		                );
+		            }
+
+				} 
+				
+				 				
 				$("ul.review-list").append(reviewStr);
 				
 			},
@@ -644,7 +656,7 @@
         }
 		
         //별점 선택
-        $('#star_grade i').click(function(){
+        $('.reviewWrite').on("click","#star_grade i",function(){
             $(this).parent().children("i").removeClass("on");  /* 별점의 on 클래스 전부 제거 */ 
             $(this).addClass("on").prevAll("i").addClass("on"); /* 클릭한 별과, 그 앞 까지 별점에 on 클래스 추가 */
             var score = $(this).attr("data-score");
@@ -653,11 +665,11 @@
         });
        
         //버튼 눌렀을 때 리뷰 추가
-        $(".button.revW").on("click", function(){
+        $(".reviewWrite").on("click",".button.revW",function(){
             console.log("클릭")
         
             var name ='김**';
-            var date = '운동기간-n개월';
+            var date = '트레이닝 횟수-n개월';
             var date2 = '2020-08-17';
             var star = $("input[name='reviewScore']").val();
             var content = $("[name = 'content']").val();
@@ -715,7 +727,7 @@
         	
         	//데이터전송
         	$.ajax({
-        			url : "${pageContext.request.contextPath }/search/trainerInfo",
+        			url : "${pageContext.request.contextPath}/search/trainerInfo",
         			type : "post",
         			//contentType : "application/json",
         			data : {no: no},

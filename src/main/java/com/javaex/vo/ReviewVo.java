@@ -28,6 +28,7 @@ public class ReviewVo {
 		this.scheduleCount = scheduleCount;
 		this.name = name;
 	}
+	
 
 
 	public String getName() {

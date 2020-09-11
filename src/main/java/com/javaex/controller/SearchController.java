@@ -111,11 +111,11 @@ public class SearchController {
 	// 리뷰작성자격 확인
 	@ResponseBody
 	@RequestMapping("/search/reviewWrite")
-	public List<ReviewVo> reviewWrite(@RequestParam("no") int no) {
+	public ReviewVo reviewWrite(@RequestParam("no") int no) {
 		System.out.println("controller:/search/reviewWrite");
 
-		System.out.println("넘버"+no);
-		List<ReviewVo> reviewVo = searchService.reviewWrite(no);
+		System.out.println("리뷰넘버"+no);
+		ReviewVo reviewVo = searchService.reviewWrite(no);
 		
 		System.out.println("리뷰작성자격 확인"+reviewVo);
 		

@@ -114,13 +114,13 @@ public class SearchDao {
 		return reviewVo;
 	}
 
-	public List<ReviewVo> reviewWrite(int no) {
+	public ReviewVo reviewWrite(int no) {
 		System.out.println("searchDao:reviewWrite");
 		
-		List<ReviewVo> reviewVo = sqlSession.selectOne("review.reviewWrite", no);
+		ReviewVo reviewWr = sqlSession.selectOne("review.reviewWrite",no);
+		System.out.println("리뷰작성하기 다오: "+reviewWr);
 		
-		
-		return reviewVo;
+		return reviewWr;
 	}
 
 	
