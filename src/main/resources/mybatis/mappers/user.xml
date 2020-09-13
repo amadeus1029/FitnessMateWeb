@@ -86,7 +86,8 @@
 			    location = #{location},
 			    company = #{company},
 				introduction = #{introduction},
-			    price = #{price}
+			    price = #{price},
+			    profileImg = #{profileImg}
 		]]>
 		
 		<if test = "name != null" >
@@ -122,7 +123,8 @@
 				gender = #{gender},
 			    birthDate = #{birthDate},
 			    career = #{career},
-				introduction = #{introduction}
+				introduction = #{introduction},
+				profileImg = #{profileImg}
 			WHERE userNo = #{userNo}
 			
 		]]>
@@ -162,7 +164,7 @@
 	<select id="selectProfile" parameterType="int" resultType="com.javaex.vo.UserVo">
 		<![CDATA[
 		
-			SELECT name, gender, phone, TO_CHAR(birthDate, 'yyyy/mm/dd') "birthDate", introduction, career, location, company, price
+			SELECT name, gender, phone, TO_CHAR(birthDate, 'yyyy/mm/dd') "birthDate", introduction, career, location, company, price, profileImg
 			FROM users
 			where userNo = #{userNo}
 		

@@ -39,6 +39,16 @@
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/mypage2.css">
 
+    <!-- dropzone -->
+    <script src="${pageContext.request.contextPath}/assets/js/dropzone/dropzone.js"></script>
+    <link href="${pageContext.request.contextPath}/assets/js/dropzone/dropzone.css" rel="stylesheet">
+
+    <script src="${pageContext.request.contextPath}/assets/js/cropper/cropper.min.js"></script>
+    <link href="${pageContext.request.contextPath}/assets/js/cropper/cropper.min.css" rel="stylesheet">
+
+    <script src="${pageContext.request.contextPath}/assets/js/canvas-blob/canvas-toBlob.js"></script>
+
+
 </head>
 
 <body>
@@ -51,9 +61,13 @@
                   method="get">
                 <div class="main-info clearfix">
                     <div class="main-info-wrapper clearfix">
-                        <img src="${pageContext.request.contextPath}/assets/image/face/Park-Myung- Soo.jpg"
-                             class="profile-img">
+                        <div class="profile-img dropzone-wrapper">
+                            <c:if test="${profile.userVo.profileImg ne null}">
+                                <img class="dropzone-previews" src="${pageContext.request.contextPath}/upload/${profile.userVo.profileImg}" alt="profileImage" title="profileImage">
+                            </c:if>
+                        </div>
                         <button type="button" class="button change-btn">이미지 변경</button>
+                        <input type="hidden" name="profileImg" value="${profile.userVo.profileImg}">
                     </div>
                     <div class="main-info-wrapper">
                         <h3 class="title">이름</h3>
@@ -68,9 +82,11 @@
                     <div class="info">
                         <h3 class="title">성별</h3>
                         <div class="radio-wrapper clearfix">
-                            <input type="radio" id="genderMale" name="gender" value="male" ${profile.userVo.gender eq 'male' ? 'checked' : ''}>
+                            <input type="radio" id="genderMale" name="gender"
+                                   value="male" ${profile.userVo.gender eq 'male' ? 'checked' : ''}>
                             <label for="genderMale">남성</label>
-                            <input type="radio" id="genderFemale" name="gender" value="female" ${profile.userVo.gender eq 'female' ? 'checked' : ''}>
+                            <input type="radio" id="genderFemale" name="gender"
+                                   value="female" ${profile.userVo.gender eq 'female' ? 'checked' : ''}>
                             <label for="genderFemale">여성</label>
                         </div>
                     </div>
@@ -86,7 +102,7 @@
                                 </option>
                             </c:forEach>
                         </select> <select name="birth">
-                            <c:forEach var="month" begin="1" end="12" step="1">
+                        <c:forEach var="month" begin="1" end="12" step="1">
                             <option value="${month}"
                                     <c:if test="${month eq profile.splitBirthDate[1]}">
                                         selected
@@ -94,7 +110,7 @@
                             >${month}월
                             </option>
                         </c:forEach>
-                        </select>
+                    </select>
                         <select name="birth">
                             <c:forEach var="date" begin="1" end="31" step="1">
                                 <option value="${date}"
@@ -106,7 +122,7 @@
                             </c:forEach>
                         </select>
                     </div>
-                    
+
                     <div class="info">
                         <c:choose>
                             <c:when test="${authUser.userType eq 'trainer'}">
@@ -121,9 +137,9 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
-                    
+
                 </div>
-                
+
                 <c:choose>
                     <c:when test="${authUser.userType eq 'trainer'}">
                         <div class="info-wrapper clearfix">
@@ -223,16 +239,25 @@
 </body>
 
 <script type="text/javascript">
-	$("button[type='submit'].main").on("click", function(){
-		console.log($("input[name='career']").val());
-		
-		if($("input[name='career']").val() == ""){
-			alert("경력 란이 비어있어요!");
-			return false;
-		}
-		
-		alert("프로필이 수정되었습니다.");
-	});
+
+    $(document).ready(function () {
+        bindDropZone($(".dropzone-wrapper"));
+
+        $(".change-btn").on("click", function(){
+            $(this).siblings(".dropzone-wrapper").click();
+        });
+    }); //ready 함수 종료
+
+    $("button[type='submit'].main").on("click", function () {
+        console.log($("input[name='career']").val());
+
+        if ($("input[name='career']").val() == "") {
+            alert("경력 란이 비어있어요!");
+            return false;
+        }
+
+        alert("프로필이 수정되었습니다.");
+    });
 
     // + 눌렀을 때 수상내역 추가
     $(".fa-plus-square")
@@ -364,6 +389,106 @@
         })
 
     };
+
+    //crop and upload
+    function bindDropZone(target) {
+        target.dropzone({
+            autoProcessQueue: true,
+            url: "${pageContext.request.contextPath}/upload/image",
+            previewTemplate: "<img class='dropzone-previews' alt='' title=''>",
+            parallelUploads: 1000,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF",
+            success: function (file) {
+                var fileName = file.xhr.responseText.replace(/\"/gi, "");
+                var imageUrl = "${pageContext.request.contextPath}/upload/"+fileName;
+                var last = target.find(".dropzone-previews").last();
+                target.siblings("input[name='profileImg']").val(fileName);
+                last.attr("src", imageUrl);
+                last.siblings('.dropzone-previews').remove();
+            },
+            transformFile: function (file, done) {
+                var myDropZone = this;
+
+                // Create the image editor overlay
+                var editor = document.createElement('div');
+                editor.classList.add('crop-wrapper');
+
+
+                // Create the confirm button
+                var confirm = document.createElement('button');
+
+
+                confirm.classList.add('confirm');
+                confirm.textContent = '확인';
+                confirm.addEventListener('click', function () {
+
+                    // Get the canvas with image data from Cropper.js
+                    var canvas = cropper.getCroppedCanvas({
+                        width: 320,
+                        height: 240
+                    });
+
+
+                    // Turn the canvas into a Blob (file object without a name)
+                    canvas.toBlob(function (blob) {
+
+                        // Update the image thumbnail with the new image data
+                        myDropZone.createThumbnail(
+                            blob,
+                            myDropZone.options.thumbnailWidth,
+                            myDropZone.options.thumbnailHeight,
+                            myDropZone.options.thumbnailMethod,
+                            false,
+                            function (dataURL) {
+
+                                // Update the Dropzone file thumbnail
+                                myDropZone.emit('thumbnail', file, dataURL);
+
+                                // Return modified file to dropzone
+                                done(blob);
+                            }
+                        );
+
+                    }, file.type);
+
+                    // Remove the editor from view
+                    editor.parentNode.removeChild(editor);
+                });
+                editor.appendChild(confirm);
+
+                // Create the cancel button
+                var cancel = document.createElement('button');
+                var thisPreview = target.find('.dropzone-previews').last();
+
+                cancel.classList.add('cancel');
+                cancel.textContent = '취소';
+                cancel.addEventListener('click', function () {
+                    // Remove the editor from view
+                    thisPreview.remove();
+                    document.body.removeChild(editor);
+                });
+                editor.appendChild(cancel);
+
+                // Load the image
+                var image = new Image();
+                image.src = URL.createObjectURL(file);
+                editor.appendChild(image);
+
+                // Append the editor to the page
+                document.body.appendChild(editor);
+
+                // Create Cropper.js and pass image
+                var cropper = new Cropper(image, {
+                    aspectRatio: 1 / 1,
+                    zoomOnWheel: false,
+                    autoCropArea: 0.5,
+                    viewMode: 2,
+                    minCanvasWidth: 200
+                });
+            }
+
+        });
+    }
 </script>
 
 </html>

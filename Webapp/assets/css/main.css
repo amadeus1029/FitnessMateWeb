@@ -223,6 +223,38 @@
 #modifyScheduleModal .modal-wrapper .modal-btn-area button {
   margin-top: 30px;
 }
+/* 이미지 크롭 모달 */
+div.crop-wrapper {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 800px;
+  max-height: 600px;
+  z-index: 20;
+}
+div.crop-wrapper img {
+  max-width: 100%;
+}
+div.crop-wrapper > button {
+  position: absolute;
+  z-index: 2;
+  bottom: 10px;
+  padding: 8px;
+  background-color: #fff;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+div.crop-wrapper > button.confirm {
+  right: 10px;
+}
+div.crop-wrapper > button.cancel {
+  right: 60px;
+}
+div.crop-wrapper .cropper-wrap-box {
+  background-color: #fff;
+}
 /* import/variable { */
 .clearfix:after {
   content: '';
