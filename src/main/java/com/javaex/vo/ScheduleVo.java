@@ -20,7 +20,12 @@ public class ScheduleVo {
         this.userName = userName;
     }
 
-    public int getScheduleNo() {
+    public ScheduleVo(int scheduleNo, String startTime) {
+		this.scheduleNo = scheduleNo;
+		this.startTime = startTime;
+	}
+
+	public int getScheduleNo() {
         return scheduleNo;
     }
 

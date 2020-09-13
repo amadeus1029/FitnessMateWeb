@@ -68,12 +68,69 @@
             values(#{exNo}, #{trainerNo}, #{exName}, #{exPartNo}, #{unit})
         ]]>
     </insert>
+    
     <delete id="delete" parameterType="ExVo">
         <![CDATA[
             delete exercise
             where exerciseNo = #{exNo} and trainerNo = #{trainerNo}
         ]]>
     </delete>
+    
+    <select id="selectExDate" parameterType="int" resultType="com.javaex.vo.ScheduleVo">
+        <![CDATA[
+        
+			SELECT TO_CHAR(s.startTime, 'yyyy-mm-dd') startTime, s.scheduleNo
+			FROM schedule s left outer join pt p
+			ON s.ptNo = p.ptNo
+			WHERE p.userNo = #{userNo}
+			AND TO_CHAR(s.startTime, 'yyyymmdd') < TO_CHAR(sysdate, 'yyyymmdd')
+			ORDER by s.startTime desc
+
+        ]]>
+    </select>
+    
+    <select id="selectEx" parameterType="int" resultType="com.javaex.vo.RecordVo">
+        <![CDATA[
+        
+			SELECT exe.exerciseName exName, exe.partName exPart, exe.unit, countS.setCount, exe.startTime
+			FROM
+			(SELECT distinct ex.exerciseName, p.partName, ex.unit, ex.startTime, ex.recordNo
+			FROM ex_part p
+			RIGHT OUTER JOIN (SELECT e.exerciseName, e.exercisePart, e.unit, e.exerciseNo, re.startTime, re.recordNo
+			                    FROM exercise e
+			                    RIGHT OUTER JOIN (SELECT r.exerciseNo, TO_CHAR(s.starttime, 'yyyy-mm-dd') startTime, r.recordNo
+			                                        FROM records r LEFT OUTER JOIN schedule s
+			                                        ON r.scheduleno = s.scheduleno
+			                                        WHERE r.scheduleno = #{scheduleNo}) re
+			                    on e.exerciseNo = re.exerciseNo) ex
+			ON p.partNo = ex.exercisePart
+			ORDER BY ex.recordNo asc) exe, (select e.exerciseName, COUNT(e.exerciseName) setCount
+			                                    FROM exercise e
+			                                    RIGHT OUTER JOIN (SELECT r.exerciseNo
+			                                                        FROM records r LEFT OUTER JOIN schedule s
+			                                                        ON r.scheduleno = s.scheduleno
+			                                                        WHERE r.scheduleno = #{scheduleNo}) re
+			                                    ON e.exerciseNo = re.exerciseNo
+			                                    GROUP BY e.exerciseName) countS
+			WHERE exe.exercisename = counts.exercisename
+
+        ]]>
+    </select>
+    
+	<select id="selectSet" parameterType="map" resultType="com.javaex.vo.RecordVo">
+        <![CDATA[
+        
+				SELECT e.exerciseName exName, re.count, re.amount
+				FROM exercise e RIGHT OUTER JOIN (SELECT r.exerciseNo, r.count, r.amount
+				                                FROM records r left outer join schedule s
+				                                ON r.scheduleno = s.scheduleno
+				                                WHERE r.scheduleno = #{scheduleNo}) re
+				ON e.exerciseNo = re.exerciseNo
+
+        ]]>
+    </select>
+    
+    
 </mapper>
 
         <!--

@@ -45,14 +45,14 @@
 	    		<div class="statistics">
 		            <dl class="review">
 		            	<dt>다음 PT</dt>
-		                <dd>2020-06-24(PM 9:00 - PM10:00)</dd>
+		                <dd>${summaryNormal.nextPt.startTime} - ${summaryNormal.nextPt.endTime}</dd>
 		            
 		                <dt>등록기간</dt>
-		                <dd>2020-06-24 ~ 2020-09-24</dd>
+		                <dd>${summaryNormal.ptVo.startDate} ~ ${summaryNormal.ptVo.endDate}</dd>
 		            </dl>
 		            <dl>
 		                <dt>잔여횟수</dt>
-		                <dd>5 / 12 (진행중)</dd>
+		                <dd>${summaryNormal.ptVo.regCount-summaryNormal.ptVo.scheduleCount} / ${summaryNormal.ptVo.regCount}</dd>
 		            </dl>
 		        </div>
 		        
@@ -60,10 +60,10 @@
 	            <h3 class="title">내 트레이너</h3>
 	            <ul class="schedule-list">
 	                <li class="schedule">
-	                    <span class="name">김회원 트레이너</span>
+	                    <span class="name">${summaryNormal.ptVo.name}</span>
 	                </li>
 	                <li class="schedule">
-	                    <span class="time">(010-1111-2222)</span>
+	                    <span class="time">(${summaryNormal.ptVo.phone})</span>
 	                </li>
 	            </ul>
 	        </div>

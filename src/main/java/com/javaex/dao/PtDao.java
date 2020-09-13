@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.InbodyVo;
 import com.javaex.vo.PtVo;
+import com.javaex.vo.ScheduleVo;
 import com.javaex.vo.UserVo;
 
 @Repository
@@ -97,7 +98,11 @@ public class PtDao {
 		return sqlSession.selectOne("pt.summaryNormal", userNo);
 	}
 
-	
+	public ScheduleVo nextPt(int userNo) {
+		System.out.println("dao 개인회원 최근 인바디");
+		
+		return sqlSession.selectOne("pt.nextPt", userNo);
+	}
 	
 	
 }

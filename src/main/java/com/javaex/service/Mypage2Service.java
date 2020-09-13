@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.javaex.dao.ExerciseDao;
 import com.javaex.dao.PtDao;
 import com.javaex.dao.RecordDao;
 import com.javaex.dao.ScheduleDao;
@@ -30,6 +31,9 @@ public class Mypage2Service {
 	
 	@Autowired
 	private ScheduleDao scheduleDao;
+	
+	@Autowired
+	private ExerciseDao exerciseDao;
 	
 	public List<PtVo> getTraineeList(int trainerNo) {
 		System.out.println("service 트레이니 리스트 받아오기");
@@ -171,11 +175,38 @@ public class Mypage2Service {
 		return summary;
 	}
 	
-	public PtVo summaryNormal(int userNo) {
+	public Map<String, Object> summaryNormal(int userNo) {
 		
 		PtVo ptVo = ptDao.summaryNormal(userNo);
+		ScheduleVo nextPt = ptDao.nextPt(userNo);
 		
-		return ptVo;
+		Map<String, Object> summaryNormal = new HashMap<>();
+		summaryNormal.put("ptVo", ptVo);
+		summaryNormal.put("nextPt", nextPt);
+		
+		return summaryNormal;
+	}
+	
+	public Map<String, Object> getExRecord(int userNo) {
+		
+		List<ScheduleVo> dateList = exerciseDao.selectExDate(userNo);
+		int scheduleNo = dateList.get(0).getScheduleNo();
+		
+		Map<String, Object> exMap = new HashMap<>();
+		exMap.put("exRecordDate", dateList);
+		exMap.put("exTitleList", exerciseDao.selectEx(scheduleNo));
+		exMap.put("exSetList", exerciseDao.selectSet(scheduleNo));
+		
+		return exMap;
+	}
+
+	public Map<String, Object> getThisRecord(int scheduleNo) {
+		
+		Map<String, Object> thisMap = new HashMap<>();
+		thisMap.put("thisExList", exerciseDao.selectEx(scheduleNo));
+		thisMap.put("thisSetList", exerciseDao.selectSet(scheduleNo));
+		
+		return thisMap;
 	}
 	
 	//오늘 날짜 가져오기

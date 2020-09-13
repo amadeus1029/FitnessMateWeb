@@ -65,6 +65,25 @@ public class Mypage2Controller {
          }
     }
     
+    @RequestMapping("/exerciseRecord")
+    public String exerciseRecord(HttpSession session, Model model) {
+    	System.out.println("마이페이지 운동기록 보기");
+    	UserVo user = (UserVo) session.getAttribute("authUser");
+    	
+    	if("normal".equals(user.getUserType())) {
+    		Map<String, Object> exMap = mypageService.getExRecord(user.getUserNo());
+    		model.addAttribute("exMap", exMap);
+    		
+    		//매 페이지마다 들어가는 상단 요약정보
+    		model.addAttribute("summaryNormal", mypageService.summaryNormal(user.getUserNo()));
+    		
+    		return "mypage/exerciseRecord";
+    		
+    	 }else {
+         	System.out.println("트레이너는 여기 오면 안돼요");
+             return "error";
+         }
+    }
     
     //API
     @ResponseBody
@@ -130,6 +149,14 @@ public class Mypage2Controller {
     	
     	//변경된 정보 가져오기
     	return mypageService.getUserInfo(ptNo);
+    }
+    
+    @ResponseBody
+    @RequestMapping("/showExRecord")
+    public Map<String, Object> showExRecord(int scheduleNo) {
+    	System.out.println("마이페이지 컨트롤러 날짜 클릭시");
+    	
+    	return mypageService.getThisRecord(scheduleNo);
     }
     
     

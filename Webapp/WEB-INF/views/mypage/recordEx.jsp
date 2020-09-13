@@ -108,8 +108,8 @@
                     "</div>"+
                     "<div class='setPart'>"+
                         "<div class='record-box'>"+
+                            "<input type='number' name='amount' placeholder='중량/초'> "+
                             "<input type='number' name='count' placeholder='횟수'> "+
-                            "<input type='number' name='amount' placeholder=''> "+
                             "<i class='far fa-plus-square' onclick='addExSet($(this))'></i>" +
                         "</div>"+
                     "</div>"+
@@ -124,8 +124,8 @@
         function addExSet(target) {
             target.parents(".setPart").append(
                 "<div class='record-box'>" +
-                    "<input type='number' name='count' placeholder=''> "+
-                    "<input type='number' name='amount' placeholder=''> "+
+                    "<input type='number' name='amount' placeholder='중량/초'> "+
+                    "<input type='number' name='count' placeholder='횟수'> "+
                     "<i class='far fa-minus-square' onclick='deleteExSet($(this))'></i>"+
                 "</div>"
             );
