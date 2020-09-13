@@ -161,11 +161,11 @@
                         </div>
                         <div class="score">
                             <p class="head">평점</p>
-                            <p class="body">4.7점</p>
+                            <p class="body socoreAvg"></p>
                         </div>
                         <div class="score">
                             <p class="head">리뷰수</p>
-                            <p class="body">117개</p>
+                            <p class="body reviewCount"></p>
                         </div>
                     </div>
                     <div class="info-wrapper clearfix">
@@ -211,6 +211,8 @@
 				
 					<!--로그인 유저 넘버 -->
 					<input type="hidden" id="loginUser" value="${authUser.userNo}" >
+					
+					
 					
 					<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
                     <div class="reviewWrite">
@@ -265,6 +267,7 @@
 				/*성공시 처리해야될 코드 작성*/
 				$("ul.search-list").empty();
 				
+				
 				var userStr = "";
 				
 				for (var i in userVo ) {
@@ -275,12 +278,13 @@
 					userStr += "<p class='name'>"+userVo[i].name+"</p>";
 					userStr += "<p class='gym'>"+userVo[i].company+"</p>";
 					userStr += "<p class='comment'>"+userVo[i].introduction+"</p>";
-					userStr += "<p class='score'>평점 4.7</p>";
+					userStr += "<p class='score'></p>";
 					userStr += "</div>";
 					userStr += "</li>";
 				}
 			
 				$("ul.search-list").append(userStr);
+				
 				
 			},
 			error : function(XHR, status, error) {
@@ -378,7 +382,7 @@
         				
         				trainerField();//전문분야
         				trainerRecord();//수상경력
-  
+        				reviewInfo();//리뷰정보
         				
         				var loca = vo.location.replace( /[|]/gi, ' ');//지역 사이의 | 지우기
         				
@@ -479,6 +483,37 @@
 					}
 					$(".award-info").append(recordStr);
 				
+					
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			    	}
+	  
+	  //리뷰정보 불러오기 함수
+	  function reviewInfo(){
+	    	
+	    	var recordNo = $("#delNo").val();
+	    	$(".award").remove();
+	    	
+	    	$.ajax({
+	
+				url : "${pageContext.request.contextPath }/search/reviewInfo",
+				type : "post",
+				//contentType : "application/json",
+				data : {no: recordNo},
+	
+				dataType : "json",
+				success : function(review) {
+					console.log("리뷰 불러오기");
+					
+					var reviewStr ='';
+					for (var i in review ) {
+						
+						$(".body.socoreAvg").html(review[i].reviewAvg+"점");
+						$(".body.reviewCount").html(review[i].reviewCount+"개");	
+					}
 					
 				},
 				error : function(XHR, status, error) {
@@ -670,52 +705,31 @@
        
         //버튼 눌렀을 때 리뷰 추가
         $(".reviewWrite").on("click",".button.revW",function(){
-            console.log("클릭")
-        
-            var name ='어떡하지';
-            console.log(name);
-            var date = '트레이닝 횟수-n개월';
-            var date2 = '2020-08-17';
-            var star = $("input[name='reviewScore']").val();
+            console.log("리뷰추가 버튼클릭")
+            
+            var score = $("input[name='reviewScore']").val();
             var content = $("[name = 'content']").val();
-            var img = $("#file").val();
+            console.log(score+content);
             
             
-            $(".review-list").prepend(
-                "<li class='review-line'>"+
-                " <div class='user-profile ff'>"+
-                "   <img class='user-profile-img' src=('${pageContext.request.contextPath}/assets/image/review-test2.jpg' );>"+
-                "   <div class='user-profile-info'>"+
-                "     <div class='user-profile-name'>"+name+"</div>"+
-                "     <div class='user-profile-date'>"+date+"</div>"+
-                "     <div class='user-profile-date'>"+date2+"</div>"+
-                "   </div>"+
-                        "<div class='user-profile-star fd'>"+
-                        "</div>"+
-                 "</div>"+
-                " <div class='box'>"+
-                "   <div class='content'>"+content+"</div>"+
-                  "</div>"+
-                  '<img class="review-imgSize" src="");>'+
-                " <div class='clearfix review-btn-area'>"+
-                "   <button type='button' class='button'>삭제</button>"+
-                "   <button type='button' class='button'>수정</button>"+
-                " </div>"+
-                "</li>"
-            ); 
-            for(var i = 0; i<star; i++){
-                $(".review-list li:first-child .user-profile-star").append(
-                    '<i class="fas fa-star"></i>'  
-                );
-            }
-            for(var i = 0; i<5-star; i++){
-                $(".review-list li:first-child .user-profile-star").append(
-                    '<i class="far fa-star"></i>'  
-                );
-            }
-            var star = $("input[name='reviewScore']").val("");
-            var content = $("[name = 'content']").val("");
-            $('#star_grade i').removeClass("on"); 
+            $.ajax({
+
+			url : "${pageContext.request.contextPath}/search/reviewPlus",
+			type : "post",
+			//contentType : "application/json",
+			data : {score: score,
+					content: content},
+
+			dataType : "json",
+			success : function(reviewVo) {
+        
+            
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+
        
         });
         

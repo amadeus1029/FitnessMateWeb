@@ -132,6 +132,13 @@ public class SearchService {
 	}
 	
 	
+	public List<Object> reviewInfo(int no) {
+		System.out.println("서비스:리뷰정보 불러오기");
+		List<Object> uVo = searchDao.reviewInfo(no);
+		return uVo;
+	}
+	
+	
 	//////////////////////////////////////////////////////////
 	
 	//리뷰 목록 가져오기
@@ -149,6 +156,21 @@ public class SearchService {
 		ReviewVo reviewVo = searchDao.reviewWrite(no);
 		return reviewVo;
 	}
+
+	
+	//리뷰 추가
+	public ReviewVo reviewPlus(int score, String content) {
+		System.out.println("SearchService:reviewPlus");
+		
+		ReviewVo reviewVo = new ReviewVo(score,content);
+		System.out.println("서비스 보 확인"+reviewVo);
+		
+		searchDao.reviewPlus(reviewVo);
+		
+		return reviewVo;
+	}
+
+	
 	
 	
 	
