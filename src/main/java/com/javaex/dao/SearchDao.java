@@ -102,6 +102,13 @@ public class SearchDao {
 		return uVo;
 	}
 	
+	public List<Object> reviewInfo(int no) {
+		System.out.println("다오:리뷰정보 불러오기");
+		List<Object> uVo = sqlSession.selectList("search.readReviewInfo",no);
+		
+		return uVo;
+	}
+	
 	///////////////////////////////////////////////////////
 
 	public List<ReviewVo> reviewList(int no) {
@@ -113,6 +120,28 @@ public class SearchDao {
 		
 		return reviewVo;
 	}
+
+	
+	public ReviewVo reviewWrite(int no) {
+		System.out.println("searchDao:reviewWrite");
+		
+		ReviewVo reviewWr = sqlSession.selectOne("review.reviewWrite",no);
+		System.out.println("리뷰작성자격 다오: "+reviewWr);
+		
+		return reviewWr;
+	}
+
+	//리뷰 추가
+	public int reviewPlus(ReviewVo vo ) {
+		System.out.println("searchDao:reviewPlus");
+		System.out.println();
+		
+		int reviewVo = sqlSession.insert("review.reviewPlus",vo);
+		
+		return reviewVo;
+	}
+
+	
 
 	
 	

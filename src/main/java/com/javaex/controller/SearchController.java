@@ -93,6 +93,22 @@ public class SearchController {
 
 	}
 	
+	
+	//트레이너 세부정보 불러오기(리뷰)
+	@ResponseBody
+	@RequestMapping("/search/reviewInfo")
+	public List<Object> reviewInfo(@RequestParam("no") int no) {
+		System.out.println("컨:리뷰정보 불러오기");
+
+		List<Object> uVo = searchService.reviewInfo(no);
+		
+		System.out.println("리뷰정보"+uVo);
+		
+		return uVo;
+
+	}
+	
+	
 	//리뷰정보 불러오기/////////////////////////////////////////////////////////////////////////
 	// 리뷰목록 불러오기
 	@ResponseBody
@@ -103,9 +119,41 @@ public class SearchController {
 		System.out.println("넘버"+no);
 		List<ReviewVo> reviewVo = searchService.reviewList(no);
 		
+		
 		return reviewVo;
 
 	}
+	
+	// 리뷰작성 가능한 사람인지 확인
+	@ResponseBody
+	@RequestMapping("/search/reviewWrite")
+	public ReviewVo reviewWrite(@RequestParam("no") int no) {
+		System.out.println("controller:/search/reviewWrite");
+
+		System.out.println("리뷰넘버"+no);
+		ReviewVo reviewVo = searchService.reviewWrite(no);
+		
+		System.out.println("리뷰작성자격 확인"+reviewVo);
+		
+		return reviewVo;
+
+	}
+	
+	
+	// 리뷰추가
+		@ResponseBody
+		@RequestMapping("/search/reviewPlus")
+		public ReviewVo reviewPlus(@RequestParam("score") int score,@RequestParam("content") String content) 
+		{
+			System.out.println("controller:/search/reviewPlus");
+			System.out.println("파람확인"+score+content);
+			ReviewVo reviewVo = searchService.reviewPlus(score,content);
+			
+			return null;
+		}
+	
+	
+	
 	
 	
 }

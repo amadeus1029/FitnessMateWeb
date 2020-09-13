@@ -171,7 +171,17 @@
 	
 	</select>
 	
+	<!--트레이너 상세정보 불러오기(리뷰) -->
+	<select id="readReviewInfo" parameterType="int"
+	resultType="com.javaex.vo.ReviewVo">
+	<![CDATA[
+	SELECT count(r.score) reviewCount, avg(r.score) reviewAvg
+	FROM review r,pt p
+	WHERE r.ptno = p.ptno
+	and p.trainerno = #{no}
+	]]>
 	
+	</select>
 	
 	
 	

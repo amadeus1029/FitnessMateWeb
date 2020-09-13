@@ -161,11 +161,11 @@
                         </div>
                         <div class="score">
                             <p class="head">평점</p>
-                            <p class="body">4.7점</p>
+                            <p class="body socoreAvg"></p>
                         </div>
                         <div class="score">
                             <p class="head">리뷰수</p>
-                            <p class="body">117개</p>
+                            <p class="body reviewCount"></p>
                         </div>
                     </div>
                     <div class="info-wrapper clearfix">
@@ -208,31 +208,20 @@
                 
                 <div class="label-tab review-wrapper">
 
-				<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
+				
+					<!--로그인 유저 넘버 -->
+					<input type="hidden" id="loginUser" value="${authUser.userNo}" >
 					
+					
+					
+					<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
                     <div class="reviewWrite">
-                        <span>리뷰작성</span>
-                        
-                        <div id="star_grade">
-                            <input type="hidden"  name="reviewScore" value="0">
-                            <i  class="fas fa-star" data-score="1"></i>
-                            <i  class="fas fa-star" data-score="2"></i>
-                            <i  class="fas fa-star" data-score="3"></i>
-                            <i  class="fas fa-star" data-score="4"></i>
-                            <i  class="fas fa-star" data-score="5"></i>
-                        </div>
-                        <textarea class="content" name='content' placeholder="사용하시면서 달라진 만족도에 대한 후기를 남겨주세요(최소 10자 이상)"></textarea>
-                        <div>
-                            <input  type="file" id="file"  name="file_name" class="image_inputType_file" >
-                        </div>
-                        <button class="button revW" type="submit">작성</button>
                     </div>
-					
 					<!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
 
                     <ul class="review-list">
-                     	<span>아직 작성된 리뷰가 없습니다.</span>	
                     </ul>
+                    
                 </div> <!-- 리뷰작성페이지 -->
                 
                 <!-- 지도 페이지 -->
@@ -278,6 +267,7 @@
 				/*성공시 처리해야될 코드 작성*/
 				$("ul.search-list").empty();
 				
+				
 				var userStr = "";
 				
 				for (var i in userVo ) {
@@ -288,12 +278,13 @@
 					userStr += "<p class='name'>"+userVo[i].name+"</p>";
 					userStr += "<p class='gym'>"+userVo[i].company+"</p>";
 					userStr += "<p class='comment'>"+userVo[i].introduction+"</p>";
-					userStr += "<p class='score'>평점 4.7</p>";
+					userStr += "<p class='score'></p>";
 					userStr += "</div>";
 					userStr += "</li>";
 				}
 			
 				$("ul.search-list").append(userStr);
+				
 				
 			},
 			error : function(XHR, status, error) {
@@ -391,7 +382,7 @@
         				
         				trainerField();//전문분야
         				trainerRecord();//수상경력
-  
+        				reviewInfo();//리뷰정보
         				
         				var loca = vo.location.replace( /[|]/gi, ' ');//지역 사이의 | 지우기
         				
@@ -499,6 +490,37 @@
 				}
 			});
 			    	}
+	  
+	  //리뷰정보 불러오기 함수
+	  function reviewInfo(){
+	    	
+	    	var recordNo = $("#delNo").val();
+	    	$(".award").remove();
+	    	
+	    	$.ajax({
+	
+				url : "${pageContext.request.contextPath }/search/reviewInfo",
+				type : "post",
+				//contentType : "application/json",
+				data : {no: recordNo},
+	
+				dataType : "json",
+				success : function(review) {
+					console.log("리뷰 불러오기");
+					
+					var reviewStr ='';
+					for (var i in review ) {
+						
+						$(".body.socoreAvg").html(review[i].reviewAvg+"점");
+						$(".body.reviewCount").html(review[i].reviewCount+"개");	
+					}
+					
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			    	}
     	
 	////////////////////////트레이너 모달 세부정보탭/////////////////////////////
 	  
@@ -506,42 +528,94 @@
 	
 	//리뷰리스트 불러오기
 	$(".label-btn.review-btn").on("click",function(){
-		console.log(${authUser.userNo});
-		reviewList();
+		
+		reviewList();//리뷰목록
+		var loginUser = $("#loginUser").val();
+		console.log("맨처음 로그인유저번호 추출"+loginUser);
+		if(loginUser !=null && loginUser !=''){reviewWrite();}
+				
 		
 	});
 	
+	//리뷰쓰기
+	function reviewWrite(){
+		var reviewNo = $("#delNo").val();
+	    console.log("리뷰작성용 트레이너 넘버"+reviewNo);
+	    var loginUser = $("#loginUser").val();
+		console.log("로그인유저번호 추출"+loginUser);
+
+	    
+	    $.ajax({
+
+			url : "${pageContext.request.contextPath}/search/reviewWrite",
+			type : "post",
+			//contentType : "application/json",
+			data : {no: loginUser},
+
+			dataType : "json",
+			success : function(reviewVo) {
+				$(".reviewWrite").empty();
+				var reviewStr = "";
+					
+				
+					if(reviewVo.trainerNo == reviewNo && reviewVo.scheduleCount >= 1){
+					
+					reviewStr += '<span>리뷰작성</span>';
+					reviewStr += '<div id="star_grade">';
+					reviewStr += '  <input type="hidden"  name="reviewScore" value="0">';
+					reviewStr += '  <i  class="fas fa-star" data-score="1"></i>';
+					reviewStr += '  <i  class="fas fa-star" data-score="2"></i>';
+					reviewStr += '  <i  class="fas fa-star" data-score="3"></i>';
+					reviewStr += '  <i  class="fas fa-star" data-score="4"></i>';
+					reviewStr += '  <i  class="fas fa-star" data-score="5"></i>';
+					reviewStr += '</div>';
+					reviewStr += '<textarea class="content" name="content" placeholder="사용하시면서 달라진 만족도에 대한 후기를 남겨주세요(최소 10자 이상)"></textarea>';
+					reviewStr += '<div>';
+					reviewStr += '  <input  type="file" id="file"  name="file_name" class="image_inputType_file" >';
+					reviewStr += '</div>';
+					reviewStr += '<button class="button revW" type="submit">작성</button>';
+					}  
+				
+				$(".reviewWrite").append(reviewStr);
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+	}
 	
-	
-	
-	
-	
-	
-	
+		
+	//리뷰목록
 	function reviewList(){
 		
 		var reviewNo = $("#delNo").val();
 		
-	    console.log("리뷰페이지 트레이너 넘버"+reviewNo);
+	    console.log("리뷰목록 트레이너 넘버"+reviewNo);
 		
 		
 		$.ajax({
 
-			url : "${pageContext.request.contextPath }/search/reviewList",
+			url : "${pageContext.request.contextPath}/search/reviewList",
 			type : "post",
 			//contentType : "application/json",
 			data : {no: reviewNo},
 
 			dataType : "json",
 			success : function(reviewVo) {
-				console.log("성공");
 				
+				
+				//방명록 비우기
 				$("ul.review-list").empty();
 				var reviewStr = "";
 				
+				var loginUser = $("#loginUser").val();
+				console.log("로그인유저번호 추출"+loginUser);
+						
+				//if(reviewVo == null && reviewVo == ''){reviewStr +='<span>아직 작성된 리뷰가 없습니다.</span>'; }
+				
 				for (var review of reviewVo ) {
-					
-					
 					reviewStr += '<li class="review-line">';
 					reviewStr += '  <div class="user-profile ff">';
 					reviewStr += '    <img class="user-profile-img" src="${pageContext.request.contextPath}/assets/image/unnamed.jpg">';
@@ -550,29 +624,47 @@
 					reviewStr += '      <div class="user-profile-date">트레이닝- '+review.scheduleCount+'회차</div>';
 					reviewStr += '      <div class="user-profile-date">'+review.regDate+'</div>';
 					reviewStr += '    </div>';
-					reviewStr += '    <div class="user-profile-star fd">'+review.score+'</div>';
+					reviewStr += '    <div class="user-profile-star fd">';
+				    
+					//별점만들기
+					for(var i = 0; i<review.score; i++){
+						reviewStr +=  '<i class="fas fa-star"></i>'  
+		            }
+		            for(var i = 0; i<5-review.score; i++){
+		            	reviewStr +=   '<i class="far fa-star"></i>'  
+		            }
+					
+					reviewStr += '    </div>';
 					reviewStr += '  </div>';
 					reviewStr += '  <div class="box">';
 					reviewStr += '    <div class="content">'+review.content+'</div>';
 					reviewStr += '  </div>';
 					reviewStr += '  <div class="clearfix review-btn-area">';
 					
+					var writeUser = review.userNo;
+					console.log("리뷰작성 유저 추출"+writeUser);
 					
-					
-					
+					//회원이 로그인한 경우
+					if(writeUser == loginUser){
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">수정</button>';
+					}
 					
-					
+					//트레이너가 로그인한 경우
+					if(reviewNo == loginUser){
 					reviewStr += '      <button type="button" class="button">삭제</button>';
 					reviewStr += '      <button type="button" class="button">답글</button> ';
-					
+					}
 					reviewStr += '  </div>';
 					reviewStr += ' </li>';
 					
-					
-				}
+				} 
+				
+				 				
 				$("ul.review-list").append(reviewStr);
+				
+				
+				
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
@@ -603,7 +695,7 @@
         }
 		
         //별점 선택
-        $('#star_grade i').click(function(){
+        $('.reviewWrite').on("click","#star_grade i",function(){
             $(this).parent().children("i").removeClass("on");  /* 별점의 on 클래스 전부 제거 */ 
             $(this).addClass("on").prevAll("i").addClass("on"); /* 클릭한 별과, 그 앞 까지 별점에 on 클래스 추가 */
             var score = $(this).attr("data-score");
@@ -612,52 +704,32 @@
         });
        
         //버튼 눌렀을 때 리뷰 추가
-        $(".button.revW").on("click", function(){
-            console.log("클릭")
-        
-            var name ='김**';
-            var date = '운동기간-n개월';
-            var date2 = '2020-08-17';
-            var star = $("input[name='reviewScore']").val();
+        $(".reviewWrite").on("click",".button.revW",function(){
+            console.log("리뷰추가 버튼클릭")
+            
+            var score = $("input[name='reviewScore']").val();
             var content = $("[name = 'content']").val();
-            var img = $("#file").val();
+            console.log(score+content);
             
             
-            $(".review-list").prepend(
-                "<li class='review-line'>"+
-                " <div class='user-profile ff'>"+
-                "   <img class='user-profile-img' src=('${pageContext.request.contextPath}/assets/image/review-test2.jpg' );>"+
-                "   <div class='user-profile-info'>"+
-                "     <div class='user-profile-name'>"+name+"</div>"+
-                "     <div class='user-profile-date'>"+date+"</div>"+
-                "     <div class='user-profile-date'>"+date2+"</div>"+
-                "   </div>"+
-                        "<div class='user-profile-star fd'>"+
-                        "</div>"+
-                 "</div>"+
-                " <div class='box'>"+
-                "   <div class='content'>"+content+"</div>"+
-                  "</div>"+
-                  '<img class="review-imgSize" src="");>'+
-                " <div class='clearfix review-btn-area'>"+
-                "   <button type='button' class='button'>삭제</button>"+
-                "   <button type='button' class='button'>수정</button>"+
-                " </div>"+
-                "</li>"
-            ); 
-            for(var i = 0; i<star; i++){
-                $(".review-list li:first-child .user-profile-star").append(
-                    '<i class="fas fa-star"></i>'  
-                );
-            }
-            for(var i = 0; i<5-star; i++){
-                $(".review-list li:first-child .user-profile-star").append(
-                    '<i class="far fa-star"></i>'  
-                );
-            }
-            var star = $("input[name='reviewScore']").val("");
-            var content = $("[name = 'content']").val("");
-            $('#star_grade i').removeClass("on"); 
+            $.ajax({
+
+			url : "${pageContext.request.contextPath}/search/reviewPlus",
+			type : "post",
+			//contentType : "application/json",
+			data : {score: score,
+					content: content},
+
+			dataType : "json",
+			success : function(reviewVo) {
+        
+            
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+
        
         });
         
@@ -674,7 +746,7 @@
         	
         	//데이터전송
         	$.ajax({
-        			url : "${pageContext.request.contextPath }/search/trainerInfo",
+        			url : "${pageContext.request.contextPath}/search/trainerInfo",
         			type : "post",
         			//contentType : "application/json",
         			data : {no: no},
