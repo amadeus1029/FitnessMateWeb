@@ -8,7 +8,7 @@
 		<![CDATA[
 		
 			SELECT
-			    pt.ptNo, u.userNo, u.userId, u.name, to_char(pt.endDate, 'yyyymmdd') intEndDate, pt.regcount, NVL(pt.schedulecount, 0) schedulecount
+			    pt.ptNo, u.userNo, u.userId, u.name, to_char(pt.endDate, 'yyyymmdd') intEndDate, pt.regcount, NVL(pt.schedulecount, 0) schedulecount, u.profileImg profileImg
 			FROM
 			    users u,
 			    (SELECT
@@ -35,7 +35,8 @@
 			    to_char(pt.endDate, 'yyyymmdd') intEndDate,
 			    to_char(pt.startdate, 'yyyy-mm-dd') startDate,
 			    to_char(pt.endDate, 'yyyy-mm-dd') endDate,
-			    pt.regcount, NVL(pt.schedulecount, 0) scheduleCount, NVL(pt.memo, ' ') memo
+			    pt.regcount, NVL(pt.schedulecount, 0) scheduleCount, NVL(pt.memo, ' ') memo,
+			    u.profileImg profileImg
 			FROM
 			    users u,
 			    (SELECT

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,6 +16,9 @@ import java.util.UUID;
 @RequestMapping("/upload")
 public class UploadController {
 
+    @Resource(name="uploadPath")
+    private String uploadPath;
+
     @ResponseBody
     @RequestMapping("/image")
     public String imageUpload(MultipartFile file) {
@@ -23,7 +27,7 @@ public class UploadController {
         if(!file.isEmpty()) { //파일을 첨부했을 때만
 
             //저장 경로
-            String saveDir = "/Users/apolion/work/upload";
+            String saveDir = uploadPath;
 
             //파일 이름
             String orgName = file.getOriginalFilename();

@@ -58,7 +58,7 @@
                 <c:forEach items="${ptList}" var="pt">
                     <li class="user clearfix ${pt.proceed eq false ? 'former off':'now'}"
                         onclick="showUser(${pt.ptNo});">
-                        <img src="${pageContext.request.contextPath}/assets/image/face/LeeHyoRi.jpg" alt="profile image"
+                        <img src="${pageContext.request.contextPath}/upload/${pt.profileImg}" alt="profile image"
                              title="profile image">
                         <p class="info">
                             <span class="name">${pt.name}</span>
@@ -87,7 +87,7 @@
             </div>
             <div class="modal-content">
                 <div class="label-tab profile-wrapper on">
-                    <img src="../assets/image/face/LeeHyoRi.jpg" alt="profile image" title="profile image">
+                    <img src="" alt="profile image" title="profile image" id="modalUserImg">
                     <div>
                         <p class="label">· 회원 이름</p>
                         <p id="userName"></p>
@@ -530,6 +530,7 @@
                     $("#count").text("\u00A0 " + userInfo.ptInfo.scheduleCount + " / " + userInfo.ptInfo.regCount);
                     $("textarea#memo").text(userInfo.ptInfo.memo);
                     $("input#modifyPtNo").val(userInfo.ptInfo.ptNo);
+                    $("#modalUserImg").attr("src","${pageContext.request.contextPath}/upload/"+userInfo.ptInfo.profileImg)
 
                     //인바디 인풋 초기화
                     $("input[name='weight']").val("");
