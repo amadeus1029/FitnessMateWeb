@@ -11,7 +11,7 @@
 
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/image/favicon.ico"/>
 
-    <title>Document</title>
+    <title>FitnessMate</title>
 
     <!-- icon 사용을 위한 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/fontawesome/all.css">

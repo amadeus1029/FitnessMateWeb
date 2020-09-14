@@ -264,6 +264,9 @@ div.crop-wrapper .cropper-wrap-box {
 * {
   color: #292c33;
 }
+textarea {
+  resize: vertical;
+}
 .wrapper {
   width: 1200px;
   margin: 0 auto;
