@@ -10,6 +10,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/image/favicon.ico"/>
+
     <!-- icon 사용을 위한 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/fontawesome/all.css">
 
@@ -143,7 +145,7 @@
                 success: function (boolean) {
                     if(boolean) {
                         target.parent("div.exercise").remove();
-                        alert("삭제하였습니다");
+                        alert("운동을 삭제하였습니다");
                     } else {
                         alert("Fail to remove Exercise!")
                     }

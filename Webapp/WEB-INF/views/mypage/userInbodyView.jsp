@@ -11,6 +11,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/image/favicon.ico"/>
+
     <!-- icon 사용을 위한 css -->
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/fontawesome/all.css">

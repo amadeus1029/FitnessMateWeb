@@ -8,6 +8,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/image/favicon.ico"/>
+
     <title>Document</title>
 
     <!-- icon 사용을 위한 css -->
