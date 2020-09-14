@@ -45,6 +45,16 @@
 	  ]]>
 
 	</insert>
+	
+	<!--리뷰작성 위한 pt번호 불러오기 -->
+	<select id="findPt" parameterType="int"
+	resultType="int">
+	<![CDATA[
+	SELECT ptno
+	FROM pt
+	WHERE userno = #{userNo}
+	]]>
+	</select>
 
 	
 	
