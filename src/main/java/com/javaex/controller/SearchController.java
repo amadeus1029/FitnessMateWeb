@@ -139,15 +139,30 @@ public class SearchController {
 
 	}
 	
+	//리뷰 추가위해 pt넘버 불러오기
+	@ResponseBody
+	@RequestMapping("/search/findPt")
+	public int findPt(@RequestParam("userNo") int userNo) 
+	{
+		System.out.println("controller:/search/findPt");
+		int ptNo = searchService.findPt(userNo);
+		
+		System.out.println("컨트롤러 pt"+ptNo);
+		
+		return ptNo;
+	}
+	
+	
 	
 	// 리뷰추가
 		@ResponseBody
 		@RequestMapping("/search/reviewPlus")
-		public ReviewVo reviewPlus(@RequestParam("score") int score,@RequestParam("content") String content) 
+		public ReviewVo reviewPlus(@RequestParam("score") int score,@RequestParam("content") String content,
+				@RequestParam("ptNo") int ptNo) 
 		{
 			System.out.println("controller:/search/reviewPlus");
 			System.out.println("파람확인"+score+content);
-			ReviewVo reviewVo = searchService.reviewPlus(score,content);
+			ReviewVo reviewVo = searchService.reviewPlus(score,content,ptNo);
 			
 			return null;
 		}

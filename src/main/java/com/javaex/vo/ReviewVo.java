@@ -18,9 +18,10 @@ public class ReviewVo {
 	public ReviewVo() {}
 	
 	
-	public ReviewVo(int score, String content) {
+	public ReviewVo(int score, String content,int ptNo) {
 		this.score = score;
 		this.content = content;
+		this.ptNo = ptNo;
 	}
 	public ReviewVo(int reviewNo, int ptNo, String regDate, int score, String content, int userNo, int trainerNo,
 			int scheduleCount, String name, int reviewCount, int reviewAvg) {

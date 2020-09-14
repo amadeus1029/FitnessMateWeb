@@ -159,15 +159,24 @@ public class SearchService {
 
 	
 	//리뷰 추가
-	public ReviewVo reviewPlus(int score, String content) {
+	public ReviewVo reviewPlus(int score, String content, int ptNo) {
 		System.out.println("SearchService:reviewPlus");
 		
-		ReviewVo reviewVo = new ReviewVo(score,content);
+		ReviewVo reviewVo = new ReviewVo(score,content,ptNo);
 		System.out.println("서비스 보 확인"+reviewVo);
 		
 		searchDao.reviewPlus(reviewVo);
 		
 		return reviewVo;
+	}
+
+	//리뷰 추가위해 pt넘버 불러오기
+	public int findPt(int userNo) {
+		System.out.println("SearchService:findPt");
+		
+		int ptNo = searchDao.findPt(userNo);
+		
+		return ptNo;
 	}
 
 	

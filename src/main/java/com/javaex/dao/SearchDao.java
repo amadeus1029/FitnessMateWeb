@@ -142,6 +142,16 @@ public class SearchDao {
 	}
 
 	
+	public int findPt(int userNo) {
+		System.out.println("searchDao:findPt");
+		
+		int ptNo = sqlSession.selectOne("review.findPt", userNo);
+		System.out.println(ptNo);
+		
+		return ptNo;
+	}
+
+	
 
 	
 	

@@ -178,7 +178,7 @@
             <div class="modal-content">
                 <div class="label-tab profile-wrapper on">
                     <div class="summary-wrapper clearfix">
-                        <img src="${pageContext.request.contextPath}/assets/image/face/Park-Myung- Soo.jpg"
+                        <img src=""
                              class="profile-img">
                         <div class="summary">
                             <input type="hidden" name="no" value="" id="delNo">
@@ -298,8 +298,8 @@
 
                     for (var i in userVo) {
                         userStr += "<li class='search-result' onclick='showProfileModal($(this)," + userVo[i].userNo + ")'>";
-                        userStr += '<div class="image-area" style="background-image:url("${pageContext.request.contextPath}/assets/image/face/Gangho-dong.jpg");">;'
-                        userStr += "</div>";
+                        userStr += "<div class='image-area' style='background-image: url(\"${pageContext.request.contextPath}/upload/"+userVo[i].profileImg+" \");'>";
+                        userStr += "</div>"
                         userStr += "<div class='content-area'>";
                         userStr += "<p class='name'>" + userVo[i].name + "</p>";
                         userStr += "<p class='gym'>" + userVo[i].company + "</p>";
@@ -706,6 +706,8 @@
 
         function showTab(target) {
             var targetTab = target.attr("data-tab");
+            
+           
 
             //다른 버튼 on 제거
             $(".label-wrapper .label-btn").removeClass("on");
@@ -736,6 +738,8 @@
             var score = $("input[name='reviewScore']").val();
             var content = $("[name = 'content']").val();
             console.log(score + content);
+            findPt();
+            console.log("리뷰추가 pt테스트"+findPt());
 
 
             $.ajax({
@@ -745,7 +749,8 @@
                 //contentType : "application/json",
                 data: {
                     score: score,
-                    content: content
+                    content: content,
+                    ptNo: ptNo
                 },
 
                 dataType: "json",
@@ -760,6 +765,36 @@
 
 
         });
+        
+        
+        
+        //ptNo 추출
+        function findPt(){
+            var userNo = $("#loginUser").val();
+            console.log("pt넘버 추출위한유저넘버"+userNo);
+            
+            $.ajax({
+
+                url: "${pageContext.request.contextPath}/search/findPt",
+                type: "post",
+                //contentType : "application/json",
+                data: {
+                	userNo: userNo 
+                },
+
+                dataType: "json",
+                success: function (ptno) {	
+						var ptNo = ptno;
+						console.log("피티넘버"+ptNo);
+
+                },
+                error: function (XHR, status, error) {
+                    console.error(status + " : " + error);
+                }
+            });
+
+        	
+        }
 
 
         ////////////////////////트레이너 모달 리뷰탭/////////////////////////////
