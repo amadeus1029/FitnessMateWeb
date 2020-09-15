@@ -175,7 +175,7 @@
 	<select id="readReviewInfo" parameterType="int"
 	resultType="com.javaex.vo.ReviewVo">
 	<![CDATA[
-	SELECT count(r.score) reviewCount, round(avg(score),1) as "reviewAvg"
+	SELECT count(r.score) reviewCount, nvl(avg(score),0) as "reviewAvg"
 	FROM review r,pt p
 	WHERE r.ptno = p.ptno
 	and p.trainerno = #{no}
