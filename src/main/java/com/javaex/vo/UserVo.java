@@ -3,7 +3,7 @@ package com.javaex.vo;
 public class UserVo {
 
 	private int userNo; /* 회원번호 PK */
-	private int career; /* 경력 */
+	private String career; /* 경력 */
 	private String userId; /* 아이디 */
 	private String password; /* 패스워드 */
 	private String name; /* 이름 */
@@ -32,11 +32,11 @@ public class UserVo {
 		this.userNo = userNo;
 	}
 
-	public int getCareer() {
+	public String getCareer() {
 		return career;
 	}
 
-	public void setCareer(int career) {
+	public void setCareer(String career) {
 		this.career = career;
 	}
 

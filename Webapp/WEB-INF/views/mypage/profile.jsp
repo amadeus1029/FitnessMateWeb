@@ -129,13 +129,13 @@
                         <c:choose>
                             <c:when test="${authUser.userType eq 'trainer'}">
                                 <h3 class="title">트레이너 경력</h3>
-                                <input type="number" name="career" min="0"
-                                       value="${profile.userVo.career}">
+                                <input type="text" name="career" min="0"
+                                       value="${profile.userVo.career}" placeholder='0년 00개월'>
                             </c:when>
                             <c:otherwise>
                                 <h3 class="title">운동 경력</h3>
-                                <input type="number" name="career" min="0"
-                                       value="${profile.userVo.career}">
+                                <input type="text" name="career" min="0"
+                                       value="${profile.userVo.career}" placeholder='0년 00개월'>
                             </c:otherwise>
                         </c:choose>
                     </div>
