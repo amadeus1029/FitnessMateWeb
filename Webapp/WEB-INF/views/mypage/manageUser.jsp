@@ -494,11 +494,7 @@
             $("input#searchKeyword").val("");
             $("ul.user-list li").addClass("off");
             $("ul.user-list li." + targetType).removeClass("off");
-            if(targetType == "former") {
-                $("ul.user-list li.now").addClass("off");
-            } else {
-                $("ul.user-list li.former").addClass("off");
-            }
+
         }
 
         function showUser(ptNo, trainerNo) {
@@ -570,12 +566,18 @@
         }
 
         function searchByKeyword(target) {
+            var type = target.prev(".radio-wrapper").find("input[name='member']:checked").val();
             var keyword = target.val();
 
-            $("ul.user-list li").hide();
-
-            $("span.name:contains('" + keyword + "')").parents("li").show();
-            $("span.id:contains('" + keyword + "')").parents("li").show();
+            $("ul.user-list li").each(function(){
+                $(this).addClass("off");
+                if($(this).find("span.name").is(":contains("+keyword+")") || $(this).find("span.id").is(":contains("+keyword+")")  ) {
+                    $(this).removeClass("off");
+                }
+                if(!$(this).hasClass(type)) {
+                    $(this).addClass("off");
+                }
+            });
         }
 
         function showAddUserModal() {

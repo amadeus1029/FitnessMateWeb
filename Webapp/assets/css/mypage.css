@@ -666,6 +666,7 @@ ul.user-list {
 }
 ul.user-list li.user {
   float: left;
+  display: block;
   width: calc((100% - 90px) / 4);
   box-sizing: border-box;
   border-radius: 4px;
