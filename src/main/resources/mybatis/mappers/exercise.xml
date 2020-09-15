@@ -18,6 +18,7 @@
                     ex.unit as unit
             from    exercise ex, ex_part p
             where   ex.trainerNo = #{trainerNo}
+            and     ex.available is null
             and     ex.exercisepart = p.partNo
             order by ex.exerciseNo asc
         ]]>
@@ -65,16 +66,17 @@
         </selectKey>
         <![CDATA[
             insert into exercise
-            values(#{exNo}, #{trainerNo}, #{exName}, #{exPartNo}, #{unit})
+            values(#{exNo}, #{trainerNo}, #{exName}, #{exPartNo}, #{unit}, '')
         ]]>
     </insert>
     
-    <delete id="delete" parameterType="ExVo">
+    <update id="delete" parameterType="ExVo">
         <![CDATA[
-            delete exercise
+            update exercise
+			set available = 'not use'
             where exerciseNo = #{exNo} and trainerNo = #{trainerNo}
         ]]>
-    </delete>
+    </update>
     
     <select id="selectExDate" parameterType="int" resultType="com.javaex.vo.ScheduleVo">
         <![CDATA[

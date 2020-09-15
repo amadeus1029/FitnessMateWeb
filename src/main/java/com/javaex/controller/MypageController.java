@@ -102,24 +102,11 @@ public class MypageController {
     public boolean deleteExercise(HttpSession session, @RequestBody ExerciseVo exVo) {
         UserVo user = (UserVo) session.getAttribute("authUser");
         exVo.setTrainerNo(user.getUserNo());
+        System.out.println("exVo: "+exVo);
+        
         return mypageService.deleteExercise(exVo);
     }
 
-    /*
-    @RequestMapping("/manageUser")
-    public String ManageUser(HttpSession session) {
-        UserVo user = (UserVo) session.getAttribute("authUser");
-
-        if("trainer".equals(user.getUserType())) {
-            System.out.println("트레이너 운동관리 이동");
-        }else {
-            System.out.println("일반회원은 여기 오면 안돼요");
-        }
-    	
-        return "mypage/manageUser";
-    }
-    */
-    
     @RequestMapping("/profile")
     public String profile(HttpSession session, Model model) {
        	System.out.println("/마이페이지/프로필 수정");

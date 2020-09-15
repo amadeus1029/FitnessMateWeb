@@ -7,9 +7,9 @@
         <h1 class="logo">
             <a href="${pageContext.request.contextPath}/main">
                 <img src="${pageContext.request.contextPath}/assets/image/logoB.jpeg" title="logo" alt="logo">
+                <p>FitnessMate</p>
             </a>
         </h1>
-        <a href="${pageContext.request.contextPath}/search" class="search-link"><i class="fas fa-search"></i></a>
         <nav id="nav">
         </nav>
         <div class="btn-area clearfix">

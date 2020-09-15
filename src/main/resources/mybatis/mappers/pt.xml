@@ -57,7 +57,7 @@
 	<select id="selectUserInfo" parameterType="String" resultType="com.javaex.vo.UserVo">
 		<![CDATA[
 		
-			SELECT userNo, userId, name
+			SELECT userNo, userId, name, profileImg
 			FROM users
 			WHERE usertype = 'normal'
 			AND userId = #{userId}
