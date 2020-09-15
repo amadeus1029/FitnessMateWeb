@@ -69,7 +69,7 @@
 						            	FROM schedule GROUP BY ptNo) c
 			ON p.ptNo = c.ptNo
 			WHERE p.trainerNo = #{trainerNo}
-			AND p.endDate <= SYSDATE
+			AND p.endDate >= SYSDATE
 			AND p.regCount >= c.scheduleCount
 
         ]]>
