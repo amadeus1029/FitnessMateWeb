@@ -753,70 +753,95 @@
 
         });
 
-        //버튼 눌렀을 때 리뷰 추가
-        $(".reviewWrite").on("click", ".button.revW", function () {
-            console.log("리뷰추가 버튼클릭")
-
-            var score = $("input[name='reviewScore']").val();
-            var content = $("[name = 'content']").val();
-            console.log(score + content);
-            findPt();
-            console.log("리뷰추가 pt테스트"+findPt());
-
-
-            $.ajax({
-
-                url: "${pageContext.request.contextPath}/search/reviewPlus",
-                type: "post",
-                //contentType : "application/json",
-                data: {
-                    score: score,
-                    content: content,
-                    ptNo: ptNo
-                },
-
-                dataType: "json",
-                success: function (reviewVo) {
-
-
-                },
-                error: function (XHR, status, error) {
-                    console.error(status + " : " + error);
-                }
-            });
-
-
-        });
-
-
-
-        //ptNo 추출
-        function findPt(){
-            var userNo = $("#loginUser").val();
+        
+        
+        
+        
+        
+        //pt넘버 추출위한 유저넘버
+        var userNo = $("#loginUser").val();
             console.log("pt넘버 추출위한유저넘버"+userNo);
+            
+            
+        //ptNo 추출
+            if(userNo != null && userNo !=''){
+                var promise = 
+                	$.ajax({
+                    url: "${pageContext.request.contextPath}/search/findPt",
+                    type: "post",
+                    //contentType : "application/json",
+                    data: {userNo: userNo},
+                    dataType: "json",
+                });
+    	
+                promise.done(successFunction);
+                promise.fail(failFunction);
+                
+                function successFunction(ptNo){
+                	
+                	//버튼 눌렀을 때 리뷰 추가
+                    $(".reviewWrite").on("click", ".button.revW", function () {
+                        console.log("리뷰추가 버튼클릭")
 
-            $.ajax({
+                        var score = $("input[name='reviewScore']").val();
+                        var content = $("[name = 'content']").val();
+                        console.log(score + content);
+                        
+                         console.log("test"+ptNo);
+                         
+                        $.ajax({
 
-                url: "${pageContext.request.contextPath}/search/findPt",
-                type: "post",
-                //contentType : "application/json",
-                data: {
-                    userNo: userNo
-                },
+                            url: "${pageContext.request.contextPath}/search/reviewPlus",
+                            type: "post",
+                            //contentType : "application/json",
+                            data:{
+                                score: score,
+                                content: content,
+                                ptNo: ptNo
+                            } ,
+                            
+                            dataType: "json",
+                            success: function (reviewVo) {
+                            	console.log(reviewVo);
+                            	
+                            	reviewStr ="";
+                            	
 
-                dataType: "json",
-                success: function (ptno) {
-                    var ptNo = ptno;
-                    console.log("피티넘버"+ptNo);
+                            	$("[name = 'content']").val("");
+                            	
+                            	$("ul.review-list").prepend(reviewStr);
+                            },
+                            error: function (XHR, status, error) {
+                                console.error(status + " : " + error);
+                            }
+                        });
 
-                },
-                error: function (XHR, status, error) {
-                    console.error(status + " : " + error);
+
+                    });
+
+ 
+            		return console.log(ptNo);
                 }
-            });
+                
+                function failFunction(ptNo){
+
+            		if(ptNo.result !='success')
+
+            			var ptNo = "함수호출 fail";		
+
+            		return console.log(ptNo);
+
+            	}
+
+            }
+        
+        
+        
+        
+        
 
 
-        }
+      
 
 
         ////////////////////////트레이너 모달 리뷰탭/////////////////////////////

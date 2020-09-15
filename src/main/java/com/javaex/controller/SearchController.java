@@ -164,7 +164,7 @@ public class SearchController {
 			System.out.println("파람확인"+score+content);
 			ReviewVo reviewVo = searchService.reviewPlus(score,content,ptNo);
 			
-			return null;
+			return reviewVo;
 		}
 	
 	

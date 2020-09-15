@@ -18,6 +18,7 @@
 		and p.ptno = s.ptno
 		and u.userno = p.userno
 		and p.trainerno= #{no}
+		ORDER BY regDate DESC
 	]]>
 	</select>
 	
