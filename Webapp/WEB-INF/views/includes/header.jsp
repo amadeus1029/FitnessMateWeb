@@ -9,7 +9,6 @@
                 <img src="${pageContext.request.contextPath}/assets/image/logoB.jpeg" title="logo" alt="logo">
             </a>
         </h1>
-        <a href="${pageContext.request.contextPath}/search" class="search-link"><i class="fas fa-search"></i></a>
         <nav id="nav">
         </nav>
         <div class="btn-area clearfix">

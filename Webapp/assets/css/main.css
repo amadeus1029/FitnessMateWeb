@@ -592,7 +592,3 @@ ul.search-list li.search-result .content-area p.score {
 #profileModal .modal-wrapper .modal-content .label-tab.review-wrapper ul.review-list .review-line .review-btn-area button.button:first-of-type {
   margin-right: 0;
 }
-#searchIcon {
-  font-size: 100px;
-  color: red;
-}
