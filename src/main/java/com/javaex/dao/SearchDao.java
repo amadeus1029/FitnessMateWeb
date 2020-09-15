@@ -104,6 +104,7 @@ public class SearchDao {
 	
 	public List<Object> reviewInfo(int no) {
 		System.out.println("다오:리뷰정보 불러오기");
+		System.out.println("다오"+no);
 		List<Object> uVo = sqlSession.selectList("search.readReviewInfo",no);
 		
 		return uVo;

@@ -13,8 +13,10 @@ public class ReviewVo {
 	private int scheduleCount;/*트레이닝 횟수*/
 	private String name;/*회원이름*/
 	private int reviewCount;/*리뷰갯수*/
-	private int reviewAvg;/*평점 평균*/
+	private String reviewAvg;/*평점 평균*/
+	private String profileImg; /*프로필 이미지*/ 
 	
+
 	public ReviewVo() {}
 	
 	
@@ -24,7 +26,7 @@ public class ReviewVo {
 		this.ptNo = ptNo;
 	}
 	public ReviewVo(int reviewNo, int ptNo, String regDate, int score, String content, int userNo, int trainerNo,
-			int scheduleCount, String name, int reviewCount, int reviewAvg) {
+			int scheduleCount, String name, int reviewCount, String reviewAvg, String profileImg) {
 		this.reviewNo = reviewNo;
 		this.ptNo = ptNo;
 		this.regDate = regDate;
@@ -36,10 +38,20 @@ public class ReviewVo {
 		this.name = name;
 		this.reviewCount = reviewCount;
 		this.reviewAvg = reviewAvg;
+		this.profileImg = profileImg;
 	}
 
 
 	
+	public String getProfileImg() {
+		return profileImg;
+	}
+
+
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
+	}
+
 	public int getReviewCount() {
 		return reviewCount;
 	}
@@ -50,12 +62,12 @@ public class ReviewVo {
 	}
 
 
-	public int getReviewAvg() {
+	public String getReviewAvg() {
 		return reviewAvg;
 	}
 
 
-	public void setReviewAvg(int reviewAvg) {
+	public void setReviewAvg(String reviewAvg) {
 		this.reviewAvg = reviewAvg;
 	}
 
@@ -120,9 +132,11 @@ public class ReviewVo {
 	public String toString() {
 		return "ReviewVo [reviewNo=" + reviewNo + ", ptNo=" + ptNo + ", regDate=" + regDate + ", score=" + score
 				+ ", content=" + content + ", userNo=" + userNo + ", trainerNo=" + trainerNo + ", scheduleCount="
-				+ scheduleCount + ", name=" + name + ", reviewCount=" + reviewCount + ", reviewAvg=" + reviewAvg + "]";
+				+ scheduleCount + ", name=" + name + ", reviewCount=" + reviewCount + ", reviewAvg=" + reviewAvg
+				+ ", profileImg=" + profileImg + "]";
 	}
-	
+
+
 	
 	
 	
