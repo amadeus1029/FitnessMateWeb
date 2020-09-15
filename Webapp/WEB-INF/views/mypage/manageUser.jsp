@@ -439,7 +439,7 @@
                     $("p.defaultMsg").hide();
 
                     var result = '';
-                    result += '<img src="${pageContext.request.contextPath}/assets/image/face/Lee-Kwang-soo.jpg" alt="profile image" title="profile image">';
+                    result += '<img src="${pageContext.request.contextPath}/upload/'+ userVo.profileImg +'" alt="profile image" title="profile image">';
                     result += '<p class="info">';
                     result += '    <span class="name">' + userVo.name + '</span>';
                     result += '    <span class="id">' + userVo.userId + '</span>';
@@ -459,7 +459,6 @@
                     $("p.defaultMsg").hide();
                     $("p.errMsg").show();
 
-                    console.error(status + " : " + error);
                 }
             })
 

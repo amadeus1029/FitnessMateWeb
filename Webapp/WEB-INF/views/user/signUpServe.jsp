@@ -71,7 +71,7 @@
                     
                     <div class="career">
                     <label for="career">경력</label>
-                    <input type="text" name="career" value="1" id ="career" placeholder='0년 00개월'>
+                    <input type="text" name="career" value="" id ="career" placeholder='0년 00개월'>
                     </div>
                 </div>    
 
