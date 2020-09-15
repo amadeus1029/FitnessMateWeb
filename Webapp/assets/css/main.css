@@ -298,6 +298,7 @@ div.crop-wrapper .cropper-wrap-box {
   position: absolute;
   right: 0;
   top: 30px;
+  margin: 0;
 }
 ul.search-list {
   padding-top: 150px;
