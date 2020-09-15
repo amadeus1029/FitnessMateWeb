@@ -670,7 +670,7 @@
                     for (var review of reviewVo) {
                         reviewStr += '<li class="review-line">';
                         reviewStr += '  <div class="user-profile ff">';
-                        reviewStr += '    <img class="user-profile-img" src="${pageContext.request.contextPath}/assets/image/unnamed.jpg">';
+                        reviewStr += '    <img class="user-profile-img" src="${pageContext.request.contextPath}/upload/'+review.profileImg+'">';
                         reviewStr += '    <div class="user-profile-info">';
                         reviewStr += '      <div class="user-profile-name">' + review.name + '</div>';
                         reviewStr += '      <div class="user-profile-date">트레이닝- ' + review.scheduleCount + '회차</div>';

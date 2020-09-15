@@ -9,8 +9,8 @@
 	<select id="reviewList" parameterType="int"
 	resultType="com.javaex.vo.ReviewVo">
 	<![CDATA[
-	SELECT r.reviewno,r.ptno,r.regdate,r.score,r.content,
-		    p.userno,p.trainerno,s.schedulecount,u.name
+	SELECT r.reviewno,r.ptno,TO_CHAR(r.regdate, 'YYYY/MM/DD')as "regDate",r.score,r.content,
+		    p.userno,p.trainerno,s.schedulecount,u.name,u.profileImg
 		FROM review r,pt p,(SELECT ptNo, COUNT(scheduleNo) scheduleCount
 					            FROM schedule
 					            group by ptNo)s,users u
