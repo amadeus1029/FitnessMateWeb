@@ -495,6 +495,11 @@
             $("input#searchKeyword").val("");
             $("ul.user-list li").addClass("off");
             $("ul.user-list li." + targetType).removeClass("off");
+            if(targetType == "former") {
+                $("ul.user-list li.now").addClass("off");
+            } else {
+                $("ul.user-list li.former").addClass("off");
+            }
         }
 
         function showUser(ptNo, trainerNo) {
