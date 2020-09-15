@@ -11,7 +11,7 @@
     margin: 0 auto;
 }
 #container .wrapper form input[type="text"], input[type="password"]{
-    margin: 10px 0px 30px 0px;
+    margin: 10px 0 30px 0;
     width: 60%;
     height: 40px;
 }
@@ -20,7 +20,7 @@
 
 }
 #container .wrapper form input[type="radio"]{
-    margin: 20px 0px 30px 0px;
+    margin: 20px 0 30px 0;
 }
 #container .wrapper form label{
     margin-right: 20px;
@@ -40,12 +40,7 @@
     width: 90px;
     height: 40px;
 }
-#container .wrapper form img{
-    float: left;
-    width: 200px;
-    height: 200px;
-    margin: 15px 20px 0px 0px;
-}
+
 #container .wrapper form input[type="file"]{
     padding-top: 187px;
 }
@@ -59,4 +54,31 @@
     right: 380px;
     font-size: 13px;
     width: 220px;
+}
+
+.wrapper .dropzone-outer-wrapper {
+    margin-top: 25px;
+}
+
+.wrapper .dropzone-outer-wrapper div.profile-img {
+    float: left;
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+    border-radius: 50%;
+    border: 1px solid #cc2121;
+    overflow: hidden;
+    cursor: pointer;
+}
+.wrapper .dropzone-outer-wrapper div.profile-img .dropzone-previews {
+    display: block;
+    width: 80px;
+    height: 80px;
+}
+.wrapper .dropzone-outer-wrapper button.change-btn {
+    float: left;
+    margin: 20px 0 0;
+    color: #fff;
+    background-color: #cc2121;
+    border: 0;
 }

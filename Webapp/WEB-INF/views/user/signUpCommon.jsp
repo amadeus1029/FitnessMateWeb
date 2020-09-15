@@ -30,6 +30,15 @@
 
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/signUpCommon.css">
+
+    <!-- dropzone -->
+    <script src="${pageContext.request.contextPath}/assets/js/dropzone/dropzone.js"></script>
+    <link href="${pageContext.request.contextPath}/assets/js/dropzone/dropzone.css" rel="stylesheet">
+
+    <script src="${pageContext.request.contextPath}/assets/js/cropper/cropper.min.js"></script>
+    <link href="${pageContext.request.contextPath}/assets/js/cropper/cropper.min.css" rel="stylesheet">
+
+    <script src="${pageContext.request.contextPath}/assets/js/canvas-blob/canvas-toBlob.js"></script>
 	
 </head>
 <body>
@@ -63,8 +72,12 @@
                 <input type="radio" id="female" name="gender" value="female">
                 <label for="female">여</label>
                 <p>프로필 이미지</p>
-                <img id="proImg" src="${pageContext.request.contextPath}/assets/image/unnamed.jpg">
-                <input type="file" id="imgPreview" name="profileImage">
+                <div class="dropzone-outer-wrapper clearfix">
+                    <div class="profile-img dropzone-wrapper">
+                    </div>
+                    <button type="button" class="button change-btn">이미지 추가</button>
+                    <input type="hidden" name="profileImg" value="">
+                </div>
           		<input type="hidden" name="userType" value="${param.userType}">
                 
 				<c:choose>
@@ -95,6 +108,12 @@
        $(".errMsg").hide();
        $(".okMsg").hide();
        $(".emtMsg").hide();
+
+        bindDropZone($(".dropzone-wrapper"));
+
+        $(".change-btn").on("click", function(){
+            $(this).siblings(".dropzone-wrapper").click();
+        });
     })
 
 	//프로필 미리보기
@@ -188,7 +207,105 @@
 		
 	});
 
-    
+    //crop and upload
+    function bindDropZone(target) {
+        target.dropzone({
+            autoProcessQueue: true,
+            url: "${pageContext.request.contextPath}/upload/image",
+            previewTemplate: "<img class='dropzone-previews' alt='' title=''>",
+            parallelUploads: 1000,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF",
+            success: function (file) {
+                var fileName = file.xhr.responseText.replace(/\"/gi, "");
+                var imageUrl = "${pageContext.request.contextPath}/upload/"+fileName;
+                var last = target.find(".dropzone-previews").last();
+                target.siblings("input[name='profileImg']").val(fileName);
+                last.attr("src", imageUrl);
+                last.siblings('.dropzone-previews').remove();
+            },
+            transformFile: function (file, done) {
+                var myDropZone = this;
+
+                // Create the image editor overlay
+                var editor = document.createElement('div');
+                editor.classList.add('crop-wrapper');
+
+
+                // Create the confirm button
+                var confirm = document.createElement('button');
+
+
+                confirm.classList.add('confirm');
+                confirm.textContent = '확인';
+                confirm.addEventListener('click', function () {
+
+                    // Get the canvas with image data from Cropper.js
+                    var canvas = cropper.getCroppedCanvas({
+                        width: 320,
+                        height: 240
+                    });
+
+
+                    // Turn the canvas into a Blob (file object without a name)
+                    canvas.toBlob(function (blob) {
+
+                        // Update the image thumbnail with the new image data
+                        myDropZone.createThumbnail(
+                            blob,
+                            myDropZone.options.thumbnailWidth,
+                            myDropZone.options.thumbnailHeight,
+                            myDropZone.options.thumbnailMethod,
+                            false,
+                            function (dataURL) {
+
+                                // Update the Dropzone file thumbnail
+                                myDropZone.emit('thumbnail', file, dataURL);
+
+                                // Return modified file to dropzone
+                                done(blob);
+                            }
+                        );
+
+                    }, file.type);
+
+                    // Remove the editor from view
+                    editor.parentNode.removeChild(editor);
+                });
+                editor.appendChild(confirm);
+
+                // Create the cancel button
+                var cancel = document.createElement('button');
+                var thisPreview = target.find('.dropzone-previews').last();
+
+                cancel.classList.add('cancel');
+                cancel.textContent = '취소';
+                cancel.addEventListener('click', function () {
+                    // Remove the editor from view
+                    thisPreview.remove();
+                    document.body.removeChild(editor);
+                });
+                editor.appendChild(cancel);
+
+                // Load the image
+                var image = new Image();
+                image.src = URL.createObjectURL(file);
+                editor.appendChild(image);
+
+                // Append the editor to the page
+                document.body.appendChild(editor);
+
+                // Create Cropper.js and pass image
+                var cropper = new Cropper(image, {
+                    aspectRatio: 1 / 1,
+                    zoomOnWheel: false,
+                    autoCropArea: 0.5,
+                    viewMode: 2,
+                    minCanvasWidth: 200
+                });
+            }
+
+        });
+    }
     
 </script>
 </html>
