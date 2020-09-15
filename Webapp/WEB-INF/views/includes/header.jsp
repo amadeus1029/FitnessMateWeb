@@ -7,6 +7,7 @@
         <h1 class="logo">
             <a href="${pageContext.request.contextPath}/main">
                 <img src="${pageContext.request.contextPath}/assets/image/logoB.jpeg" title="logo" alt="logo">
+                <p>FitnessMate</p>
             </a>
         </h1>
         <nav id="nav">
