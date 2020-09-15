@@ -37,7 +37,7 @@ public class ExerciseDao {
     }
 
     public Boolean delete(ExerciseVo exVo) {
-        return sqlSession.delete("exercise.delete", exVo) == 1;
+        return sqlSession.update("exercise.delete", exVo) == 1;
     }
 
     public List<ExerciseVo> showExPart(ExerciseVo exVo) {
