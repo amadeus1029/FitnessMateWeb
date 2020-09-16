@@ -774,6 +774,7 @@
                 promise.done(successFunction);
                 promise.fail(failFunction);
                 
+                //pt넘버 추출 성공한 경우
                 function successFunction(ptNo){
                 	
                 	//버튼 눌렀을 때 리뷰 추가
@@ -819,7 +820,7 @@
  
             		return console.log(ptNo);
                 }
-                
+              //pt넘버 추출 실패한 경우
                 function failFunction(ptNo){
 
             		if(ptNo.result !='success')
@@ -833,6 +834,12 @@
             }
         
         //리뷰 수정
+        
+        
+        
+        
+        
+        
         //리뷰 삭제
         $(".review-list").on("click","#removeRe",function(){
         	console.log("삭제");
@@ -857,20 +864,13 @@
          			}
                  	
          			else{
-        				
          				console.log("아무일도 없음");
         			}
-                 	
-
-                 	
                  },
                  error: function (XHR, status, error) {
                      console.error(status + " : " + error);
                  }
              });
-        	
-        	
-        	
         });
       
         ////////////////////////트레이너 모달 리뷰탭/////////////////////////////
