@@ -71,7 +71,7 @@
 		<![CDATA[
 		
 			INSERT INTO users 
-			VALUES(#{userNo}, #{userId}, #{password}, #{name}, #{gender}, #{phone}, '', #{userType}, #{profileImg}, '', 1, '', '', '')
+			VALUES(#{userNo}, #{userId}, #{password}, #{name}, #{gender}, #{phone}, '', #{userType}, #{profileImg}, '', 1, '', '', '', '','')
 
 		 ]]>
 	</insert>
@@ -107,6 +107,25 @@
 				,gender = #{gender}
 		]]>		
 		</if>
+		
+		<if test = "workingHours != null" >
+		<![CDATA[   
+				,workingHours = #{workingHours}
+		]]>		
+		</if>
+		
+		<choose>
+			<when test = "invisible != null">
+				<![CDATA[   
+				,invisible = ''
+				]]>		
+			</when>
+			<otherwise>
+				<![CDATA[   
+				,invisible = 'invisible'
+				]]>		
+			</otherwise>
+		</choose>
 		
 		<![CDATA[
 			WHERE userNo = #{userNo}
@@ -164,7 +183,7 @@
 	<select id="selectProfile" parameterType="int" resultType="com.javaex.vo.UserVo">
 		<![CDATA[
 		
-			SELECT name, gender, phone, TO_CHAR(birthDate, 'yyyy/mm/dd') "birthDate", introduction, career, location, company, price, profileImg
+			SELECT name, gender, phone, TO_CHAR(birthDate, 'yyyy/mm/dd') "birthDate", introduction, career, location, company, price, profileImg, invisible
 			FROM users
 			where userNo = #{userNo}
 		

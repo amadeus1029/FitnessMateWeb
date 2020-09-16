@@ -218,6 +218,10 @@ public class Mypage2Service {
 
 		return today;
 	}
+
+	public boolean getThisRecord(boolean invisible) {
+		return false;
+	}
 	
 
 }

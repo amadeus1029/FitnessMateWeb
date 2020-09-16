@@ -114,6 +114,7 @@ public class MypageController {
        	UserVo userVo = (UserVo)session.getAttribute("authUser");
        	
        	Map<String, Object> proMap = mypageService.getProfile(userVo.getUserType(), userVo.getUserNo());
+       	System.out.println(proMap);
        	
        	model.addAttribute("profile", proMap);
        	

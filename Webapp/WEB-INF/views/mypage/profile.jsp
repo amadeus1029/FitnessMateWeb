@@ -50,7 +50,6 @@
 
     <script src="${pageContext.request.contextPath}/assets/js/canvas-blob/canvas-toBlob.js"></script>
 
-
 </head>
 
 <body>
@@ -131,6 +130,7 @@
                                 <h3 class="title">트레이너 경력</h3>
                                 <input type="text" name="career" min="0"
                                        value="${profile.userVo.career}" placeholder='0년 00개월'>
+                                 
                             </c:when>
                             <c:otherwise>
                                 <h3 class="title">운동 경력</h3>
@@ -183,6 +183,10 @@
                                 <input type="text" name="company"
                                        value="${profile.userVo.company}">
                             </div>
+                            <div class="info">      
+                                 <h3 class="title">PT 운영 시간</h3>
+                                 <textarea class="content" name="workingHours"><%-- ${profile.userVo.workingHours} --%></textarea>
+                        	</div>
                         </div>
                         <div class="info-wrapper clearfix">
                             <div class="category-info">
@@ -234,7 +238,19 @@
                 <input type="hidden" name="userNo" value="${authUser.userNo}">
                 <input type="hidden" name="userType" value="${authUser.userType}">
                 <button type="submit" class="button main">저장하기</button>
+	            <c:if test="${authUser.userType eq 'trainer'}">
+		            <div id="profileOpen">
+		            	<p class="msg_profile" style="${empty profile.userVo.invisible ? 'display:none;' : ''}">프로필 비공개</p>
+		            	<p class="msg_profile" style="${empty profile.userVo.invisible ? '' : 'display:none;'}">프로필 공개 중</p>
+		            	<input type="checkbox" id="toggle" name="invisible" value="open" ${empty profile.userVo.invisible ? 'checked' : ''}>
+		            	<div>
+		            		<label for="toggle"><span></span></label>
+		           		</div>
+		            </div>
+	            </c:if>
             </form>
+            
+            
         </div>
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
@@ -248,7 +264,13 @@
         $(".change-btn").on("click", function(){
             $(this).siblings(".dropzone-wrapper").click();
         });
+        
     }); //ready 함수 종료
+    
+    $("input#toggle").on('change', function(){
+    	$("p.msg_profile").toggle();
+    	
+    });
 
     $("button[type='submit'].main").on("click", function () {
         console.log($("input[name='career']").val());
