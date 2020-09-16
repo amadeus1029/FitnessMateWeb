@@ -57,17 +57,24 @@
 		        </div>
 		        
 		        <div class="schedule-wrapper">
-	            <h3 class="title">내 트레이너</h3>
-	            <ul class="schedule-list">
-	                <li class="schedule">
-	                    <span class="name">${summaryNormal.ptVo.name}</span>
-	                </li>
-	                <li class="schedule">
-	                    <span class="time">(${summaryNormal.ptVo.phone})</span>
-	                </li>
-	            </ul>
-	        </div>
-		        
+					<h3 class="title">예약 현황</h3>
+					<div class="reserved-wrapper">
+			            <ul class="schedule-list">
+			            	<!-- 반복 -->
+			                <li class="schedule">
+			                    <span class="time"><i class="fas fa-check"></i>2020-09-17 PM 10:00 (확정)</span>
+			                </li>
+			                <li class="schedule">
+			                    <span class="time"><i class="fas fa-times"></i>2020-09-24 PM 10:00 (반려)</span>
+			                </li>
+			                <li class="schedule">
+			                    <span class="time">2020-10-01 PM 10:00 (요청)</span>
+			                </li>
+			                <!-- 반복끝 -->
+						</ul>
+	        		</div>
+					<button id="btn-reserved" class="button sub">PT 예약하기</button>
+				</div>		        
     		</c:otherwise>
    		</c:choose>
     </div>

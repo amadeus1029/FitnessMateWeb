@@ -17,7 +17,7 @@ public class UserVo {
 	private String company; /* 소속회사 */
 	private String price; /* 가격 */
 	private String fieldNo; /* 전문분야 고유넘버 */
-	//private String fieldName;/* 전문분야  */
+	private String fieldName;/* 전문분야  */
 	private String invisible; /* 프로필 공개여부 */
 	private String workingHours; /* PT운영시간 */
 	
@@ -143,7 +143,6 @@ public class UserVo {
 		this.fieldNo = fieldNo;
 	}
 
-	/*
 	public String getFieldName() {
 		return fieldName;
 	}
@@ -151,7 +150,6 @@ public class UserVo {
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
 	}
-	*/
 
 	public String getInvisible() {
 		return invisible;
@@ -175,7 +173,7 @@ public class UserVo {
 				+ ", name=" + name + ", gender=" + gender + ", phone=" + phone + ", birthDate=" + birthDate
 				+ ", userType=" + userType + ", profileImg=" + profileImg + ", introduction=" + introduction
 				+ ", location=" + location + ", company=" + company + ", price=" + price + ", fieldNo=" + fieldNo
-				+ ", invisible=" + invisible + ", workingHours=" + workingHours + "]";
+				+ ", fieldName=" + fieldName + ", invisible=" + invisible + ", workingHours=" + workingHours + "]";
 	}
 
 }

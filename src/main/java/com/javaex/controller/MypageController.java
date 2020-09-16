@@ -102,7 +102,6 @@ public class MypageController {
     public boolean deleteExercise(HttpSession session, @RequestBody ExerciseVo exVo) {
         UserVo user = (UserVo) session.getAttribute("authUser");
         exVo.setTrainerNo(user.getUserNo());
-        System.out.println("exVo: "+exVo);
         
         return mypageService.deleteExercise(exVo);
     }
@@ -114,7 +113,6 @@ public class MypageController {
        	UserVo userVo = (UserVo)session.getAttribute("authUser");
        	
        	Map<String, Object> proMap = mypageService.getProfile(userVo.getUserType(), userVo.getUserNo());
-       	System.out.println(proMap);
        	
        	model.addAttribute("profile", proMap);
        	

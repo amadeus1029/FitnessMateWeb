@@ -183,10 +183,6 @@
                                 <input type="text" name="company"
                                        value="${profile.userVo.company}">
                             </div>
-                            <div class="info">      
-                                 <h3 class="title">PT 운영 시간</h3>
-                                 <textarea class="content" name="workingHours"><%-- ${profile.userVo.workingHours} --%></textarea>
-                        	</div>
                         </div>
                         <div class="info-wrapper clearfix">
                             <div class="category-info">
@@ -217,6 +213,10 @@
                                     </p>
                                 </c:forEach>
                             </div>
+                        </div>
+                        <div class="comment-wrapper">
+	                       <h3 class="title">PT 운영 시간</h3>
+	                       <textarea class="content" name="workingHours">${profile.userVo.workingHours}</textarea>
                         </div>
                         <div class="comment-wrapper">
                             <h3 class="title">트레이너 메세지</h3>
