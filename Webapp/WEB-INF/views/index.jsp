@@ -668,7 +668,7 @@
                     //if(reviewVo == null && reviewVo == ''){reviewStr +='<span>아직 작성된 리뷰가 없습니다.</span>'; }
 
                     for (var review of reviewVo) {
-                        reviewStr += '<li class="review-line">';
+                        reviewStr += '<li class="review-line" id="r-'+review.reviewNo+'">';
                         reviewStr += '  <div class="user-profile ff">';
                         reviewStr += '    <img class="user-profile-img" src="${pageContext.request.contextPath}/upload/'+review.profileImg+'">';
                         reviewStr += '    <div class="user-profile-info">';
@@ -698,14 +698,14 @@
 
                         //회원이 로그인한 경우
                         if (writeUser == loginUser) {
-                            reviewStr += '      <button type="button" class="button">삭제</button>';
-                            reviewStr += '      <button type="button" class="button">수정</button>';
+                            reviewStr += '      <button type="button"  data-reno="'+review.reviewNo+'" class="button" id="removeRe">삭제</button>';
+                            reviewStr += '      <button type="button" class="button" id="modifyRe">수정</button>';
                         }
 
                         //트레이너가 로그인한 경우
                         if (reviewNo == loginUser) {
-                            reviewStr += '      <button type="button" class="button">삭제</button>';
-                            reviewStr += '      <button type="button" class="button">답글</button> ';
+                            reviewStr += '      <button type="button" class="button" id="removeRe">삭제</button>';
+                            reviewStr += '      <button type="button" class="button" id="reRe">답글</button> ';
                         }
                         reviewStr += '  </div>';
                         reviewStr += ' </li>';
@@ -753,9 +753,6 @@
 
         });
 
-        
-        
-        
         
         
         //pt넘버 추출위한 유저넘버
@@ -835,15 +832,47 @@
 
             }
         
-        
-        
-        
-        
+        //리뷰 수정
+        //리뷰 삭제
+        $(".review-list").on("click","#removeRe",function(){
+        	console.log("삭제");
+        	var reviewNo = $(this).data('reno');
+        	console.log("삭제위한 리뷰넘버 추출"+reviewNo);
+        	
+        	
+        	 $.ajax({
 
+                 url: "${pageContext.request.contextPath}/search/reviewRemove",
+                 type: "post",
+                 //contentType : "application/json",
+                 data:{reviewNo: reviewNo} ,
+                 
+                 dataType: "json",
+                 success: function (count) {
+                	 console.log(count);
+         			if(count==1){
+         				
+         				console.log("삭제"+reviewNo);
+         				$("#r-"+reviewNo).remove();
+         			}
+                 	
+         			else{
+        				
+         				console.log("아무일도 없음");
+        			}
+                 	
 
+                 	
+                 },
+                 error: function (XHR, status, error) {
+                     console.error(status + " : " + error);
+                 }
+             });
+        	
+        	
+        	
+        });
       
-
-
         ////////////////////////트레이너 모달 리뷰탭/////////////////////////////
 
         ////////////////////////트레이너 모달 위치탭/////////////////////////////

@@ -179,6 +179,15 @@ public class SearchService {
 		return ptNo;
 	}
 
+	//리뷰삭제
+	public int reviewRemove(int reviewNo) {
+		System.out.println("SearchService:reviewRemove");
+		
+		int remove = searchDao.reviewRemove(reviewNo);
+		
+		return remove;
+	}
+
 	
 	
 	

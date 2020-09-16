@@ -139,35 +139,41 @@ public class SearchController {
 
 	}
 	
-	//리뷰 추가위해 pt넘버 불러오기
+	// 리뷰 추가위해 pt넘버 불러오기
 	@ResponseBody
 	@RequestMapping("/search/findPt")
-	public int findPt(@RequestParam("userNo") int userNo) 
-	{
+	public int findPt(@RequestParam("userNo") int userNo) {
 		System.out.println("controller:/search/findPt");
 		int ptNo = searchService.findPt(userNo);
-		
-		System.out.println("컨트롤러 pt"+ptNo);
-		
+
+		System.out.println("컨트롤러 pt" + ptNo);
+
 		return ptNo;
 	}
-	
-	
-	
+
 	// 리뷰추가
-		@ResponseBody
-		@RequestMapping("/search/reviewPlus")
-		public ReviewVo reviewPlus(@RequestParam("score") int score,@RequestParam("content") String content,
-				@RequestParam("ptNo") int ptNo) 
-		{
-			System.out.println("controller:/search/reviewPlus");
-			System.out.println("파람확인"+score+content);
-			ReviewVo reviewVo = searchService.reviewPlus(score,content,ptNo);
-			
-			return reviewVo;
-		}
+	@ResponseBody
+	@RequestMapping("/search/reviewPlus")
+	public ReviewVo reviewPlus(@RequestParam("score") int score, @RequestParam("content") String content,
+			@RequestParam("ptNo") int ptNo) {
+		System.out.println("controller:/search/reviewPlus");
+		System.out.println("파람확인" + score + content);
+		ReviewVo reviewVo = searchService.reviewPlus(score, content, ptNo);
+
+		return reviewVo;
+	}
 	
-	
+		
+	//리뷰 삭제
+	@ResponseBody
+	@RequestMapping("/search/reviewRemove")
+	public int reviewRemove(@RequestParam("reviewNo") int reviewNo) {
+		System.out.println("controller:/search/reviewRemove");
+		System.out.println("리뷰넘버 확인"+reviewNo );
+		int remove = searchService.reviewRemove(reviewNo);
+
+		return remove;
+	}
 	
 	
 	

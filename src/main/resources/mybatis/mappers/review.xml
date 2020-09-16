@@ -38,7 +38,7 @@
 	</select>
 	
 	
-	<!-- 내용추가 -->
+	<!-- 리뷰추가 -->
 	<insert id="reviewPlus" parameterType="com.javaex.vo.ReviewVo">
 	  <![CDATA[
 		insert into review
@@ -56,6 +56,15 @@
 	WHERE userno = #{userNo}
 	]]>
 	</select>
+	
+	<!-- 리뷰지우기 -->
+	<delete id="reviewRemove" parameterType="int">
+		<![CDATA[
+			DELETE from review
+			where reviewno =#{reviewNo}
+		]]>
+	</delete>
+	
 
 	
 	

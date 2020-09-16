@@ -152,6 +152,15 @@ public class SearchDao {
 		return ptNo;
 	}
 
+	//리뷰삭제
+	public int reviewRemove(int reviewNo) {
+		System.out.println("searchDao:reviewRemove");
+		
+		int remove = sqlSession.delete("review.reviewRemove", reviewNo);
+		
+		return remove;
+	}
+
 	
 
 	
