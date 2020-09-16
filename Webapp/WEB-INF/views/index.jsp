@@ -233,6 +233,10 @@
                                 <h3 class="title">입상경력</h3>
                             </div>
                         </div>
+                         <div class="comment-wrapper">
+                            <h3 class="title">PT 운영 시간</h3>
+                            <p class="content ptTimer"></p>
+                        </div>
                         <div class="pay-wrapper">
                             <h3 class="title">비용</h3>
                             <p class="content price"></p>
@@ -460,10 +464,11 @@
                         $(".content.gender").html("남자");
                     }
                     $(".content.location").html(loca); //지역
-                    $(".content.career").html(vo.career + "년"); //경력
+                    $(".content.career").html(vo.career); //경력
                     $(".content.price").html(vo.price); //가격
                     $(".content.introduction").html(vo.introduction); //자기소개
                     $(".content.age").html("만" + years + "세");
+                    $(".content.ptTimer").html(vo.workingHours); //자기소개
 
 
                 },
