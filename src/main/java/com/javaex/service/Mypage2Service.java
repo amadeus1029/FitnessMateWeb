@@ -177,12 +177,13 @@ public class Mypage2Service {
 	
 	public Map<String, Object> summaryNormal(int userNo) {
 		
-		PtVo ptVo = ptDao.summaryNormal(userNo);
-		ScheduleVo nextPt = ptDao.nextPt(userNo);
+		List<ScheduleVo> reservList = ptDao.selectReservList(userNo);
+		System.out.println(reservList);
 		
 		Map<String, Object> summaryNormal = new HashMap<>();
-		summaryNormal.put("ptVo", ptVo);
-		summaryNormal.put("nextPt", nextPt);
+		summaryNormal.put("ptVo", ptDao.summaryNormal(userNo));
+		summaryNormal.put("nextPt", ptDao.nextPt(userNo));
+		summaryNormal.put("reservList", reservList);
 		
 		return summaryNormal;
 	}

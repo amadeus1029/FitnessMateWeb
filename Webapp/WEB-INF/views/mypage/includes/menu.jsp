@@ -13,64 +13,65 @@
          
         <c:choose>
     		<c:when test="${authUser.userType eq 'trainer'}">
-	        <div class="statistics">
-	            <dl class="review">
-	                <dt>평점</dt>
-	                <dd>${summary.summaryVo.avgScore}점 / ${summary.summaryVo.reviewCount}개</dd>
-	            </dl>
-	            <dl>
-	                <dt>현재 회원 수</dt>
-	                <dd>${summary.summaryVo.countCurrent}명</dd>
-	            </dl>
-	            <dl>
-	                <dt>누적 회원 수</dt>
-	                <dd>${summary.summaryVo.countAll}명</dd>
-	            </dl>
-	        </div>
-	        <div class="schedule-wrapper">
-	            <h3 class="title">오늘의 일정</h3>
-	            <ul class="schedule-list">
-	            	<c:forEach items="${summary.scheduleList}" var="schedule">
-		                <li class="schedule">
-		                    <span class="name">${schedule.userName} 회원님</span>
-		                    <span class="time">${schedule.startTime} - ${schedule.endTime}</span>
-		                </li>
+		        <div class="statistics">
+		                <h3 class="title left">평점</h3>
+		                <div class="info">${summary.summaryVo.avgScore}점 / ${summary.summaryVo.reviewCount}개</div>
+		                
+		                <h3 class="title left">현재 회원 수</h3>
+		                 <div class="info">${summary.summaryVo.countCurrent}명</div>
+		                 
+		                <h3 class="title left">누적 회원 수</h3>
+		                 <div class="info">${summary.summaryVo.countAll}명</div>
+		        </div>
+		        <div class="schedule-wrapper">
+		            <h3 class="title">오늘의 일정</h3>
+		            <ul class="schedule-list">
+		            	<c:forEach items="${summary.scheduleList}" var="schedule">
+			                <li class="schedule">
+			                    <span class="name">${schedule.userName} 회원님</span>
+			                    <span class="time">${schedule.startTime} - ${schedule.endTime}</span>
+			                </li>
 		                </c:forEach>
-	
-	            </ul>
-	        </div>
+		            </ul>
+		        </div>
 		    </c:when>
 		    
     		<c:otherwise>
 	    		<div class="statistics">
-		            <dl class="review">
-		            	<dt>다음 PT</dt>
-		                <dd>${summaryNormal.nextPt.startTime} - ${summaryNormal.nextPt.endTime}</dd>
-		            
-		                <dt>등록기간</dt>
-		                <dd>${summaryNormal.ptVo.startDate} ~ ${summaryNormal.ptVo.endDate}</dd>
-		            </dl>
-		            <dl>
-		                <dt>잔여횟수</dt>
-		                <dd>${summaryNormal.ptVo.regCount-summaryNormal.ptVo.scheduleCount} / ${summaryNormal.ptVo.regCount}</dd>
-		            </dl>
+	            	<h3 class="title left">다음 PT</h3>
+	                <div class="info">${summaryNormal.nextPt.startTime} - ${summaryNormal.nextPt.endTime}</div>
+	            
+	                <h3 class="title left">등록기간</h3>
+	                <div class="info">${summaryNormal.ptVo.startDate} ~ ${summaryNormal.ptVo.endDate}</div>
+	                
+	                <h3 class="title left">잔여횟수</h3>
+	                <div class="info">${summaryNormal.ptVo.regCount-summaryNormal.ptVo.scheduleCount} / ${summaryNormal.ptVo.regCount}</div>
 		        </div>
 		        
 		        <div class="schedule-wrapper">
 					<h3 class="title">예약 현황</h3>
 					<div class="reserved-wrapper">
 			            <ul class="schedule-list">
-			            	<!-- 반복 -->
-			                <li class="schedule">
-			                    <span class="time"><i class="fas fa-check"></i>2020-09-17 PM 10:00 (확정)</span>
-			                </li>
-			                <li class="schedule">
-			                    <span class="time"><i class="fas fa-times"></i>2020-09-24 PM 10:00 (반려)</span>
-			                </li>
-			                <li class="schedule">
-			                    <span class="time">2020-10-01 PM 10:00 (요청)</span>
-			                </li>
-			                <!-- 반복끝 -->
+			            	<c:forEach items="${summaryNormal.reservList}" var="reservation">
+				                <li class="schedule">
+				                    <span class="time">
+				                    	<c:choose>
+				                    		<c:when test="${reservation.state eq 'confirm'}">
+						                    	<i class="fas fa-check"></i>
+						                    	${reservation.startTime} (확정)
+				                    		</c:when>
+				                    		<c:when test="${reservation.state eq 'rejected'}">
+				                    			<i class="fas fa-times"></i>
+				                    			${reservation.startTime} (반려)
+				                    		</c:when>
+				                    		<c:otherwise>
+				                    			<i class="far fa-square"></i>
+				                    			${reservation.startTime} (예약)
+				                    		</c:otherwise>
+				                    	</c:choose>
+				                    </span>
+				                </li>
+			                </c:forEach>
 						</ul>
 	        		</div>
 					<button id="btn-reserved" class="button sub">PT 예약하기</button>
@@ -96,3 +97,13 @@
    		</c:choose>
     </ul>
 </div>
+
+
+
+
+
+
+
+
+
+

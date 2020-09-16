@@ -34,6 +34,7 @@
 
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage2.css">
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {

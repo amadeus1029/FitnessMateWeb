@@ -211,6 +211,23 @@
 		 ]]>
 	</select>
 	
+	<!-- 예약 리스트 -->
+	<select id="selectReservList" parameterType="int" resultType="com.javaex.vo.ScheduleVo">
+		<![CDATA[
+		
+				SELECT  scheduleNo,
+				        	ptNo,
+				        	state,
+				        	TO_CHAR(startTime, 'yyyy-mm-dd AM hh:mi', 'NLS_DATE_LANGUAGE=ENGLISH') startTime
+				FROM    schedule
+				WHERE   ptNo = (SELECT MAX(ptNo)
+						                FROM pt
+						                WHERE userNo = #{userNo})
+				AND startTime > sysdate
+				ORDER BY startTime asc
+
+		 ]]>
+	</select>
 	
 	
 	

@@ -103,6 +103,12 @@ public class PtDao {
 		
 		return sqlSession.selectOne("pt.nextPt", userNo);
 	}
+
+	public List<ScheduleVo> selectReservList(int userNo) {
+		System.out.println("dao 개인회원 예약 내역");
+		
+		return sqlSession.selectList("pt.selectReservList", userNo);
+	}
 	
 	
 }

@@ -115,9 +115,7 @@ div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div butt
 	margin: 30px 0px 0px 45px;
 }
 .schedule-wrapper button#btn-reserved{
-	position: absolute;
-	right: 20px;
-	bottom: 25px;
+	float: right;
 	width: 125px;
 	height: 40px;
 	background: none;
@@ -125,6 +123,11 @@ div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div butt
 	color: #fff;
 	font-size: 14px;
 	margin: 15px 5px 0px 0px;
+}
+.schedule-wrapper .reserved-wrapper{
+	height: 230px;
+	overflow: auto;
+	font-size: 18px;
 }
 .schedule-wrapper .reserved-wrapper i{
 	color: #fff;
@@ -418,4 +421,18 @@ div.content-wrapper div.recordList table td {
 	#container .wrapper #editProfileForm #profileOpen input:checked+div label>span
 	{
 	left: 24px;
+}
+
+/* 요약부분 CSS 수정 */
+.summary-wrapper .summary .statistics {
+	color: #fff;
+	text-align: left ;
+}
+.summary-wrapper .summary .statistics h3.title.left {
+	text-align: left ;
+}
+.summary-wrapper .summary .statistics .info {
+	color: #fff;
+	font-size: 20px;
+	margin-bottom: 25px;
 }
