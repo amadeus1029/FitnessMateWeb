@@ -135,11 +135,17 @@ public class SearchDao {
 	//리뷰 추가
 	public int reviewPlus(ReviewVo vo ) {
 		System.out.println("searchDao:reviewPlus");
-		System.out.println();
 		
 		int reviewVo = sqlSession.insert("review.reviewPlus",vo);
-		
 		return reviewVo;
+	}
+	
+	//추가된 리뷰정보 가지고 오기
+	public ReviewVo reviewOne(int reviewNo) {
+		System.out.println("searchDao:reviewOne");
+		ReviewVo vo =sqlSession.selectOne("review.reviewOne", reviewNo);
+		
+		return vo;
 	}
 
 	
@@ -160,6 +166,8 @@ public class SearchDao {
 		
 		return remove;
 	}
+
+	
 
 	
 

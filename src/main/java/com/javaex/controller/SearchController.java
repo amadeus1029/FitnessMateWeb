@@ -159,6 +159,8 @@ public class SearchController {
 		System.out.println("controller:/search/reviewPlus");
 		System.out.println("파람확인" + score + content);
 		ReviewVo reviewVo = searchService.reviewPlus(score, content, ptNo);
+		
+		System.out.println("리뷰정보 제대로 가지고 와지나 확인"+reviewVo);
 
 		return reviewVo;
 	}

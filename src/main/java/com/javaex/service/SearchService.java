@@ -167,8 +167,11 @@ public class SearchService {
 		
 		searchDao.reviewPlus(reviewVo);
 		
+		int reviewNo = reviewVo.getReviewNo();
 		
-		return reviewVo;
+		ReviewVo vo = searchDao.reviewOne(reviewNo);
+		
+		return vo;
 	}
 
 	//리뷰 추가위해 pt넘버 불러오기

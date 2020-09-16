@@ -40,12 +40,37 @@
 	
 	<!-- 리뷰추가 -->
 	<insert id="reviewPlus" parameterType="com.javaex.vo.ReviewVo">
+	 
+	<selectKey keyProperty="reviewNo" resultType="int" order="BEFORE">  
+	<![CDATA[
+        select SEQ_REVIEWNO.nextval FROM dual
+        ]]>
+     </selectKey>
+      
 	  <![CDATA[
 		insert into review
-		VALUES (SEQ_REVIEWNO.nextval,#{ptNo},sysdate,#{score},#{content})
+		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content})
 	  ]]>
 
 	</insert>
+	
+	<!-- 추가한 리뷰 불러오기 -->
+	<select id="reviewOne" parameterType="int"
+	resultType="com.javaex.vo.ReviewVo">
+	<![CDATA[
+	SELECT r.reviewno,r.ptno,TO_CHAR(r.regdate, 'YYYY/MM/DD')as "regDate",r.score,r.content,
+		    p.userno,p.trainerno,s.schedulecount,u.name,u.profileImg
+		FROM review r,pt p,(SELECT ptNo, COUNT(scheduleNo) scheduleCount
+					            FROM schedule
+					            group by ptNo)s,users u
+		where r.ptno = p.ptno
+		and p.ptno = s.ptno
+		and u.userno = p.userno
+		and r.reviewno=#{reviewNo}
+	]]>
+	</select>
+	
+	
 	
 	<!--리뷰작성 위한 pt번호 불러오기 -->
 	<select id="findPt" parameterType="int"
