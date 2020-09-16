@@ -171,10 +171,10 @@
 		<![CDATA[
 		
 			SELECT 
-			    pt.ptNo, pt.trainerNo userNo, pt.name, pt.phone, pt.startDate, pt.endDate, pt.regcount, s.scheduleCount
+			    pt.ptNo, pt.startDate, pt.endDate, pt.regcount, s.scheduleCount
 			FROM
 			    (SELECT
-			       p.ptNo, p.trainerNo, u.name, u.phone, TO_CHAR(p.startdate, 'yyyy-mm-dd') startDate, TO_CHAR(p.endDate, 'yyyy-mm-dd') endDate, p.regcount
+			       p.ptNo, TO_CHAR(p.startdate, 'yyyy-mm-dd') startDate, TO_CHAR(p.endDate, 'yyyy-mm-dd') endDate, p.regcount
 			    FROM pt p LEFT OUTER JOIN users u
 			    ON p.trainerNo = u.userNo) pt
 			LEFT OUTER JOIN
@@ -195,13 +195,13 @@
 		
 
 			SELECT ROWNUM, startTime, endTime
-			FROM(
-			SELECT 
-			    TO_CHAR(startTime, 'yyyy-mm-dd AM hh:mi', 'NLS_DATE_LANGUAGE=ENGLISH') startTime,
-			    TO_CHAR(endtime, 'hh:mi') endtime
-			FROM schedule
-			WHERE 
-			    ptNo = (SELECT MAX(ptNo)
+			FROM(	SELECT 
+						    TO_CHAR(startTime, 'yyyy-mm-dd AM hh:mi', 'NLS_DATE_LANGUAGE=ENGLISH') startTime,
+						    TO_CHAR(endtime, 'hh:mi') endtime,
+						    state
+						FROM schedule
+			WHERE state = 'confirm' 
+			AND ptNo = (SELECT MAX(ptNo)
 			            FROM pt
 			            WHERE userNo = #{userNo})
 			AND startTime > sysdate

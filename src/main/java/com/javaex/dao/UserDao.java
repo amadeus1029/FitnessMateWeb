@@ -57,6 +57,7 @@ public class UserDao {
 
 	public void updateTrainerInfo(UserVo vo) {
 		System.out.println("userDao.트레이너 정보 수정");
+		System.out.println(vo);
 		
 		sqlSession.update("user.updateTrainerInfo", vo);
 	}

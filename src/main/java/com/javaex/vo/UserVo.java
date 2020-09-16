@@ -18,11 +18,10 @@ public class UserVo {
 	private String price; /* 가격 */
 	private String fieldNo; /* 전문분야 고유넘버 */
 	private String fieldName;/* 전문분야  */
+	private String invisible; /* 프로필 공개여부 */
+	private String workingHours; /* PT운영시간 */
 	
-	
-	public UserVo() {
-
-	}
+	public UserVo() {}
 
 	public int getUserNo() {
 		return userNo;
@@ -152,25 +151,29 @@ public class UserVo {
 		this.fieldName = fieldName;
 	}
 
+	public String getInvisible() {
+		return invisible;
+	}
+
+	public void setInvisible(String invisible) {
+		this.invisible = invisible;
+	}
+
+	public String getWorkingHours() {
+		return workingHours;
+	}
+
+	public void setWorkingHours(String workingHours) {
+		this.workingHours = workingHours;
+	}
+
 	@Override
 	public String toString() {
-		return "UserVo{" +
-				"userNo=" + userNo +
-				", career=" + career +
-				", userId='" + userId + '\'' +
-				", password='" + password + '\'' +
-				", name='" + name + '\'' +
-				", gender='" + gender + '\'' +
-				", phone='" + phone + '\'' +
-				", birthDate='" + birthDate + '\'' +
-				", userType='" + userType + '\'' +
-				", profileImg='" + profileImg + '\'' +
-				", introduction='" + introduction + '\'' +
-				", location='" + location + '\'' +
-				", company='" + company + '\'' +
-				", price='" + price + '\'' +
-				", fieldNo='" + fieldNo + '\'' +
-				", fieldName='" + fieldName + '\'' +
-				'}';
+		return "UserVo [userNo=" + userNo + ", career=" + career + ", userId=" + userId + ", password=" + password
+				+ ", name=" + name + ", gender=" + gender + ", phone=" + phone + ", birthDate=" + birthDate
+				+ ", userType=" + userType + ", profileImg=" + profileImg + ", introduction=" + introduction
+				+ ", location=" + location + ", company=" + company + ", price=" + price + ", fieldNo=" + fieldNo
+				+ ", fieldName=" + fieldName + ", invisible=" + invisible + ", workingHours=" + workingHours + "]";
 	}
+
 }

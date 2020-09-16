@@ -114,6 +114,28 @@ div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div butt
 	float: left;
 	margin: 30px 0px 0px 45px;
 }
+.schedule-wrapper button#btn-reserved{
+	position: absolute;
+	right: 20px;
+	bottom: 25px;
+	width: 125px;
+	height: 40px;
+	background: none;
+	border: 1px solid  #fff;
+	color: #fff;
+	font-size: 14px;
+	margin: 15px 5px 0px 0px;
+}
+.schedule-wrapper .reserved-wrapper i{
+	color: #fff;
+	margin-right: 6px;
+}
+.schedule-wrapper .reserved-wrapper .fa-times{
+	color: #ff0000;
+	font-size: 110%;
+	margin-right: 10px;
+	cursor: pointer;
+}
 
 /* 인바디 모달 */
 div.inbody_record {
@@ -289,44 +311,111 @@ div.content-wrapper table tr td {
 	border-bottom: 1px solid #292c33;
 }
 
-div.content-wrapper div.recordList{
-    float: left;
-    width: 600px;
-    border: none;
-    margin: 2px 0px 0px 35px;
+div.content-wrapper div.recordList {
+	float: left;
+	width: 600px;
+	border: none;
+	margin: 2px 0px 0px 35px;
 }
 
-div.content-wrapper div.recordList div.emtMsg{
-    height: auto;
-    margin-top: 20px;
-    font-size: 20px;
-    font-weight: 600;
+div.content-wrapper div.recordList div.emtMsg {
+	height: auto;
+	margin-top: 20px;
+	font-size: 20px;
+	font-weight: 600;
 }
 
-div.content-wrapper div.recordList table{
-    margin: 20px auto 0px;
+div.content-wrapper div.recordList table {
+	margin: 20px auto 0px;
 	border: 1px solid #dadde6;
 	border-radius: 5px;
 }
 
-div.content-wrapper div.recordList table th{
-    text-align: center;
-    vertical-align: middle;
-    padding: 10px;
-    width: 100px;
+div.content-wrapper div.recordList table th {
+	text-align: center;
+	vertical-align: middle;
+	padding: 10px;
+	width: 100px;
 }
 
-div.content-wrapper div.recordList table td.exTitle{
-    color: #cc2121;
-    font-size: 20px;
+div.content-wrapper div.recordList table td.exTitle {
+	color: #cc2121;
+	font-size: 20px;
 }
 
-div.content-wrapper div.recordList table td{
-    width: 280px;
-    padding: 4px;
+div.content-wrapper div.recordList table td {
+	width: 280px;
+	padding: 4px;
 }
 
 .box_color ul li:hover {
 	background-color: #dadde6;
 	cursor: pointer;
+}
+
+#container .wrapper #editProfileForm {
+	position: relative;
+}
+
+#container .wrapper #editProfileForm #profileOpen {
+	position: absolute;
+	top: 20px;
+	right: 15px;
+	width: 150px;
+	margin: 0 auto;
+	padding: 0 10px;
+}
+
+#container .wrapper #editProfileForm #profileOpen p {
+	float: left;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 20px;
+}
+
+#container .wrapper #editProfileForm #profileOpen>div {
+	float: right;
+	width: 34px;
+	height: 20px;
+	position: relative;
+}
+
+#container .wrapper #editProfileForm #profileOpen div label {
+	display: block;
+	width: 45px;
+	height: 25px;
+	box-sizing: border-box;
+	border-radius: 36px;
+	border: 1px solid #e5e5e5;
+	background: #fff;
+	transition: all 0.3s ease;
+}
+
+#container .wrapper #editProfileForm #profileOpen div label span {
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	display: block;
+	width: 17px;
+	height: 17px;
+	border-radius: 50%;
+	box-sizing: border-box;
+	box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.25), 0 3px 3px 0
+		rgba(0, 0, 0, 0.15);
+	transition: all 0.3s cubic-bezier(0.275, -0.45, 0.725, 1.45);
+	background: #fff;
+}
+
+#container .wrapper #editProfileForm #profileOpen input:active+div label,
+	#container .wrapper #editProfileForm #profileOpen input:checked+div label
+	{
+	border: 10px solid #008526;
+	box-shadow: 0 0 5px #008526;
+	background: #008526;
+}
+
+#container .wrapper #editProfileForm #profileOpen input:active+div label>span,
+	#container .wrapper #editProfileForm #profileOpen input:checked+div label>span
+	{
+	left: 24px;
 }
