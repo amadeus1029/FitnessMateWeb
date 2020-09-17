@@ -586,8 +586,10 @@
             reviewList();//리뷰목록
             var loginUser = $("#loginUser").val();
             console.log("맨처음 로그인유저번호 추출" + loginUser);
-            if (loginUser != null && loginUser != '') {
-                reviewWrite();
+            var tNo = $("#delNo").val();
+            console.log("트레이너 넘버" + tNo);
+            if (loginUser != null && loginUser != '' && loginUser!= tNo) {
+             reviewWrite();
             }
 
 
@@ -652,7 +654,7 @@
                         reviewStr += '  <input  type="file" id="file"  name="file_name" class="image_inputType_file" >';
                         reviewStr += '</div>';
                         reviewStr += '<button class="button revW" type="submit">작성</button>';
-                    }
+                    } else{ console.log("암것도 하지마");}
 
                     $(".reviewWrite").append(reviewStr);
 
@@ -897,8 +899,6 @@
          });
         
         
-        
-        
         //리뷰 삭제
         $(".review-list").on("click","#removeRe",function(){
         	console.log("삭제");
@@ -931,6 +931,29 @@
                  }
              });
         });
+        
+        
+        //답글
+        $(".review-list").on("click","#reRe",function(){
+        	console.log("답글");
+        	var reviewNo = $(this).data('rere');
+        	console.log("삭제위한 리뷰넘버 추출"+reviewNo);
+        	
+        	//답글할 새창 불러오기
+        	reviewStr =""
+       		reviewStr += '<input type="hidden"  name="reviewNo" value="">';            
+            reviewStr += '<textarea class="content review" name="contentRe" placeholder=""></textarea>';
+            reviewStr += '<div>';
+            reviewStr += '<div class="clearfix review-btn-area">';
+            reviewStr += '      <button type="button"  class="button" id="modifyCan">취소</button>';
+            reviewStr += '      <button type="button"  class="button" id="modifyOk" >확인</button>';
+            reviewStr += '</div>';
+           
+        	
+            $("#r-"+reviewNo).append(reviewStr);
+ 
+        });
+        
         
         
         //리뷰목록 가지고 오기
@@ -988,7 +1011,7 @@
                //트레이너가 로그인한 경우
                if (reviewNo == loginUser) {
                    reviewStr += '      <button type="button" data-reno="'+review.reviewNo+'" class="button" id="removeRe">삭제</button>';
-                   reviewStr += '      <button type="button" class="button" id="reRe">답글</button> ';
+                   reviewStr += '      <button type="button" data-rere="'+review.reviewNo+'" class="button" id="reRe">답글</button> ';
                }
                reviewStr += '  </div>';
                reviewStr += ' </li>';
@@ -998,11 +1021,6 @@
            $("ul.review-list").append(reviewStr);
         	
         }
-        
-        
-        
-        
-        
         
       
         ////////////////////////트레이너 모달 리뷰탭/////////////////////////////
