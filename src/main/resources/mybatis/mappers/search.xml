@@ -100,6 +100,7 @@
 	WHERE fi.fieldno = li.fieldno
 	AND u.userno = li.userno
 	AND userType = 'trainer'
+	and u.invisible is null
 	]]>
 	
 	<if test = "field!='' and  field!=null" >

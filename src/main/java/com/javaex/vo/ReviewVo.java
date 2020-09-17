@@ -23,8 +23,9 @@ public class ReviewVo {
 	public ReviewVo(int score, String content,int ptNo) {
 		this.score = score;
 		this.content = content;
-		this.ptNo = ptNo;
+		this.ptNo = ptNo;	
 	}
+	
 	public ReviewVo(int reviewNo, int ptNo, String regDate, int score, String content, int userNo, int trainerNo,
 			int scheduleCount, String name, int reviewCount, String reviewAvg, String profileImg) {
 		this.reviewNo = reviewNo;

@@ -82,6 +82,17 @@
 	]]>
 	</select>
 	
+	<!--리뷰수정 -->
+	<update id="reviewModify" parameterType="map">
+		<![CDATA[
+		update review
+		set score = #{score},
+		    content = #{content}
+		where reviewno = #{reviewNo}
+		]]>
+		</update>
+	
+	
 	<!-- 리뷰지우기 -->
 	<delete id="reviewRemove" parameterType="int">
 		<![CDATA[

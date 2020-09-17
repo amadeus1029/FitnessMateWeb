@@ -118,7 +118,7 @@ public class SearchController {
 
 		System.out.println("넘버"+no);
 		List<ReviewVo> reviewVo = searchService.reviewList(no);
-		
+
 		
 		return reviewVo;
 
@@ -158,14 +158,25 @@ public class SearchController {
 			@RequestParam("ptNo") int ptNo) {
 		System.out.println("controller:/search/reviewPlus");
 		System.out.println("파람확인" + score + content);
-		ReviewVo reviewVo = searchService.reviewPlus(score, content, ptNo);
-		
-		System.out.println("리뷰정보 제대로 가지고 와지나 확인"+reviewVo);
+		ReviewVo reviewVo = searchService.reviewPlus(score, content, ptNo);		
 
 		return reviewVo;
 	}
 	
-		
+	// 리뷰수정
+	@ResponseBody
+	@RequestMapping("/search/reviewModify")
+	public List<ReviewVo> reviewModify(@RequestParam("score") int score, @RequestParam("content") String content,
+			@RequestParam("reviewNo") int reviewNo) {
+		System.out.println("controller:/search/reviewModify");
+		System.out.println("파람확인" + score + content);
+		List<ReviewVo> reviewVo = searchService.reviewModify(score, content,reviewNo);
+
+		System.out.println("리뷰수정정보 제대로 가지고 와지나 확인" + reviewVo);
+
+		return reviewVo;
+	}
+	
 	//리뷰 삭제
 	@ResponseBody
 	@RequestMapping("/search/reviewRemove")
