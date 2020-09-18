@@ -273,7 +273,7 @@ form#editProfileForm .main-info .main-info-wrapper.secDiv, form#editProfileForm 
 }
 
 div.tableBox {
-	margin: 1px 40px 0px 40px;
+	margin: 1px 80px 0px 80px;
 	width: 200px;
 	height: 450px;
 	padding: 10px;
@@ -319,14 +319,14 @@ div.content-wrapper table tr td {
 	border-bottom: 1px solid #292c33;
 }
 
-div.content-wrapper div.recordList {
+.content-wrapper .recordList {
 	float: left;
-	width: 600px;
+	width: 350px;
 	border: none;
 	margin: 2px 0px 0px 35px;
 }
 
-div.content-wrapper div.recordList div.emtMsg {
+.content-wrapper .recordList .emtMsg {
 	height: auto;
 	margin-top: 20px;
 	font-size: 20px;
@@ -334,8 +334,8 @@ div.content-wrapper div.recordList div.emtMsg {
 }
 
 div.content-wrapper div.recordList table {
-	margin: 20px auto 0px;
-	border: 1px solid #dadde6;
+	margin: 5px auto 0px;
+	border-bottom: 1px solid #dadde6;
 	border-radius: 5px;
 }
 
@@ -343,7 +343,7 @@ div.content-wrapper div.recordList table th {
 	text-align: center;
 	vertical-align: middle;
 	padding: 10px;
-	width: 100px;
+	width: 80px;
 }
 
 div.content-wrapper div.recordList table td.exTitle {
@@ -352,7 +352,7 @@ div.content-wrapper div.recordList table td.exTitle {
 }
 
 div.content-wrapper div.recordList table td {
-	width: 280px;
+	width: 200px;
 	padding: 4px;
 }
 
