@@ -173,6 +173,22 @@ public class SearchService {
 
 		return vo;
 	}
+	
+	//답글추가
+	public ReviewVo rereviewPlus(int score, String content, int ptNo, int reviewNo) {
+		System.out.println("SearchService:rereviewPlus");
+		
+		Map<String,Object> remap = new HashMap<>();
+		remap.put("score", score);
+		remap.put("content", content);
+		remap.put("reviewNo", ptNo);
+		remap.put("reviewNo", reviewNo);
+		
+		
+		
+		
+		return null;
+	}
 
 	// 리뷰수정
 	public List<ReviewVo> reviewModify(int score, String content, int reviewNo) {
@@ -213,6 +229,8 @@ public class SearchService {
 		
 		return remove;
 	}
+
+	
 	
 	
 

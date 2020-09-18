@@ -163,6 +163,21 @@ public class SearchController {
 		return reviewVo;
 	}
 	
+	// 답글추가
+		@ResponseBody
+		@RequestMapping("/search/rereviewPlus")
+		public ReviewVo rereviewPlus(@RequestParam("score") int score, @RequestParam("content") String content,
+				@RequestParam("ptNo") int ptNo,@RequestParam("reviewNo") int reviewNo) {
+			System.out.println("controller:/search/reviewPlus");
+			System.out.println("파람확인" + score + content);
+			ReviewVo reviewVo = searchService.rereviewPlus(score, content, ptNo,reviewNo);		
+
+			return reviewVo;
+		}
+	
+	
+	
+	
 	// 리뷰수정
 	@ResponseBody
 	@RequestMapping("/search/reviewModify")
