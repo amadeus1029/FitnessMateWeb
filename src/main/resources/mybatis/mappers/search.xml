@@ -59,6 +59,7 @@
        u.location,u.company,u.price
 	FROM users u
 	WHERE userType = 'trainer'
+	and u.invisible is null
 	]]>
 	
 	<if test = "location !='' and  location!=null" >
@@ -99,6 +100,7 @@
 	WHERE fi.fieldno = li.fieldno
 	AND u.userno = li.userno
 	AND userType = 'trainer'
+	and u.invisible is null
 	]]>
 	
 	<if test = "field!='' and  field!=null" >
@@ -140,7 +142,7 @@
        u.usertype as "userType",
        u.profileimg as "profileImg",
        u.introduction,u.career,
-       u.location,u.company,u.price
+       u.location,u.company,u.price,workingHours
 	FROM users u
 	where userType = 'trainer'
     and u.userno = #{no}
@@ -175,9 +177,10 @@
 	<select id="readReviewInfo" parameterType="int"
 	resultType="com.javaex.vo.ReviewVo">
 	<![CDATA[
-	SELECT count(r.score) reviewCount, round(avg(score),1) as "reviewAvg"
+	SELECT count(r.score) reviewCount, round(nvl(avg(score),0),1) as "reviewAvg"
 	FROM review r,pt p
 	WHERE r.ptno = p.ptno
+	and r.depth = 0
 	and p.trainerno = #{no}
 	]]>
 	

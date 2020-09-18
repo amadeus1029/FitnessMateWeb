@@ -15,6 +15,9 @@ public class ReviewVo {
 	private int reviewCount;/*리뷰갯수*/
 	private String reviewAvg;/*평점 평균*/
 	private String profileImg; /*프로필 이미지*/ 
+	private int group_no; /*그룹넘버*/ 
+	private int order_no; /*그룹내 글순서*/ 
+	private int depth; /*깊이*/ 
 	
 
 	public ReviewVo() {}
@@ -23,10 +26,12 @@ public class ReviewVo {
 	public ReviewVo(int score, String content,int ptNo) {
 		this.score = score;
 		this.content = content;
-		this.ptNo = ptNo;
+		this.ptNo = ptNo;	
 	}
+	
 	public ReviewVo(int reviewNo, int ptNo, String regDate, int score, String content, int userNo, int trainerNo,
-			int scheduleCount, String name, int reviewCount, String reviewAvg, String profileImg) {
+			int scheduleCount, String name, int reviewCount, String reviewAvg, String profileImg, int group_no,
+			int order_no, int depth) {
 		this.reviewNo = reviewNo;
 		this.ptNo = ptNo;
 		this.regDate = regDate;
@@ -39,10 +44,44 @@ public class ReviewVo {
 		this.reviewCount = reviewCount;
 		this.reviewAvg = reviewAvg;
 		this.profileImg = profileImg;
+		this.group_no = group_no;
+		this.order_no = order_no;
+		this.depth = depth;
 	}
 
 
 	
+	
+	public int getGroup_no() {
+		return group_no;
+	}
+
+
+	public void setGroup_no(int group_no) {
+		this.group_no = group_no;
+	}
+
+
+	public int getOrder_no() {
+		return order_no;
+	}
+
+
+	public void setOrder_no(int order_no) {
+		this.order_no = order_no;
+	}
+
+
+	public int getDepth() {
+		return depth;
+	}
+
+
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+
+
 	public String getProfileImg() {
 		return profileImg;
 	}
@@ -133,10 +172,10 @@ public class ReviewVo {
 		return "ReviewVo [reviewNo=" + reviewNo + ", ptNo=" + ptNo + ", regDate=" + regDate + ", score=" + score
 				+ ", content=" + content + ", userNo=" + userNo + ", trainerNo=" + trainerNo + ", scheduleCount="
 				+ scheduleCount + ", name=" + name + ", reviewCount=" + reviewCount + ", reviewAvg=" + reviewAvg
-				+ ", profileImg=" + profileImg + "]";
+				+ ", profileImg=" + profileImg + ", group_no=" + group_no + ", order_no=" + order_no + ", depth="
+				+ depth + "]";
 	}
-
-
+	
 	
 	
 	
