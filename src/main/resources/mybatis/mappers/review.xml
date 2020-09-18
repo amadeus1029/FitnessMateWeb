@@ -49,7 +49,7 @@
       
 	  <![CDATA[
 		insert into review
-		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content})
+		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content},#{reviewNo},1,0)
 	  ]]>
 
 	</insert>

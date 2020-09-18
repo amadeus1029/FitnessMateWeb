@@ -756,6 +756,7 @@
                             	reviewStr ="";
                             	
                             	 reviewStr += '<li class="review-line" id="r-'+review.reviewNo+'">';
+                            	 reviewStr += '<input type="text" id="reptNo" value="'+review.ptNo+'">';
                                  reviewStr += '  <div class="user-profile ff">';
                                  reviewStr += '    <img class="user-profile-img" src="${pageContext.request.contextPath}/upload/'+review.profileImg+'">';
                                  reviewStr += '    <div class="user-profile-info">';
@@ -933,27 +934,43 @@
         });
         
         
-        //답글
+        //답글 폼
         $(".review-list").on("click","#reRe",function(){
         	console.log("답글");
         	var reviewNo = $(this).data('rere');
-        	console.log("삭제위한 리뷰넘버 추출"+reviewNo);
+        	console.log("답글위한 리뷰넘버 추출"+reviewNo);
+        	
+        	
         	
         	//답글할 새창 불러오기
         	reviewStr =""
-       		reviewStr += '<input type="hidden"  name="reviewNo" value="">';            
+       		reviewStr += '<div>';            
             reviewStr += '<textarea class="content review" name="contentRe" placeholder=""></textarea>';
-            reviewStr += '<div>';
             reviewStr += '<div class="clearfix review-btn-area">';
             reviewStr += '      <button type="button"  class="button" id="modifyCan">취소</button>';
-            reviewStr += '      <button type="button"  class="button" id="modifyOk" >확인</button>';
+            reviewStr += '      <button type="button"  class="button" id="revW" >확인</button>';
             reviewStr += '</div>';
-           
+            reviewStr += '</div>';   
         	
             $("#r-"+reviewNo).append(reviewStr);
+            
  
         });
         
+       
+        
+        
+        //답글 작성버튼
+        function addre(ptNo){
+        $(".review-list").on("click","#revW",function(){
+        	 console.log("답글작성");
+       var content = $('[name ="contentRe"]').val();
+         console.log("수정위한 내용 추출"+content);
+          	
+          	console.log(ptNo);
+        	
+        	 
+        }
         
         
         //리뷰목록 가지고 오기
@@ -974,7 +991,9 @@
 
 
            for (var review of reviewVo) {
+        	   
                reviewStr += '<li class="review-line" id="r-'+review.reviewNo+'">';
+               reviewStr += '<input type="text" id="reptNo" value="'+review.ptNo+'">';
                reviewStr += '  <div class="user-profile ff">';
                reviewStr += '    <img class="user-profile-img" src="${pageContext.request.contextPath}/upload/'+review.profileImg+'">';
                reviewStr += '    <div class="user-profile-info">';
@@ -1011,7 +1030,7 @@
                //트레이너가 로그인한 경우
                if (reviewNo == loginUser) {
                    reviewStr += '      <button type="button" data-reno="'+review.reviewNo+'" class="button" id="removeRe">삭제</button>';
-                   reviewStr += '      <button type="button" data-rere="'+review.reviewNo+'" class="button" id="reRe">답글</button> ';
+                   reviewStr += '      <button type="button" data-rere="'+review.reviewNo+'" class="button" id="reRe" onClick="addre('+review.ptNo+')">답글</button> ';
                }
                reviewStr += '  </div>';
                reviewStr += ' </li>';
