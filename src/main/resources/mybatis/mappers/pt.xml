@@ -212,7 +212,7 @@
 	</select>
 	
 	<!-- 예약 리스트 -->
-	<select id="selectReservList" parameterType="int" resultType="com.javaex.vo.ScheduleVo">
+	<select id="selectReserveList" parameterType="int" resultType="com.javaex.vo.ScheduleVo">
 		<![CDATA[
 		
 				SELECT  scheduleNo,
@@ -227,31 +227,5 @@
 
 		 ]]>
 	</select>
-	
-	<select id="selectEndDate" parameterType="int" resultType="String">
-		<![CDATA[
-		
-			SELECT TO_CHAR(endDate, 'yyyy-mm-dd')
-			FROM pt
-			WHERE ptNo = #{ptNo}
-			
-		 ]]>
-	</select>
-	
-	<delete id="deleteReserve">
-		<![CDATA[
-		
-			DELETE FROM schedule
-			WHERE scheduleNo = #{scheduleNo}
-	
-		 ]]>
-	</delete>
-	
-	<insert id="insertPtReserve" parameterType="map">
-        <![CDATA[
-            insert into schedule
-            values(seq_scheduleNo.nextVal, #{ptNo}, 'reserved', '', to_date(#{date}, 'yyyy-mm-dd hh24:mi') , '')
-        ]]>
-    </insert>
 	
 </mapper>

@@ -453,26 +453,21 @@ div.content-wrapper div.recordList table td {
     bottom: 0;
 }
 #reservationModal .modal-wrapper{
-	width: 685px;
-	height: 360px;
+	width: 700px;
 }
 #reservationModal .modal-wrapper #modalCalender{
 	float: left;
 }
 #reservationModal .modal-wrapper .modal-btn-area {
-	position: absolute;
-	bottom: 5px;
-	right: 5px;
-    width: 50%;
+	float: right;
+	width: 50%;
 }
 #reservationModal .modal-wrapper .reserv-info{
 	float: right;
-	width: 335px;
-	height: 275px;
-}
-#reservationModal .modal-wrapper .reserv-info > p{
-	margin-top: 100px;
-	font-weight: 600;
+	width: 50%;
+	text-align: left;
+	box-sizing: border-box;
+	padding-left: 15px;
 }
 #reservationModal .modal-wrapper .ui-widget-header {
     border: none;
@@ -498,35 +493,34 @@ div.content-wrapper div.recordList table td {
 #reservationModal .modal-wrapper .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
     color: #cc2121;
 }
-#reservationModal .modal-wrapper .reserv-info .title{
+#reservationModal .modal-wrapper .reserv-info h3.title{
 	text-align: left;
-	margin-top: 95px;
+	font-size: 24px;
+	margin-top: 55px;
 }
-#reservationModal .modal-wrapper .reserv-info table{
-	margin-top: 20px;
+#reservationModal .modal-wrapper .reserv-info .time-wrapper {
+	margin-top: 25px;
 }
-#reservationModal .modal-wrapper .reserv-info table tr th,
-#reservationModal .modal-wrapper .reserv-info table tr td{
-	padding: 10px;
-	vertical-align: middle;
-}
-#reservationModal .modal-wrapper .reserv-info table tr th{
-	text-align: right;
-	width: 70px;
-	height: 20px;
-}
-#reservationModal .modal-wrapper .reserv-info table tr td{
-	text-align: left;
-}
-#reservationModal .modal-wrapper .reserv-info table tr td select{
+#reservationModal .modal-wrapper select {
 	width: 80px;
-    height: 35px;
-    display: inline-block;
-    margin: 5px;
+	height: 35px;
+	display: inline-block !important;
+	margin: 0;
 }
-#reservationModal .modal-wrapper .reserv-info table tr #reservTime{
-	padding-left: 0px;
+#reservationModal .modal-wrapper input[name="amount"] {
+	width: 100px;
 }
+
+#reservationModal .modal-wrapper .text {
+	font-size: 20px;
+	margin: 0 0 10px;
+	font-weight: 500;
+}
+#reservationModal .modal-wrapper ol {
+	margin: 0 30px 0 0;
+	float: left;
+}
+
 
 .content-wrapper .exSelect-wrapper select,
 .content-wrapper .exSelect-wrapper input{

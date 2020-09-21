@@ -165,6 +165,9 @@
 			    	$(".exSelect-wrapper > p").remove();
 			    	$("input[name='exList']").val("");
 
+                    $("#canvas").removeAttr("style");
+                    $("#canvas").attr("width", "500");
+                    $("#canvas").attr("height", "400");
 			    	drawChart(exName, graphInfo);
 
                 },

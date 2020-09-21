@@ -178,13 +178,13 @@ public class Mypage2Service {
 	
 	public Map<String, Object> summaryNormal(int userNo) {
 		
-		List<ScheduleVo> reservList = ptDao.selectReservList(userNo);
-		System.out.println(reservList);
+		List<ScheduleVo> reserveList = ptDao.selectReserveList(userNo);
+		System.out.println(reserveList);
 		
 		Map<String, Object> summaryNormal = new HashMap<>();
 		summaryNormal.put("ptVo", ptDao.summaryNormal(userNo));
 		summaryNormal.put("nextPt", ptDao.nextPt(userNo));
-		summaryNormal.put("reservList", reservList);
+		summaryNormal.put("reserveList", reserveList);
 		
 		return summaryNormal;
 	}
@@ -218,23 +218,6 @@ public class Mypage2Service {
 		return false;
 	}
 
-	public String getEndDate(int ptNo) {
-		return ptDao.selectEndDate(ptNo);
-	}
-	
-	public boolean deleteReserve(int scheduleNo) {
-		return ptDao.deleteReserve(scheduleNo);
-	}
-	
-	public boolean ptReservation(int ptNo, String date, String hour, String minute) {
-		
-		String reserveDate = date+" "+hour+":"+minute;
-		Map<String, Object> map = new HashMap<>();
-		map.put("ptNo", ptNo);
-		map.put("date", reserveDate);
-		
-		return ptDao.insertPtReserve(map);
-	}
 	
 	public List<ExGraphVo> getExGraph(int userNo, int exNo) {
 		
@@ -249,10 +232,8 @@ public class Mypage2Service {
 	public int getToday() {
 		
 		String localDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-		
-		int today = Integer.parseInt(localDate);
 
-		return today;
+		return Integer.parseInt(localDate);
 	}
 	
 

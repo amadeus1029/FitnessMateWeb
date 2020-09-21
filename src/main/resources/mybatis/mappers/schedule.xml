@@ -5,7 +5,7 @@
     <insert id="insert" parameterType="ScheduleVo">
         <![CDATA[
             insert into schedule
-            values(seq_scheduleNo.nextVal, #{ptNo}, 'confirm', '', to_date(#{startTime}, 'yyyy-mm-dd hh24:mi') , to_date(#{startTime}, 'yyyy-mm-dd hh24:mi') + #{amount}/(24*60))
+            values(seq_scheduleNo.nextVal, #{ptNo}, 'reserved', '', to_date(#{startTime}, 'yyyy-mm-dd hh24:mi') , to_date(#{startTime}, 'yyyy-mm-dd hh24:mi') + #{amount}/(24*60))
         ]]>
     </insert>
     
