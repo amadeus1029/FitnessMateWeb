@@ -178,15 +178,17 @@ public class SearchService {
 	public ReviewVo rereviewPlus(int score, String content, int ptNo, int group_no) {
 		System.out.println("SearchService:rereviewPlus");
 		
-		Map<String,Object> remap = new HashMap<>();
-		remap.put("score", score);
-		remap.put("content", content);
-		remap.put("reviewNo", ptNo);
-		remap.put("group_no", group_no);
+		ReviewVo reviewVo = new ReviewVo(score,content,ptNo,group_no);
+		System.out.println("서비스 보 확인" + reviewVo);
 		
-		searchDao.rereviewPlus(remap);
+		searchDao.rereviewPlus(reviewVo);
 		
-		return null;
+		int reviewNo = reviewVo.getReviewNo();
+		System.out.println("리뷰넘버 추출 확인"+reviewNo);
+		
+		ReviewVo vo = searchDao.reviewOne(reviewNo);
+		
+		return vo;
 	}
 
 	// 리뷰수정

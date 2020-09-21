@@ -180,7 +180,7 @@
 	SELECT count(r.score) reviewCount, round(nvl(avg(score),0),1) as "reviewAvg"
 	FROM review r,pt p
 	WHERE r.ptno = p.ptno
-	and r.depth = 0
+	and r.order_no = 1
 	and p.trainerno = #{no}
 	]]>
 	

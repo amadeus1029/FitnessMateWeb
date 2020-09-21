@@ -142,10 +142,12 @@ public class SearchDao {
 	}
 	
 	
-	//답글
-	public void rereviewPlus(Map<String, Object> remap) {
-		// TODO Auto-generated method stub
+	//답글 추가
+	public int rereviewPlus(ReviewVo vo ) {
+		System.out.println("searchDao:rereviewPlus");
+		int rereVo = sqlSession.insert("review.rereviewPlus",vo);
 		
+		return rereVo;
 	}
 	
 	

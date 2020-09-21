@@ -17,8 +17,9 @@ public class ReviewVo {
 	private String profileImg; /*프로필 이미지*/ 
 	private int group_no; /*그룹넘버*/ 
 	private int order_no; /*그룹내 글순서*/ 
-	private int depth; /*깊이*/ 
 	
+	private String trainerName;/*트레이너 이름*/
+	private String trainerImg;/*트레이너 프사*/
 
 	public ReviewVo() {}
 	
@@ -28,10 +29,22 @@ public class ReviewVo {
 		this.content = content;
 		this.ptNo = ptNo;	
 	}
+
+	public ReviewVo( int score, String content,int ptNo, int group_no) {
+		this.ptNo = ptNo;
+		this.score = score;
+		this.content = content;
+		this.group_no = group_no;
+	}
+
 	
+	
+
+
 	public ReviewVo(int reviewNo, int ptNo, String regDate, int score, String content, int userNo, int trainerNo,
 			int scheduleCount, String name, int reviewCount, String reviewAvg, String profileImg, int group_no,
-			int order_no, int depth) {
+			int order_no, String trainerName, String trainerImg) {
+		super();
 		this.reviewNo = reviewNo;
 		this.ptNo = ptNo;
 		this.regDate = regDate;
@@ -46,12 +59,31 @@ public class ReviewVo {
 		this.profileImg = profileImg;
 		this.group_no = group_no;
 		this.order_no = order_no;
-		this.depth = depth;
+		this.trainerName = trainerName;
+		this.trainerImg = trainerImg;
 	}
 
 
-	
-	
+	public String getTrainerName() {
+		return trainerName;
+	}
+
+
+	public void setTrainerName(String trainerName) {
+		this.trainerName = trainerName;
+	}
+
+
+	public String getTrainerImg() {
+		return trainerImg;
+	}
+
+
+	public void setTrainerImg(String trainerImg) {
+		this.trainerImg = trainerImg;
+	}
+
+
 	public int getGroup_no() {
 		return group_no;
 	}
@@ -71,15 +103,6 @@ public class ReviewVo {
 		this.order_no = order_no;
 	}
 
-
-	public int getDepth() {
-		return depth;
-	}
-
-
-	public void setDepth(int depth) {
-		this.depth = depth;
-	}
 
 
 	public String getProfileImg() {
@@ -172,9 +195,15 @@ public class ReviewVo {
 		return "ReviewVo [reviewNo=" + reviewNo + ", ptNo=" + ptNo + ", regDate=" + regDate + ", score=" + score
 				+ ", content=" + content + ", userNo=" + userNo + ", trainerNo=" + trainerNo + ", scheduleCount="
 				+ scheduleCount + ", name=" + name + ", reviewCount=" + reviewCount + ", reviewAvg=" + reviewAvg
-				+ ", profileImg=" + profileImg + ", group_no=" + group_no + ", order_no=" + order_no + ", depth="
-				+ depth + "]";
+				+ ", profileImg=" + profileImg + ", group_no=" + group_no + ", order_no=" + order_no + ", trainerName="
+				+ trainerName + ", trainerImg=" + trainerImg + "]";
 	}
+	
+	
+
+
+
+
 	
 	
 	
