@@ -171,10 +171,10 @@
 		<![CDATA[
 		
 			SELECT 
-			    pt.ptNo, pt.startDate, pt.endDate, pt.regcount, s.scheduleCount
+			    pt.ptNo, pt.startDate, pt.endDate, pt.intEndDate, pt.regcount, s.scheduleCount
 			FROM
 			    (SELECT
-			       p.ptNo, TO_CHAR(p.startdate, 'yyyy-mm-dd') startDate, TO_CHAR(p.endDate, 'yyyy-mm-dd') endDate, p.regcount
+			       p.ptNo, TO_CHAR(p.startdate, 'yyyy-mm-dd') startDate, TO_CHAR(p.endDate, 'yyyy-mm-dd') endDate, TO_CHAR(p.endDate, 'yyyymmdd') intEndDate, p.regcount
 			    FROM pt p LEFT OUTER JOIN users u
 			    ON p.trainerNo = u.userNo) pt
 			LEFT OUTER JOIN
@@ -211,7 +211,47 @@
 		 ]]>
 	</select>
 	
+	<!-- 예약 리스트 -->
+	<select id="selectReservList" parameterType="int" resultType="com.javaex.vo.ScheduleVo">
+		<![CDATA[
+		
+				SELECT  scheduleNo,
+				        	state,
+				        	TO_CHAR(startTime, 'yyyy-mm-dd AM hh:mi', 'NLS_DATE_LANGUAGE=ENGLISH') startTime
+				FROM    schedule
+				WHERE   ptNo = (SELECT MAX(ptNo)
+						                FROM pt
+						                WHERE userNo = #{userNo})
+				AND startTime > sysdate
+				ORDER BY startTime asc
+
+		 ]]>
+	</select>
 	
+	<select id="selectEndDate" parameterType="int" resultType="String">
+		<![CDATA[
+		
+			SELECT TO_CHAR(endDate, 'yyyy-mm-dd')
+			FROM pt
+			WHERE ptNo = #{ptNo}
+			
+		 ]]>
+	</select>
 	
+	<delete id="deleteReserve">
+		<![CDATA[
+		
+			DELETE FROM schedule
+			WHERE scheduleNo = #{scheduleNo}
+	
+		 ]]>
+	</delete>
+	
+	<insert id="insertPtReserve" parameterType="map">
+        <![CDATA[
+            insert into schedule
+            values(seq_scheduleNo.nextVal, #{ptNo}, 'reserved', '', to_date(#{date}, 'yyyy-mm-dd hh24:mi') , '')
+        ]]>
+    </insert>
 	
 </mapper>

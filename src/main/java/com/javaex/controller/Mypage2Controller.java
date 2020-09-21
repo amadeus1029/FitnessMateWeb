@@ -154,11 +154,25 @@ public class Mypage2Controller {
     @ResponseBody
     @RequestMapping("/showExRecord")
     public Map<String, Object> showExRecord(int scheduleNo) {
-    	System.out.println("마이페이지 컨트롤러 날짜 클릭시");
-    	
     	return mypageService.getThisRecord(scheduleNo);
     }
     
+    @ResponseBody
+    @RequestMapping("/getEndDate")
+    public String getEndDate(int ptNo) {
+    	return mypageService.getEndDate(ptNo);
+    }
     
+    @ResponseBody
+    @RequestMapping("/reservDel")
+    public boolean reservDel(int scheduleNo) {
+    	return mypageService.deleteReserve(scheduleNo);
+    }
+    
+    @ResponseBody
+    @RequestMapping("/ptReservation")
+    public boolean ptReservation(int ptNo, String date, String hour, String minute) {
+    	return mypageService.ptReservation(ptNo, date, hour, minute);
+    }
     
 }

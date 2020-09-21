@@ -114,23 +114,30 @@ div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div butt
 	float: left;
 	margin: 30px 0px 0px 45px;
 }
-.schedule-wrapper button#btn-reserved{
-	position: absolute;
-	right: 20px;
-	bottom: 25px;
-	width: 125px;
+
+.schedule-wrapper button#btn-reserved {
+	float: right; width : 125px;
 	height: 40px;
 	background: none;
-	border: 1px solid  #fff;
+	border: 1px solid #fff;
 	color: #fff;
 	font-size: 14px;
 	margin: 15px 5px 0px 0px;
+	width: 125px;
 }
-.schedule-wrapper .reserved-wrapper i{
+
+.schedule-wrapper .reserved-wrapper {
+	height: 230px;
+	overflow: auto;
+	font-size: 18px;
+}
+
+.schedule-wrapper .reserved-wrapper i {
 	color: #fff;
 	margin-right: 6px;
 }
-.schedule-wrapper .reserved-wrapper .fa-times{
+
+.schedule-wrapper .reserved-wrapper .fa-times {
 	color: #ff0000;
 	font-size: 110%;
 	margin-right: 10px;
@@ -255,6 +262,7 @@ form#editProfileForm .main-info .main-info-wrapper.secDiv, form#editProfileForm 
 /* 스크롤 css */
 ::-webkit-scrollbar {
 	width: 5px;
+	height: 5px;
 	border-radius: 3px;
 	background-color: #979dac;
 }
@@ -265,7 +273,7 @@ form#editProfileForm .main-info .main-info-wrapper.secDiv, form#editProfileForm 
 }
 
 div.tableBox {
-	margin: 1px 40px 0px 40px;
+	margin: 1px 80px 0px 80px;
 	width: 200px;
 	height: 450px;
 	padding: 10px;
@@ -311,14 +319,14 @@ div.content-wrapper table tr td {
 	border-bottom: 1px solid #292c33;
 }
 
-div.content-wrapper div.recordList {
+.content-wrapper .recordList {
 	float: left;
-	width: 600px;
+	width: 350px;
 	border: none;
 	margin: 2px 0px 0px 35px;
 }
 
-div.content-wrapper div.recordList div.emtMsg {
+.content-wrapper .recordList .emtMsg {
 	height: auto;
 	margin-top: 20px;
 	font-size: 20px;
@@ -326,8 +334,8 @@ div.content-wrapper div.recordList div.emtMsg {
 }
 
 div.content-wrapper div.recordList table {
-	margin: 20px auto 0px;
-	border: 1px solid #dadde6;
+	margin: 5px auto 0px;
+	border-bottom: 1px solid #dadde6;
 	border-radius: 5px;
 }
 
@@ -335,7 +343,7 @@ div.content-wrapper div.recordList table th {
 	text-align: center;
 	vertical-align: middle;
 	padding: 10px;
-	width: 100px;
+	width: 80px;
 }
 
 div.content-wrapper div.recordList table td.exTitle {
@@ -344,7 +352,7 @@ div.content-wrapper div.recordList table td.exTitle {
 }
 
 div.content-wrapper div.recordList table td {
-	width: 280px;
+	width: 200px;
 	padding: 4px;
 }
 
@@ -418,4 +426,104 @@ div.content-wrapper div.recordList table td {
 	#container .wrapper #editProfileForm #profileOpen input:checked+div label>span
 	{
 	left: 24px;
+}
+
+/* 요약부분 CSS 수정 */
+.summary-wrapper .summary .statistics {
+	color: #fff;
+	text-align: left;
+}
+
+.summary-wrapper .summary .statistics h3.title.left {
+	text-align: left;
+}
+
+.summary-wrapper .summary .statistics .info {
+	color: #fff;
+	font-size: 20px;
+	margin-bottom: 25px;
+}
+
+/* 예약 모달 */
+#reservationModal{
+	position: fixed;
+    top: -15%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+#reservationModal .modal-wrapper{
+	width: 685px;
+	height: 360px;
+}
+#reservationModal .modal-wrapper #modalCalender{
+	float: left;
+}
+#reservationModal .modal-wrapper .modal-btn-area {
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+    width: 50%;
+}
+#reservationModal .modal-wrapper .reserv-info{
+	float: right;
+	width: 335px;
+	height: 275px;
+}
+#reservationModal .modal-wrapper .reserv-info > p{
+	margin-top: 100px;
+	font-weight: 600;
+}
+#reservationModal .modal-wrapper .ui-widget-header {
+    border: none;
+    background: none;
+}
+#reservationModal .modal-wrapper  .ui-datepicker td {
+    padding: 3px;
+}
+#reservationModal .modal-wrapper .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: none;
+    background: none;
+    padding: 8px 7px 8px 7px;
+    text-align: center;
+}
+#reservationModal .modal-wrapper .ui-widget.ui-widget-content{
+	margin: 50px 20px 50px 50px;
+    border: none;
+}
+#reservationModal .modal-wrapper .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+    background: #cc2121;
+    border-radius: 50%;
+}
+#reservationModal .modal-wrapper .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    color: #cc2121;
+}
+#reservationModal .modal-wrapper .reserv-info .title{
+	text-align: left;
+	margin-top: 95px;
+}
+#reservationModal .modal-wrapper .reserv-info table{
+	margin-top: 20px;
+}
+#reservationModal .modal-wrapper .reserv-info table tr th,
+#reservationModal .modal-wrapper .reserv-info table tr td{
+	padding: 10px;
+	vertical-align: middle;
+}
+#reservationModal .modal-wrapper .reserv-info table tr th{
+	text-align: right;
+	width: 70px;
+	height: 20px;
+}
+#reservationModal .modal-wrapper .reserv-info table tr td{
+	text-align: left;
+}
+#reservationModal .modal-wrapper .reserv-info table tr td select{
+	width: 80px;
+    height: 35px;
+    display: inline-block;
+    margin: 5px;
+}
+#reservationModal .modal-wrapper .reserv-info table tr #reservTime{
+	padding-left: 0px;
 }

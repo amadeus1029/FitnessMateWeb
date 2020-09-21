@@ -428,6 +428,9 @@ h3.title {
   -o-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
+#container.no-header {
+  padding-top: 0;
+}
 #footer {
   padding: 40px 0;
   background-color: #f0f2f7;

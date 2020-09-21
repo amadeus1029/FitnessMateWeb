@@ -84,10 +84,13 @@
                                 </c:if>
                             </c:forEach>
                         </table>
-
                     </c:forEach>
                 </div>
             </div>
+        
+        <canvas id="canvas" width="500" height="400">
+        </canvas>
+        
         </div>
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>

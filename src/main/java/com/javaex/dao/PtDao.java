@@ -103,6 +103,24 @@ public class PtDao {
 		
 		return sqlSession.selectOne("pt.nextPt", userNo);
 	}
+
+	public List<ScheduleVo> selectReservList(int userNo) {
+		System.out.println("dao 개인회원 예약 내역");
+		
+		return sqlSession.selectList("pt.selectReservList", userNo);
+	}
+
+	public String selectEndDate(int ptNo) {
+		return sqlSession.selectOne("pt.selectEndDate", ptNo);
+	}
+
+	public boolean deleteReserve(int scheduleNo) {
+		return sqlSession.delete("pt.deleteReserve", scheduleNo) == 1;
+	}
+
+	public boolean insertPtReserve(Map<String, Object> map) {
+		return sqlSession.insert("pt.insertPtReserve", map) == 1;
+	}
 	
 	
 }

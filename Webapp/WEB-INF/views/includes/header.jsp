@@ -102,10 +102,10 @@
 				console.log(result);
 				
 				/*성공시 처리해야될 코드 작성*/
-				if(result == true){
-					location.reload(true);
-					
+				if(result){
 					forceHideModal('#loginModal');
+
+					location.reload(true);
 					
 				}else {
 					$(".errMsg").show();
