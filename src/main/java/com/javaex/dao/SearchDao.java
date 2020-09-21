@@ -57,6 +57,7 @@ public class SearchDao {
 
 		List<UserVo> print = sqlSession.selectList("search.userList");
 		System.out.println(print);
+		
 
 		return print;
 	}
@@ -135,14 +136,29 @@ public class SearchDao {
 	//리뷰 추가
 	public int reviewPlus(ReviewVo vo ) {
 		System.out.println("searchDao:reviewPlus");
-		System.out.println();
 		
 		int reviewVo = sqlSession.insert("review.reviewPlus",vo);
-		
 		return reviewVo;
 	}
-
 	
+	
+	//리뷰수정
+	public int reviewModify(Map<String, Object> remap) {
+		System.out.println("searchDao:reviewModify");
+		
+		int vo = sqlSession.update("review.reviewModify",remap);
+		return vo;
+	}
+	
+	//추가,수정된 리뷰정보 가지고 오기
+	public ReviewVo reviewOne(int reviewNo) {
+		System.out.println("searchDao:reviewOne");
+		ReviewVo vo =sqlSession.selectOne("review.reviewOne", reviewNo);
+		
+		return vo;
+	}
+
+	//내용 추가위해 pt정보 불러오기
 	public int findPt(int userNo) {
 		System.out.println("searchDao:findPt");
 		
@@ -151,6 +167,19 @@ public class SearchDao {
 		
 		return ptNo;
 	}
+
+	//리뷰삭제
+	public int reviewRemove(int reviewNo) {
+		System.out.println("searchDao:reviewRemove");
+		
+		int remove = sqlSession.delete("review.reviewRemove", reviewNo);
+		
+		return remove;
+	}
+
+	
+
+	
 
 	
 

@@ -527,3 +527,29 @@ div.content-wrapper div.recordList table td {
 #reservationModal .modal-wrapper .reserv-info table tr #reservTime{
 	padding-left: 0px;
 }
+
+.content-wrapper .exSelect-wrapper select,
+.content-wrapper .exSelect-wrapper input{
+	display: inline-block;
+	width: 150px;
+}
+.content-wrapper .exSelect-wrapper{
+	position: relative;
+	float: left;
+	margin: 20px 0px 10px 30px;
+	width: 500px
+}
+.content-wrapper .exSelect-wrapper button{
+	position: absolute;
+    top: -1px;
+    right: 30px;
+    width: 135px;
+    height: 32px;
+    font-size: 14px;
+    line-height: 25px;
+    padding: 0px;
+}
+.content-wrapper .exSelect-wrapper > p{
+	font-weight: 600;
+	margin: 30px 0px 0px 30px;
+}

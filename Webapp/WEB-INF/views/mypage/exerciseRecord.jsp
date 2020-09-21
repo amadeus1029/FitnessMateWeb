@@ -34,6 +34,10 @@
             rel="stylesheet">
     <script
             src="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/js/swiper.min.js"></script>
+            
+    <%--차트--%>
+    <script src="${pageContext.request.contextPath}/assets/js/chart/dist/Chart.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/chart/dist/Chart.min.css">
 
     <!-- 해당 페이지 css -->
     <link rel="stylesheet"
@@ -87,15 +91,164 @@
                     </c:forEach>
                 </div>
             </div>
+        	
+        	<div class="exSelect-wrapper">
+        		<select id='exPart'>
+        			<option value="">운동부위</option>
+        			<c:forEach items="${exMap.exPartList}" var="part">
+        				<option value="${part.exPartNo}">${part.exPartName}</option>
+        			</c:forEach>
+        		</select>
+        		
+				<input type="text" name="exList" list="exList" placeholder="운동이름">
+			    <datalist id="exList">
+			    	<c:forEach items="${exMap.exList}" var="ex">
+			    		<option value="${ex.exName}" data-exno="${ex.exNo}"></option>
+			    	</c:forEach>
+				</datalist>
+				
+				<button id="btn-ShowGraph" class="button main">운동량 변화 보기</button>
+				
+				<p>
+					<i class="fas fa-exclamation-circle"></i>
+					운동을 선택하시면 변화 그래프를 보실 수 있어요 :)
+				</p>
+				
+	        	<canvas id="canvas" width="500" height="400">
+	        	</canvas>
         
-        <canvas id="canvas" width="500" height="400">
-        </canvas>
-        
+        	</div>
         </div>
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     <script type="text/javascript">
+    
+    /* 운동부위 변경되었을 때 데이터리스트 변화 */
+    $("#exPart").on("change", function(){
+    	var thisPartNo = $(this).val();
+    	
+    	$("input[name='exList']").val("");
+    	$("datalist").empty();
+    	
+    	var str = ""
+    	
+   		<c:forEach items = "${exMap.exList}" var="ex">
+	    	if( thisPartNo == "" ){
+    			str += '<option value="${ex.exName}" data-exno="${ex.exNo}"></option>';
+	    	}else {
+	    		if(thisPartNo == '${ex.exPartNo}'){
+	    			str += '<option value="${ex.exName}" data-exno="${ex.exNo}"></option>';
+	    		}
+	    	}
+   		</c:forEach>
+    	
+    	$("datalist").append(str);    	
+    	
+    });
+    
+    $("#btn-ShowGraph").on("click", function(){
+    	var exName = $("input[name='exList']").val();
+    	var exNo = $("option[value='"+exName+"']").data("exno");
+    	
+    	var userNo = ${authUser.userNo};
+    	
+    	if( exNo ){
+	    	
+            $.ajax({
+                url: "${pageContext.request.contextPath}/mypage2/showExGraph",
+                type: "post",
+                data: {userNo: userNo,
+                		exNo: exNo},
 
+                dataType: "json",
+                success: function (graphInfo) {
+			    	$(".exSelect-wrapper > p").remove();
+			    	$("input[name='exList']").val("");
+
+			    	drawChart(exName, graphInfo);
+
+                },
+                error: function (XHR, status, error) {
+                    console.error(status + ":" + error);
+                }
+            });
+
+    	}else{
+    		$(".exSelect-wrapper > p").html('<i class="fas fa-exclamation-circle"></i> 운동 이름을 선택해 주셔야 해요 :( ');
+    		alert(" 운동 이름을 선택해 주셔야 해요 :( ");
+    	}
+    		
+    	
+    });
+    		
+    /* 그래프 그리기 함수 */
+	function drawChart(exName, graphInfo) {
+	    var amountArr = [];
+	    var countArr = [];
+	    var labelArr = [];
+	    var listLength = graphInfo.length - 1;
+	    
+	    for (var i = listLength; i >= 0; i--) {
+	    	amountArr.push(graphInfo[i].maxAmount);
+	    	countArr.push(graphInfo[i].maxCount);
+	        labelArr.push(graphInfo[i].exDate);
+	    }
+	
+	    var lineChartData = {
+	        labels: labelArr,
+	        datasets: [
+	            {
+	                label: '최대중량/최대시간',
+	                borderColor: '#cc2121',
+	                backgroundColor: '#cc2121',
+	                fill: false,
+	                data: amountArr,
+	                yAxisID: 'y-axis-1',
+	            }, {
+	                label: '최대횟수',
+	                borderColor: '#008526',
+	                backgroundColor: '#008526',
+	                fill: false,
+	                data: countArr,
+	                yAxisID: 'y-axis-1'
+	            }
+	        ]
+	    };
+	    var chartCanvas = document.getElementById("canvas");
+	    var myLineChart = new Chart(chartCanvas, {
+	        type: 'line',
+	        data: lineChartData,
+	        options: {
+	            responsive: false,
+	            hoverMode: 'index',
+	            stacked: false,
+	            title: {
+	                display: true,
+	                text: exName+' 운동량 변화 그래프'
+	            },
+	            scales: {
+	                yAxes: [{
+	                    type: 'linear',
+	                    display: true,
+	                    position: 'left',
+	                    id: 'y-axis-1',
+	                }, {
+	                    type: 'linear',
+	                    display: true,
+	                    position: 'right',
+	                    id: 'y-axis-2',
+	
+	                    // grid line settings
+	                    gridLines: {
+	                        drawOnChartArea: false
+	                    },
+	                }],
+	            }
+	        }
+	    });
+	}
+
+    	/* 날짜 클릭했을 때 운동 기록 보기 */
         function showDateList(scheduleNo, date) {
             $(".recordList>div").children().remove();
             $("p.exDate").text(date);

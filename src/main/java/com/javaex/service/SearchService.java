@@ -161,11 +161,37 @@ public class SearchService {
 	//리뷰 추가
 	public ReviewVo reviewPlus(int score, String content, int ptNo) {
 		System.out.println("SearchService:reviewPlus");
-		
-		ReviewVo reviewVo = new ReviewVo(score,content,ptNo);
-		System.out.println("서비스 보 확인"+reviewVo);
-		
+
+		ReviewVo reviewVo = new ReviewVo(score, content,ptNo);
+		System.out.println("서비스 보 확인" + reviewVo);
+
 		searchDao.reviewPlus(reviewVo);
+
+		int reviewNo = reviewVo.getReviewNo();
+
+		ReviewVo vo = searchDao.reviewOne(reviewNo);
+
+		return vo;
+	}
+
+	// 리뷰수정
+	public List<ReviewVo> reviewModify(int score, String content, int reviewNo) {
+		System.out.println("SearchService:reviewPlus");
+		
+		Map<String,Object> remap = new HashMap<>();
+		remap.put("score", score);
+		remap.put("content", content);
+		remap.put("reviewNo", reviewNo);
+		
+		searchDao.reviewModify(remap);
+		System.out.println("수정내용 확인" + remap);
+		
+		ReviewVo vo = searchDao.reviewOne(reviewNo);
+		
+		int tNo = vo.getTrainerNo();
+		System.out.println("트레이너 넘버확인"+tNo);
+		List<ReviewVo> reviewVo = searchDao.reviewList(tNo);
+		
 		
 		return reviewVo;
 	}
@@ -178,6 +204,17 @@ public class SearchService {
 		
 		return ptNo;
 	}
+
+	//리뷰삭제
+	public int reviewRemove(int reviewNo) {
+		System.out.println("SearchService:reviewRemove");
+		
+		int remove = searchDao.reviewRemove(reviewNo);
+		
+		return remove;
+	}
+	
+	
 
 	
 	

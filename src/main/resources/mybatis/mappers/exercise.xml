@@ -132,6 +132,53 @@
         ]]>
     </select>
     
+    <select id="myPartList" parameterType="int" resultType="com.javaex.vo.ExerciseVo">
+        <![CDATA[
+        
+			SELECT DISTINCT ex.partName exPartName, ex.partno exPartNo
+			FROM records r, exercise e, ex_part ex, schedule s
+			WHERE r.exerciseno = e.exerciseno
+			AND ex.partNo = e.exercisepart
+			AND r.scheduleno = s.scheduleNo
+			AND ptNo = (SELECT max(ptNo)
+					            FROM pt
+					            WHERE userNo = #{userNo})
+			ORDER BY ex.partName ASC
+
+        ]]>
+    </select>
+    
+    <select id="myExList" parameterType="int" resultType="com.javaex.vo.ExerciseVo">
+        <![CDATA[
+        
+			SELECT DISTINCT e.exercisename exName, e.exerciseNo exNo, ex.partno exPartNo
+			FROM records r, exercise e, ex_part ex, schedule s
+			WHERE r.exerciseno = e.exerciseno
+			AND ex.partNo = e.exercisepart
+			AND r.scheduleno = s.scheduleNo
+			AND ptNo = (SELECT max(ptNo)
+					            FROM pt
+					            WHERE userNo = #{userNo})
+			ORDER BY e.exercisename ASC
+
+        ]]>
+    </select>
+    
+    <select id="selectGraphInfo" parameterType="map" resultType="com.javaex.vo.ExGraphVo">
+        <![CDATA[
+        
+			SELECT MAX(r.amount) maxAmount, MAX(r.count) maxCount, TO_CHAR(s.starttime, 'yyyy-mm-dd') exDate
+			FROM records r, schedule s
+			WHERE s.scheduleno = r.scheduleno
+			AND s.ptno = (SELECT max(ptNo)
+					            FROM pt
+					            WHERE userNo = #{userNo})
+			AND r.exerciseNo = #{exNo}
+			GROUP BY s.startTime
+			ORDER BY s.startTime ASC
+        
+        ]]>
+    </select>
     
 </mapper>
 
