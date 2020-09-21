@@ -25,6 +25,8 @@ public class UserDao {
 
 	public UserVo insertUser(UserVo vo) {
 		System.out.println("userDao.insertUser");
+		System.out.println("vo 꺼내보기");
+		System.out.println(vo);
 		
 		sqlSession.insert("user.insertUser", vo);
 	

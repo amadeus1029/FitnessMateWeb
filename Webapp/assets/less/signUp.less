@@ -1,0 +1,152 @@
+@charset "UTF-8";
+@import "import/colorset.less";
+@import "import/modal.less";
+@import "import/variable.less";
+@import "import/mixin.less";
+
+.signUp-wrapper {
+  .img-part {
+    float: right;
+    width: ~"calc(50% + 100px)";
+    height: 700px;
+    background-image: url('../../assets/image/signUp.jpg');
+    background-size: cover;
+    background-position: left top;
+    background-repeat: no-repeat;
+  }
+
+  .signUp-part {
+    float: right;
+    width: 500px;
+    text-align: center;
+    margin-top: 150px;
+
+    a.logo {
+      display: block;
+      width: 50px;
+      margin: 0 auto 30px;
+      img {
+        display: block;
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    .title {
+      font-weight: 500;
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    p.guide {
+      line-height: 1.4;
+    }
+
+
+    form {
+      text-align: center;
+      box-sizing: border-box;
+      padding-top: 30px;
+
+      input {
+        display: none;
+      }
+
+      input[type="radio"]:checked + label {
+        background: #008526;
+        color: #ffffff;
+      }
+
+
+      .button-label {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px;
+        width: 96px;
+        cursor: pointer;
+        color: #008526;
+        border: 1px solid #008526;
+        border-radius: 5px;
+        background: #ffffff;
+        transition: 0.3s;
+        user-select: none;
+      }
+
+      button.main {
+        width: 250px;
+        margin: 30px auto 0;
+      }
+    }
+  }
+}
+
+form#signInfoForm {
+  width: 360px;
+  margin: 0 auto;
+  padding: 50px 0;
+  p.title{
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 40px;
+    margin: 60px 0 40px;
+  }
+  .input-wrapper {
+    position: relative;
+    &.id-wrapper {
+      input[name="userId"] {
+        width: 60%;
+        margin-right: 20px;
+        float: left;
+      }
+      button#idCheck {
+        width: ~"calc(40% - 20px)";
+        float: left;
+        margin: 10px 0 0;
+      }
+      .errMsg, .okMsg, .emtMsg {
+        color: @color-main;
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        font-size: 14px;
+      }
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      height: 40px;
+      margin: 10px 0 30px 0;
+    }
+  }
+  .dropzone-outer-wrapper {
+    margin-top: 20px;
+    .dropzone-inner-wrapper {
+      margin-top: 15px;
+      div.profile-img {
+        float: left;
+        width: 80px;
+        height: 80px;
+        margin-right: 20px;
+        border-radius: 50%;
+        border: 1px solid #cc2121;
+        overflow: hidden;
+        cursor: pointer;
+        .dropzone-previews {
+          display: block;
+          width: 80px;
+          height: 80px;
+        }
+      }
+      button.change-btn {
+        float: left;
+        margin: 20px 0 0;
+        color: #fff;
+        background-color: #cc2121;
+        border: 0;
+      }
+    }
+  }
+  button[type="submit"].main {
+    margin: 50px auto 0;
+    width: 200px;
+  }
+}
