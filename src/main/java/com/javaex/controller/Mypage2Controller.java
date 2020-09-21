@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.Mypage2Service;
+import com.javaex.vo.ExGraphVo;
 import com.javaex.vo.InbodyVo;
 import com.javaex.vo.PtVo;
 import com.javaex.vo.UserVo;
@@ -173,6 +174,12 @@ public class Mypage2Controller {
     @RequestMapping("/ptReservation")
     public boolean ptReservation(int ptNo, String date, String hour, String minute) {
     	return mypageService.ptReservation(ptNo, date, hour, minute);
+    }
+    
+    @ResponseBody
+    @RequestMapping("/showExGraph")
+    public List<ExGraphVo> showExGraph(int userNo, int exNo) {
+    	return mypageService.getExGraph(userNo, exNo);
     }
     
 }

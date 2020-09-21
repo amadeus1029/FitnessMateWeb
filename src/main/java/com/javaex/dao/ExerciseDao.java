@@ -1,11 +1,13 @@
 package com.javaex.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.ExGraphVo;
 import com.javaex.vo.ExerciseVo;
 import com.javaex.vo.RecordVo;
 import com.javaex.vo.ScheduleVo;
@@ -56,5 +58,17 @@ public class ExerciseDao {
 		return sqlSession.selectList("exercise.selectSet", ScheduleNo);
 	}
 
-    
+	public List<ExerciseVo> myPartList(int userNo) {
+		return sqlSession.selectList("exercise.myPartList", userNo);
+	}
+
+	public List<ExerciseVo> myExList(int userNo) {
+		return sqlSession.selectList("exercise.myExList", userNo);
+	}
+
+	public List<ExGraphVo> selectGraphInfo(Map<String, Integer> map) {
+		System.out.println("dao 그래프 인포");
+		
+		return sqlSession.selectList("exercise.selectGraphInfo", map);
+	}
 }

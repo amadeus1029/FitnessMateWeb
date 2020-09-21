@@ -13,6 +13,7 @@ import com.javaex.dao.ExerciseDao;
 import com.javaex.dao.PtDao;
 import com.javaex.dao.RecordDao;
 import com.javaex.dao.ScheduleDao;
+import com.javaex.vo.ExGraphVo;
 import com.javaex.vo.InbodyVo;
 import com.javaex.vo.PtVo;
 import com.javaex.vo.RecordVo;
@@ -193,10 +194,13 @@ public class Mypage2Service {
 		List<ScheduleVo> dateList = exerciseDao.selectExDate(userNo);
 		int scheduleNo = dateList.get(0).getScheduleNo();
 		
+		
 		Map<String, Object> exMap = new HashMap<>();
 		exMap.put("exRecordDate", dateList);
 		exMap.put("exTitleList", exerciseDao.selectEx(scheduleNo));
 		exMap.put("exSetList", exerciseDao.selectSet(scheduleNo));
+		exMap.put("exPartList", exerciseDao.myPartList(userNo));
+		exMap.put("exList", exerciseDao.myExList(userNo));
 		
 		return exMap;
 	}
@@ -230,6 +234,15 @@ public class Mypage2Service {
 		map.put("date", reserveDate);
 		
 		return ptDao.insertPtReserve(map);
+	}
+	
+	public List<ExGraphVo> getExGraph(int userNo, int exNo) {
+		
+		Map<String, Integer> map = new HashMap<>();
+		map.put("userNo", userNo);
+		map.put("exNo", exNo);
+		
+		return exerciseDao.selectGraphInfo(map);
 	}
 	
 	//오늘 날짜 가져오기
