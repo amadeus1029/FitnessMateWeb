@@ -44,8 +44,13 @@ public class UserController {
     public String signUp(@ModelAttribute UserVo vo,
     					Model model) {
     	System.out.println("/signUp");
-    	
-    	vo = userService.signUp(vo);
+
+    	if(userService.checkSignUp(vo)) {
+			vo = userService.signUp(vo);
+			System.out.println("가입시켜요");
+		} else {
+			System.out.println("가입하지마");
+		}
 
     	model.addAttribute("vo", vo);
     	

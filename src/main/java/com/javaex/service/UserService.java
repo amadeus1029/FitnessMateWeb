@@ -62,6 +62,11 @@ public class UserService {
 		return userDao.insertUser(vo);
 	}
 
+	public boolean checkSignUp(UserVo userVo) {
+		String userId = userVo.getUserId();
+		return userDao.selectSameId(userId) != 1;
+	}
+
 	public List<String> getAddress() {
 		System.out.println("userService.주소 대분류 가져오기");
 		
