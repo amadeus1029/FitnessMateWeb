@@ -833,14 +833,13 @@
           	console.log("수정위한 리뷰넘버 추출"+reviewNo);
           	var content = $('[name ="content').val();
          	console.log("수정위한 내용 추출"+content);
-          	
+          	var score = $("#scoreNo-"+reviewNo).val();
+          	console.log("화면에 보일 스코어 추출"+score);
 
         	//수정할 새창 불러오기
         	reviewStr =""
        		 reviewStr += '<div id="star_grade">';
        		 reviewStr += '<input type="hidden"  name="reviewNo" value="'+reviewNo+'">';
-       		 
-       		 
             reviewStr += '<input type="hidden"  name="reviewScore" value="0">';
             reviewStr += '  <i  class="fas fa-star" data-score="1"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="2"></i>';
@@ -848,8 +847,7 @@
             reviewStr += '  <i  class="fas fa-star" data-score="4"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="5"></i>';
             reviewStr += '</div>';
-            
-            reviewStr += '<textarea class="content review" name="contentRe" placeholder=""></textarea>';
+            reviewStr += '<textarea class="content review" name="contentRe" placeholder="">'+content+'</textarea>';
             reviewStr += '<div>';
             reviewStr += '<div class="clearfix review-btn-area">';
             reviewStr += '      <button type="button"  class="button" id="modifyCan">취소</button>';
@@ -1050,13 +1048,9 @@
         	   
         	  
         	   
-               reviewStr += '<li class="review-line" id="';
-             	//트레이너가 쓴 답변일 경우 배경색 추가위한 div
-               if(review.order_no !=1){
-            	   reviewStr += 'bg '
-            	   }               
-               reviewStr += 'r-'+review.reviewNo+'">';;
+               reviewStr += '<li class="review-line" id="r-'+review.reviewNo+'">';
                reviewStr += '<input type="hidden" id="reptNo-'+review.reviewNo+'" value="'+review.ptNo+'">';
+               reviewStr += '<input type="hidden" id="scoreNo-'+review.reviewNo+'" value="'+review.score+'">';
                reviewStr += '  <div class="user-profile ff">';
                //회원이 쓴 리뷰의 경우
                if(review.order_no !=2){
@@ -1098,9 +1092,11 @@
 
                var writeUser = review.userNo;
                console.log("리뷰작성 유저 추출" + writeUser);
+               var writeTrainer = review.trainerNo;
+               console.log("답글작성 트레이너 추출" + writeTrainer);
 
                //회원이 로그인한 경우
-               if (writeUser == loginUser) {
+               if (writeUser == loginUser && review.order_no !=2) {
                    reviewStr += '      <button type="button"  data-reno="'+review.reviewNo+'" class="button" id="removeRe">삭제</button>';
                    reviewStr += '      <button type="button" data-modino="'+review.reviewNo+'" class="button" id="modifyRe">수정</button>';
                }
@@ -1111,7 +1107,8 @@
                    reviewStr += '      <button type="button" data-rere="'+review.reviewNo+'" class="button" id="reRe" >답글</button> ';
                }
                
-               if (reviewNo == loginUser && review.order_no !=1) {
+             //트레이가 단 답글
+               if (writeTrainer = loginUser && review.order_no !=1 ) {
             	   reviewStr += '      <button type="button"  data-reno="'+review.reviewNo+'" class="button" id="removeRe">삭제</button>';
                    reviewStr += '      <button type="button" data-modino="'+review.reviewNo+'" class="button" id="modifyRe">수정</button>';
                }
