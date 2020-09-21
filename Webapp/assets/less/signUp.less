@@ -32,14 +32,23 @@
       }
     }
 
-    .title {
+    p.title {
       font-weight: 500;
       font-size: 20px;
       margin-bottom: 15px;
+      &.larger {
+        font-size: 40px;
+      }
     }
 
     p.guide {
       line-height: 1.4;
+      &.larger {
+        font-size: 20px;
+      }
+      span.bold {
+        color: @color-sub;
+      }
     }
 
 
@@ -71,11 +80,11 @@
         transition: 0.3s;
         user-select: none;
       }
-
-      button.main {
-        width: 250px;
-        margin: 30px auto 0;
-      }
+    }
+    button.main,
+    a.main {
+      width: 250px;
+      margin: 30px auto 0;
     }
   }
 }

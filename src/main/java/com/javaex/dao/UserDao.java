@@ -25,8 +25,6 @@ public class UserDao {
 
 	public UserVo insertUser(UserVo vo) {
 		System.out.println("userDao.insertUser");
-		System.out.println("vo 꺼내보기");
-		System.out.println(vo);
 		
 		sqlSession.insert("user.insertUser", vo);
 	
@@ -59,6 +57,7 @@ public class UserDao {
 
 	public void updateTrainerInfo(UserVo vo) {
 		System.out.println("userDao.트레이너 정보 수정");
+		System.out.println(vo);
 		
 		sqlSession.update("user.updateTrainerInfo", vo);
 	}

@@ -25,7 +25,6 @@ public class UserController {
 	@Autowired
 	private UserService userService; 
 
-
     @RequestMapping("/signUpStart")
     public String signUpStart() {
     	System.out.println("/signUpStart");
@@ -74,6 +73,7 @@ public class UserController {
     							@RequestParam("birth") List<String> birthList,
     							Model model) {
     	System.out.println("/signUpComplete");
+    	System.out.println(vo);
     	
     	userService.updateProfile(vo, address, fieldList, careerList, birthList);
     	

@@ -29,6 +29,8 @@
 
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage2.css">
+        
 </head>
 <body>
     <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>

@@ -51,7 +51,6 @@
                     </label>
                     <button type="submit" class="button main">회원가입</button>
                 </form>
-
             </div>
         </div>
     </div>

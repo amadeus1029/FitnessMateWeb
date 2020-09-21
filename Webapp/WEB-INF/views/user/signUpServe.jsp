@@ -116,7 +116,13 @@
                         <input type="text" name="careerRecord" placeholder="대회명(교육명) / 상세내용 ">
                         <i class="far fa-plus-square"></i>
                     </div>
-                </div>     
+                </div>
+                
+                <!-- 근무시간 -->
+                <div>     
+                    <p>PT 운영 시간</p>
+                    <textarea name="workingHours"></textarea>
+                </div>  
 
                 <!-- 자기소개 -->
                 <div>     
