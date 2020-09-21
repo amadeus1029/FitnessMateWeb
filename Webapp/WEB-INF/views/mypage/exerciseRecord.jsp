@@ -155,7 +155,7 @@
     	if( exNo ){
 	    	
             $.ajax({
-                url: "${pageContext.request.contextPath}/mypage2/showExGraph",
+                url: "${pageContext.request.contextPath}/mypage/showExGraph",
                 type: "post",
                 data: {userNo: userNo,
                 		exNo: exNo},
@@ -257,7 +257,7 @@
             $("p.exDate").text(date);
 
             $.ajax({
-                url: "${pageContext.request.contextPath}/mypage2/showExRecord",
+                url: "${pageContext.request.contextPath}/mypage/showExRecord",
                 type: "post",
                 data: {scheduleNo: scheduleNo},
 

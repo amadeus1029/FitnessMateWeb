@@ -24,7 +24,7 @@
                             <a href="${pageContext.request.contextPath}/mypage/schedule" class="button sub">마이페이지</a>
                         </c:when>
                         <c:otherwise>
-                            <a href="${pageContext.request.contextPath}/mypage2/inbodyRecord" class="button sub">마이페이지</a>
+                            <a href="${pageContext.request.contextPath}/mypage/inbodyRecord" class="button sub">마이페이지</a>
                         </c:otherwise>
                     </c:choose>
                 </c:otherwise>

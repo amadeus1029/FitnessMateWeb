@@ -223,7 +223,7 @@
                 //데이터 전송
                 $.ajax({
                     //보낼 때 옵션
-                    url: "${pageContext.request.contextPath}/mypage2/saveInbody",
+                    url: "${pageContext.request.contextPath}/mypage/saveInbody",
                     type: "post",
                     data: {
                         ptNo: ptNo,
@@ -277,7 +277,7 @@
                 //데이터 전송
                 $.ajax({
                     //보낼 때 옵션
-                    url: "${pageContext.request.contextPath}/mypage2/getInbodyInfo",
+                    url: "${pageContext.request.contextPath}/mypage/getInbodyInfo",
                     type: "post",
                     data: {inbodyNo: inbodyNo},
 
@@ -337,7 +337,7 @@
                 //데이터 전송
                 $.ajax({
                     //보낼 때 옵션
-                    url: "${pageContext.request.contextPath}/mypage2/extendPt",
+                    url: "${pageContext.request.contextPath}/mypage/extendPt",
                     type: "post",
                     data: {
                         ptNo: ptNo,
@@ -391,7 +391,7 @@
                 //데이터 전송
                 $.ajax({
                     //보낼 때 옵션
-                    url: "${pageContext.request.contextPath}/mypage2/getInbodyInfo",
+                    url: "${pageContext.request.contextPath}/mypage/getInbodyInfo",
                     type: "post",
                     data: {inbodyNo: inbodyNo},
 
@@ -428,7 +428,7 @@
             //데이터 전송
             $.ajax({
                 //보낼 때 옵션
-                url: "${pageContext.request.contextPath}/mypage2/searchUser",
+                url: "${pageContext.request.contextPath}/mypage/searchUser",
                 type: "post",
                 data: {keyword: keyword},
 
@@ -514,7 +514,7 @@
             //데이터 전송
             $.ajax({
                 //보낼 때 옵션
-                url: "${pageContext.request.contextPath}/mypage2/userInfo",
+                url: "${pageContext.request.contextPath}/mypage/userInfo",
                 type: "post",
                 data: {
                     ptNo: ptNo,
@@ -596,7 +596,7 @@
             //데이터 전송
             $.ajax({
                 //보낼 때 옵션
-                url: "${pageContext.request.contextPath}/mypage2/modifyMemo",
+                url: "${pageContext.request.contextPath}/mypage/modifyMemo",
                 type: "post",
                 data: {
                     ptNo: ptNo,
@@ -633,7 +633,7 @@
             //데이터 전송
             $.ajax({
                 //보낼 때 옵션
-                url: "${pageContext.request.contextPath}/mypage2/addPt",
+                url: "${pageContext.request.contextPath}/mypage/addPt",
                 type: "post",
                 data: {
                     userNo: userNo,

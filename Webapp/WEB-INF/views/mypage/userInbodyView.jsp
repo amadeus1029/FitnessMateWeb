@@ -198,7 +198,7 @@
 		//데이터 전송
 		$.ajax({
 			//보낼 때 옵션
-			url : "${pageContext.request.contextPath}/mypage2/getInbodyInfo",
+			url : "${pageContext.request.contextPath}/mypage/getInbodyInfo",
 			type : "post",
 			data : {inbodyNo: inbodyNo},
 					
