@@ -173,6 +173,23 @@ public class SearchService {
 
 		return vo;
 	}
+	
+	//답글추가
+	public ReviewVo rereviewPlus(int score, String content, int ptNo, int group_no) {
+		System.out.println("SearchService:rereviewPlus");
+		
+		ReviewVo reviewVo = new ReviewVo(score,content,ptNo,group_no);
+		System.out.println("서비스 보 확인" + reviewVo);
+		
+		searchDao.rereviewPlus(reviewVo);
+		
+		int reviewNo = reviewVo.getReviewNo();
+		System.out.println("리뷰넘버 추출 확인"+reviewNo);
+		
+		ReviewVo vo = searchDao.reviewOne(reviewNo);
+		
+		return vo;
+	}
 
 	// 리뷰수정
 	public List<ReviewVo> reviewModify(int score, String content, int reviewNo) {
@@ -213,6 +230,8 @@ public class SearchService {
 		
 		return remove;
 	}
+
+	
 	
 	
 

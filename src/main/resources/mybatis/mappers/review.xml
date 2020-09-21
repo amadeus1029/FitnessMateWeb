@@ -10,15 +10,20 @@
 	resultType="com.javaex.vo.ReviewVo">
 	<![CDATA[
 	SELECT r.reviewno,r.ptno,TO_CHAR(r.regdate, 'YYYY/MM/DD')as "regDate",r.score,r.content,
-		    p.userno,p.trainerno,s.schedulecount,u.name,u.profileImg
+		    p.userno,p.trainerno,s.schedulecount,u.name,u.profileImg,r.group_no,r.order_no,
+		    tra.name as "trainerName",tra.img as "trainerImg"
+		 
 		FROM review r,pt p,(SELECT ptNo, COUNT(scheduleNo) scheduleCount
 					            FROM schedule
-					            group by ptNo)s,users u
+					            group by ptNo)s,users u,(SELECT name as name,profileimg as Img,userno
+                                                         FROM users
+                                                         WHERE usertype = 'trainer')tra
 		where r.ptno = p.ptno
 		and p.ptno = s.ptno
 		and u.userno = p.userno
+		and p.trainerno = tra.userno
 		and p.trainerno= #{no}
-		ORDER BY regDate DESC
+		ORDER BY r.group_no DESc,r.order_no ASC
 	]]>
 	</select>
 	
@@ -49,7 +54,23 @@
       
 	  <![CDATA[
 		insert into review
-		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content},#{reviewNo},1,0)
+		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content},#{reviewNo},1)
+	  ]]>
+
+	</insert>
+	
+	<!-- 답글추가 -->
+	<insert id="rereviewPlus" parameterType="com.javaex.vo.ReviewVo">
+	
+		<selectKey keyProperty="reviewNo" resultType="int" order="BEFORE">  
+		<![CDATA[
+	        select SEQ_REVIEWNO.nextval FROM dual
+	        ]]>
+	     </selectKey>
+	
+	  <![CDATA[
+		insert into review
+		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content},#{group_no},2)
 	  ]]>
 
 	</insert>
@@ -59,13 +80,16 @@
 	resultType="com.javaex.vo.ReviewVo">
 	<![CDATA[
 	SELECT r.reviewno,r.ptno,TO_CHAR(r.regdate, 'YYYY/MM/DD')as "regDate",r.score,r.content,
-		    p.userno,p.trainerno,s.schedulecount,u.name,u.profileImg
+		    p.userno,p.trainerno,s.schedulecount,u.name,u.profileImg,tra.name as "trainerName",tra.img as "trainerImg"
 		FROM review r,pt p,(SELECT ptNo, COUNT(scheduleNo) scheduleCount
 					            FROM schedule
-					            group by ptNo)s,users u
+					            group by ptNo)s,users u,(SELECT name as name,profileimg as Img,userno
+                                                         FROM users
+                                                         WHERE usertype = 'trainer')tra
 		where r.ptno = p.ptno
 		and p.ptno = s.ptno
 		and u.userno = p.userno
+		and p.trainerno = tra.userno
 		and r.reviewno=#{reviewNo}
 	]]>
 	</select>

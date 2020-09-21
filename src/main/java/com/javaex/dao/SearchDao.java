@@ -142,6 +142,15 @@ public class SearchDao {
 	}
 	
 	
+	//답글 추가
+	public int rereviewPlus(ReviewVo vo ) {
+		System.out.println("searchDao:rereviewPlus");
+		int rereVo = sqlSession.insert("review.rereviewPlus",vo);
+		
+		return rereVo;
+	}
+	
+	
 	//리뷰수정
 	public int reviewModify(Map<String, Object> remap) {
 		System.out.println("searchDao:reviewModify");
@@ -176,6 +185,8 @@ public class SearchDao {
 		
 		return remove;
 	}
+
+	
 
 	
 
