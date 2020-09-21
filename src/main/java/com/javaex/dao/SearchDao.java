@@ -142,6 +142,13 @@ public class SearchDao {
 	}
 	
 	
+	//답글
+	public void rereviewPlus(Map<String, Object> remap) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 	//리뷰수정
 	public int reviewModify(Map<String, Object> remap) {
 		System.out.println("searchDao:reviewModify");
@@ -176,6 +183,8 @@ public class SearchDao {
 		
 		return remove;
 	}
+
+	
 
 	
 

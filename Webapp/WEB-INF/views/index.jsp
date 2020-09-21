@@ -964,7 +964,7 @@
       
         $(".review-list").on("click","#revW",function(){
         	 console.log("답글작성");
-        	 var reviewNo = $(this).data('rerere');
+        	 var group_no = $(this).data('rerere');
          	console.log("답글위한 리뷰넘버 추출"+reviewNo);
        		var content = $('[name ="contentRe"]').val();
         	 console.log("답글위한 내용 추출"+content); 
@@ -978,7 +978,7 @@
              type: "post",
              //contentType : "application/json",
              data:{ 
-            	 reviewNo:reviewNo,
+            	 group_no:group_no,
                  score: score,
                  content: content,
                  ptNo: ptNo

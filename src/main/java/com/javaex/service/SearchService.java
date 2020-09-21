@@ -175,17 +175,16 @@ public class SearchService {
 	}
 	
 	//답글추가
-	public ReviewVo rereviewPlus(int score, String content, int ptNo, int reviewNo) {
+	public ReviewVo rereviewPlus(int score, String content, int ptNo, int group_no) {
 		System.out.println("SearchService:rereviewPlus");
 		
 		Map<String,Object> remap = new HashMap<>();
 		remap.put("score", score);
 		remap.put("content", content);
 		remap.put("reviewNo", ptNo);
-		remap.put("reviewNo", reviewNo);
+		remap.put("group_no", group_no);
 		
-		
-		
+		searchDao.rereviewPlus(remap);
 		
 		return null;
 	}
