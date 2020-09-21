@@ -28,8 +28,6 @@
     <link href="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/css/swiper.min.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/js/swiper.min.js"></script>
 
-    <!-- 해당 페이지 css -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/signUpCommon.css">
 
     <!-- dropzone -->
     <script src="${pageContext.request.contextPath}/assets/js/dropzone/dropzone.js"></script>
@@ -39,6 +37,9 @@
     <link href="${pageContext.request.contextPath}/assets/js/cropper/cropper.min.css" rel="stylesheet">
 
     <script src="${pageContext.request.contextPath}/assets/js/canvas-blob/canvas-toBlob.js"></script>
+
+    <!-- 해당 페이지 css -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/signUp.css">
 	
 </head>
 <body>
@@ -47,51 +48,62 @@
     <!-- header가 필요한 페이지에서 사용 -->
 
     <div id="container">
-       
         <div class="wrapper">
-            <form action="${pageContext.request.contextPath}/user/signUp" method="post" enctype="multipart/form-data">
-                <p class="title">기본정보 입력</p>
-                <p>아이디</p>
-                <input type="text" name="userId" placeholder="id">
-                <p class="errMsg">이미 사용 중인 아이디 입니다.</p>
-                <p class="emtMsg">사용 불가한 아이디 입니다.</p>
-                <p class="okMsg">사용 가능한 아이디 입니다.</p>
-                
-                <button type="button" id="idCheck">중복 확인</button>
-                <p>비밀번호</p>
-                <input type="password" id="pw" name="password" placeholder="********">
-                <p>비밀번호 확인</p>
-                <input type="password" id="pwCheck" placeholder="********">
-                <p>이름</p>
-                <input type="text" name="name" placeholder="김이름">
-                <p>휴대전화번호</p>
-                <input type="text" name="phone" placeholder="010-0000-1111">
-                <p>성별</p>
-                <input type="radio" id="male" name="gender" value="male">
-                <label for="male">남</label>
-                <input type="radio" id="female" name="gender" value="female">
-                <label for="female">여</label>
-                <p>프로필 이미지</p>
-                <div class="dropzone-outer-wrapper clearfix">
-                    <div class="profile-img dropzone-wrapper">
-                    </div>
-                    <button type="button" class="button change-btn">이미지 추가</button>
-                    <input type="hidden" name="profileImg" value="">
+            <form action="${pageContext.request.contextPath}/user/signUp" method="post" enctype="multipart/form-data" id="signInfoForm">
+                <h3 class="title">기본정보 입력</h3>
+                <div class="input-wrapper id-wrapper clearfix">
+                    <p>아이디</p>
+                    <input type="text" name="userId" placeholder="id">
+                    <button type="button" class="button sub" id="idCheck">중복 확인</button>
+                    <p class="errMsg">이미 사용 중인 아이디 입니다.</p>
+                    <p class="emtMsg">사용 불가한 아이디 입니다.</p>
+                    <p class="okMsg">사용 가능한 아이디 입니다.</p>
                 </div>
-          		<input type="hidden" name="userType" value="${param.userType}">
-                
-				<c:choose>
-                	<c:when test="${param.userType eq 'trainer'}">
-                		<button type="submit" class="button main">다음</button>
-                	</c:when>
-                	<c:otherwise>
-                		<button type="submit" class="button main">완료</button>
-	                </c:otherwise>
-				</c:choose>
-				
-            </form>
+                <div class="input-wrapper">
+                    <p>비밀번호</p>
+                    <input type="password" id="pw" name="password" placeholder="********">
+                </div>
+                <div class="input-wrapper">
+                    <p>비밀번호 확인</p>
+                    <input type="password" id="pwCheck" placeholder="********">
+                </div>
+                <div class="input-wrapper">
+                    <p>이름</p>
+                    <input type="text" name="name" placeholder="김이름">
+                </div>
+                <div class="input-wrapper">
+                    <p>휴대전화번호</p>
+                    <input type="text" name="phone" placeholder="010-0000-1111">
+                </div>
+                <div class="input-wrapper radio-wrapper">
+                    <p>성별</p>
+                    <input type="radio" id="male" name="gender" value="male">
+                    <label for="male">남</label>
+                    <input type="radio" id="female" name="gender" value="female">
+                    <label for="female">여</label>
+                </div>
+                <div class="input-wrapper dropzone-outer-wrapper">
+                    <p>프로필 이미지</p>
+                    <div class="clearfix dropzone-inner-wrapper">
+                        <div class="profile-img dropzone-wrapper">
+                        </div>
+                        <button type="button" class="button change-btn">이미지 추가</button>
+                        <input type="hidden" name="profileImg" value="">
+                    </div>
+                </div>
+                <input type="hidden" name="userType" value="${param.userType}">
 
+                <c:choose>
+                    <c:when test="${param.userType eq 'trainer'}">
+                        <button type="submit" class="button main">다음</button>
+                    </c:when>
+                    <c:otherwise>
+                        <button type="submit" class="button main">완료</button>
+                    </c:otherwise>
+                </c:choose>
+            </form>
         </div>
+
     </div>
 
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
@@ -116,16 +128,6 @@
         });
     })
 
-	//프로필 미리보기
-    $("input[name='profileImage']").on("change", function(){
-    	var reader = new FileReader();
-    	
-        reader.onload = function (e) {
-            document.getElementById("proImg").src = e.target.result;
-        };
-
-        reader.readAsDataURL(this.files[0]);
-    });
 
     // 아이디 체크
     $("#idCheck").on("click", function(){
@@ -173,8 +175,7 @@
     });
     
     $("button.main").on("submit", function(){
-    	console.log("아이디"+$("input[name='userId']").val());
-    	
+
 		//아이디를 입력해 주세요
 		if($("input[name='userId']").val() == ""){
 			alert("아이디를 입력해주세요");

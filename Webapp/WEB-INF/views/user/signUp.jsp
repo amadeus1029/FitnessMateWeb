@@ -29,42 +29,29 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/signUp.css">
 </head>
 <body>
-
-    <header id="header">
-        
-        <div class="wrapper clearfix">
-            <h1 class="logo">
-                <a href="${pageContext.request.contextPath}/main">
+	<div id="container" class="no-header">
+        <div class="signUp-wrapper clearfix">
+            <div class="img-part"></div>
+            <div class="signUp-part">
+                <a class="logo" href="${pageContext.request.contextPath}/main">
                     <img src="${pageContext.request.contextPath}/assets/image/logoB.jpeg" title="logo" alt="logo">
                 </a>
-            </h1>
-        </div>
-
-    </header>
-	<div id="container">
-        <div class="signUpPart">
-
-            <p class="bold">회원가입</p>
-            <p>가입하고자 하는 유형을<br>
-            	아래에서 선택해주세요</p>
-            <form action="${pageContext.request.contextPath}/user/signUpForm" method="get">
-	            <div class="buttonPart">
-	                <input type="radio" id="trainee" name="userType" value="normal">
-	                <label for="trainee" class="button-label lable_trainee">
-	                   	 일반회원
-	                </label>
-	                <p>or</p>
-	                <input type="radio" id="trainer" name="userType" value="trainer">
-	                <label for="trainer" class="button-label lable_trainer">
-                    	트레이너 회원
-	                </label>
-	            </div>
-	            <button type="submit" class="button main">회원가입</button>
-            </form>
-
-        </div>
-        <div class="imgPart">
-
+                <p class="title">회원가입</p>
+                <p class="guide">가입하고자 하는 유형을<br>
+                    아래에서 선택해주세요</p>
+                <form action="${pageContext.request.contextPath}/user/signUpForm" method="get">
+                    <input type="radio" id="trainee" name="userType" value="normal">
+                    <label for="trainee" class="button-label lable_trainee">
+                        일반회원
+                    </label>
+                    <p>or</p>
+                    <input type="radio" id="trainer" name="userType" value="trainer">
+                    <label for="trainer" class="button-label lable_trainer">
+                        트레이너 회원
+                    </label>
+                    <button type="submit" class="button main">회원가입</button>
+                </form>
+            </div>
         </div>
     </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>

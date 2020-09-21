@@ -29,37 +29,24 @@
     <script src="${pageContext.request.contextPath}/assets/js/swiper-4.2.6/dist/js/swiper.min.js"></script>
 
     <!-- 해당 페이지 css -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/signUpComplete.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/signUp.css">
 </head>
 <body>
-    
-    <header id="header">
-        <div class="imgPart"></div>
-        
-        <div class="wrapper clearfix">
-            <h1 class="logo">
-            	<a href="${pageContext.request.contextPath}/main">
+
+
+    <div id="container" class="no-header">
+        <div class="signUp-wrapper clearfix">
+            <div class="img-part"></div>
+            <div class="signUp-part">
+                <a class="logo" href="${pageContext.request.contextPath}/main">
                     <img src="${pageContext.request.contextPath}/assets/image/logoB.jpeg" title="logo" alt="logo">
                 </a>
-            </h1>
-        </div>
-
-    </header>
-    <!-- header가 필요한 페이지에서 사용 -->
-    
-
-    <div id="container">
-        <div class="wrapper">
-            <div>
-            <p class="title">환영합니다!</p>
-            <p>${vo.name} 님, 회원가입을 축하합니다.<br>
-            가입하신 아이디는 <span class="bold">${vo.userId}</span> 입니다.</p>
-
-			<a href="${pageContext.request.contextPath}/main" class="button main" id="btn_login">메인페이지로 돌아가기</a>
+                <p class="title larger">환영합니다!</p>
+                <p class="guide larger">${vo.name} 님, 회원가입을 축하합니다.<br>
+                    가입하신 아이디는 <span class="bold">${vo.userId}</span> 입니다.</p>
+                <a href="${pageContext.request.contextPath}/main" class="button main" id="btn_login">메인페이지로 돌아가기</a>
             </div>
-
         </div>
-
     </div>
 
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
