@@ -68,6 +68,9 @@ public class MypageController {
             int trainerNo = user.getUserNo();
             List<ExerciseVo> exList = mypageService.getExList(trainerNo);
 
+            List<ScheduleVo> scheduleList = mypageService.getScheduleList(user.getUserNo());
+            model.addAttribute("scheduleList", scheduleList);
+
             model.addAttribute("showList", showList);
             model.addAttribute("exList", exList);
             
@@ -120,6 +123,10 @@ public class MypageController {
        		
             //매 페이지마다 들어가는 상단 요약정보
             model.addAttribute("summary", mypage2Service.summary(userVo.getUserNo()));
+            List<ScheduleVo> scheduleList = mypageService.getScheduleList(userVo.getUserNo());
+            model.addAttribute("scheduleList", scheduleList);
+
+
         }else {
             //매 페이지마다 들어가는 상단 요약정보 - 일반
         	model.addAttribute("summaryNormal", mypage2Service.summaryNormal(userVo.getUserNo()));
@@ -140,7 +147,8 @@ public class MypageController {
             
             //매 페이지마다 들어가는 상단 요약정보
             model.addAttribute("summary", mypage2Service.summary(user.getUserNo()));
-            
+            List<ScheduleVo> scheduleList = mypageService.getScheduleList(user.getUserNo());
+            model.addAttribute("scheduleList", scheduleList);
         }else {
             System.out.println("일반회원은 여기 오면 안돼요");
         }

@@ -21,7 +21,7 @@
                     to_char(s.endTime, 'yyyy-mm-dd hh24:mi') as endTime,
                     round((s.endtime - s.startTime) * 1440) as amount
             from    schedule s, pt p, users u
-            where   p.ptNo = s.ptNo and p.trainerNo = #{trainerNo} and p.userno = u.userno and s.state = 'confirm'
+            where   p.ptNo = s.ptNo and p.trainerNo = #{trainerNo} and p.userno = u.userno
         ]]>
     </select>
     

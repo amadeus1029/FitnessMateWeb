@@ -38,6 +38,9 @@
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
+            <c:forEach items="${scheduleList}" var="schedule">
+            console.log("${schedule}");
+            </c:forEach>
             var calendarEl = document.getElementById('calendar');
             var calendar;
 
@@ -75,8 +78,8 @@
                             var top = target.offset().top - 60;
                             $("#calendar").append(
                                 "<div class='btn_pop'>" +
-                                "<button type='button' class='button btn_modify' onclick='btnModify("+info.event.extendedProps.dataId+");'>스케쥴변경</button>" +
-                                "<a href='${pageContext.request.contextPath}/mypage/recordEx?scheduleNo="+ info.event.extendedProps.dataId +"' class='button'>운동시작</a>" +
+                                "<button type='button' class='button btn_modify' onclick='btnModify(" + info.event.extendedProps.dataId + ");'>스케쥴변경</button>" +
+                                "<a href='${pageContext.request.contextPath}/mypage/recordEx?scheduleNo=" + info.event.extendedProps.dataId + "' class='button'>운동시작</a>" +
                                 "<div>"
                             );
                             $(".btn_pop").css({
@@ -86,7 +89,8 @@
                         },
                         height: 'auto',
                         events: [
-                            <c:forEach items="#{scheduleList}" var="schedule">
+                            <c:forEach items="${scheduleList}" var="schedule">
+                            <c:if test="${schedule.state eq 'confirm'}">
                             {
                                 title: '${schedule.userName}(${schedule.amount}분)',
                                 start: '${schedule.startTime}',
@@ -95,6 +99,8 @@
                                     dataId : ${schedule.scheduleNo}
                                 }
                             },
+                            </c:if>
+
                             </c:forEach>
                         ],
                         eventDisplay: 'list-item'
@@ -310,8 +316,8 @@
             var amount = modal.find("input[name='amount']");
             var ptNo = modal.find("select[name='ptNo']");
             var scheduleVo = {
-                scheduleNo : scheduleNo,
-                trainerNo : ${authUser.userNo}
+                scheduleNo: scheduleNo,
+                trainerNo: ${authUser.userNo}
             }
             $.ajax({
                 url: "${pageContext.request.contextPath}/mypage/getSchedule",
@@ -324,23 +330,23 @@
                     var hourVal = schedule.startTime.substring(11, 13);
                     var minuteVal = schedule.startTime.substring(14, 16);
 
-                    if(parseInt(hourVal) >= 12) {
+                    if (parseInt(hourVal) >= 12) {
                         modal.find("input#modifyStartPm").prop("checked", true);
                         hourVal = parseInt(hourVal) - 12;
-                        if(hourVal < 10) {
+                        if (hourVal < 10) {
                             hourVal = 0 + hourVal.toString();
                         }
                     } else {
                         modal.find("input#modifyStartAm").prop("checked", true);
                     }
                     date.val(dateVal);
-                    hour.find("option[value='"+hourVal+"']").prop("selected", true);
-                    minute.find("option[value='"+minuteVal+"']").prop("selected", true);
+                    hour.find("option[value='" + hourVal + "']").prop("selected", true);
+                    minute.find("option[value='" + minuteVal + "']").prop("selected", true);
                     amount.val(schedule.amount);
-                    ptNo.find("option[value='"+schedule.ptNo+"']").prop("selected", true);
+                    ptNo.find("option[value='" + schedule.ptNo + "']").prop("selected", true);
 
-                    modal.find(".modal-confirm").attr("onclick","modifySchedule('"+ schedule.scheduleNo +"')");
-                    modal.find(".delete-btn").attr("onclick","deleteSchedule('"+ schedule.scheduleNo +"')");
+                    modal.find(".modal-confirm").attr("onclick", "modifySchedule('" + schedule.scheduleNo + "')");
+                    modal.find(".delete-btn").attr("onclick", "deleteSchedule('" + schedule.scheduleNo + "')");
                 },
                 error: function (XHR, status, error) {
                     console.error(status + ":" + error);
@@ -447,7 +453,7 @@
                 data: JSON.stringify(scheduleVo),
                 dataType: "json",
                 success: function (result) {
-                    if(result) {
+                    if (result) {
                         alert("스케쥴이 수정되었습니다.");
                         window.location.reload();
                     }
@@ -460,7 +466,7 @@
 
         function deleteSchedule(scheduleNo) {
             var scheduleVo = {
-                scheduleNo : scheduleNo
+                scheduleNo: scheduleNo
             }
 
             $.ajax({
@@ -470,7 +476,7 @@
                 data: JSON.stringify(scheduleVo),
                 dataType: "json",
                 success: function (result) {
-                    if(result) {
+                    if (result) {
                         alert("스케쥴이 삭제되었습니다.");
                         window.location.reload();
                     }

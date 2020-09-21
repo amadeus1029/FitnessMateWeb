@@ -22,8 +22,7 @@ public class ScheduleDao {
     public List<ScheduleVo> getScheduleList(int trainerNo) {
     	
     	List<ScheduleVo> list = sqlSession.selectList("schedule.selectList", trainerNo);
-    	System.out.println(list);
-    	
+
         return list;
     }
 
