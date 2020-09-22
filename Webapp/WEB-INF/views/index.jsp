@@ -107,7 +107,9 @@
             <!--  <form action="${pageContext.request.contextPath}/search/results" method="get"
             id="searchKeywordForm">-->
             <div id="searchKeywordForm">
+              
                 <ul class="search-condition clearfix">
+                <input type="hidden" name="page" value="1">
                     <li class="local clearfix">
                         <h3 class="title">지역</h3>
                         <!--지역 고르기 -->
@@ -176,7 +178,24 @@
                     </li>
                 </c:forEach>
             </ul>
-            <!-- 트레이너목록-->
+
+			<!-- 페이징-->
+			<div id="paging">
+				<ul>
+					<li><a href="">◀</a></li>
+
+					<c:forEach var="page" begin="1" end="${p.count}">
+
+						<li <c:if test="${param.page eq page}"> class="active" </c:if>>
+							<a href="${pageContext.request.contextPath}/main?page=${page}">${page}</a>
+						</li>
+
+					</c:forEach>
+					<li><a href="">▶</a></li>
+				</ul>
+			</div>
+			<!-- 페이징-->
+			<!-- 트레이너목록-->
 
         </div> <!-- wrapper-->
 
@@ -302,6 +321,7 @@
         //검색
         $(".button.key").on("click", function () {
             console.log("검색버튼");
+            console.log("검색버튼");
             //값 추출
             var user = {
                 province: $("[name='province']").val(),
@@ -309,7 +329,8 @@
                 region: $("[name='region']").val(),
                 gender: $("[name='gender']:checked").val(),
                 field: $("[name='field']").val(),
-                name: $("[name='name']").val()
+                name: $("[name='name']").val(),
+                page: $("[name= 'page']").val()
             }
 
             console.log(user);
@@ -833,8 +854,8 @@
         	console.log("수정");
         	 var reviewNo = $(this).data('modino');
           	console.log("수정위한 리뷰넘버 추출"+reviewNo);
-          	var content = $('[name ="content').val();
-         	console.log("수정위한 내용 추출"+content);
+          	var content = $('.box').children(".content").val();
+         	console.log("수정 전 원래 내용 추출"+content);
           	var score = $("#scoreNo-"+reviewNo).val();
           	console.log("화면에 보일 스코어 추출"+score);
 
@@ -843,11 +864,14 @@
        		 reviewStr += '<div id="star_grade">';
        		 reviewStr += '<input type="hidden"  name="reviewNo" value="'+reviewNo+'">';
             reviewStr += '<input type="hidden"  name="reviewScore" value="0">';
+            
             reviewStr += '  <i  class="fas fa-star" data-score="1"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="2"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="3"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="4"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="5"></i>';
+            
+            
             reviewStr += '</div>';
             reviewStr += '<textarea class="content review" name="contentRe" placeholder="">'+content+'</textarea>';
             reviewStr += '<div>';

@@ -54,21 +54,36 @@ public class SearchService {
 	
 	//////////////////////////////////////////////////
 	
-	//트레이너 리스트
-	public List<UserVo> userList() {
+	// 트레이너 리스트
+	public List<UserVo> userList(int page) {
 		System.out.println("SearchService:userList");
-		
-		List<UserVo> userVo = searchDao.userList();
-		
+
+		Map<String, Object> listMap = new HashMap<>();
+		listMap.put("start", 1 + (page - 1) * 8);
+		listMap.put("end", 1 + (page - 1) * 8 + (8 - 1));
+
+		List<UserVo> userVo = searchDao.userList(listMap);
+
 		return userVo;
-		
+
 	}
-	
-	
+
+	// 페이지 정보
+	public Map<String, Integer> pageCount() {
+		System.out.println("서비스:페이지 카운트");
+
+		Map<String, Integer> cMap = new HashMap<>();
+		cMap.put("countAll", searchDao.pageCount());
+		cMap.put("count", (int) Math.ceil(cMap.get("countAll") / 8.0));
+		
+		System.out.println("서비스 잘 나오는지 확인"+cMap);
+
+		return cMap;
+	}
 	
 	//트레이너 검색
 	public List<UserVo> userList(String province, String city, String region, String gender, String field,
-			String name) {
+			String name, int page) {
 		System.out.println("SearchService:userList");
 		
 		
@@ -84,10 +99,12 @@ public class SearchService {
 		} else { listMap.put("location",province);}
 		
 		
-		//전공,성별,이름담기
+		//전공,성별,이름,페이지담기
 		listMap.put("field",field);
 		listMap.put("gender",gender);
 		listMap.put("name",name);
+		listMap.put("start", 1 + (page - 1) * 8);
+		listMap.put("end", 1 + (page - 1) * 8 + (8 - 1));
 		
 		
 		if("".equals(listMap.get("field") )){
@@ -231,6 +248,7 @@ public class SearchService {
 		return remove;
 	}
 
+	
 	
 	
 	

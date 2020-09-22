@@ -27,10 +27,11 @@ public class SearchController {
 						  @RequestParam(value="region",required=false) String region,
 						  @RequestParam(value="gender",required=false) String gender,
 						  @RequestParam(value="field",required=false) String field,
-						  @RequestParam(value="name",required=false) String name
+						  @RequestParam(value="name",required=false) String name,
+						  @RequestParam(value="page") int page
 						  ) 
-	{   System.out.println("controller"+province+city+region+gender+field+name);
-		List<UserVo> userVo  = searchService.userList(province,city,region,gender,field,name);
+	{   System.out.println("controller"+province+city+region+gender+field+name+page);
+		List<UserVo> userVo  = searchService.userList(province,city,region,gender,field,name,page);
 		System.out.println("controller:search/results");
 				
 		return userVo;

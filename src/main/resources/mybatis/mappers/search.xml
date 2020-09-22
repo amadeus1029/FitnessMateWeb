@@ -50,57 +50,82 @@
 	<select id="userList" 
 	resultType="com.javaex.vo.UserVo">
 	<![CDATA[
-	SELECT u.userno as "userNo",
-       u.userid as "userId",
-       u.password,u.name,u.gender,u.phone,u.birthdate,
-       u.usertype as "userType",
-       u.profileimg as "profileImg",
-       u.introduction,u.career,
-       u.location,u.company,u.price
-	FROM users u
-	WHERE userType = 'trainer'
-	and u.invisible is null
+	SELECT userno,userid,password,name,gender,phone,
+               birthdate,usertype,profileimg,introduction,career,location,company,price
+	FROM (SELECT ROWNUM rn,userno,userid,password,name,gender,phone,
+	               birthdate,usertype,profileimg,introduction,career,location,company,price
+	        FROM (
+					SELECT userno,
+				       userid,
+				       password,name,gender,phone,birthdate,
+				       usertype,
+				       profileimg,
+				       introduction,career,
+				       location,company,price
+					FROM users 
+					WHERE userType = 'trainer'
+					and invisible is null
 	]]>
 	
 	<if test = "location !='' and  location!=null" >
 	 <![CDATA[
-	AND u.location like '%'||#{location}||'%'
+	AND location like '%'||#{location}||'%'
 	]]>
 	</if>
 	
 	<if test = "name!='' and  name!=null" >
 	  <![CDATA[
-	AND u.name like '%'||#{name}||'%'
+	AND name like '%'||#{name}||'%'
 	]]>
 	</if>
 	
 	<if test = "gender!='' and  gender!=null" >
 	  <![CDATA[
-	AND u.gender = #{gender}
+	AND gender = #{gender}
 	]]>
 	</if>
+	<![CDATA[
+	
+			 ORDER BY userno DESC))
+			 WHERE rn >= #{start} AND rn<= #{end}
+	]]>
 	
 	</select>
+	
+	<!-- 트레이너 목록 카운드 -->
+	<select id="pageCount" resultType="int">
+	<![CDATA[
+		SELECT count(userNo)
+		FROM users
+		WHERE userType = 'trainer'
+		and invisible is null
+	]]>
+	</select>
+	
 	
 
 	<!--트레이너 검색(전문분야) -->
 	<select id="interestList" parameterType="map"
 	resultType="com.javaex.vo.UserVo">
 	<![CDATA[
-	SELECT u.userno as "userNo",
-       u.userid as "userId",
-       u.password,u.name,u.gender,u.phone,u.birthdate,
-       u.usertype as "userType",
-       u.profileimg as "profileImg",
-       u.introduction,u.career,
-       u.location,u.company,u.price,
-       li.fieldno as "fieldNo",
-       fi.fieldname as "fieldName"
-	FROM users u,interest_field fi,interest_list li
-	WHERE fi.fieldno = li.fieldno
-	AND u.userno = li.userno
-	AND userType = 'trainer'
-	and u.invisible is null
+	SELECT userno,userid,password,name,gender,phone,birthdate,usertype,profileimg,
+               introduction,career,location,company,price,fieldno,fieldname
+	FROM (SELECT ROWNUM rn,a.userno,a.userid,a.password,a.name,a.gender,a.phone,a.birthdate,a.usertype,a.profileimg,
+	               a.introduction,a.career,a.location,a.company,a.price,a.fieldno,a.fieldname
+	        FROM(SELECT u.userno as "userNo",
+				       u.userid as "userId",
+				       u.password,u.name,u.gender,u.phone,u.birthdate,
+				       u.usertype as "userType",
+				       u.profileimg as "profileImg",
+				       u.introduction,u.career,
+				       u.location,u.company,u.price,
+				       li.fieldno as "fieldNo",
+				       fi.fieldname as "fieldName"
+					FROM users u,interest_field fi,interest_list li
+					WHERE fi.fieldno = li.fieldno
+					AND u.userno = li.userno
+					AND userType = 'trainer'
+					and u.invisible is null
 	]]>
 	
 	<if test = "field!='' and  field!=null" >
@@ -127,7 +152,10 @@
 	AND u.gender = #{gender}
 	]]>
 	</if>
-	
+	 <![CDATA[
+	 ORDER BY u.userno DESC)a)
+	WHERE rn >= #{start} AND rn<= #{end}
+	]]>
 	
 	</select>
 	

@@ -52,14 +52,19 @@ public class SearchDao {
 	///////////////////////////////////////////////////////
 
 	// 트레이너 리스트
-	public List<UserVo> userList() {
+	public List<UserVo> userList(Map<String, Object> listMap) {
 		System.out.println("searchDao:userList");
-
-		List<UserVo> print = sqlSession.selectList("search.userList");
+		System.out.println(listMap.toString());
+		List<UserVo> print = sqlSession.selectList("search.userList", listMap);
 		System.out.println(print);
-		
 
 		return print;
+	}
+
+	// 페이지 카운트
+	public int pageCount() {
+		System.out.println("다오:페이지 숫자");
+		return sqlSession.selectOne("search.pageCount");
 	}
 
 	// 검색(전문분야제외)
@@ -185,6 +190,8 @@ public class SearchDao {
 		
 		return remove;
 	}
+	
+	
 
 	
 
