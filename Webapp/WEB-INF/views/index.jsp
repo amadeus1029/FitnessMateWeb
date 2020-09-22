@@ -107,7 +107,9 @@
             <!--  <form action="${pageContext.request.contextPath}/search/results" method="get"
             id="searchKeywordForm">-->
             <div id="searchKeywordForm">
+              
                 <ul class="search-condition clearfix">
+                <input type="hidden" name="page" value="1">
                     <li class="local clearfix">
                         <h3 class="title">지역</h3>
                         <!--지역 고르기 -->
@@ -163,6 +165,7 @@
             <ul class="search-list clearfix">
                 <c:forEach items="${userVo}" var="userVo" varStatus="status">
                     <li class="search-result" onclick="showProfileModal($(this), ${userVo.userNo})">
+                    <input type="hidden" id="reAvgNo" value="${userVo.userNo}">
                         <div class="image-area"
                              style="background-image: url('${pageContext.request.contextPath}/upload/${userVo.profileImg}');">
                         </div>
@@ -170,12 +173,29 @@
                             <p class="name">${userVo.name}</p>
                             <p class="gym">${userVo.company}</p>
                             <p class="comment">${userVo.introduction}</p>
-                            <p class="score">평점 4.7</p>
+                            <p class="score"></p>
                         </div>
                     </li>
                 </c:forEach>
             </ul>
-            <!-- 트레이너목록-->
+
+			<!-- 페이징-->
+			<div id="paging">
+				<ul>
+					<li><a href="">◀</a></li>
+
+					<c:forEach var="page" begin="1" end="${p.count}">
+
+						<li <c:if test="${param.page eq page}"> class="active" </c:if>>
+							<a href="${pageContext.request.contextPath}/main?page=${page}">${page}</a>
+						</li>
+
+					</c:forEach>
+					<li><a href="">▶</a></li>
+				</ul>
+			</div>
+			<!-- 페이징-->
+			<!-- 트레이너목록-->
 
         </div> <!-- wrapper-->
 
@@ -297,8 +317,10 @@
 
 
         ////////////////////////검색 관련/////////////////////////////
+   
         //검색
         $(".button.key").on("click", function () {
+            console.log("검색버튼");
             console.log("검색버튼");
             //값 추출
             var user = {
@@ -307,7 +329,8 @@
                 region: $("[name='region']").val(),
                 gender: $("[name='gender']:checked").val(),
                 field: $("[name='field']").val(),
-                name: $("[name='name']").val()
+                name: $("[name='name']").val(),
+                page: $("[name= 'page']").val()
             }
 
             console.log(user);
@@ -831,8 +854,8 @@
         	console.log("수정");
         	 var reviewNo = $(this).data('modino');
           	console.log("수정위한 리뷰넘버 추출"+reviewNo);
-          	var content = $('[name ="content').val();
-         	console.log("수정위한 내용 추출"+content);
+          	var content = $('.box').children(".content").val();
+         	console.log("수정 전 원래 내용 추출"+content);
           	var score = $("#scoreNo-"+reviewNo).val();
           	console.log("화면에 보일 스코어 추출"+score);
 
@@ -841,11 +864,14 @@
        		 reviewStr += '<div id="star_grade">';
        		 reviewStr += '<input type="hidden"  name="reviewNo" value="'+reviewNo+'">';
             reviewStr += '<input type="hidden"  name="reviewScore" value="0">';
+            
             reviewStr += '  <i  class="fas fa-star" data-score="1"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="2"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="3"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="4"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="5"></i>';
+            
+            
             reviewStr += '</div>';
             reviewStr += '<textarea class="content review" name="contentRe" placeholder="">'+content+'</textarea>';
             reviewStr += '<div>';
@@ -1040,7 +1066,7 @@
            
 
            var loginUser = $("#loginUser").val();
-           console.log("로그인유저번호 추출" + loginUser);
+           console.log("목록 로그인유저" + loginUser);
 
 
            for (var review of reviewVo) {
@@ -1091,9 +1117,9 @@
                reviewStr += '  <div class="clearfix review-btn-area">';
 
                var writeUser = review.userNo;
-               console.log("리뷰작성 유저 추출" + writeUser);
+               console.log("목록 리뷰쓴유저번호" + writeUser);
                var writeTrainer = review.trainerNo;
-               console.log("답글작성 트레이너 추출" + writeTrainer);
+               console.log("목록 트레이너번호" + writeTrainer);
 
                //회원이 로그인한 경우
                if (writeUser == loginUser && review.order_no !=2) {
@@ -1108,7 +1134,7 @@
                }
                
              //트레이가 단 답글
-               if (writeTrainer = loginUser && review.order_no !=1 ) {
+               if (writeTrainer == loginUser && writeUser != loginUser && review.order_no !=1) {
             	   reviewStr += '      <button type="button"  data-reno="'+review.reviewNo+'" class="button" id="removeRe">삭제</button>';
                    reviewStr += '      <button type="button" data-modino="'+review.reviewNo+'" class="button" id="modifyRe">수정</button>';
                }
