@@ -108,7 +108,6 @@
 <body>
     <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 
-    <!-- <div id="container"> -->
     <div class="img-box">
         <div class="color-box">
             <i class="far fa-frown"></i>
@@ -119,7 +118,6 @@
             <a href="${pageContext.request.contextPath}/main">메인페이지로 돌아가기</a>
         </div>
     </div>
-    <!-- </div> -->
 
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 

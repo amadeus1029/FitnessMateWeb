@@ -52,24 +52,5 @@ public class MainController {
 		return "redirect:/main";
 	}
 	
-/*    @RequestMapping("/search")
-    public String Search(Model model) {
-    	
-    	//지역 불러오기
-    	List<AddressVo> addVo = searchService.addProvince();
-    	//지역정보 받기
-    	model.addAttribute("addVo", addVo);
-    	
-    	//전문분야 불러오기
-    	List<InterestFieldVo> fieldVo = searchService.addField();
-    	//전문분야 받기
-    	model.addAttribute("fieldVo", fieldVo);
-    	
-    	//트레이너 정보 불러오기
-    	List<UserVo> userVo  = searchService.userList();
-    	//트레이너 리스트 받기
-    	model.addAttribute("userVo", userVo);
 
-        return "search";
-    }*/
 }

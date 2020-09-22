@@ -6,7 +6,7 @@
     <div class="wrapper clearfix">
         <h1 class="logo">
             <a href="${pageContext.request.contextPath}/main">
-                <img src="${pageContext.request.contextPath}/assets/image/logoC.jpg" title="logo" alt="logo">
+                <img src="${pageContext.request.contextPath}/assets/image/logoC.png" title="logo" alt="logo">
             </a>
         </h1>
         <nav id="nav">
