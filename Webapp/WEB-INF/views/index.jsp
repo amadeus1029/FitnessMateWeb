@@ -163,6 +163,7 @@
             <ul class="search-list clearfix">
                 <c:forEach items="${userVo}" var="userVo" varStatus="status">
                     <li class="search-result" onclick="showProfileModal($(this), ${userVo.userNo})">
+                    <input type="hidden" id="reAvgNo" value="${userVo.userNo}">
                         <div class="image-area"
                              style="background-image: url('${pageContext.request.contextPath}/upload/${userVo.profileImg}');">
                         </div>
@@ -170,7 +171,7 @@
                             <p class="name">${userVo.name}</p>
                             <p class="gym">${userVo.company}</p>
                             <p class="comment">${userVo.introduction}</p>
-                            <p class="score">평점 4.7</p>
+                            <p class="score"></p>
                         </div>
                     </li>
                 </c:forEach>
@@ -297,6 +298,7 @@
 
 
         ////////////////////////검색 관련/////////////////////////////
+   
         //검색
         $(".button.key").on("click", function () {
             console.log("검색버튼");
@@ -1040,7 +1042,7 @@
            
 
            var loginUser = $("#loginUser").val();
-           console.log("로그인유저번호 추출" + loginUser);
+           console.log("목록 로그인유저" + loginUser);
 
 
            for (var review of reviewVo) {
@@ -1091,9 +1093,9 @@
                reviewStr += '  <div class="clearfix review-btn-area">';
 
                var writeUser = review.userNo;
-               console.log("리뷰작성 유저 추출" + writeUser);
+               console.log("목록 리뷰쓴유저번호" + writeUser);
                var writeTrainer = review.trainerNo;
-               console.log("답글작성 트레이너 추출" + writeTrainer);
+               console.log("목록 트레이너번호" + writeTrainer);
 
                //회원이 로그인한 경우
                if (writeUser == loginUser && review.order_no !=2) {
@@ -1108,7 +1110,7 @@
                }
                
              //트레이가 단 답글
-               if (writeTrainer = loginUser && review.order_no !=1 ) {
+               if (writeTrainer == loginUser && writeUser != loginUser && review.order_no !=1) {
             	   reviewStr += '      <button type="button"  data-reno="'+review.reviewNo+'" class="button" id="removeRe">삭제</button>';
                    reviewStr += '      <button type="button" data-modino="'+review.reviewNo+'" class="button" id="modifyRe">수정</button>';
                }
