@@ -6,8 +6,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>FitnessMate</title>
 
@@ -34,7 +33,7 @@
             <div class="img-part"></div>
             <div class="signUp-part">
                 <a class="logo" href="${pageContext.request.contextPath}/main">
-                    <img src="${pageContext.request.contextPath}/assets/image/logoB.jpeg" title="logo" alt="logo">
+                    <img src="${pageContext.request.contextPath}/assets/image/logoC.png" title="logo" alt="logo">
                 </a>
                 <p class="title">회원가입</p>
                 <p class="guide">가입하고자 하는 유형을<br>
