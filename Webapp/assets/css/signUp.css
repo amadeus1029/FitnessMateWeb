@@ -202,6 +202,11 @@
 #modifyScheduleModal .modal-wrapper select[name="ptNo"] {
   width: 200px;
 }
+#addScheduleModal .modal-wrapper select[name="ptNo"].disabled,
+#modifyScheduleModal .modal-wrapper select[name="ptNo"].disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
 #addScheduleModal .modal-wrapper .text,
 #modifyScheduleModal .modal-wrapper .text {
   font-size: 20px;

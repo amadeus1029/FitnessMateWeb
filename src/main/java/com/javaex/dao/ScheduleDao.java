@@ -34,6 +34,11 @@ public class ScheduleDao {
         return sqlSession.update("schedule.update", scheduleVo) == 1;
     }
 
+    public boolean changeScheduleState(ScheduleVo scheduleVo) {
+        return sqlSession.update("schedule.changeScheduleState", scheduleVo) == 1;
+    }
+
+
     public boolean deleteSchedule(ScheduleVo scheduleVo) {
         return sqlSession.delete("schedule.delete", scheduleVo) == 1;
     }

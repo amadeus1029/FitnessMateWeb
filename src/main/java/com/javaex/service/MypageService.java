@@ -133,7 +133,11 @@ public class MypageService {
 	public boolean deleteSchedule(ScheduleVo scheduleVo) {
 		return scheduleDao.deleteSchedule(scheduleVo);
 	}
-	
+
+	public boolean changeScheduleState(ScheduleVo scheduleVo) {
+		return scheduleDao.changeScheduleState(scheduleVo);
+	}
+
 	public void deleteCareer(int careerNo) {
 		userDao.deleteCareer(careerNo);
 	}

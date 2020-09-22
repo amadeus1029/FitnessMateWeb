@@ -38,9 +38,6 @@
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
-            <c:forEach items="${scheduleList}" var="schedule">
-            console.log("${schedule}");
-            </c:forEach>
             var calendarEl = document.getElementById('calendar');
             var calendar;
 
@@ -76,34 +73,73 @@
                             var target = $(info.el);
                             var left = target.offset().left + 120;
                             var top = target.offset().top - 60;
+
+                            var state = info.event.extendedProps.state;
+                            var element;
+                            switch (state) {
+                                case "confirm" :
+                                    element =
+                                        "<button type='button' class='button btn_modify' onclick='changeScheduleState(" + info.event.extendedProps.dataId + ",\"trainerReject\");'>예약 취소</button>" +
+                                        "<a href='${pageContext.request.contextPath}/mypage/recordEx?scheduleNo=" + info.event.extendedProps.dataId + "' class='button'>운동 시작</a>";
+                                    break;
+                                case "trainerReserve" :
+                                    element = ""+
+                                        "<button type='button' class='button btn_modify' onclick='deleteSchedule(" + info.event.extendedProps.dataId + ");'>예약 취소</button>"
+                                    break;
+                                case "traineeReserve" :
+                                    element = "<button type='button' class='button btn_modify' onclick='changeScheduleState(" + info.event.extendedProps.dataId + ",\"confirm\");'>예약 수락</button>" +
+                                        "<button type='button' class='button btn_modify' onclick='changeScheduleState(" + info.event.extendedProps.dataId + ",\"trainerReject\");'>예약 반려</button>"
+                                    break;
+                                case "traineeReject" :
+                                    element = "<button type='button' class='button btn_modify' onclick='deleteSchedule(" + info.event.extendedProps.dataId + ");'>예약 삭제</button>"
+                                    break;
+                            }
+
                             $("#calendar").append(
                                 "<div class='btn_pop'>" +
-                                "<button type='button' class='button btn_modify' onclick='btnModify(" + info.event.extendedProps.dataId + ");'>스케쥴변경</button>" +
-                                "<a href='${pageContext.request.contextPath}/mypage/recordEx?scheduleNo=" + info.event.extendedProps.dataId + "' class='button'>운동시작</a>" +
+                                "<button type='button' class='button btn_modify' onclick='btnModify(" + info.event.extendedProps.dataId + ");'>예약 변경</button>" + element +
                                 "<div>"
                             );
                             $(".btn_pop").css({
                                 left: left,
                                 top: top
-                            })
+                            });
+                            if (info.event.extendedProps.state !== "confirm") {
+                                $(".btn_pop").find("a.button").addClass("disabled");
+                            }
                         },
                         height: 'auto',
                         events: [
                             <c:forEach items="${scheduleList}" var="schedule">
-                            <c:if test="${schedule.state eq 'confirm'}">
                             {
+                                <c:choose>
+                                <c:when test="${schedule.state eq 'confirm'}">
+                                color: "#007bff",
+                                </c:when>
+                                <c:when test="${schedule.state eq 'trainerReserve'}">
+                                color: "#ffc107",
+                                </c:when>
+                                <c:when test="${schedule.state eq 'traineeReserve'}">
+                                color: "#28a745",
+                                </c:when>
+                                <c:when test="${schedule.state eq 'traineeReject'}">
+                                color: "#dc3545",
+                                </c:when>
+                                <c:otherwise>
+                                    display: "none",
+                                </c:otherwise>
+                                </c:choose>
                                 title: '${schedule.userName}(${schedule.amount}분)',
                                 start: '${schedule.startTime}',
                                 end: '${schedule.endTime}',
                                 extendedProps: {
-                                    dataId : ${schedule.scheduleNo}
+                                    dataId: ${schedule.scheduleNo},
+                                    state: "${schedule.state}"
                                 }
                             },
-                            </c:if>
-
                             </c:forEach>
                         ],
-                        eventDisplay: 'list-item'
+                        eventDisplay: "list-item"
                     });
                     calendar.render();
                 }
@@ -283,14 +319,13 @@
                 </div>
                 <div>
                     <p class="text">회원이름</p>
-                    <select name="ptNo">
+                    <select name="ptNo" class="disabled">
                         <option disabled selected value="default">회원 선택</option>
                         <c:forEach items="${ptList}" var="ptVo">
                             <option value="${ptVo.ptNo}">${ptVo.name}(${ptVo.userId})</option>
                         </c:forEach>
                     </select>
                 </div>
-                <button type="button" class="delete-btn button main">삭제하기</button>
             </div>
             <div class="modal-btn-area">
                 <button type="button" class="modal-cancel" onclick="forceHideModal('#modifyScheduleModal')">취소</button>
@@ -388,7 +423,8 @@
             var scheduleVo = {
                 startTime: startTime,
                 amount: amount,
-                ptNo: ptNo
+                ptNo: ptNo,
+                state: "trainerReserve"
             }
 
 
@@ -442,7 +478,8 @@
                 startTime: startTime,
                 amount: amount,
                 ptNo: ptNo,
-                scheduleNo: scheduleNo
+                scheduleNo: scheduleNo,
+                state: "trainerReserve"
             }
 
 
@@ -455,6 +492,36 @@
                 success: function (result) {
                     if (result) {
                         alert("스케쥴이 수정되었습니다.");
+                        window.location.reload();
+                    }
+                },
+                error: function (XHR, status, error) {
+                    console.error(status + ":" + error);
+                }
+            });
+        }
+
+        function changeScheduleState(scheduleNo, state) {
+            var resultText;
+            var scheduleVo = {
+                scheduleNo: scheduleNo,
+                state: state
+            }
+            if(state === "trainerReject") {
+                resultText = "취소";
+            } else {
+                resultText = "수락";
+            }
+
+            $.ajax({
+                url: "${pageContext.request.contextPath}/mypage/changeScheduleState",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify(scheduleVo),
+                dataType: "json",
+                success: function (result) {
+                    if (result) {
+                        alert("예약이 "+ resultText +"되었습니다.");
                         window.location.reload();
                     }
                 },
@@ -477,7 +544,7 @@
                 dataType: "json",
                 success: function (result) {
                     if (result) {
-                        alert("스케쥴이 삭제되었습니다.");
+                        alert("예약이 삭제되었습니다.");
                         window.location.reload();
                     }
                 },

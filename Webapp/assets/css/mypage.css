@@ -202,6 +202,11 @@
 #modifyScheduleModal .modal-wrapper select[name="ptNo"] {
   width: 200px;
 }
+#addScheduleModal .modal-wrapper select[name="ptNo"].disabled,
+#modifyScheduleModal .modal-wrapper select[name="ptNo"].disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
 #addScheduleModal .modal-wrapper .text,
 #modifyScheduleModal .modal-wrapper .text {
   font-size: 20px;
@@ -451,6 +456,13 @@ div.crop-wrapper .cropper-wrap-box {
 }
 .calendar-wrapper #calendar .btn_pop .button:hover {
   background-color: #dadde6;
+}
+.calendar-wrapper #calendar .btn_pop .button.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.calendar-wrapper #calendar .btn_pop .button.disabled:hover {
+  background-color: #fff;
 }
 form#addExercise,
 #exerciseList {

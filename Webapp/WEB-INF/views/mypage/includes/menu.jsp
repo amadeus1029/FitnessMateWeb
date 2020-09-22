@@ -62,23 +62,37 @@
                     <div class="reserved-wrapper">
                         <ul class="schedule-list">
                             <c:forEach items="${summaryNormal.reserveList}" var="reservation">
-                                <li class="schedule"><span class="time"> <c:choose>
+                                <c:choose>
                                     <c:when test="${reservation.state eq 'confirm'}">
-                                        <i class="fas fa-check"></i>
-                                        ${reservation.startTime} (확정)
+                                        <li class="schedule">
+                                            <span class="time">
+                                                <i class="fas fa-check"></i>${reservation.startTime} (확정)
+                                            </span>
+                                        </li>
                                     </c:when>
-                                    <c:when test="${reservation.state eq 'rejected'}">
-                                        <i class="fas fa-times"
-                                           onclick="reservDel(${reservation.scheduleNo},$(this))"></i>
-                                        ${reservation.startTime} (반려)
+                                    <c:when test="${reservation.state eq 'traineeReserve'}">
+                                        <li class="schedule">
+                                            <span class="time">
+                                                <i class="fas fa-spinner"></i>${reservation.startTime} (확인중)
+                                            </span>
+                                        </li>
                                     </c:when>
-                                    <c:otherwise>
-                                        <i class="far fa-square"></i>
-                                        ${reservation.startTime} (예약)
-                                    </c:otherwise>
+                                    <c:when test="${reservation.state eq 'trainerReserve'}">
+                                        <li class="schedule">
+                                            <span class="time">
+                                                <i class="fas fa-question" onclick="changeScheduleState(${reservation.scheduleNo},'confirm')"></i>${reservation.startTime} (수락 대기)
+                                            </span>
+                                        </li>
+                                    </c:when>
+                                    <c:when test="${reservation.state eq 'trainerReject'}">
+                                        <li class="schedule">
+                                            <span class="time">
+                                                <i class="fas fa-times"
+                                                   onclick="reserveDel(${reservation.scheduleNo},$(this))"></i>${reservation.startTime} (반려됨)
+                                            </span>
+                                        </li>
+                                    </c:when>
                                 </c:choose>
-									</span>
-                                </li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -235,7 +249,8 @@
             var scheduleVo = {
                 startTime: startTime,
                 amount: amount,
-                ptNo: ptNo
+                ptNo: ptNo,
+                state: "traineeReserve"
             }
 
             $.ajax({
@@ -254,8 +269,38 @@
             });
         }
 
+        function changeScheduleState(scheduleNo, state) {
+            var resultText;
+            var scheduleVo = {
+                scheduleNo: scheduleNo,
+                state: state
+            }
+            if(state === "traineeReject") {
+                resultText = "취소";
+            } else {
+                resultText = "수락";
+            }
+
+            $.ajax({
+                url: "${pageContext.request.contextPath}/mypage/changeScheduleState",
+                type: "post",
+                contentType: "application/json",
+                data: JSON.stringify(scheduleVo),
+                dataType: "json",
+                success: function (result) {
+                    if (result) {
+                        alert("예약이 "+ resultText +"되었습니다.");
+                        window.location.reload();
+                    }
+                },
+                error: function (XHR, status, error) {
+                    console.error(status + ":" + error);
+                }
+            });
+        }
+
         /* 반려된 예약 삭제 */
-        function reservDel(scheduleNo, target) {
+        function reserveDel(scheduleNo, target) {
 
             alert("반려된 예약이 삭제됩니다.");
 
@@ -294,7 +339,6 @@
             leadingZeros(d.getFullYear(), 4) + '-' +
             leadingZeros(d.getMonth() + 1, 2) + '-' +
             leadingZeros(d.getDate() + 1, 2);
-
         return s;
     }
 

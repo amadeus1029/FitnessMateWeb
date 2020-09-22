@@ -5,7 +5,7 @@
     <insert id="insert" parameterType="ScheduleVo">
         <![CDATA[
             insert into schedule
-            values(seq_scheduleNo.nextVal, #{ptNo}, 'reserved', '', to_date(#{startTime}, 'yyyy-mm-dd hh24:mi') , to_date(#{startTime}, 'yyyy-mm-dd hh24:mi') + #{amount}/(24*60))
+            values(seq_scheduleNo.nextVal, #{ptNo}, #{state}, '', to_date(#{startTime}, 'yyyy-mm-dd hh24:mi') , to_date(#{startTime}, 'yyyy-mm-dd hh24:mi') + #{amount}/(24*60))
         ]]>
     </insert>
     
@@ -43,10 +43,20 @@
     <update id="update" parameterType="ScheduleVo">
         <![CDATA[
             update  schedule
-            set     ptNo = #{ptNo}, state = '', memo = '', startTime = to_date(#{startTime}, 'yyyy-mm-dd hh24:mi'), endTime = to_date(#{startTime}, 'yyyy-mm-dd hh24:mi') + #{amount}/(24*60)
+            set     ptNo = #{ptNo}, state = #{state}, memo = '', startTime = to_date(#{startTime}, 'yyyy-mm-dd hh24:mi'), endTime = to_date(#{startTime}, 'yyyy-mm-dd hh24:mi') + #{amount}/(24*60)
             where   scheduleNo = #{scheduleNo}
         ]]>
     </update>
+
+    <update id="changeScheduleState" parameterType="ScheduleVo">
+        <![CDATA[
+            update  schedule
+            set     state = #{state}
+            where   scheduleNo = #{scheduleNo}
+        ]]>
+    </update>
+
+
 
     <delete id="delete" parameterType="ScheduleVo">
         <![CDATA[

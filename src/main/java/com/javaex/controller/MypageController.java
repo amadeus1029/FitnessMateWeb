@@ -191,6 +191,13 @@ public class MypageController {
         return mypageService.modifySchedule(scheduleVo);
     }
 
+    //스케쥴 취소
+    @ResponseBody
+    @RequestMapping("/changeScheduleState")
+    public boolean changeScheduleState(@RequestBody ScheduleVo scheduleVo) {
+        return mypageService.changeScheduleState(scheduleVo);
+    }
+
     //스케쥴 삭제
     @ResponseBody
     @RequestMapping("/deleteSchedule")
