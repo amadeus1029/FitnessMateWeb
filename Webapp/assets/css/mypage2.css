@@ -138,10 +138,54 @@ div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div butt
 }
 
 .schedule-wrapper .reserved-wrapper .fa-times {
-	color: #ff0000;
+	color: #dc3545;
 	font-size: 110%;
 	margin-right: 10px;
 	cursor: pointer;
+}
+.schedule-wrapper .reserved-wrapper .fa-question {
+	color: #28a745;
+	cursor: pointer;
+}
+.schedule-wrapper .reserved-wrapper .fa-spinner {
+	color: #ffc107;
+}
+.schedule-wrapper .reserved-wrapper .fa-check {
+	color: #007bff;
+}
+.summary-wrapper .summary .schedule-list li .time{
+	position: relative;
+}
+.summary-wrapper .summary .schedule-list li .time .tipMsg{
+	background-color: rgba( 0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 13px;
+    padding: 8px;
+    position: absolute;
+    top: -26px;
+    left: 20px;
+}
+.summary-wrapper .summary .schedule-list li .time .btnPop {
+    position: absolute;
+    top: -43px;
+    right: 29px;
+    color: #fff;
+    border: 1px solid #fff;
+    background-color: rgba( 0, 0, 0, 0.8);
+    -webkit-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+.summary-wrapper .summary .schedule-list li .time .btnPop .button {
+	display: inline-block;
+    border-radius: 0;
+    margin: 0;
+    width: 100px;
+    height: 40px;
+    border: 1px solid #fff;;
+    background: transparent;
+    color: #fff;
+    text-decoration: none;
 }
 
 /* 인바디 모달 */

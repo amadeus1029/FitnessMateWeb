@@ -10,6 +10,11 @@
 <!-- 달력 -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style>
+
+
+
+</style>
 
 <div class="summary-wrapper">
     <div class="summary clearfix">
@@ -73,22 +78,21 @@
                                     <c:when test="${reservation.state eq 'traineeReserve'}">
                                         <li class="schedule">
                                             <span class="time">
-                                                <i class="fas fa-spinner"></i>${reservation.startTime} (확인중)
+                                                <i class="fas fa-spinner"></i>${reservation.startTime} (대기)
                                             </span>
                                         </li>
                                     </c:when>
                                     <c:when test="${reservation.state eq 'trainerReserve'}">
                                         <li class="schedule">
-                                            <span class="time">
-                                                <i class="fas fa-question" onclick="changeScheduleState(${reservation.scheduleNo},'confirm')"></i>${reservation.startTime} (수락 대기)
+                                            <span class="time question"  onclick="popMenu(${reservation.scheduleNo},$(this))">
+                                                <i class="fas fa-question"></i> ${reservation.startTime} (요청)
                                             </span>
                                         </li>
                                     </c:when>
                                     <c:when test="${reservation.state eq 'trainerReject'}">
                                         <li class="schedule">
-                                            <span class="time">
-                                                <i class="fas fa-times"
-                                                   onclick="reserveDel(${reservation.scheduleNo},$(this))"></i>${reservation.startTime} (반려됨)
+                                            <span class="time rejected"  onclick="reserveDel(${reservation.scheduleNo},$(this))">
+                                                <i class="fas fa-times"></i>${reservation.startTime} (반려)
                                             </span>
                                         </li>
                                     </c:when>
@@ -191,8 +195,43 @@
         </div>
     </div>
     <script type="text/javascript">
+    
+    $(document).ready(function () {
+        $(window).on("click", function () {
+            $(".btnPop").remove();
 
+        });
+    });
+    
+    /* ? 호버 했을 때 툴팁 */
+    $(".question").hover(function(){
+    	$(this).append("<span class='tipMsg'>트레이너의 요청에 응답해주세요 :)</span>");
+    }, function(){
+    	$(".tipMsg").remove();
+    });
+    
+    /* X 호버 했을 때 툴팁 */
+    $(".rejected").hover(function(){
+    	$(this).append("<span class='tipMsg'>거절된 요청을 삭제해 주세요 :(</span>");
+    }, function(){
+    	$(".tipMsg").remove();
+    });
 
+    /* ?  클릭  */
+    function popMenu(scheduleNo, target){
+    	event.stopPropagation();
+	   	$(".tipMsg").remove();
+	   	$(".btnPop").remove();
+	   	
+    	target.prepend(
+	               "<div class='btnPop'>" +
+	               "<button type='button' class='button btn_modify' onclick='changeScheduleState(" + scheduleNo + ",\"confirm\");'>수락</button>" +
+	               "<button type='button' class='button btn_modify' onclick='changeScheduleState(" + scheduleNo + ",\"trainerReject\");'>거절</button>"+
+	               "<div>"
+	           );
+    	
+    };
+    
         /* 예약버튼클릭 */
         $("#btn-reserved").on("click", function () {
             /* 초기화 */
