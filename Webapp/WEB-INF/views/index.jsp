@@ -612,20 +612,24 @@
         //리뷰탭 클릭시
         $(".label-btn.review-btn").on("click", function () {
         	
-        	//리뷰목록
-            reviewList();
-          	//페이지 숫자
-            reviewPage();
-        	
-            //로그인 유저번호 추출
+        	//로그인 유저번호 추출
             var loginUser = $("#loginUser").val();
             console.log("맨처음 로그인유저번호 추출" + loginUser);
             //트레이너 넘버 추출
-            var tNo = $("#delNo").val();
-            console.log("트레이너 넘버" + tNo);
+            var trainerNo = $("#delNo").val();
+            console.log("트레이너 넘버" + trainerNo);
+            //페이지
+            var page =1;
+        	
+        	//리뷰목록
+            reviewList(trainerNo,page);
+          	//페이지 숫자
+            reviewPage();
+        	
+            
             
             //로그인된 회원중 트레이너 본인이 아닐시에만 보이게
-            if (loginUser != null && loginUser != '' && loginUser!= tNo) {
+            if (loginUser != null && loginUser != '' && loginUser!= trainerNo) {
              reviewWrite();//리뷰쓰기폼
              reviewup();//리뷰추가
             }
@@ -634,10 +638,10 @@
         });
         
       //리뷰목록
-        function reviewList() {
-            var trainerNo = $("#delNo").val();
-            console.log("리뷰목록 트레이너 넘버" + trainerNo);
-            var page = 1;
+        function reviewList(trainerNo,page) {
+            
+            console.log("리뷰목록 트레이너 넘버" + trainerNo+page);
+            
             $.ajax({
                 url: "${pageContext.request.contextPath}/search/reviewList",
                 type: "post",
@@ -681,13 +685,14 @@
                     	 reviewStr += '<li>';
                     	 
                     	 reviewStr += '<li >';
-                    	 reviewStr += '<a href="${pageContext.request.contextPath}/search/reviewList?page='+i+'&trainerNo='+trainerNo+'">'+i+'</a>';
+                    	 reviewStr += '<a href="">'+i+'</a>';
                     	 reviewStr += '</li>';
                     	
                     	 reviewStr += '<li>';
                     	 reviewStr += '</ul>';
                     	 }
                      
+                   
                      $("ul.review-list").after(reviewStr);
                      
                  },
@@ -695,9 +700,8 @@
                      console.error(status + " : " + error);
                  }
              });
-    	  
-    	  
       }
+      
       
         //리뷰쓰기탭
         function reviewWrite() {
