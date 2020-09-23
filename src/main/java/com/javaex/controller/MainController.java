@@ -24,8 +24,9 @@ public class MainController {
 	
 
     @RequestMapping("/main")
-    public String Main(@RequestParam(value="page",required=false) int page,Model model) {
-
+    public String Main(@RequestParam(value="page",required=false, defaultValue = "1") int page,Model model) {
+    	
+    	System.out.println(page);
 		//지역 불러오기
 		List<AddressVo> addVo = searchService.addProvince();
 		//지역정보 받기

@@ -112,15 +112,15 @@
                introduction,career,location,company,price,fieldno,fieldname
 	FROM (SELECT ROWNUM rn,a.userno,a.userid,a.password,a.name,a.gender,a.phone,a.birthdate,a.usertype,a.profileimg,
 	               a.introduction,a.career,a.location,a.company,a.price,a.fieldno,a.fieldname
-	        FROM(SELECT u.userno as "userNo",
-				       u.userid as "userId",
+	        FROM(SELECT u.userno,
+				       u.userid,
 				       u.password,u.name,u.gender,u.phone,u.birthdate,
-				       u.usertype as "userType",
-				       u.profileimg as "profileImg",
+				       u.usertype,
+				       u.profileimg,
 				       u.introduction,u.career,
 				       u.location,u.company,u.price,
-				       li.fieldno as "fieldNo",
-				       fi.fieldname as "fieldName"
+				       li.fieldno,
+				       fi.fieldname
 					FROM users u,interest_field fi,interest_list li
 					WHERE fi.fieldno = li.fieldno
 					AND u.userno = li.userno
