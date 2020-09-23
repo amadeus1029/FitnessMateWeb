@@ -66,6 +66,18 @@ public class SearchDao {
 		System.out.println("다오:페이지 숫자");
 		return sqlSession.selectOne("search.pageCount");
 	}
+	
+	// (지역,성별,이름 검색시)페이지 카운트
+	public Integer pageCount(Map<String, Object> listMap) {
+		System.out.println("(지역,성별,이름 검색시)다오:페이지 숫자"+listMap);
+		return sqlSession.selectOne("search.pageCount",listMap);
+	}
+	
+	// (전문분야 검색시)페이지 카운트
+	public Integer fipageCount(Map<String, Object> listMap) {
+		System.out.println("(전문분야 검색시)다오:페이지 숫자"+listMap);
+		return sqlSession.selectOne("search.fipageCount",listMap);
+	}
 
 	// 검색(전문분야제외)
 	public List<UserVo> searchList(Map<String, Object> listMap) {
@@ -118,15 +130,23 @@ public class SearchDao {
 	
 	///////////////////////////////////////////////////////
 
-	public List<ReviewVo> reviewList(int no) {
+	//리뷰리스트
+	public List<ReviewVo> reviewList(Map<String, Object> listMap) {
 		System.out.println("searchDao:reviewList");
 		
-		System.out.println("다오"+no);
-		List<ReviewVo> reviewVo = sqlSession.selectList("review.reviewList", no);
+		System.out.println("다오"+listMap);
+		List<ReviewVo> reviewVo = sqlSession.selectList("review.reviewList",listMap);
 		System.out.println("다오: "+reviewVo);
 		
 		return reviewVo;
 	}
+	
+	//리뷰카운트
+	public Integer reviewCount(int trainerNo) {
+		System.out.println("다오:리뷰페이지 숫자");
+		return sqlSession.selectOne("review.reviewCount",trainerNo);
+	}
+
 
 	
 	public ReviewVo reviewWrite(int no) {
@@ -190,6 +210,9 @@ public class SearchDao {
 		
 		return remove;
 	}
+
+	
+
 	
 	
 

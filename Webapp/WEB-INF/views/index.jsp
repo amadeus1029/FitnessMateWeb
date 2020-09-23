@@ -182,7 +182,7 @@
 			<!-- 페이징-->
 			<div id="paging">
 				<ul>
-					<li><a href="">◀</a></li>
+					<li><a href="${pageContext.request.contextPath}/main?page=${page}">◀</a></li>
 
 					<c:forEach var="page" begin="1" end="${p.count}">
 
@@ -191,7 +191,8 @@
 						</li>
 
 					</c:forEach>
-					<li><a href="">▶</a></li>
+			
+					<li><a href="${pageContext.request.contextPath}/main?page=${page}">▶</a></li>
 				</ul>
 			</div>
 			<!-- 페이징-->
@@ -344,9 +345,10 @@
                 success: function (userVo) {
                     /*성공시 처리해야될 코드 작성*/
                     $("ul.search-list").empty();
-
+					$("#paging").empty();
 
                     var userStr = "";
+                   
 
                     for (var user of userVo) {
                         userStr += "<li class='search-result' onclick='showProfileModal($(this)," + user.userNo + ")'>";
@@ -360,9 +362,9 @@
                         userStr += "</div>";
                         userStr += "</li>";
                     }
-
+                    
                     $("ul.search-list").append(userStr);
-
+                    
 
                 },
                 error: function (XHR, status, error) {
@@ -612,7 +614,9 @@
         	
         	//리뷰목록
             reviewList();
-            
+          	//페이지 숫자
+            reviewPage();
+        	
             //로그인 유저번호 추출
             var loginUser = $("#loginUser").val();
             console.log("맨처음 로그인유저번호 추출" + loginUser);
@@ -631,13 +635,15 @@
         
       //리뷰목록
         function reviewList() {
-            var reviewNo = $("#delNo").val();
-            console.log("리뷰목록 트레이너 넘버" + reviewNo);
+            var trainerNo = $("#delNo").val();
+            console.log("리뷰목록 트레이너 넘버" + trainerNo);
+            var page = 1;
             $.ajax({
                 url: "${pageContext.request.contextPath}/search/reviewList",
                 type: "post",
                 //contentType : "application/json",
-                data: {no: reviewNo},
+                data: {trainerNo: trainerNo,
+                	page:page},
 
                 dataType: "json",
                 success: function (reviewVo) {                	
@@ -649,7 +655,49 @@
                 }
             });
         }
+      
+      //리뷰페이지
+      	function reviewPage(){
+      		 var trainerNo = $("#delNo").val();
+             console.log("리뷰페이지 트레이너 넘버" + trainerNo);
+             $.ajax({
+                 url: "${pageContext.request.contextPath}/search/reviewPage",
+                 type: "post",
+                 //contentType : "application/json",
+                 data: {trainerNo: trainerNo},
 
+                 dataType: "json",
+                 success: function (r) {                	
+                     
+                     console.log("일단 여기까진 전달됨"+r);
+                     
+                     var count = r+1;
+                     console.log("일단 여기까진 전달됨"+count);
+                     
+                     var reviewStr = "";
+                    	 for(var i=1; i<count; i++){
+                    	 
+                    	 reviewStr += '<ul>';
+                    	 reviewStr += '<li>';
+                    	 
+                    	 reviewStr += '<li >';
+                    	 reviewStr += '<a href="${pageContext.request.contextPath}/search/reviewList?page='+i+'&trainerNo='+trainerNo+'">'+i+'</a>';
+                    	 reviewStr += '</li>';
+                    	
+                    	 reviewStr += '<li>';
+                    	 reviewStr += '</ul>';
+                    	 }
+                     
+                     $("ul.review-list").after(reviewStr);
+                     
+                 },
+                 error: function (XHR, status, error) {
+                     console.error(status + " : " + error);
+                 }
+             });
+    	  
+    	  
+      }
       
         //리뷰쓰기탭
         function reviewWrite() {
@@ -791,7 +839,9 @@
                             	reviewStr ="";
                             	
                             	 reviewStr += '<li class="review-line" id="r-'+review.reviewNo+'">';
-                            	 reviewStr += '<input type="hidden" id="reptNo" value="'+review.ptNo+'">';
+                            	 reviewStr += '<input type="hidden" id="reptNo-'+review.reviewNo+'" value="'+review.ptNo+'">';
+                                 reviewStr += '<input type="hidden" id="scoreNo-'+review.reviewNo+'" value="'+review.score+'">';
+                                 reviewStr += '<input type="hidden" id="orderNo-'+review.reviewNo+'" value="'+review.order_no+'">';
                                  reviewStr += '  <div class="user-profile ff">';
                                  reviewStr += '    <img class="user-profile-img" src="${pageContext.request.contextPath}/upload/'+review.profileImg+'">';
                                  reviewStr += '    <div class="user-profile-info">';
@@ -812,7 +862,7 @@
                                  reviewStr += '    </div>';
                                  reviewStr += '  </div>';
                                  reviewStr += '  <div class="box">';
-                                 reviewStr += '    <div class="content">'+review.content+'</div>';
+                                 reviewStr += '    <div class="content" id="contentModi-'+review.reviewNo+'">'+review.content+'</div>';
                                  reviewStr += '  </div>';
                                  reviewStr += '  <div class="clearfix review-btn-area">';
 
@@ -854,23 +904,27 @@
         	console.log("수정");
         	 var reviewNo = $(this).data('modino');
           	console.log("수정위한 리뷰넘버 추출"+reviewNo);
-          	var content = $('.box').children(".content").val();
+          	var content = $("#contentModi-"+reviewNo).text();
          	console.log("수정 전 원래 내용 추출"+content);
           	var score = $("#scoreNo-"+reviewNo).val();
           	console.log("화면에 보일 스코어 추출"+score);
+          	var order = $("#orderNo-"+reviewNo).val();
+          	console.log("글쓴이 자격 추출"+order);
 
         	//수정할 새창 불러오기
+        	
         	reviewStr =""
        		 reviewStr += '<div id="star_grade">';
        		 reviewStr += '<input type="hidden"  name="reviewNo" value="'+reviewNo+'">';
             reviewStr += '<input type="hidden"  name="reviewScore" value="0">';
             
+           if(order == 1){
             reviewStr += '  <i  class="fas fa-star" data-score="1"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="2"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="3"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="4"></i>';
             reviewStr += '  <i  class="fas fa-star" data-score="5"></i>';
-            
+           }
             
             reviewStr += '</div>';
             reviewStr += '<textarea class="content review" name="contentRe" placeholder="">'+content+'</textarea>';
@@ -1022,7 +1076,9 @@
             	 reviewStr ="";
              	
             	 reviewStr += '<li class="review-line" id="r-'+review.reviewNo+'">';
-            	 reviewStr += '<input type="hidden" id="reptNo" value="'+review.ptNo+'">';
+            	 reviewStr += '<input type="hidden" id="reptNo-'+review.reviewNo+'" value="'+review.ptNo+'">';
+                 reviewStr += '<input type="hidden" id="scoreNo-'+review.reviewNo+'" value="'+review.score+'">';
+                 reviewStr += '<input type="hidden" id="orderNo-'+review.reviewNo+'" value="'+review.order_no+'">';
                  reviewStr += '  <div class="user-profile ff">';
                  reviewStr += '    <img class="user-profile-img" src="${pageContext.request.contextPath}/upload/'+review.trainerImg+'">';
                  reviewStr += '    <div class="user-profile-info">';
@@ -1031,7 +1087,7 @@
                  reviewStr += '    </div>';
                  reviewStr += '  </div>';
                  reviewStr += '  <div class="box">';
-                 reviewStr += '    <div class="content">'+review.content+'</div>';
+                 reviewStr += '    <div class="content" id="contentModi-'+review.reviewNo+'">'+review.content+'</div>';
                  reviewStr += '  </div>';
                  reviewStr += '  <div class="clearfix review-btn-area">';
                  reviewStr += '      <button type="button"  data-reno="'+review.reviewNo+'" class="button" id="removeRe">삭제</button>';
@@ -1039,7 +1095,7 @@
                  reviewStr += '  </div>';
                  reviewStr += ' </li>';
           	
-                 $("#r-"+group_no).append(reviewStr);
+                 $("#r-"+group_no).after(reviewStr);
             	 
              },
              error: function (XHR, status, error) {
@@ -1077,6 +1133,7 @@
                reviewStr += '<li class="review-line" id="r-'+review.reviewNo+'">';
                reviewStr += '<input type="hidden" id="reptNo-'+review.reviewNo+'" value="'+review.ptNo+'">';
                reviewStr += '<input type="hidden" id="scoreNo-'+review.reviewNo+'" value="'+review.score+'">';
+               reviewStr += '<input type="hidden" id="orderNo-'+review.reviewNo+'" value="'+review.order_no+'">';
                reviewStr += '  <div class="user-profile ff">';
                //회원이 쓴 리뷰의 경우
                if(review.order_no !=2){
@@ -1112,7 +1169,7 @@
                reviewStr += '    </div>';
                reviewStr += '  </div>';
                reviewStr += '  <div class="box">';
-               reviewStr += '    <div class="content">' + review.content + '</div>';
+               reviewStr += '    <div class="content" id="contentModi-'+review.reviewNo+'">'+review.content+'</div>';
                reviewStr += '  </div>';
                reviewStr += '  <div class="clearfix review-btn-area">';
 

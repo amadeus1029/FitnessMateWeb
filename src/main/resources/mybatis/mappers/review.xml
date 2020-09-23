@@ -6,27 +6,39 @@
 	
 	
 	<!--리뷰 목록 불러오기 -->
-	<select id="reviewList" parameterType="int"
+	<select id="reviewList" parameterType="map"
 	resultType="com.javaex.vo.ReviewVo">
 	<![CDATA[
-	SELECT r.reviewno,r.ptno,TO_CHAR(r.regdate, 'YYYY/MM/DD')as "regDate",r.score,r.content,
-		    p.userno,p.trainerno,s.schedulecount,u.name,u.profileImg,r.group_no,r.order_no,
-		    tra.name as "trainerName",tra.img as "trainerImg"
-		 
-		FROM review r,pt p,(SELECT ptNo, COUNT(scheduleNo) scheduleCount
-					            FROM schedule
-					            group by ptNo)s,users u,(SELECT name as name,profileimg as Img,userno
-                                                         FROM users
-                                                         WHERE usertype = 'trainer')tra
-		where r.ptno = p.ptno
-		and p.ptno = s.ptno
-		and u.userno = p.userno
-		and p.trainerno = tra.userno
-		and p.trainerno= #{no}
-		ORDER BY r.group_no DESc,r.order_no ASC
+		SELECT reviewno,ptno,"regDate",score,content,userno,trainerno,schedulecount,name,profileImg,group_no,order_no,"trainerName","trainerImg"
+		FROM (SELECT ROWNUM rn,reviewno,ptno,"regDate",score,content,userno,trainerno,schedulecount,name,profileImg,group_no,order_no,"trainerName","trainerImg"
+		FROM(SELECT r.reviewno,r.ptno,TO_CHAR(r.regdate, 'YYYY/MM/DD')as "regDate",r.score,r.content,
+				    p.userno,p.trainerno,s.schedulecount,u.name,u.profileImg,r.group_no,r.order_no,
+				    tra.name as "trainerName",tra.img as "trainerImg"
+				 
+				FROM review r,pt p,(SELECT ptNo, COUNT(scheduleNo) scheduleCount
+							            FROM schedule
+							            group by ptNo)s,users u,(SELECT name as name,profileimg as Img,userno
+		                                                         FROM users
+		                                                         WHERE usertype = 'trainer')tra
+				where r.ptno = p.ptno
+				and p.ptno = s.ptno
+				and u.userno = p.userno
+				and p.trainerno = tra.userno
+				and p.trainerno= #{trainerNo}
+				ORDER BY r.group_no DESc,r.order_no ASC))
+		 WHERE rn >= #{start} AND rn<= #{end}
 	]]>
 	</select>
 	
+	<!--리뷰페이지 카운트 -->
+	<select id="reviewCount" parameterType="int" resultType="int">
+	<![CDATA[
+		SELECT count(reviewno)
+		FROM review r,pt p
+		where r.ptno = p.ptno
+		and p.trainerno = #{trainerNo}
+	]]>
+	</select>
 	
 	<!--리뷰 작성가능 회원 분별 -->
 	<select id="reviewWrite" parameterType="int"
@@ -80,7 +92,7 @@
 	resultType="com.javaex.vo.ReviewVo">
 	<![CDATA[
 	SELECT r.reviewno,r.ptno,TO_CHAR(r.regdate, 'YYYY/MM/DD')as "regDate",r.score,r.content,
-		    p.userno,p.trainerno,s.schedulecount,u.name,u.profileImg,tra.name as "trainerName",tra.img as "trainerImg"
+		    p.userno,p.trainerno,s.schedulecount,u.name,u.profileImg,tra.name as "trainerName",tra.img as "trainerImg",r.group_no,r.order_no
 		FROM review r,pt p,(SELECT ptNo, COUNT(scheduleNo) scheduleCount
 					            FROM schedule
 					            group by ptNo)s,users u,(SELECT name as name,profileimg as Img,userno
