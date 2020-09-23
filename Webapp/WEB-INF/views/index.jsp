@@ -680,20 +680,20 @@
                      
                      var reviewStr = "";
                     	 for(var i=1; i<count; i++){
+                    	 reviewStr += '<div>';
+                    	 reviewStr += '<div class="repageNum">'+i+'</div>';
+                    	 reviewStr += '</div>';
                     	 
-                    	 reviewStr += '<ul>';
-                    	 reviewStr += '<li>';
                     	 
-                    	 reviewStr += '<li >';
-                    	 reviewStr += '<a href="">'+i+'</a>';
-                    	 reviewStr += '</li>';
-                    	
-                    	 reviewStr += '<li>';
-                    	 reviewStr += '</ul>';
                     	 }
-                     
-                   
-                     $("ul.review-list").after(reviewStr);
+
+                    	//클릭하면 펑션 실행되게
+                       	$("ul.review-list").on("click",".repageNum",function(){
+                       		var count = $(this).val();
+                       		console.log("클릭인식"+count);
+                       	});
+                    	 
+                     $("ul.review-list").append(reviewStr);
                      
                  },
                  error: function (XHR, status, error) {
@@ -701,6 +701,10 @@
                  }
              });
       }
+      
+      
+      
+      
       
       
         //리뷰쓰기탭
