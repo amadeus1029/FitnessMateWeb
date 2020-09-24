@@ -40,4 +40,7 @@
         
         
         .review-line.bg
-        {background-color: #F0F2F7;}
+        {background-color: #F0F2F7;
+        }
+        
+        .repageNum{cursor:pointer}
