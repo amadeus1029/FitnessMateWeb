@@ -30,6 +30,7 @@
 
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main.css">
+     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/main2.css">
 
     <!-- 지도js -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -39,48 +40,7 @@
     <!-- 임시 style-->
     <style>
 
-        /*별*/
-        .reviewWrite {
-            text-align: left;
-        }
-
-        #star_grade {
-            margin: 10px 0 0 0;
-        }
-
-        #star_grade i {
-            text-decoration: none;
-            color: gray;
-        }
-
-        #star_grade i.on {
-            color: red;
-        }
-
-        /*별*/
-        .fd {
-            float: right;
-        }
-
-        .ff {
-            width: 800px;
-        }
-
-        .content.review {
-            width: 800px;
-            height: 100px;
-            margin: 10px 0;
-            padding: 0;
-        }
-
-        .button.revW {
-            margin: 0 0 0 700px;
-        }
         
-        
-        #bg
-        {background-color: #F0F2F7;}
-
     </style>
 
 </head>
@@ -623,8 +583,7 @@
         	
         	//리뷰목록
             reviewList(trainerNo,page);
-          	//페이지 숫자
-            reviewPage();
+            
         	
             
             
@@ -653,6 +612,8 @@
                 success: function (reviewVo) {                	
                     
                     render(reviewVo);//리뷰리스트 불러오기
+                  //페이지 숫자
+                    reviewPage();
                 },
                 error: function (XHR, status, error) {
                     console.error(status + " : " + error);
@@ -680,19 +641,12 @@
                      
                      var reviewStr = "";
                     	 for(var i=1; i<count; i++){
-                    	 reviewStr += '<div>';
-                    	 reviewStr += '<div class="repageNum">'+i+'</div>';
-                    	 reviewStr += '</div>';
                     	 
-                    	 
+                    	 reviewStr += '<div class="repageNum" data-c="'+i+'">'+i+'</div>';
+                    	                    	 
                     	 }
-
-                    	//클릭하면 펑션 실행되게
-                       	$("ul.review-list").on("click",".repageNum",function(){
-                       		var count = $(this).val();
-                       		console.log("클릭인식"+count);
-                       	});
                     	 
+                    	
                      $("ul.review-list").append(reviewStr);
                      
                  },
@@ -702,6 +656,18 @@
              });
       }
       
+      //클릭하면 펑션 실행되게
+     	$("ul.review-list").on("click",".repageNum",function(){ 
+     		var trainerNo = $("#delNo").val();
+     		console.log("클릭인식");  
+     		//페이지 숫자 추출
+     		var why = $(this).data("c");
+     		console.log(why);   
+     		
+     		//목록 불러오기
+     		reviewList(trainerNo,why);
+     	}); 
+   
       
       
       
@@ -918,6 +884,7 @@
           	console.log("화면에 보일 스코어 추출"+score);
           	var order = $("#orderNo-"+reviewNo).val();
           	console.log("글쓴이 자격 추출"+order);
+          
 
         	//수정할 새창 불러오기
         	
@@ -952,7 +919,14 @@
          $(".review-list").on("click","#modifyCan",function(){ 
         	 console.log("수정취소");
         	 $("ul.review-list").empty();
-        	 reviewList(); 
+        	 
+        	 var trainerNo = $("#delNo").val();
+             console.log("트레이너 넘버" + trainerNo);
+             var page = $("#c-"+trainerNo).val();
+             console.log("페이지 되니ㅠㅠ"+page);
+             
+        	 
+        	 reviewList(trainerNo,1); 
          });
         
         //수정완료
@@ -1083,7 +1057,7 @@
             	 
             	 reviewStr ="";
              	
-            	 reviewStr += '<li class="review-line" id="r-'+review.reviewNo+'">';
+            	 reviewStr += '<li class="review-line bg" id="r-'+review.reviewNo+'">';
             	 reviewStr += '<input type="hidden" id="reptNo-'+review.reviewNo+'" value="'+review.ptNo+'">';
                  reviewStr += '<input type="hidden" id="scoreNo-'+review.reviewNo+'" value="'+review.score+'">';
                  reviewStr += '<input type="hidden" id="orderNo-'+review.reviewNo+'" value="'+review.order_no+'">';
@@ -1138,7 +1112,13 @@
         	   
         	  
         	   
-               reviewStr += '<li class="review-line" id="r-'+review.reviewNo+'">';
+               reviewStr += '<li class="review-line';
+               //답글일 경우 배경색 회색
+               if(review.order_no !=1){
+               reviewStr += ' bg';
+               }
+               
+               reviewStr += '" id="r-'+review.reviewNo+'">';
                reviewStr += '<input type="hidden" id="reptNo-'+review.reviewNo+'" value="'+review.ptNo+'">';
                reviewStr += '<input type="hidden" id="scoreNo-'+review.reviewNo+'" value="'+review.score+'">';
                reviewStr += '<input type="hidden" id="orderNo-'+review.reviewNo+'" value="'+review.order_no+'">';
