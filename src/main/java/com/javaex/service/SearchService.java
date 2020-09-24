@@ -81,6 +81,53 @@ public class SearchService {
 		return cMap;
 	}
 	
+	
+	// (검색)페이지 정보
+	public Map<String, Integer> pageCount(String province, String city, String region, String gender, String field,
+			String name, int page) {
+		System.out.println("서비스:페이지 카운트");
+
+		// map에 받은 파라미터 값 담기
+		Map<String, Object> listMap = new HashMap<>();
+
+		// 지역 정보 담기
+		if (region != "") {
+			listMap.put("location", province + "|" + city + "|" + region);
+		} else if (city != "") {
+			listMap.put("location", province + "|" + city);
+		} else {
+			listMap.put("location", province);
+		}
+
+		// 전공,성별,이름,페이지담기
+		listMap.put("field", field);
+		listMap.put("gender", gender);
+		listMap.put("name", name);
+		listMap.put("start", 1 + (page - 1) * 8);
+		listMap.put("end", 1 + (page - 1) * 8 + (8 - 1));
+
+		Map<String, Integer> cMap = new HashMap<>();
+		
+		if("".equals(listMap.get("field") )){
+			
+		cMap.put("countAll", searchDao.pageCount(listMap));
+		cMap.put("count", (int) Math.ceil(cMap.get("countAll") / 8.0));
+		System.out.println("페이지정보 잘 나오는지 확인" + cMap);
+		 return cMap;
+		 
+		} else {
+			cMap.put("countAll", searchDao.fipageCount(listMap));
+			cMap.put("count", (int) Math.ceil(cMap.get("countAll") / 8.0));
+			System.out.println("페이지정보 잘 나오는지 확인" + cMap);
+			 return cMap;
+			
+		}
+
+		
+	}
+
+	
+	
 	//트레이너 검색
 	public List<UserVo> userList(String province, String city, String region, String gender, String field,
 			String name, int page) {
@@ -105,6 +152,8 @@ public class SearchService {
 		listMap.put("name",name);
 		listMap.put("start", 1 + (page - 1) * 8);
 		listMap.put("end", 1 + (page - 1) * 8 + (8 - 1));
+		
+		
 		
 		
 		if("".equals(listMap.get("field") )){
@@ -159,13 +208,35 @@ public class SearchService {
 	//////////////////////////////////////////////////////////
 	
 	//리뷰 목록 가져오기
-	public List<ReviewVo> reviewList(int no) {
+	public List<ReviewVo> reviewList(int trainerNo, int page) {
 		System.out.println("SearchService:reviewList");
 		
-		System.out.println("서비스"+no);
-		List<ReviewVo> reviewVo = searchDao.reviewList(no);
+		
+		Map<String, Object> listMap = new HashMap<>();
+		listMap.put("trainerNo", trainerNo);
+		listMap.put("start", 1 + (page - 1) * 4);
+		listMap.put("end", 1 + (page - 1) * 4 + (4 - 1));
+		
+		
+		List<ReviewVo> reviewVo = searchDao.reviewList(listMap);
 		return reviewVo;
 	}
+	
+	// 페이지 정보
+		public Map<String, Integer> reviewCount(int trainerNo) {
+			System.out.println("서비스:페이지 카운트");
+
+			Map<String, Integer> cMap = new HashMap<>();
+			cMap.put("countAll", searchDao.reviewCount(trainerNo));
+			cMap.put("count", (int) Math.ceil(cMap.get("countAll") / 4.0));
+			
+			System.out.println("서비스 잘 나오는지 확인"+cMap);
+
+			return cMap;
+		}
+	
+	
+	
 
 	// 리뷰작성자격 확인
 	public ReviewVo reviewWrite(int no) {
@@ -209,7 +280,7 @@ public class SearchService {
 	}
 
 	// 리뷰수정
-	public List<ReviewVo> reviewModify(int score, String content, int reviewNo) {
+	public List<ReviewVo> reviewModify(int score, String content, int reviewNo, int page) {
 		System.out.println("SearchService:reviewPlus");
 		
 		Map<String,Object> remap = new HashMap<>();
@@ -223,8 +294,14 @@ public class SearchService {
 		ReviewVo vo = searchDao.reviewOne(reviewNo);
 		
 		int tNo = vo.getTrainerNo();
+		
 		System.out.println("트레이너 넘버확인"+tNo);
-		List<ReviewVo> reviewVo = searchDao.reviewList(tNo);
+		Map<String, Object> listMap = new HashMap<>();
+		listMap.put("trainerNo", tNo);
+		listMap.put("start", 1 + (page - 1) * 4);
+		listMap.put("end", 1 + (page - 1) * 4 + (4 - 1));
+		
+		List<ReviewVo> reviewVo = searchDao.reviewList(listMap);
 		
 		
 		return reviewVo;
@@ -247,6 +324,7 @@ public class SearchService {
 		
 		return remove;
 	}
+
 
 	
 	

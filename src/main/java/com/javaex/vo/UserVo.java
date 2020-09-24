@@ -21,6 +21,7 @@ public class UserVo {
 	private String invisible; /* 프로필 공개여부 */
 	private String workingHours; /* PT운영시간 */
 	
+	
 	public UserVo() {}
 
 	public int getUserNo() {

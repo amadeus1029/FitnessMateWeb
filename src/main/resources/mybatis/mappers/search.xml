@@ -92,17 +92,69 @@
 	
 	</select>
 	
-	<!-- 트레이너 목록 카운드 -->
-	<select id="pageCount" resultType="int">
+	
+	<!-- 트레이너 목록 카운드(지역,이름,성별검색) -->
+	<select id="pageCount" parameterType="map" resultType="int">
 	<![CDATA[
 		SELECT count(userNo)
 		FROM users
 		WHERE userType = 'trainer'
 		and invisible is null
 	]]>
+	<if test = "location !='' and  location!=null" >
+	 <![CDATA[
+	AND location like '%'||#{location}||'%'
+	]]>
+	</if>
+	
+	<if test = "name!='' and  name!=null" >
+	  <![CDATA[
+	AND name like '%'||#{name}||'%'
+	]]>
+	</if>
+	
+	<if test = "gender!='' and  gender!=null" >
+	  <![CDATA[
+	AND gender = #{gender}
+	]]>
+	</if>
 	</select>
 	
+	<!-- 트레이너 목록 카운드(전문분야) -->
+	<select id="fipageCount" parameterType="map" resultType="int">
+	<![CDATA[
+	SELECT count(u.userNo)
+	FROM users u,interest_field fi,interest_list li
+    WHERE fi.fieldno = li.fieldno
+    AND u.userno = li.userno
+    AND userType = 'trainer'
+     and u.invisible is null
+	]]>
+	<if test = "field!='' and  field!=null" >
+	  <![CDATA[
+	AND fi.fieldname = #{field}
 	
+	]]>
+	</if>
+	
+	<if test = "location !='' and  location!=null" >
+	 <![CDATA[
+	AND u.location like '%'||#{location}||'%'
+	]]>
+	</if>
+	
+	<if test = "name!='' and  name!=null" >
+	  <![CDATA[
+	AND u.name like '%'||#{name}||'%'
+	]]>
+	</if>
+	
+	<if test = "gender!='' and  gender!=null" >
+	  <![CDATA[
+	AND u.gender = #{gender}
+	]]>
+	</if>
+	</select>
 
 	<!--트레이너 검색(전문분야) -->
 	<select id="interestList" parameterType="map"

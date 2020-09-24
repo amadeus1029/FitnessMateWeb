@@ -46,6 +46,7 @@ public class MainController {
 		Map<String, Integer> p = searchService.pageCount();
 		//페이지 정보 받기
 		model.addAttribute("p", p);
+		
 
         return "index";
     }
