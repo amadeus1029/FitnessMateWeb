@@ -204,10 +204,10 @@ public class SearchController {
 	@ResponseBody
 	@RequestMapping("/search/reviewModify")
 	public List<ReviewVo> reviewModify(@RequestParam("score") int score, @RequestParam("content") String content,
-			@RequestParam("reviewNo") int reviewNo,@RequestParam("page") int page) {
+			@RequestParam("reviewNo") int reviewNo) {
 		System.out.println("controller:/search/reviewModify");
 		System.out.println("파람확인" + score + content);
-		List<ReviewVo> reviewVo = searchService.reviewModify(score, content,reviewNo,page);
+		List<ReviewVo> reviewVo = searchService.reviewModify(score, content,reviewNo,1);
 
 		System.out.println("리뷰수정정보 제대로 가지고 와지나 확인" + reviewVo);
 

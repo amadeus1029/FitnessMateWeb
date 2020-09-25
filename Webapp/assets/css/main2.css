@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+		/*별*/
+        .reviewWrite {
+            text-align: left;
+        }
+
+        #star_grade {
+            margin: 10px 0 0 0;
+        }
+
+        #star_grade i {
+            text-decoration: none;
+            color: gray;
+        }
+
+        #star_grade i.on {
+            color: red;
+        }
+
+        /*리뷰칸 크기*/
+        .fd {
+            float: right;
+        }
+        .ff {
+            width: 800px;
+            margin: 0 15px;
+        }
+
+        .content.review {
+            width: 800px;
+            height: 100px;
+            margin: 10px 0;
+            padding: 0;
+        }
+
+        .button.revW {
+            margin: 0 0 0 700px;
+        }
+        
+        
+        .review-line.bg
+        {background-color: #F0F2F7;
+        	  
+        }
+        
+        .repageNum{cursor:pointer}

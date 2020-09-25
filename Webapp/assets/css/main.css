@@ -582,7 +582,7 @@ ul.search-list li.search-result .content-area p.score {
   margin: 10px 0;
 }
 #profileModal .modal-wrapper .modal-content .label-tab.review-wrapper ul.review-list .review-line .box .content {
-  margin: 10px 0;
+  margin: 10px 10px;
   padding: 0;
   line-height: 20px;
 }
