@@ -37,11 +37,7 @@
     <script type="text/javascript"
             src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=575e0fbd097917d59e7c28fe5976a11c&libraries=services,clusterer,drawing"></script>
 
-    <!-- 임시 style-->
-    <style>
-
-        
-    </style>
+  
 
 </head>
 <body>
@@ -1156,6 +1152,8 @@
 
                reviewStr += '    </div>';
                reviewStr += '  </div>';
+               //
+               
                reviewStr += '  <div class="box">';
                reviewStr += '    <div class="content" id="contentModi-'+review.reviewNo+'">'+review.content+'</div>';
                reviewStr += '  </div>';

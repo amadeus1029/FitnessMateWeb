@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-/*별*/
+		/*별*/
         .reviewWrite {
             text-align: left;
         }
@@ -18,13 +18,13 @@
             color: red;
         }
 
-        /*별*/
+        /*리뷰칸 크기*/
         .fd {
             float: right;
         }
-
         .ff {
             width: 800px;
+            margin: 0 15px;
         }
 
         .content.review {
@@ -41,6 +41,7 @@
         
         .review-line.bg
         {background-color: #F0F2F7;
+        	  
         }
         
         .repageNum{cursor:pointer}
