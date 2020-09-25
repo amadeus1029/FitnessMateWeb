@@ -85,10 +85,6 @@
 
 
         <div class="wrapper">
-
-            <!-- 검색-->
-            <!--  <form action="${pageContext.request.contextPath}/search/results" method="get"
-            id="searchKeywordForm">-->
             <div id="searchKeywordForm">
                 <ul class="search-condition clearfix">
                     <li class="local clearfix">
