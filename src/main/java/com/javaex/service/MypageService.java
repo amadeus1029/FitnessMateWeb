@@ -223,7 +223,6 @@ public class MypageService {
 	}
 
 	public InbodyVo getInbodyInfo(int inbodyNo) {
-		System.out.println("service 인바디 가져오기");
 
 		return ptDao.selectInbodyInfo(inbodyNo);
 	}

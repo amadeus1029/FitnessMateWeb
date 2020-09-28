@@ -3,14 +3,10 @@ package com.javaex.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.javaex.vo.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.javaex.vo.AddressVo;
-import com.javaex.vo.InterestFieldVo;
-import com.javaex.vo.ReviewVo;
-import com.javaex.vo.UserVo;
 
 @Repository
 public class SearchDao {
@@ -48,51 +44,16 @@ public class SearchDao {
 		System.out.println("searchDao:field list");
 		return sqlSession.selectList("search.fieldname");
 	}
-	
-	///////////////////////////////////////////////////////
 
-	// 트레이너 리스트
-	public List<UserVo> userList(Map<String, Object> listMap) {
-		System.out.println("searchDao:userList");
-		System.out.println(listMap.toString());
-		List<UserVo> print = sqlSession.selectList("search.userList", listMap);
-		System.out.println(print);
-
-		return print;
+	//트레이너리스트 카운트 받기
+	public int getTrainerCount(SearchVo searchVo) {
+		return sqlSession.selectOne("search.getTrainerCount", searchVo);
 	}
 
-	// 페이지 카운트
-	public int pageCount() {
-		System.out.println("다오:페이지 숫자");
-		return sqlSession.selectOne("search.pageCount");
+	//트레이너 리스트 받기
+	public List<UserVo> getTrainerList(SearchVo searchVo) {
+		return sqlSession.selectList("search.getTrainerList", searchVo);
 	}
-	
-	// (지역,성별,이름 검색시)페이지 카운트
-	public Integer pageCount(Map<String, Object> listMap) {
-		System.out.println("(지역,성별,이름 검색시)다오:페이지 숫자"+listMap);
-		return sqlSession.selectOne("search.pageCount",listMap);
-	}
-	
-	// (전문분야 검색시)페이지 카운트
-	public Integer fipageCount(Map<String, Object> listMap) {
-		System.out.println("(전문분야 검색시)다오:페이지 숫자"+listMap);
-		return sqlSession.selectOne("search.fipageCount",listMap);
-	}
-
-	// 검색(전문분야제외)
-	public List<UserVo> searchList(Map<String, Object> listMap) {
-		System.out.println("searchDao:userList");
-		List<UserVo> print = sqlSession.selectList("search.userList", listMap);
-		return print;
-	}
-
-	// 검색(전문분야 포함)
-	public List<UserVo> interestList(Map<String, Object> listMap) {
-		System.out.println("searchDao:userList");
-		List<UserVo> print = sqlSession.selectList("search.interestList", listMap);
-		return print;
-	}
-
 	///////////////////////////////////////////////////////
 	
 	//트레이너 세부정보 보기

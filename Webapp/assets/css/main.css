@@ -306,7 +306,7 @@ div.crop-wrapper .cropper-wrap-box {
   margin: 0;
 }
 ul.search-list {
-  padding: 100px 0 50px 0;
+  padding: 30px 0 50px 0;
 }
 ul.search-list li.search-result {
   float: left;
@@ -364,6 +364,28 @@ ul.search-list li.search-result .content-area p.score {
   font-size: 20px;
   font-weight: 700;
   color: #cc2121;
+}
+ul.search-paging {
+  padding-bottom: 30px;
+  text-align: center;
+}
+ul.search-paging li {
+  display: inline;
+  margin: 0 15px;
+  color: #292c33;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
+}
+ul.search-paging li.active {
+  font-size: 18px;
+  font-weight: bold;
+  pointer-events: none;
+}
+ul.search-paging li.off {
+  opacity: 0.3;
+  pointer-events: none;
 }
 #profileModal .modal-wrapper {
   position: relative;
@@ -582,7 +604,7 @@ ul.search-list li.search-result .content-area p.score {
   margin: 10px 0;
 }
 #profileModal .modal-wrapper .modal-content .label-tab.review-wrapper ul.review-list .review-line .box .content {
-  margin: 10px 10px;
+  margin: 10px 0;
   padding: 0;
   line-height: 20px;
 }

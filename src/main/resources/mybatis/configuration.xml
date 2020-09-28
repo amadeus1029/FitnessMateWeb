@@ -6,6 +6,8 @@
         <typeAlias alias="ExVo" type="com.javaex.vo.ExerciseVo" />
         <typeAlias alias="RecordVo" type="com.javaex.vo.RecordVo" />
         <typeAlias alias="ScheduleVo" type="com.javaex.vo.ScheduleVo" />
+        <typeAlias alias="SearchVo" type="com.javaex.vo.SearchVo" />
+        <typeAlias alias="UserVo" type="com.javaex.vo.UserVo" />
     </typeAliases>
 
     <mappers>

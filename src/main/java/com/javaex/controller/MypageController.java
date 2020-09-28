@@ -33,7 +33,6 @@ public class MypageController {
         UserVo user = (UserVo) session.getAttribute("authUser");
 
         if("trainer".equals(user.getUserType())) {
-            System.out.println("트레이너 마이페이지 스케쥴 이동");
             List<PtVo> ptList  = mypageService.getTraineeList(user.getUserNo());
             model.addAttribute("ptList", ptList);
             List<ScheduleVo> scheduleList = mypageService.getScheduleList(user.getUserNo());
@@ -45,7 +44,6 @@ public class MypageController {
             return "mypage/schedule";
 
         }else {
-        	System.out.println("일반회원은 여기 오면 안돼요");
             return "error";
         }
     }
@@ -70,7 +68,6 @@ public class MypageController {
             return "mypage/manageExercise";
             
         }else {
-            System.out.println("일반회원은 여기 오면 안돼요");
             return "error";
         }
     }
@@ -102,8 +99,7 @@ public class MypageController {
 
     @RequestMapping("/profile")
     public String profile(HttpSession session, Model model) {
-       	System.out.println("/마이페이지/프로필 수정");
-       	
+
        	UserVo userVo = (UserVo)session.getAttribute("authUser");
        	
        	Map<String, Object> proMap = mypageService.getProfile(userVo.getUserType(), userVo.getUserNo());
@@ -141,7 +137,6 @@ public class MypageController {
             List<ScheduleVo> scheduleList = mypageService.getScheduleList(user.getUserNo());
             model.addAttribute("scheduleList", scheduleList);
         }else {
-            System.out.println("일반회원은 여기 오면 안돼요");
         }
     	
         return "mypage/recordEx";
@@ -162,7 +157,6 @@ public class MypageController {
 								@RequestParam(value="fieldNo", required=false) List<String> fieldList,
 								@RequestParam(value="careerRecord", required=false) List<String> careerList,
 								@RequestParam(value="birth", required=false) List<String> birthList) {
-    	System.out.println("/마이페이지/프로필 수정완료");
     	
     	userService.updateProfile(vo, address, fieldList, careerList, birthList);
     	
@@ -216,21 +210,16 @@ public class MypageController {
 
     @RequestMapping("/manageUser")
     public String ManageUser(HttpSession session, Model model) {
-        System.out.println("마이페이지 컨트롤러 회원가져오기");
-
         UserVo user = (UserVo) session.getAttribute("authUser");
         List<PtVo> ptList = mypageService.getTraineeList(user.getUserNo());
 
         if("trainer".equals(user.getUserType())) {
-            System.out.println("트레이너 운동관리 이동");
-
             model.addAttribute("ptList", ptList);
 
             //매 페이지마다 들어가는 상단 요약정보
             model.addAttribute("summary", mypageService.summary(user.getUserNo()));
 
         }else {
-            System.out.println("일반회원은 여기 오면 안돼요");
             return "error";
         }
         return "mypage/manageUser";
