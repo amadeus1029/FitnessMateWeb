@@ -484,7 +484,7 @@
         $(".label-btn.review-btn").on("click", function () {
 
             //로그인 유저번호 추출
-            var loginUser = "${user.no}";
+            var loginUser = "${authUser.userNo}";
             console.log("맨처음 로그인유저번호 추출" + loginUser);
             //트레이너 넘버 추출
             var trainerNo = $("#delNo").val();
@@ -980,6 +980,7 @@
                     console.log("로그인유저번호 추출" + loginUser);
                     //목록 다시 불러오기
                     render(reviewVo);
+                    reviewPage();
                 },
                 error: function (XHR, status, error) {
                     console.error(status + " : " + error);
