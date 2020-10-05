@@ -92,20 +92,20 @@ public class SearchDao {
 	///////////////////////////////////////////////////////
 
 	//리뷰리스트
-	public List<ReviewVo> reviewList(Map<String, Object> listMap) {
+	public List<ReviewVo> reviewList(ReviewVo reviewVo) {
 		System.out.println("searchDao:reviewList");
 		
-		System.out.println("다오"+listMap);
-		List<ReviewVo> reviewVo = sqlSession.selectList("review.reviewList",listMap);
-		System.out.println("다오: "+reviewVo);
+		System.out.println("다오"+reviewVo);
+		List<ReviewVo> rVo = sqlSession.selectList("review.reviewList",reviewVo);
+		System.out.println("다오: "+rVo);
 		
-		return reviewVo;
+		return rVo;
 	}
 	
 	//리뷰카운트
-	public Integer reviewCount(int trainerNo) {
-		System.out.println("다오:리뷰페이지 숫자");
-		return sqlSession.selectOne("review.reviewCount",trainerNo);
+	public Integer reviewCount(int i) {
+		System.out.println("다오:리뷰페이지 숫자"+i);
+		return sqlSession.selectOne("review.reviewCount",i);
 	}
 
 
@@ -138,10 +138,10 @@ public class SearchDao {
 	
 	
 	//리뷰수정
-	public int reviewModify(Map<String, Object> remap) {
+	public int reviewModify(ReviewVo reviewVo) {
 		System.out.println("searchDao:reviewModify");
 		
-		int vo = sqlSession.update("review.reviewModify",remap);
+		int vo = sqlSession.update("review.reviewModify",reviewVo);
 		return vo;
 	}
 	

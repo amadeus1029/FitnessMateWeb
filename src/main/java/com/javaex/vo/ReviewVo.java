@@ -20,6 +20,9 @@ public class ReviewVo {
 	
 	private String trainerName;/*트레이너 이름*/
 	private String trainerImg;/*트레이너 프사*/
+	
+	private int page;/*페이지*/
+	private int pageView;/*페이지*/
 
 	public ReviewVo() {}
 	
@@ -37,13 +40,9 @@ public class ReviewVo {
 		this.group_no = group_no;
 	}
 
-	
-	
-
-
 	public ReviewVo(int reviewNo, int ptNo, String regDate, int score, String content, int userNo, int trainerNo,
 			int scheduleCount, String name, int reviewCount, String reviewAvg, String profileImg, int group_no,
-			int order_no, String trainerName, String trainerImg) {
+			int order_no, String trainerName, String trainerImg, int page, int pageView) {
 		super();
 		this.reviewNo = reviewNo;
 		this.ptNo = ptNo;
@@ -61,6 +60,31 @@ public class ReviewVo {
 		this.order_no = order_no;
 		this.trainerName = trainerName;
 		this.trainerImg = trainerImg;
+		this.page = page;
+		this.pageView = pageView;
+	}
+
+	
+	
+	
+
+	public int getPage() {
+		return page;
+	}
+
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+
+	public int getPageView() {
+		return pageView;
+	}
+
+
+	public void setPageView(int pageView) {
+		this.pageView = pageView;
 	}
 
 
@@ -196,15 +220,10 @@ public class ReviewVo {
 				+ ", content=" + content + ", userNo=" + userNo + ", trainerNo=" + trainerNo + ", scheduleCount="
 				+ scheduleCount + ", name=" + name + ", reviewCount=" + reviewCount + ", reviewAvg=" + reviewAvg
 				+ ", profileImg=" + profileImg + ", group_no=" + group_no + ", order_no=" + order_no + ", trainerName="
-				+ trainerName + ", trainerImg=" + trainerImg + "]";
+				+ trainerName + ", trainerImg=" + trainerImg + ", page=" + page + ", pageView=" + pageView + "]";
 	}
-	
-	
 
 
-
-
-	
 	
 	
 	
