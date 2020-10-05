@@ -6,7 +6,7 @@
 	
 	
 	<!--리뷰 목록 불러오기 -->
-	<select id="reviewList" parameterType="map"
+	<select id="reviewList" parameterType="com.javaex.vo.ReviewVo"
 	resultType="com.javaex.vo.ReviewVo">
 	<![CDATA[
 		SELECT reviewno,ptno,"regDate",score,content,userno,trainerno,schedulecount,name,profileImg,group_no,order_no,"trainerName","trainerImg"
@@ -26,9 +26,10 @@
 				and p.trainerno = tra.userno
 				and p.trainerno= #{trainerNo}
 				ORDER BY r.group_no DESc,r.order_no ASC))
-		 WHERE rn >= #{start} AND rn<= #{end}
+		 where   rn>=(#{page}*#{pageView}-#{pageView}+1) and rn<=(#{page}*#{pageView})
 	]]>
 	</select>
+	
 	
 	<!--리뷰페이지 카운트 -->
 	<select id="reviewCount" parameterType="int" resultType="int">
@@ -39,6 +40,8 @@
 		and p.trainerno = #{trainerNo}
 	]]>
 	</select>
+	
+	
 	
 	<!--리뷰 작성가능 회원 분별 -->
 	<select id="reviewWrite" parameterType="int"
@@ -109,7 +112,7 @@
 	
 	
 	<!--리뷰작성 위한 pt번호 불러오기 -->
-	<select id="findPt" parameterType="int"
+	<select id="findPt" parameterType="com.javaex.vo.ReviewVo"
 	resultType="int">
 	<![CDATA[
 	SELECT ptno

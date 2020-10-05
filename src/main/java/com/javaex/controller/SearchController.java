@@ -8,6 +8,7 @@ import com.javaex.vo.SearchVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -87,24 +88,25 @@ public class SearchController {
     // 리뷰목록 불러오기
     @ResponseBody
     @RequestMapping("/search/reviewList")
-    public List<ReviewVo> reviewList(@RequestParam("trainerNo") int trainerNo, @RequestParam("page") int page) {
+    public Map<String, Object> reviewList(@RequestBody ReviewVo reviewVo) {
+    	
+    	System.out.println("컨트롤러"+reviewVo);
+    	
 
-        List<ReviewVo> reviewVo = searchService.reviewList(trainerNo, page);
-
-        return reviewVo;
+        return searchService.reviewList(reviewVo);
 
     }
 
-    @ResponseBody
-    @RequestMapping("/search/reviewPage")
-    public int reviewPage(@RequestParam("trainerNo") int trainerNo) {
-        // 페이지 정보불러오기
-        Map<String, Integer> r = searchService.reviewCount(trainerNo);
-
-        int count = r.get("count");
-
-        return count;
-    }
+//    @ResponseBody
+//    @RequestMapping("/search/reviewPage")
+//    public int reviewPage(@RequestParam("trainerNo") int trainerNo) {
+//        // 페이지 정보불러오기
+//        Map<String, Integer> r = searchService.reviewCount(trainerNo);
+//
+//        int count = r.get("count");
+//
+//        return count;
+//    }
 
 
     // 리뷰작성 가능한 사람인지 확인
@@ -157,15 +159,14 @@ public class SearchController {
     // 리뷰수정
     @ResponseBody
     @RequestMapping("/search/reviewModify")
-    public List<ReviewVo> reviewModify(@RequestParam("score") int score, @RequestParam("content") String content,
-                                       @RequestParam("reviewNo") int reviewNo) {
+    public Map<String, Object> reviewModify(@RequestBody ReviewVo reviewVo) {
         System.out.println("controller:/search/reviewModify");
-        System.out.println("파람확인" + score + content);
-        List<ReviewVo> reviewVo = searchService.reviewModify(score, content, reviewNo, 1);
+        System.out.println("파람확인" +reviewVo);
+        Map<String, Object> rVo = searchService.reviewModify(reviewVo);
 
-        System.out.println("리뷰수정정보 제대로 가지고 와지나 확인" + reviewVo);
+        System.out.println("리뷰수정정보 제대로 가지고 와지나 확인" + rVo);
 
-        return reviewVo;
+        return rVo;
     }
 
     //리뷰 삭제

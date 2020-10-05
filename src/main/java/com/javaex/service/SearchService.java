@@ -116,16 +116,38 @@ public class SearchService {
     //////////////////////////////////////////////////////////
 
     //리뷰 목록 가져오기
-    public List<ReviewVo> reviewList(int trainerNo, int page) {
+    public Map<String, Object> reviewList(ReviewVo reviewVo) {
 
-        Map<String, Object> listMap = new HashMap<>();
-        listMap.put("trainerNo", trainerNo);
-        listMap.put("start", 1 + (page - 1) * 4);
-        listMap.put("end", 1 + (page - 1) * 4 + (4 - 1));
+        
+        int pageView = 4; //한 페이지에 표시할 게시물 수
+        int pageNum = 5; //화면 하단에 표시할 페이지 최대 갯수
+        int currPage = reviewVo.getPage() > 0 ? reviewVo.getPage() : 1;
+        int totalPage = (searchDao.reviewCount(reviewVo.getTrainerNo() )-1)/pageView + 1;
+        int _currPage = (currPage - 1)/pageNum;
+        int beginPage = _currPage*pageNum+1;
+        int endPage = Math.min(_currPage * pageNum + pageNum, totalPage);
+
+        reviewVo.setPage(currPage);
+        reviewVo.setPageView(pageView);
 
 
-        List<ReviewVo> reviewVo = searchDao.reviewList(listMap);
-        return reviewVo;
+        List<ReviewVo> reveiwList = searchDao.reviewList(reviewVo);
+        
+        System.out.println("리뷰리스트 "+reveiwList);
+        
+        
+        Map<String, Object> reveiwListMap = new HashMap<String, Object>();
+
+        reveiwListMap.put("pageNum", pageNum);
+        reveiwListMap.put("currPage", currPage);
+        reveiwListMap.put("totalPage", totalPage);
+        reveiwListMap.put("beginPage", beginPage);
+        reveiwListMap.put("endPage", endPage);
+        reveiwListMap.put("reveiwList", reveiwList);
+        
+        System.out.println("맵 "+reveiwListMap);
+        
+        return reveiwListMap;
     }
 
     // 페이지 정보
@@ -180,31 +202,45 @@ public class SearchService {
     }
 
     // 리뷰수정
-    public List<ReviewVo> reviewModify(int score, String content, int reviewNo, int page) {
+    public Map<String, Object> reviewModify(ReviewVo reviewVo) {
         System.out.println("SearchService:reviewPlus");
 
-        Map<String, Object> remap = new HashMap<>();
-        remap.put("score", score);
-        remap.put("content", content);
-        remap.put("reviewNo", reviewNo);
+       
+        searchDao.reviewModify(reviewVo);
+        System.out.println("수정내용 확인" + reviewVo);
 
-        searchDao.reviewModify(remap);
-        System.out.println("수정내용 확인" + remap);
+        ReviewVo vo = searchDao.reviewOne(reviewVo.getReviewNo());
+        System.out.println("리뷰리스트 "+vo);
 
-        ReviewVo vo = searchDao.reviewOne(reviewNo);
+        
+        
+        int pageView = 4; //한 페이지에 표시할 게시물 수
+        int pageNum = 5; //화면 하단에 표시할 페이지 최대 갯수
+        int currPage = reviewVo.getPage() > 0 ? reviewVo.getPage() : 1;
+        int totalPage = (searchDao.reviewCount(reviewVo.getTrainerNo() )-1)/pageView + 1;
+        int _currPage = (currPage - 1)/pageNum;
+        int beginPage = _currPage*pageNum+1;
+        int endPage = Math.min(_currPage * pageNum + pageNum, totalPage);
 
-        int tNo = vo.getTrainerNo();
+        vo.setPage(currPage);
+        vo.setPageView(pageView);
+        
+        List<ReviewVo> rVo = searchDao.reviewList(vo);
+        System.out.println("리뷰리스트2 "+rVo);
+        
+        
+        Map<String, Object> reveiwListMap = new HashMap<String, Object>();
 
-        System.out.println("트레이너 넘버확인" + tNo);
-        Map<String, Object> listMap = new HashMap<>();
-        listMap.put("trainerNo", tNo);
-        listMap.put("start", 1 + (page - 1) * 4);
-        listMap.put("end", 1 + (page - 1) * 4 + (4 - 1));
+        reveiwListMap.put("pageNum", pageNum);
+        reveiwListMap.put("currPage", currPage);
+        reveiwListMap.put("totalPage", totalPage);
+        reveiwListMap.put("beginPage", beginPage);
+        reveiwListMap.put("endPage", endPage);
+        reveiwListMap.put("reveiwList", rVo);
+        
+        System.out.println("맵 "+reveiwListMap);
 
-        List<ReviewVo> reviewVo = searchDao.reviewList(listMap);
-
-
-        return reviewVo;
+        return reveiwListMap;
     }
 
     //리뷰 추가위해 pt넘버 불러오기

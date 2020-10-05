@@ -44,4 +44,28 @@
         	  
         }
         
-        .repageNum{cursor:pointer}
+       ul.review-paging {
+		  padding-bottom: 30px;
+		  text-align: center;
+		}
+        
+        ul.review-paging li {
+		  display: inline;
+		  margin: 10px 5px;
+		  color: #292c33;
+		  font-size: 16px;
+		  font-weight: 400;
+		  line-height: 1;
+		  cursor: pointer;
+		}
+
+		
+		ul.review-paging li.active {
+		  font-size: 18px;
+		  font-weight: bold;
+		  pointer-events: none;
+		}
+		ul.review-paging li.off {
+		  opacity: 0.3;
+		  pointer-events: none;
+		}

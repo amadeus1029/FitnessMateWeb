@@ -204,8 +204,8 @@
                         </div>
                         <!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
 
-                        <ul class="review-list">
-                        </ul>
+                        <ul class="review-list"></ul>
+                        <ul class="review-paging clearfix"></ul>
 
                     </div> <!-- 리뷰작성페이지 -->
 
@@ -504,27 +504,34 @@
 
 
         });
+        
+       
 
         //리뷰목록
         function reviewList(trainerNo, page) {
 
             console.log("리뷰목록 트레이너 넘버" + trainerNo + page);
+            
+            var rVo = {trainerNo:trainerNo,
+            				page:page}
+            
+            console.log("확인용" +rVo);
 
             $.ajax({
                 url: "${pageContext.request.contextPath}/search/reviewList",
                 type: "post",
-                //contentType : "application/json",
-                data: {
-                    trainerNo: trainerNo,
-                    page: page
-                },
-
+                contentType: "application/json",
+                data: JSON.stringify(rVo),
                 dataType: "json",
                 success: function (reviewVo) {
-
-                    render(reviewVo);//리뷰리스트 불러오기
+                 	var rvo  = reviewVo.reveiwList;
+                 	
+                 	console.log("됐냐"+trainerNo);	
+                 	//리뷰리스트 불러오기
+                    render(rvo);                    
                     //페이지 숫자
-                    reviewPage();
+                    reviewPage(trainerNo,reviewVo);
+                    
                 },
                 error: function (XHR, status, error) {
                     console.error(status + " : " + error);
@@ -532,39 +539,64 @@
             });
         }
 
-        //리뷰페이지
-        function reviewPage() {
-            var trainerNo = $("#delNo").val();
-            console.log("리뷰페이지 트레이너 넘버" + trainerNo);
-            $.ajax({
-                url: "${pageContext.request.contextPath}/search/reviewPage",
-                type: "post",
-                //contentType : "application/json",
-                data: {trainerNo: trainerNo},
+        //리뷰페이징
+        function reviewPage(trainerNo,reviewVo) {
+        	var paging = $("ul.review-paging");
+        	paging.empty();
+            if(reviewVo.currPage === 1 ) {
+                paging.append(
+                    "<li class='off' onclick='reviewList("+trainerNo+",1);'>처음으로</li>"
+                );
+            } else {
+                paging.append(
+                    "<li onclick='reviewList("+trainerNo+",1)'>처음으로</li>"
+                    
+                );
+            }
 
-                dataType: "json",
-                success: function (r) {
+            if(reviewVo.currPage <= reviewVo.pageNum ) {
+                paging.append(
+                    "<li class='off' onclick='reviewList("+trainerNo+","+ (reviewVo.beginPage - 10)+ ")'>◀</li>"
+                )
+            } else {
+                paging.append(
+                    "<li onclick='reviewList("+trainerNo+","+ (reviewVo.beginPage - 10)+ ")'>◀</li>"
+                )
+            }
 
-                    console.log("일단 여기까진 전달됨" + r);
-
-                    var count = r + 1;
-                    console.log("일단 여기까진 전달됨" + count);
-
-                    var reviewStr = "";
-                    for (var i = 1; i < count; i++) {
-
-                        reviewStr += '<div class="repageNum" data-c="' + i + '">' + i + '</div>';
-
-                    }
-
-
-                    $("ul.review-list").append(reviewStr);
-
-                },
-                error: function (XHR, status, error) {
-                    console.error(status + " : " + error);
+            for(i = reviewVo.beginPage; i <= reviewVo.endPage; i++) {
+                if(i === reviewVo.currPage) {
+                    paging.append(
+                        "<li class='active' onclick='reviewList("+trainerNo+","+ i +")'>"+i+"</li>"
+                    );
+                } else {
+                    paging.append(
+                        "<li onclick='reviewList("+trainerNo+","+ i +")'>"+i+"</li>"
+                    );
                 }
-            });
+            }
+
+
+            if((reviewVo.totalPage - reviewVo.beginPage) < reviewVo.pageNum ) {
+                paging.append(
+                    "<li class='off' onclick='reviewList("+trainerNo+","+ (reviewVo.endPage + 1)+ ")'>▶</li>"
+                );
+            } else {
+                paging.append(
+                    "<li onclick='reviewList("+trainerNo+","+ (reviewVo.endPage + 1)+ ")'>▶</li>"
+                );
+            }
+
+            if(reviewVo.currPage === reviewVo.totalPage) {
+                paging.append(
+                    "<li class='off' onclick='reviewList("+trainerNo+","+ reviewVo.totalPage + ")'>마지막으로</li>"
+                );
+            } else {
+                paging.append(
+                    "<li onclick='reviewList("+trainerNo+","+ reviewVo.totalPage + ")'>마지막으로</li>"
+                );
+            }
+            
         }
 
         //클릭하면 펑션 실행되게
@@ -952,35 +984,40 @@
 
         //수정완료
         $(".review-list").on("click", "#modifyOk", function () {
-            console.log("수정완료");
-
+            
+           
             var reviewNo = $('[name="reviewNo"]').val();
             console.log("수정위한 리뷰넘버 추출" + reviewNo);
             var content = $('[name ="contentRe"]').val();
             console.log("수정위한 내용 추출" + content);
             var score = $("input[name='reviewScore']").val();
             console.log("수정위한 스코어 추출" + score);
-
+            var page = $();
+            
+            var reviewVo = {
+                    reviewNo: reviewNo,
+                    content: content,
+                    score: score
+                }
 
             $.ajax({
 
                 url: "${pageContext.request.contextPath}/search/reviewModify",
                 type: "post",
-                //contentType : "application/json",
-                data: {
-                    reviewNo: reviewNo,
-                    content: content,
-                    score: score
-                },
-
+                contentType: "application/json",
+                data: JSON.stringify(reviewVo),
                 dataType: "json",
-                success: function (reviewVo) {
+                success: function (rVo) {
                     $("ul.review-list").empty();
                     var loginUser = $("#loginUser").val();
                     console.log("로그인유저번호 추출" + loginUser);
+                    console.log("로그인유저번호 추출" + rVo.);
+                    
                     //목록 다시 불러오기
-                    render(reviewVo);
-                    reviewPage();
+                    render(rVo);
+                    reviewPage(trainerNo,reviewVo);
+                    
+                    
                 },
                 error: function (XHR, status, error) {
                     console.error(status + " : " + error);
