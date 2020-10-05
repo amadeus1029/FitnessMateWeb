@@ -1011,11 +1011,9 @@
                     $("ul.review-list").empty();
                     var loginUser = $("#loginUser").val();
                     console.log("로그인유저번호 추출" + loginUser);
-                    console.log("로그인유저번호 추출" + rVo.);
                     
-                    //목록 다시 불러오기
-                    render(rVo);
-                    reviewPage(trainerNo,reviewVo);
+                    
+                    
                     
                     
                 },
@@ -1229,7 +1227,6 @@
 
                 //트레이너가 로그인한 경우
                 if (reviewNo == loginUser && review.order_no != 2) {
-                    reviewStr += '      <button type="button" data-reno="' + review.reviewNo + '" class="button" id="removeRe">삭제</button>';
                     reviewStr += '      <button type="button" data-rere="' + review.reviewNo + '" class="button" id="reRe" >답글</button> ';
                 }
 
