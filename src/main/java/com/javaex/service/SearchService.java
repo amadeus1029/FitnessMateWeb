@@ -54,7 +54,7 @@ public class SearchService {
         }
         searchVo.setLocation(location);
 
-        int pageView = 2; //한 페이지에 표시할 게시물 수
+        int pageView = 8; //한 페이지에 표시할 게시물 수
         int pageNum = 5; //화면 하단에 표시할 페이지 최대 갯수
         int currPage = searchVo.getPage() > 0 ? searchVo.getPage() : 1;
         int totalPage = (searchDao.getTrainerCount(searchVo)-1)/pageView + 1;

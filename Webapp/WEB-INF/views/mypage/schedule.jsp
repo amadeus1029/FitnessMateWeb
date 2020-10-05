@@ -152,6 +152,12 @@
     <div id="container" class="calendar-wrapper">
         <c:import url="/WEB-INF/views/mypage/includes/menu.jsp"></c:import>
         <div class="wrapper">
+            <ul class="schedule-guide">
+               <li class="confirm">예약 확정</li>
+               <li class="reserved">고객 신청</li>
+               <li class="waiting">확인 대기</li>
+               <li class="rejected">예약 거절</li>
+            </ul>
             <div id='top'>
 
                 <div class='left'>

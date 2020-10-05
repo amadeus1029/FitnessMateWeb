@@ -13,7 +13,6 @@
 <style>
 
 
-
 </style>
 
 <div class="summary-wrapper">
@@ -84,14 +83,16 @@
                                     </c:when>
                                     <c:when test="${reservation.state eq 'trainerReserve'}">
                                         <li class="schedule">
-                                            <span class="time question"  onclick="popMenu(${reservation.scheduleNo},$(this))">
+                                            <span class="time question"
+                                                  onclick="popMenu(${reservation.scheduleNo},$(this))">
                                                 <i class="fas fa-question"></i> ${reservation.startTime} (요청)
                                             </span>
                                         </li>
                                     </c:when>
                                     <c:when test="${reservation.state eq 'trainerReject'}">
                                         <li class="schedule">
-                                            <span class="time rejected"  onclick="reserveDel(${reservation.scheduleNo},$(this))">
+                                            <span class="time rejected"
+                                                  onclick="reserveDel(${reservation.scheduleNo},$(this))">
                                                 <i class="fas fa-times"></i>${reservation.startTime} (반려)
                                             </span>
                                         </li>
@@ -195,43 +196,43 @@
         </div>
     </div>
     <script type="text/javascript">
-    
-    $(document).ready(function () {
-        $(window).on("click", function () {
+
+        $(document).ready(function () {
+            $(window).on("click", function () {
+                $(".btnPop").remove();
+
+            });
+        });
+
+        /* ? 호버 했을 때 툴팁 */
+        $(".question").hover(function () {
+            $(this).append("<span class='tipMsg'>트레이너의 요청에 응답해주세요 :)</span>");
+        }, function () {
+            $(".tipMsg").remove();
+        });
+
+        /* X 호버 했을 때 툴팁 */
+        $(".rejected").hover(function () {
+            $(this).append("<span class='tipMsg'>거절된 요청을 삭제해 주세요 :(</span>");
+        }, function () {
+            $(".tipMsg").remove();
+        });
+
+        /* ?  클릭  */
+        function popMenu(scheduleNo, target) {
+            event.stopPropagation();
+            $(".tipMsg").remove();
             $(".btnPop").remove();
 
-        });
-    });
-    
-    /* ? 호버 했을 때 툴팁 */
-    $(".question").hover(function(){
-    	$(this).append("<span class='tipMsg'>트레이너의 요청에 응답해주세요 :)</span>");
-    }, function(){
-    	$(".tipMsg").remove();
-    });
-    
-    /* X 호버 했을 때 툴팁 */
-    $(".rejected").hover(function(){
-    	$(this).append("<span class='tipMsg'>거절된 요청을 삭제해 주세요 :(</span>");
-    }, function(){
-    	$(".tipMsg").remove();
-    });
+            target.prepend(
+                "<div class='btnPop'>" +
+                "<button type='button' class='button btn_modify' onclick='changeScheduleState(" + scheduleNo + ",\"confirm\");'>수락</button>" +
+                "<button type='button' class='button btn_modify' onclick='changeScheduleState(" + scheduleNo + ",\"traineeReject\");'>거절</button>" +
+                "<div>"
+            );
 
-    /* ?  클릭  */
-    function popMenu(scheduleNo, target){
-    	event.stopPropagation();
-	   	$(".tipMsg").remove();
-	   	$(".btnPop").remove();
-	   	
-    	target.prepend(
-	               "<div class='btnPop'>" +
-	               "<button type='button' class='button btn_modify' onclick='changeScheduleState(" + scheduleNo + ",\"confirm\");'>수락</button>" +
-	               "<button type='button' class='button btn_modify' onclick='changeScheduleState(" + scheduleNo + ",\"trainerReject\");'>거절</button>"+
-	               "<div>"
-	           );
-    	
-    };
-    
+        };
+
         /* 예약버튼클릭 */
         $("#btn-reserved").on("click", function () {
             /* 초기화 */
@@ -314,7 +315,7 @@
                 scheduleNo: scheduleNo,
                 state: state
             }
-            if(state === "traineeReject") {
+            if (state === "traineeReject") {
                 resultText = "취소";
             } else {
                 resultText = "수락";
@@ -328,7 +329,7 @@
                 dataType: "json",
                 success: function (result) {
                     if (result) {
-                        alert("예약이 "+ resultText +"되었습니다.");
+                        alert("예약이 " + resultText + "되었습니다.");
                         window.location.reload();
                     }
                 },

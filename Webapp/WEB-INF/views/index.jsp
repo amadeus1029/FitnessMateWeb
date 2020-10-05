@@ -612,11 +612,17 @@
 
                     //트레이너 리스트 그리기
                     for(i = 0;i<trainerList.length;i++) {
+                        var trainerLocation;
                         if(trainerList[i].company == null) {
                             trainerList[i].company = "";
                         }
                         if(trainerList[i].introduction == null) {
                             trainerList[i].introduction = "";
+                        }
+                        if(trainerList[i].location == null) {
+                            trainerLocation = "";
+                        } else {
+                            trainerLocation = trainerList[i].location.replaceAll("|", " ");
                         }
                         list.append(
                             "<li class='search-result' onclick='showProfileModal($(this),"+ trainerList[i].userNo +")'>" +
@@ -626,6 +632,7 @@
                                     "<p class='name'>"+ trainerList[i].name +"</p>" +
                                     "<p class='gym'>"+ trainerList[i].company+"</p>" +
                                     "<p class='comment'>"+ trainerList[i].introduction+"</p>" +
+                                    "<p class='location'>"+ trainerLocation +"</p>" +
                                     "<p class='score'></p>" +
                                 "</div>" +
                             "</li>"

@@ -381,6 +381,49 @@ div.crop-wrapper .cropper-wrap-box {
 .calendar-wrapper {
   padding-bottom: 70px;
 }
+.calendar-wrapper ul.schedule-guide {
+  width: 600px;
+  margin: 0 auto 30px;
+  padding: 20px;
+  box-sizing: border-box;
+  border: 1px solid #6b7799;
+  border-radius: 4px;
+  font-size: 0;
+  text-align: center;
+}
+.calendar-wrapper ul.schedule-guide li {
+  display: inline-block;
+  margin: 0 20px;
+  padding-left: 20px;
+  position: relative;
+  color: #292c33;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+}
+.calendar-wrapper ul.schedule-guide li:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+}
+.calendar-wrapper ul.schedule-guide li.confirm:after {
+  background-color: #007bff;
+}
+.calendar-wrapper ul.schedule-guide li.reserved:after {
+  background-color: #28a745;
+}
+.calendar-wrapper ul.schedule-guide li.waiting:after {
+  background-color: #ffc107;
+}
+.calendar-wrapper ul.schedule-guide li.rejected:after {
+  background-color: #dc3545;
+}
 .calendar-wrapper #top {
   display: none;
 }
