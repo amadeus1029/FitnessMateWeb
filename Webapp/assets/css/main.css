@@ -400,7 +400,11 @@ ul.search-paging li.off {
   opacity: 0.3;
   pointer-events: none;
 }
+#profileModal {
+  overflow: scroll;
+}
 #profileModal .modal-wrapper {
+  margin: 50px auto;
   position: relative;
   width: 800px;
   padding: 30px;

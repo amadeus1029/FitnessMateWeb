@@ -118,109 +118,109 @@
             <ul class="search-paging clearfix"></ul>
         </div> <!-- wrapper-->
 
-        <div class="modal-layer" id="profileModal">
-            <div class="modal-wrapper">
-                <button type="button" class="close-btn" onclick="forceHideModal('#profileModal')">X</button>
-                <div class="label-wrapper clearfix">
-                    <button type="button" class="label-btn profile-btn on" data-tab="profile"
-                            onclick="showTab($(this))">
-                        프로필
-                    </button>
-                    <button type="button" class="label-btn review-btn" data-tab="review" onclick="showTab($(this))">리뷰
-                    </button>
-                    <button type="button" class="label-btn location-btn" data-tab="location" onclick="showTab($(this))">
-                        위치
-                    </button>
-                </div>
-                <div class="modal-content">
-                    <div class="label-tab profile-wrapper on">
-                        <div class="summary-wrapper clearfix">
-                            <img src=""
-                                 class="profile-img">
-                            <div class="summary">
-                                <input type="hidden" name="no" value="" id="delNo">
-                                <p class="name info"></p>
-                                <p class="belong"></p>
-                            </div>
-                            <div class="score">
-                                <p class="head">평점</p>
-                                <p class="body socoreAvg"></p>
-                            </div>
-                            <div class="score">
-                                <p class="head">리뷰수</p>
-                                <p class="body reviewCount"></p>
-                            </div>
-                        </div>
-                        <div class="info-wrapper clearfix">
-                            <div class="info">
-                                <h3 class="title">나이</h3>
-                                <p class="content age"></p>
-                            </div>
-                            <div class="info">
-                                <h3 class="title">성별</h3>
-                                <p class="content gender"></p>
-                            </div>
-                            <div class="info">
-                                <h3 class="title">지역</h3>
-                                <p class="content location"></p>
-                            </div>
-                            <div class="info">
-                                <h3 class="title">트레이너 경력</h3>
-                                <p class="content career"></p>
-                            </div>
-                        </div>
-                        <div class="info-wrapper clearfix">
-                            <div class="category-info">
-                                <h3 class="title field">전문분야</h3>
-                            </div>
-                            <div class="award-info">
-                                <h3 class="title">입상경력</h3>
-                            </div>
-                        </div>
-                        <div class="comment-wrapper">
-                            <h3 class="title">PT 운영 시간</h3>
-                            <p class="content ptTimer"></p>
-                        </div>
-                        <div class="pay-wrapper">
-                            <h3 class="title">비용</h3>
-                            <p class="content price"></p>
-                        </div>
-                        <div class="comment-wrapper">
-                            <h3 class="title">트레이너 메세지</h3>
-                            <p class="content introduction"></p>
-                        </div>
-                    </div>
-
-
-                    <div class="label-tab review-wrapper">
-
-
-                        <!--로그인 유저 넘버 -->
-                        <input type="hidden" id="loginUser" value="${authUser.userNo}">
-
-
-                        <!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
-                        <div class="reviewWrite">
-                        </div>
-                        <!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
-
-                        <ul class="review-list">
-                        </ul>
-
-                    </div> <!-- 리뷰작성페이지 -->
-
-                    <!-- 지도 페이지 -->
-                    <div class="label-tab location-wrapper">
-                        <div id="mapInfo"></div>
-                        <br>
-                        <div id="map" style="width:800px;height:500px;"></div>
-                    </div>
-                    <!-- 지도 페이지 -->
-
-                </div>
-            </div>
-        </div><!-- 모달 -->
     </div>
+    <div class="modal-layer" id="profileModal">
+        <div class="modal-wrapper">
+            <button type="button" class="close-btn" onclick="forceHideModal('#profileModal')">X</button>
+            <div class="label-wrapper clearfix">
+                <button type="button" class="label-btn profile-btn on" data-tab="profile"
+                        onclick="showTab($(this))">
+                    프로필
+                </button>
+                <button type="button" class="label-btn review-btn" data-tab="review" onclick="showTab($(this))">리뷰
+                </button>
+                <button type="button" class="label-btn location-btn" data-tab="location" onclick="showTab($(this))">
+                    위치
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="label-tab profile-wrapper on">
+                    <div class="summary-wrapper clearfix">
+                        <img src=""
+                             class="profile-img">
+                        <div class="summary">
+                            <input type="hidden" name="no" value="" id="delNo">
+                            <p class="name info"></p>
+                            <p class="belong"></p>
+                        </div>
+                        <div class="score">
+                            <p class="head">평점</p>
+                            <p class="body socoreAvg"></p>
+                        </div>
+                        <div class="score">
+                            <p class="head">리뷰수</p>
+                            <p class="body reviewCount"></p>
+                        </div>
+                    </div>
+                    <div class="info-wrapper clearfix">
+                        <div class="info">
+                            <h3 class="title">나이</h3>
+                            <p class="content age"></p>
+                        </div>
+                        <div class="info">
+                            <h3 class="title">성별</h3>
+                            <p class="content gender"></p>
+                        </div>
+                        <div class="info">
+                            <h3 class="title">지역</h3>
+                            <p class="content location"></p>
+                        </div>
+                        <div class="info">
+                            <h3 class="title">트레이너 경력</h3>
+                            <p class="content career"></p>
+                        </div>
+                    </div>
+                    <div class="info-wrapper clearfix">
+                        <div class="category-info">
+                            <h3 class="title field">전문분야</h3>
+                        </div>
+                        <div class="award-info">
+                            <h3 class="title">입상경력</h3>
+                        </div>
+                    </div>
+                    <div class="comment-wrapper">
+                        <h3 class="title">PT 운영 시간</h3>
+                        <p class="content ptTimer"></p>
+                    </div>
+                    <div class="pay-wrapper">
+                        <h3 class="title">비용</h3>
+                        <p class="content price"></p>
+                    </div>
+                    <div class="comment-wrapper">
+                        <h3 class="title">트레이너 메세지</h3>
+                        <p class="content introduction"></p>
+                    </div>
+                </div>
+
+
+                <div class="label-tab review-wrapper">
+
+
+                    <!--로그인 유저 넘버 -->
+                    <input type="hidden" id="loginUser" value="${authUser.userNo}">
+
+
+                    <!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
+                    <div class="reviewWrite">
+                    </div>
+                    <!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
+
+                    <ul class="review-list">
+                    </ul>
+
+                </div> <!-- 리뷰작성페이지 -->
+
+                <!-- 지도 페이지 -->
+                <div class="label-tab location-wrapper">
+                    <div id="mapInfo"></div>
+                    <br>
+                    <div id="map" style="width:800px;height:500px;"></div>
+                </div>
+                <!-- 지도 페이지 -->
+
+            </div>
+        </div>
+    </div><!-- 모달 -->
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     <script type="text/javascript">
         var swiper = new Swiper('#mainBanner', {

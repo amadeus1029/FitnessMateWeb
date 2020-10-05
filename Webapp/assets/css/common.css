@@ -281,6 +281,14 @@ textarea {
     width: 360px;
   }
 }
+body.scroll {
+  height: 100%;
+  overflow-y: scroll;
+}
+body.no-scroll {
+  height: 100vh;
+  overflow-y: hidden;
+}
 input[type="text"],
 input[type="password"],
 input[type="number"],
