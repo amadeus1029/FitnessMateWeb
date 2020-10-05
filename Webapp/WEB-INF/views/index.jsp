@@ -1012,9 +1012,9 @@
                     var loginUser = $("#loginUser").val();
                     console.log("로그인유저번호 추출" + loginUser);
                     
-                    
-                    
-                    
+                    render(rvo);                    
+                    //페이지 숫자
+                    reviewPage(trainerNo,rvo);
                     
                 },
                 error: function (XHR, status, error) {
@@ -1163,13 +1163,11 @@
             for (var review of reviewVo) {
 
 
-                reviewStr += '<li class="review-line';
-                //답글일 경우 배경색 회색
-                if (review.order_no != 1) {
-                    reviewStr += ' bg';
+            	if (review.order_no != 1) {
+                    reviewStr += '<li class="review-line bg" id="r-' + review.reviewNo + '">';
+                } else {
+                    reviewStr += '<li class="review-line" id="r-' + review.reviewNo + '">';
                 }
-
-                reviewStr += '" id="r-' + review.reviewNo + '">';
                 reviewStr += '<input type="hidden" id="reptNo-' + review.reviewNo + '" value="' + review.ptNo + '">';
                 reviewStr += '<input type="hidden" id="scoreNo-' + review.reviewNo + '" value="' + review.score + '">';
                 reviewStr += '<input type="hidden" id="orderNo-' + review.reviewNo + '" value="' + review.order_no + '">';
