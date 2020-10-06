@@ -636,7 +636,9 @@
                     paging.empty();
 
                     if (trainerList.length == 0) {
-                        alert("검색결과가 없습니다!");
+                        list.append(
+                            "<li class='empty'></li>"
+                        );
                     }
 
                     //트레이너 리스트 그리기
