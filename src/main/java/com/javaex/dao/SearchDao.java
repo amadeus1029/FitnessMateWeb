@@ -173,6 +173,14 @@ public class SearchDao {
 	}
 
 	
+	//이미 리뷰,답글 썼는지 체크
+	public void checkReview(int ptNo) {
+		System.out.println("searchDao:리뷰쓴거 카운트업");
+		
+		sqlSession.update("review.checkReview",ptNo);
+	}
+
+	
 
 	
 	

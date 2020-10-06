@@ -9,11 +9,11 @@
 	<select id="reviewList" parameterType="com.javaex.vo.ReviewVo"
 	resultType="com.javaex.vo.ReviewVo">
 	<![CDATA[
-		SELECT reviewno,ptno,"regDate",score,content,userno,trainerno,schedulecount,name,profileImg,group_no,order_no,"trainerName","trainerImg"
-		FROM (SELECT ROWNUM rn,reviewno,ptno,"regDate",score,content,userno,trainerno,schedulecount,name,profileImg,group_no,order_no,"trainerName","trainerImg"
+		SELECT reviewno,ptno,"regDate",score,content,userno,trainerno,schedulecount,name,profileImg,group_no,order_no,"trainerName","trainerImg",check_review
+		FROM (SELECT ROWNUM rn,reviewno,ptno,"regDate",score,content,userno,trainerno,schedulecount,name,profileImg,group_no,order_no,"trainerName","trainerImg",check_review
 		FROM(SELECT r.reviewno,r.ptno,TO_CHAR(r.regdate, 'YYYY/MM/DD')as "regDate",r.score,r.content,
 				    p.userno,p.trainerno,s.schedulecount,u.name,u.profileImg,r.group_no,r.order_no,
-				    tra.name as "trainerName",tra.img as "trainerImg"
+				    tra.name as "trainerName",tra.img as "trainerImg",r.check_review
 				 
 				FROM review r,pt p,(SELECT ptNo, COUNT(scheduleNo) scheduleCount
 							            FROM schedule
@@ -69,7 +69,7 @@
       
 	  <![CDATA[
 		insert into review
-		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content},#{reviewNo},1)
+		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content},#{reviewNo},1,1)
 	  ]]>
 
 	</insert>
@@ -85,7 +85,7 @@
 	
 	  <![CDATA[
 		insert into review
-		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content},#{group_no},2)
+		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content},#{group_no},2,1)
 	  ]]>
 
 	</insert>
@@ -140,6 +140,14 @@
 		]]>
 	</delete>
 	
+	<!--리뷰수정 -->
+	<update id="checkReview" parameterType="int">
+		<![CDATA[
+		update review
+		set check_review = 2
+		where ptNo = #{ptNo}
+		]]>
+		</update>
 
 	
 	
