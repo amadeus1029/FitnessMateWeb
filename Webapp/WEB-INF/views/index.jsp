@@ -1072,46 +1072,25 @@
             console.log("답글위한 pt넘버 추출" + ptNo);
             var score = 0;
 
+            var reviewVo = { group_no: group_no,
+                    score: score,
+                    content: content,
+                    ptNo: ptNo}
+            
             $.ajax({
 
                 url: "${pageContext.request.contextPath}/search/rereviewPlus",
                 type: "post",
-                //contentType : "application/json",
-                data: {
-                    group_no: group_no,
-                    score: score,
-                    content: content,
-                    ptNo: ptNo
-                },
-
+                contentType: "application/json",
+                data: JSON.stringify(reviewVo),
+               
                 dataType: "json",
-                success: function (review) {
-                    console.log("답글추가" + review.trainerImg + review.trainerName);
-                    $(".trainerReview").empty()
-
-                    reviewStr = "";
-
-                    reviewStr += '<li class="review-line bg" id="r-' + review.reviewNo + '">';
-                    reviewStr += '<input type="hidden" id="reptNo-' + review.reviewNo + '" value="' + review.ptNo + '">';
-                    reviewStr += '<input type="hidden" id="scoreNo-' + review.reviewNo + '" value="' + review.score + '">';
-                    reviewStr += '<input type="hidden" id="orderNo-' + review.reviewNo + '" value="' + review.order_no + '">';
-                    reviewStr += '  <div class="user-profile ff">';
-                    reviewStr += '    <img class="user-profile-img" src="${pageContext.request.contextPath}/upload/' + review.trainerImg + '">';
-                    reviewStr += '    <div class="user-profile-info">';
-                    reviewStr += '      <div class="user-profile-name">' + review.trainerName + '</div>';
-                    reviewStr += '      <div class="user-profile-date">' + review.regDate + '</div>';
-                    reviewStr += '    </div>';
-                    reviewStr += '  </div>';
-                    reviewStr += '  <div class="box">';
-                    reviewStr += '    <div class="content" id="contentModi-' + review.reviewNo + '">' + review.content + '</div>';
-                    reviewStr += '  </div>';
-                    reviewStr += '  <div class="clearfix review-btn-area">';
-                    reviewStr += '      <button type="button"  data-reno="' + review.reviewNo + '" class="button" id="removeRe">삭제</button>';
-                    reviewStr += '      <button type="button" data-modino="' + review.reviewNo + '" class="button" id="modifyRe">수정</button>';
-                    reviewStr += '  </div>';
-                    reviewStr += ' </li>';
-
-                    $("#r-" + group_no).after(reviewStr);
+                success: function (rVo) {
+                    console.log("답글추가");
+                    $("ul.review-list").empty();
+                    var reviewVo = rVo.reveiwList;
+                    
+                    render(reviewVo);
 
                 },
                 error: function (XHR, status, error) {

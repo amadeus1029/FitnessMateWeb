@@ -143,14 +143,13 @@ public class SearchController {
     // 답글추가
     @ResponseBody
     @RequestMapping("/search/rereviewPlus")
-    public ReviewVo rereviewPlus(@RequestParam("score") int score, @RequestParam("content") String content,
-                                 @RequestParam("ptNo") int ptNo, @RequestParam("group_no") int group_no) {
+    public Map<String, Object> rereviewPlus(@RequestBody ReviewVo reviewVo) {
         System.out.println("controller:/search/rereviewPlus");
-        System.out.println("파람확인" + score + content + ptNo + group_no);
-        ReviewVo reviewVo = searchService.rereviewPlus(score, content, ptNo, group_no);
+        System.out.println("파람확인" + reviewVo);
+        Map<String, Object> rVo = searchService.rereviewPlus(reviewVo);
         System.out.println("답글 컨트롤러" + reviewVo);
 
-        return reviewVo;
+        return rVo;
     }
 
 
