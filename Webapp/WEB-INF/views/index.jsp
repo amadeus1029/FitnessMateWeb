@@ -845,6 +845,11 @@
                     console.log("리뷰추가 버튼클릭")
 
                     var score = $("input[name='reviewScore']").val();
+                    
+                    var score_t = $("input[name='reviewScore']").val()>0 ;
+                    
+                    if(score_t== false){alert("별점을 선택해주세요"); return false;}
+                    
                     var content = $("[name = 'content']").val();
                     console.log(score + content);
 
@@ -936,7 +941,7 @@
             console.log("수정위한 리뷰넘버 추출" + reviewNo);
             var content = $("#contentModi-" + reviewNo).text();
             console.log("수정 전 원래 내용 추출" + content);
-            var score = $("#scoreNo-" + reviewNo).val();
+            var score = parseInt($("#scoreNo-" + reviewNo).val());
             console.log("화면에 보일 스코어 추출" + score);
             var order = $("#orderNo-" + reviewNo).val();
             console.log("글쓴이 자격 추출" + order);
@@ -950,11 +955,13 @@
             reviewStr += '<input type="hidden"  name="reviewScore" value="0">';
 
             if (order == 1) {
-                reviewStr += '  <i  class="fas fa-star" data-score="1"></i>';
-                reviewStr += '  <i  class="fas fa-star" data-score="2"></i>';
-                reviewStr += '  <i  class="fas fa-star" data-score="3"></i>';
-                reviewStr += '  <i  class="fas fa-star" data-score="4"></i>';
-                reviewStr += '  <i  class="fas fa-star" data-score="5"></i>';
+            	 for(var i=0; i<score; i++){
+                	 reviewStr += '  <i  class="fas fa-star on" data-score="'+(i+1)+'"></i>';
+                 }
+            	 
+            	 for(var i = 0; i < 5 -score; i++){
+            		 reviewStr += '  <i  class="fas fa-star" data-score="'+(i+1+score)+'"></i>';
+            	 }
             }
 
             reviewStr += '</div>';
@@ -974,15 +981,16 @@
         //수정취소
         $(".review-list").on("click", "#modifyCan", function () {
             console.log("수정취소");
+            
             $("ul.review-list").empty();
 
             var trainerNo = $("#delNo").val();
             console.log("트레이너 넘버" + trainerNo);
-            var page = $("#c-" + trainerNo).val();
-            console.log("페이지 되니ㅠㅠ" + page);
+            var page = $("ul.review-paging").children("li.active").text();
+            console.log("페이지" + page);
 
 
-            reviewList(trainerNo, 1);
+            reviewList(trainerNo,page);
         });
 
         //수정완료
@@ -995,12 +1003,13 @@
             console.log("수정위한 내용 추출" + content);
             var score = $("input[name='reviewScore']").val();
             console.log("수정위한 스코어 추출" + score);
-            var page = $();
+            var page = $("ul.review-paging").children("li.active").text();
 
             var reviewVo = {
                 reviewNo: reviewNo,
                 content: content,
-                score: score
+                score: score,
+                page:page
             }
 
             $.ajax({
@@ -1012,9 +1021,10 @@
                 dataType: "json",
                 success: function (rVo) {
                     $("ul.review-list").empty();
-                    var loginUser = $("#loginUser").val();
-                    console.log("로그인유저번호 추출" + loginUser);
-
+                    var reviewVo = rVo.reveiwList;
+                    
+                    render(reviewVo);
+                    
                 },
                 error: function (XHR, status, error) {
                     console.error(status + " : " + error);
@@ -1162,12 +1172,8 @@
             for (var review of reviewVo) {
 
 
-<<<<<<< HEAD
+
             	if (review.order_no != 1) {
-=======
-                //답글일 경우 배경색 회색
-                if (review.group_no != 1) {
->>>>>>> refs/remotes/origin/develop
                     reviewStr += '<li class="review-line bg" id="r-' + review.reviewNo + '">';
                 } else {
                     reviewStr += '<li class="review-line" id="r-' + review.reviewNo + '">';
