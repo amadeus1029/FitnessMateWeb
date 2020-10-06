@@ -118,109 +118,106 @@
             <ul class="search-paging clearfix"></ul>
         </div> <!-- wrapper-->
 
-        <div class="modal-layer" id="profileModal">
-            <div class="modal-wrapper">
-                <button type="button" class="close-btn" onclick="forceHideModal('#profileModal')">X</button>
-                <div class="label-wrapper clearfix">
-                    <button type="button" class="label-btn profile-btn on" data-tab="profile"
-                            onclick="showTab($(this))">
-                        프로필
-                    </button>
-                    <button type="button" class="label-btn review-btn" data-tab="review" onclick="showTab($(this))">리뷰
-                    </button>
-                    <button type="button" class="label-btn location-btn" data-tab="location" onclick="showTab($(this))">
-                        위치
-                    </button>
-                </div>
-                <div class="modal-content">
-                    <div class="label-tab profile-wrapper on">
-                        <div class="summary-wrapper clearfix">
-                            <img src=""
-                                 class="profile-img">
-                            <div class="summary">
-                                <input type="hidden" name="no" value="" id="delNo">
-                                <p class="name info"></p>
-                                <p class="belong"></p>
-                            </div>
-                            <div class="score">
-                                <p class="head">평점</p>
-                                <p class="body socoreAvg"></p>
-                            </div>
-                            <div class="score">
-                                <p class="head">리뷰수</p>
-                                <p class="body reviewCount"></p>
-                            </div>
-                        </div>
-                        <div class="info-wrapper clearfix">
-                            <div class="info">
-                                <h3 class="title">나이</h3>
-                                <p class="content age"></p>
-                            </div>
-                            <div class="info">
-                                <h3 class="title">성별</h3>
-                                <p class="content gender"></p>
-                            </div>
-                            <div class="info">
-                                <h3 class="title">지역</h3>
-                                <p class="content location"></p>
-                            </div>
-                            <div class="info">
-                                <h3 class="title">트레이너 경력</h3>
-                                <p class="content career"></p>
-                            </div>
-                        </div>
-                        <div class="info-wrapper clearfix">
-                            <div class="category-info">
-                                <h3 class="title field">전문분야</h3>
-                            </div>
-                            <div class="award-info">
-                                <h3 class="title">입상경력</h3>
-                            </div>
-                        </div>
-                        <div class="comment-wrapper">
-                            <h3 class="title">PT 운영 시간</h3>
-                            <p class="content ptTimer"></p>
-                        </div>
-                        <div class="pay-wrapper">
-                            <h3 class="title">비용</h3>
-                            <p class="content price"></p>
-                        </div>
-                        <div class="comment-wrapper">
-                            <h3 class="title">트레이너 메세지</h3>
-                            <p class="content introduction"></p>
-                        </div>
-                    </div>
-
-
-                    <div class="label-tab review-wrapper">
-
-
-                        <!--로그인 유저 넘버 -->
-                        <input type="hidden" id="loginUser" value="${authUser.userNo}">
-
-
-                        <!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
-                        <div class="reviewWrite">
-                        </div>
-                        <!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
-
-                        <ul class="review-list"></ul>
-                        <ul class="review-paging clearfix"></ul>
-
-                    </div> <!-- 리뷰작성페이지 -->
-
-                    <!-- 지도 페이지 -->
-                    <div class="label-tab location-wrapper">
-                        <div id="mapInfo"></div>
-                        <br>
-                        <div id="map" style="width:800px;height:500px;"></div>
-                    </div>
-                    <!-- 지도 페이지 -->
-
-                </div>
-            </div>
-        </div><!-- 모달 -->
     </div>
+    <div class="modal-layer" id="profileModal">
+        <div class="modal-wrapper">
+            <button type="button" class="close-btn" onclick="forceHideModal('#profileModal')">X</button>
+            <div class="label-wrapper clearfix">
+                <button type="button" class="label-btn profile-btn on" data-tab="profile"
+                        onclick="showTab($(this))">
+                    프로필
+                </button>
+                <button type="button" class="label-btn review-btn" data-tab="review" onclick="showTab($(this))">리뷰
+                </button>
+                <button type="button" class="label-btn location-btn" data-tab="location" onclick="showTab($(this))">
+                    위치
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="label-tab profile-wrapper on">
+                    <div class="summary-wrapper clearfix">
+                        <img src=""
+                             class="profile-img">
+                        <div class="summary">
+                            <input type="hidden" name="no" value="" id="delNo">
+                            <p class="name info"></p>
+                            <p class="belong"></p>
+                        </div>
+                        <div class="score">
+                            <p class="head">평점</p>
+                            <p class="body socoreAvg"></p>
+                        </div>
+                        <div class="score">
+                            <p class="head">리뷰수</p>
+                            <p class="body reviewCount"></p>
+                        </div>
+                    </div>
+                    <div class="info-wrapper clearfix">
+                        <div class="info">
+                            <h3 class="title">나이</h3>
+                            <p class="content age"></p>
+                        </div>
+                        <div class="info">
+                            <h3 class="title">성별</h3>
+                            <p class="content gender"></p>
+                        </div>
+                        <div class="info">
+                            <h3 class="title">지역</h3>
+                            <p class="content location"></p>
+                        </div>
+                        <div class="info">
+                            <h3 class="title">트레이너 경력</h3>
+                            <p class="content career"></p>
+                        </div>
+                    </div>
+                    <div class="info-wrapper clearfix">
+                        <div class="category-info">
+                            <h3 class="title field">전문분야</h3>
+                        </div>
+                        <div class="award-info">
+                            <h3 class="title">입상경력</h3>
+                        </div>
+                    </div>
+                    <div class="comment-wrapper">
+                        <h3 class="title">PT 운영 시간</h3>
+                        <p class="content ptTimer"></p>
+                    </div>
+                    <div class="pay-wrapper">
+                        <h3 class="title">비용</h3>
+                        <p class="content price"></p>
+                    </div>
+                    <div class="comment-wrapper">
+                        <h3 class="title">트레이너 메세지</h3>
+                        <p class="content introduction"></p>
+                    </div>
+                </div>
+
+
+                <div class="label-tab review-wrapper">
+
+
+                    <!--로그인 유저 넘버 -->
+                    <input type="hidden" id="loginUser" value="${authUser.userNo}">
+
+                    <!--내 트레이너&1회이상 트레이닝 받았을시만 보임 -->
+                    <div class="reviewWrite">
+                    </div>
+                    <ul class="review-list"></ul>
+                    <ul class="review-paging clearfix"></ul>
+
+                </div> <!-- 리뷰작성페이지 -->
+
+                <!-- 지도 페이지 -->
+                <div class="label-tab location-wrapper">
+                    <div id="mapInfo"></div>
+                    <br>
+                    <div id="map" style="width:800px;height:500px;"></div>
+                </div>
+                <!-- 지도 페이지 -->
+
+            </div>
+        </div>
+    </div><!-- 모달 -->
     <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     <script type="text/javascript">
         var swiper = new Swiper('#mainBanner', {
@@ -504,18 +501,19 @@
 
 
         });
-        
-       
+
 
         //리뷰목록
         function reviewList(trainerNo, page) {
 
             console.log("리뷰목록 트레이너 넘버" + trainerNo + page);
-            
-            var rVo = {trainerNo:trainerNo,
-            				page:page}
-            
-            console.log("확인용" +rVo);
+
+            var rVo = {
+                trainerNo: trainerNo,
+                page: page
+            }
+
+            console.log("확인용" + rVo);
 
             $.ajax({
                 url: "${pageContext.request.contextPath}/search/reviewList",
@@ -524,14 +522,14 @@
                 data: JSON.stringify(rVo),
                 dataType: "json",
                 success: function (reviewVo) {
-                 	var rvo  = reviewVo.reveiwList;
-                 	
-                 	console.log("됐냐"+trainerNo);	
-                 	//리뷰리스트 불러오기
-                    render(rvo);                    
+                    var rvo = reviewVo.reveiwList;
+
+                    console.log("됐냐" + trainerNo);
+                    //리뷰리스트 불러오기
+                    render(rvo);
                     //페이지 숫자
-                    reviewPage(trainerNo,reviewVo);
-                    
+                    reviewPage(trainerNo, reviewVo);
+
                 },
                 error: function (XHR, status, error) {
                     console.error(status + " : " + error);
@@ -540,63 +538,62 @@
         }
 
         //리뷰페이징
-        function reviewPage(trainerNo,reviewVo) {
-        	var paging = $("ul.review-paging");
-        	paging.empty();
-            if(reviewVo.currPage === 1 ) {
+        function reviewPage(trainerNo, reviewVo) {
+            var paging = $("ul.review-paging");
+            paging.empty();
+            if (reviewVo.currPage === 1) {
                 paging.append(
-                    "<li class='off' onclick='reviewList("+trainerNo+",1);'>처음으로</li>"
+                    "<li class='off' onclick='reviewList(" + trainerNo + ",1);'>처음으로</li>"
                 );
             } else {
                 paging.append(
-                    "<li onclick='reviewList("+trainerNo+",1)'>처음으로</li>"
-                    
+                    "<li onclick='reviewList(" + trainerNo + ",1)'>처음으로</li>"
                 );
             }
 
-            if(reviewVo.currPage <= reviewVo.pageNum ) {
+            if (reviewVo.currPage <= reviewVo.pageNum) {
                 paging.append(
-                    "<li class='off' onclick='reviewList("+trainerNo+","+ (reviewVo.beginPage - 10)+ ")'>◀</li>"
+                    "<li class='off' onclick='reviewList(" + trainerNo + "," + (reviewVo.beginPage - 10) + ")'>◀</li>"
                 )
             } else {
                 paging.append(
-                    "<li onclick='reviewList("+trainerNo+","+ (reviewVo.beginPage - 10)+ ")'>◀</li>"
+                    "<li onclick='reviewList(" + trainerNo + "," + (reviewVo.beginPage - 10) + ")'>◀</li>"
                 )
             }
 
-            for(i = reviewVo.beginPage; i <= reviewVo.endPage; i++) {
-                if(i === reviewVo.currPage) {
+            for (i = reviewVo.beginPage; i <= reviewVo.endPage; i++) {
+                if (i === reviewVo.currPage) {
                     paging.append(
-                        "<li class='active' onclick='reviewList("+trainerNo+","+ i +")'>"+i+"</li>"
+                        "<li class='active' onclick='reviewList(" + trainerNo + "," + i + ")'>" + i + "</li>"
                     );
                 } else {
                     paging.append(
-                        "<li onclick='reviewList("+trainerNo+","+ i +")'>"+i+"</li>"
+                        "<li onclick='reviewList(" + trainerNo + "," + i + ")'>" + i + "</li>"
                     );
                 }
             }
 
 
-            if((reviewVo.totalPage - reviewVo.beginPage) < reviewVo.pageNum ) {
+            if ((reviewVo.totalPage - reviewVo.beginPage) < reviewVo.pageNum) {
                 paging.append(
-                    "<li class='off' onclick='reviewList("+trainerNo+","+ (reviewVo.endPage + 1)+ ")'>▶</li>"
+                    "<li class='off' onclick='reviewList(" + trainerNo + "," + (reviewVo.endPage + 1) + ")'>▶</li>"
                 );
             } else {
                 paging.append(
-                    "<li onclick='reviewList("+trainerNo+","+ (reviewVo.endPage + 1)+ ")'>▶</li>"
+                    "<li onclick='reviewList(" + trainerNo + "," + (reviewVo.endPage + 1) + ")'>▶</li>"
                 );
             }
 
-            if(reviewVo.currPage === reviewVo.totalPage) {
+            if (reviewVo.currPage === reviewVo.totalPage) {
                 paging.append(
-                    "<li class='off' onclick='reviewList("+trainerNo+","+ reviewVo.totalPage + ")'>마지막으로</li>"
+                    "<li class='off' onclick='reviewList(" + trainerNo + "," + reviewVo.totalPage + ")'>마지막으로</li>"
                 );
             } else {
                 paging.append(
-                    "<li onclick='reviewList("+trainerNo+","+ reviewVo.totalPage + ")'>마지막으로</li>"
+                    "<li onclick='reviewList(" + trainerNo + "," + reviewVo.totalPage + ")'>마지막으로</li>"
                 );
             }
-            
+
         }
 
         //클릭하면 펑션 실행되게
@@ -638,34 +635,40 @@
                     list.empty();
                     paging.empty();
 
-                    if(trainerList.length == 0) {
-                        alert("검색결과가 없습니다!");   
+                    if (trainerList.length == 0) {
+                        alert("검색결과가 없습니다!");
                     }
 
                     //트레이너 리스트 그리기
-                    for(i = 0;i<trainerList.length;i++) {
-                        if(trainerList[i].company == null) {
+                    for (i = 0; i < trainerList.length; i++) {
+                        var trainerLocation;
+                        if (trainerList[i].company == null) {
                             trainerList[i].company = "";
                         }
-                        if(trainerList[i].introduction == null) {
+                        if (trainerList[i].introduction == null) {
                             trainerList[i].introduction = "";
                         }
+                        if (trainerList[i].location == null) {
+                            trainerLocation = "";
+                        } else {
+                            trainerLocation = trainerList[i].location.replaceAll("|", " ");
+                        }
                         list.append(
-                            "<li class='search-result' onclick='showProfileModal($(this),"+ trainerList[i].userNo +")'>" +
-                                "<div class='image-area' style='background-image: url(${pageContext.request.contextPath}/upload/"+trainerList[i].profileImg +")'>"+
-                                "</div>" +
-                                "<div class='content-area'>" +
-                                    "<p class='name'>"+ trainerList[i].name +"</p>" +
-                                    "<p class='gym'>"+ trainerList[i].company+"</p>" +
-                                    "<p class='comment'>"+ trainerList[i].introduction+"</p>" +
-                                    "<p class='score'></p>" +
-                                "</div>" +
+                            "<li class='search-result' onclick='showProfileModal($(this)," + trainerList[i].userNo + ")'>" +
+                            "<div class='image-area' style='background-image: url(${pageContext.request.contextPath}/upload/" + trainerList[i].profileImg + ")'>" +
+                            "</div>" +
+                            "<div class='content-area'>" +
+                            "<p class='name'>" + trainerList[i].name + "</p>" +
+                            "<p class='gym'>" + trainerList[i].company + "</p>" +
+                            "<p class='comment'>" + trainerList[i].introduction + "</p>" +
+                            "<p class='location'>" + trainerLocation + "</p>" +
+                            "<p class='score'></p>" +
+                            "</div>" +
                             "</li>"
-
                         );
                     }
 
-                    if(result.currPage === 1 ) {
+                    if (result.currPage === 1) {
                         paging.append(
                             "<li class='off' onclick='searchTrainer(1)'>처음으로</li>"
                         );
@@ -675,46 +678,46 @@
                         );
                     }
 
-                    if(result.currPage <= result.pageNum ) {
+                    if (result.currPage <= result.pageNum) {
                         paging.append(
-                            "<li class='off' onclick='searchTrainer("+ (result.beginPage - 10)+ ")'>◀</li>"
+                            "<li class='off' onclick='searchTrainer(" + (result.beginPage - 10) + ")'>◀</li>"
                         )
                     } else {
                         paging.append(
-                            "<li onclick='searchTrainer("+ (result.beginPage - 10)+ ")'>◀</li>"
+                            "<li onclick='searchTrainer(" + (result.beginPage - 10) + ")'>◀</li>"
                         )
                     }
 
-                    for(i = result.beginPage; i <= result.endPage; i++) {
-                        if(i === result.currPage) {
+                    for (i = result.beginPage; i <= result.endPage; i++) {
+                        if (i === result.currPage) {
                             paging.append(
-                                "<li class='active' onclick='searchTrainer("+ i +")'>"+i+"</li>"
+                                "<li class='active' onclick='searchTrainer(" + i + ")'>" + i + "</li>"
                             );
                         } else {
                             paging.append(
-                                "<li onclick='searchTrainer("+ i +")'>"+i+"</li>"
+                                "<li onclick='searchTrainer(" + i + ")'>" + i + "</li>"
                             );
                         }
                     }
 
 
-                    if((result.totalPage - result.beginPage) < result.pageNum ) {
+                    if ((result.totalPage - result.beginPage) < result.pageNum) {
                         paging.append(
-                            "<li class='off' onclick='searchTrainer("+ (result.endPage + 1)+ ")'>▶</li>"
+                            "<li class='off' onclick='searchTrainer(" + (result.endPage + 1) + ")'>▶</li>"
                         );
                     } else {
                         paging.append(
-                            "<li onclick='searchTrainer("+ (result.endPage + 1)+ ")'>▶</li>"
+                            "<li onclick='searchTrainer(" + (result.endPage + 1) + ")'>▶</li>"
                         );
                     }
 
-                    if(result.currPage === result.totalPage) {
+                    if (result.currPage === result.totalPage) {
                         paging.append(
-                            "<li class='off' onclick='searchTrainer("+ result.totalPage + ")'>마지막으로</li>"
+                            "<li class='off' onclick='searchTrainer(" + result.totalPage + ")'>마지막으로</li>"
                         );
                     } else {
                         paging.append(
-                            "<li onclick='searchTrainer("+ result.totalPage + ")'>마지막으로</li>"
+                            "<li onclick='searchTrainer(" + result.totalPage + ")'>마지막으로</li>"
                         );
                     }
 
@@ -984,8 +987,8 @@
 
         //수정완료
         $(".review-list").on("click", "#modifyOk", function () {
-            
-           
+
+
             var reviewNo = $('[name="reviewNo"]').val();
             console.log("수정위한 리뷰넘버 추출" + reviewNo);
             var content = $('[name ="contentRe"]').val();
@@ -993,12 +996,12 @@
             var score = $("input[name='reviewScore']").val();
             console.log("수정위한 스코어 추출" + score);
             var page = $();
-            
+
             var reviewVo = {
-                    reviewNo: reviewNo,
-                    content: content,
-                    score: score
-                }
+                reviewNo: reviewNo,
+                content: content,
+                score: score
+            }
 
             $.ajax({
 
@@ -1011,11 +1014,7 @@
                     $("ul.review-list").empty();
                     var loginUser = $("#loginUser").val();
                     console.log("로그인유저번호 추출" + loginUser);
-                    
-                    render(rvo);                    
-                    //페이지 숫자
-                    reviewPage(trainerNo,rvo);
-                    
+
                 },
                 error: function (XHR, status, error) {
                     console.error(status + " : " + error);
@@ -1163,7 +1162,12 @@
             for (var review of reviewVo) {
 
 
+<<<<<<< HEAD
             	if (review.order_no != 1) {
+=======
+                //답글일 경우 배경색 회색
+                if (review.group_no != 1) {
+>>>>>>> refs/remotes/origin/develop
                     reviewStr += '<li class="review-line bg" id="r-' + review.reviewNo + '">';
                 } else {
                     reviewStr += '<li class="review-line" id="r-' + review.reviewNo + '">';

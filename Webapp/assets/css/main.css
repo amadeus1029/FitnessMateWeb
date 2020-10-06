@@ -339,9 +339,13 @@ ul.search-list li.search-result .content-area p.name {
   letter-spacing: -0.5px;
 }
 ul.search-list li.search-result .content-area p.gym {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   position: absolute;
   right: 20px;
   top: 20px;
+  max-width: 150px;
   font-size: 18px;
   line-height: 24px;
   color: #008526;
@@ -365,6 +369,15 @@ ul.search-list li.search-result .content-area p.score {
   font-weight: 700;
   color: #cc2121;
 }
+ul.search-list li.search-result .content-area p.location {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: #6b7799;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
 ul.search-paging {
   padding-bottom: 30px;
   text-align: center;
@@ -387,7 +400,11 @@ ul.search-paging li.off {
   opacity: 0.3;
   pointer-events: none;
 }
+#profileModal {
+  overflow: scroll;
+}
 #profileModal .modal-wrapper {
+  margin: 50px auto;
   position: relative;
   width: 800px;
   padding: 30px;
