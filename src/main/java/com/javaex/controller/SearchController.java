@@ -170,11 +170,13 @@ public class SearchController {
 
     //리뷰(답글) 삭제
     @ResponseBody
-    @RequestMapping("/search/reviewReRemove")
-    public int reviewReRemove(@RequestParam("reviewNo") int reviewNo) {
+    @RequestMapping("/search/reviewRemove")
+    public Map<String, Object> reviewReRemove(@RequestBody ReviewVo reviewVo) {
         System.out.println("controller:/search/reviewRemove");
-        System.out.println("리뷰넘버 확인" + reviewNo);
-        int remove = searchService.reviewReRemove(reviewNo);
+        System.out.println("리뷰넘버 확인" + reviewVo);
+        Map<String, Object> remove = searchService.reviewReRemove(reviewVo);
+        
+        
 
         return remove;
     }

@@ -316,12 +316,51 @@ public class SearchService {
     }
 
     //리뷰(답글)삭제
-    public int reviewReRemove(int reviewNo) {
+    public Map<String, Object> reviewReRemove(ReviewVo reviewVo) {
         System.out.println("SearchService:reviewRemove");
 
-        int remove = searchDao.reviewRemove(reviewNo);
+        ReviewVo vo = searchDao.reviewRemove(reviewVo);
+        int order = vo.getOrder_no();
+        System.out.println("오더"+order);
         
-        return remove;
+        if(order == 1) {
+        searchDao.reviewRemove2(vo);}
+        if(order ==2 ) {
+        searchDao.reviewRemove3(reviewVo,vo.getPtNo());
+        }
+        
+        System.out.println("받아와지나 확인"+vo);
+        
+        
+        int pageView = 4; //한 페이지에 표시할 게시물 수
+        int pageNum = 5; //화면 하단에 표시할 페이지 최대 갯수
+        int currPage = reviewVo.getPage() > 0 ? reviewVo.getPage() : 1;
+        int totalPage = (searchDao.reviewCount(reviewVo.getTrainerNo() )-1)/pageView + 1;
+        int _currPage = (currPage - 1)/pageNum;
+        int beginPage = _currPage*pageNum+1;
+        int endPage = Math.min(_currPage * pageNum + pageNum, totalPage);
+
+        vo.setPage(currPage);
+        vo.setPageView(pageView);
+        
+        List<ReviewVo> rVo = searchDao.reviewList(vo);
+        System.out.println("리뷰리스트2 "+rVo);
+        
+        
+        Map<String, Object> reveiwListMap = new HashMap<String, Object>();
+
+        reveiwListMap.put("pageNum", pageNum);
+        reveiwListMap.put("currPage", currPage);
+        reveiwListMap.put("totalPage", totalPage);
+        reveiwListMap.put("beginPage", beginPage);
+        reveiwListMap.put("endPage", endPage);
+        reveiwListMap.put("reveiwList", rVo);
+        
+        System.out.println("맵 "+reveiwListMap);
+
+        return reveiwListMap;
+        
+
     }
 
     

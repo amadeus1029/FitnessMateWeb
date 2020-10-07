@@ -124,6 +124,19 @@
 	]]>
 	</select>
 	
+	<!--리뷰삭제 위한 pt번호 불러오기 -->
+	<select id="findPt2" parameterType="com.javaex.vo.ReviewVo"
+	resultType="com.javaex.vo.ReviewVo">
+	<![CDATA[
+	SELECT r.ptno,p.trainerno,r.order_no
+			FROM review r,pt p
+			WHERE r.ptno = p.ptno
+            and reviewno = #{reviewNo}
+	]]>
+	</select>
+	
+	
+	
 	<!--리뷰수정 -->
 	<update id="reviewModify" parameterType="map">
 		<![CDATA[
@@ -137,12 +150,30 @@
 	
 	
 	<!-- 리뷰지우기 -->
-	<delete id="reviewRemove" parameterType="int">
+	<delete id="reviewRemove" parameterType="com.javaex.vo.ReviewVo">
+		<![CDATA[
+			DELETE from review
+			where ptno =#{ptNo}
+		]]>
+	</delete>
+	
+	<!-- 리뷰지우기 -->
+	<delete id="reviewRemove2" parameterType="com.javaex.vo.ReviewVo">
 		<![CDATA[
 			DELETE from review
 			where reviewno =#{reviewNo}
 		]]>
 	</delete>
+	
+	<!--리뷰지우기 -->
+	<update id="reviewRemove3" parameterType="int">
+		<![CDATA[
+		update review
+		set check_review = 1
+		where ptNo = #{ptNo}
+		]]>
+		</update>
+	
 	
 	<!--리뷰수정 -->
 	<update id="checkReview" parameterType="int">

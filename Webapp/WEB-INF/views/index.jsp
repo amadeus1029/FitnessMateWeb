@@ -1016,25 +1016,22 @@
             console.log("삭제");
             var reviewNo = $(this).data('reno');
             console.log("삭제위한 리뷰넘버 추출" + reviewNo);
-
+		var reviewVo = {reviewNo: reviewNo}
 
             $.ajax({
 
-                url: "${pageContext.request.contextPath}/search/reviewReRemove",
+                url: "${pageContext.request.contextPath}/search/reviewRemove",
                 type: "post",
-                //contentType : "application/json",
-                data: {reviewNo: reviewNo},
+                contentType : "application/json",
+                data: JSON.stringify(reviewVo),
 
                 dataType: "json",
-                success: function (count) {
-                    console.log(count);
-                    if (count == 1) {
-
-                        console.log("삭제" + reviewNo);
-                        $("#r-" + reviewNo).remove();
-                    } else {
-                        console.log("아무일도 없음");
-                    }
+                success: function (rVo) {
+                	$("ul.review-list").empty();
+                	 var reviewVo = rVo.reveiwList;
+                     
+                     render(reviewVo);
+                   
                 },
                 error: function (XHR, status, error) {
                     console.error(status + " : " + error);
