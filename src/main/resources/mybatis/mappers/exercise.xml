@@ -43,7 +43,7 @@
                     e.exercisename as exName,
                     e.unit as unit
             from    exercise e, ex_part p
-            where   e.exercisepart = p.partNo and e.trainerNo = #{trainerNo} and e.exercisepart = #{exPartNo}
+            where   e.exercisepart = p.partNo and e.trainerNo = #{trainerNo} and e.exercisepart = #{exPartNo} and e.available is null
             order by e.exerciseno asc
         ]]>
     </select>
@@ -94,9 +94,9 @@
     <select id="selectEx" parameterType="int" resultType="com.javaex.vo.RecordVo">
         <![CDATA[
         
-			SELECT exe.exerciseName exName, exe.partName exPart, exe.unit, countS.setCount, exe.startTime
+			SELECT distinct exe.exerciseName exName, exe.partName exPart, exe.unit, countS.setCount, exe.startTime
 			FROM
-			(SELECT distinct ex.exerciseName, p.partName, ex.unit, ex.startTime, ex.recordNo
+			(SELECT ex.exerciseName, p.partName, ex.unit, ex.startTime, ex.recordNo
 			FROM ex_part p
 			RIGHT OUTER JOIN (SELECT e.exerciseName, e.exercisePart, e.unit, e.exerciseNo, re.startTime, re.recordNo
 			                    FROM exercise e

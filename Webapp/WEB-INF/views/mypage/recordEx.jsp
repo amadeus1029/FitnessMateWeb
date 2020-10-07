@@ -30,6 +30,18 @@
     <!-- 해당 페이지 css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/recordForm.css">
+    
+    <style>
+    .summary-wrapper .summary .statistics h3.title.left {
+    text-align: left;
+	}
+	.summary-wrapper .summary .statistics .info {
+    color: #fff;
+    font-size: 20px;
+    margin-bottom: 25px;
+	}
+    </style>
+    
 </head>
 <body>
     <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>

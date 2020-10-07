@@ -128,7 +128,7 @@ div.modal-layer div.modal-wrapper div.modal-content div.profile-wrapper div butt
 
 .schedule-wrapper .reserved-wrapper {
 	height: 230px;
-	overflow: auto;
+	overflow: visible;
 	font-size: 18px;
 }
 

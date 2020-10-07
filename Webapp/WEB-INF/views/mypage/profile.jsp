@@ -75,7 +75,7 @@
                         <input type="text" name="name" value="${profile.userVo.name}">
                     </div>
                     <div class="main-info-wrapper">
-                        <h3 class="title">휴대전화번호</h3>
+                        <h3 class="title">연락처 / SNS</h3>
                         <input type="text" name="phone" value="${profile.userVo.phone}">
                     </div>
                 </div>

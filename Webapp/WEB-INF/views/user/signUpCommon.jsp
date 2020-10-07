@@ -72,8 +72,8 @@
                     <input type="text" name="name" placeholder="김이름">
                 </div>
                 <div class="input-wrapper">
-                    <p>휴대전화번호</p>
-                    <input type="text" name="phone" placeholder="010-0000-1111">
+                    <p>연락처 / SNS</p>
+                    <input type="text" name="phone" placeholder="010-0000-1111/ID">
                 </div>
                 <div class="input-wrapper radio-wrapper">
                     <p>성별</p>
