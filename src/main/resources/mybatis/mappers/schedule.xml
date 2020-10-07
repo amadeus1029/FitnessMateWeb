@@ -90,10 +90,11 @@
 	<select id="getReviewCount" parameterType="int" resultType="com.javaex.vo.SummaryVo">
         <![CDATA[
         
-			SELECT AVG(NVL(r.score, 0)) avgScore, count(r.reviewNo) reviewCount
+			SELECT ROUND(AVG(NVL(r.score, 0)),1) avgScore, count(r.reviewNo) reviewCount
 			FROM review r left outer join pt p
 			ON p.ptNo = r.ptno
 			WHERE trainerNo = #{trainerNo}
+			AND r.order_no = 1
 			
         ]]>
     </select>
