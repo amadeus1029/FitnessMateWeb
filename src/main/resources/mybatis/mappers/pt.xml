@@ -93,7 +93,7 @@
 			SELECT	inbodyNo, TO_CHAR(measureDate,'yyyy-mm-dd') measureDate, weight, percentFat, musclemass, bmi
 			FROM 	inbody
 			WHERE 	ptNo = #{ptNo}
-			ORDER BY inbodyNo DESC
+			ORDER BY measureDate DESC
 			
 		]]>
 	</select>
