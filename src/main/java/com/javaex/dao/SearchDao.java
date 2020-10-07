@@ -118,6 +118,8 @@ public class SearchDao {
 		
 		return reviewWr;
 	}
+	
+
 
 	//리뷰 추가
 	public int reviewPlus(ReviewVo vo ) {
@@ -163,7 +165,7 @@ public class SearchDao {
 		return ptNo;
 	}
 
-	//리뷰삭제
+	//리뷰(답글)삭제
 	public int reviewRemove(int reviewNo) {
 		System.out.println("searchDao:reviewRemove");
 		
@@ -171,6 +173,7 @@ public class SearchDao {
 		
 		return remove;
 	}
+	
 
 	
 	//이미 리뷰,답글 썼는지 체크
@@ -179,6 +182,10 @@ public class SearchDao {
 		
 		sqlSession.update("review.checkReview",ptNo);
 	}
+
+	
+
+	
 
 	
 

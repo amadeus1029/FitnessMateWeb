@@ -111,6 +111,8 @@ public class SearchController {
     @RequestMapping("/search/reviewWrite")
     public ReviewVo reviewWrite(@RequestParam("no") int no) {
         ReviewVo reviewVo = searchService.reviewWrite(no);
+        
+        System.out.println("리뷰 작성 가능한 사람인가?"+reviewVo);
         return reviewVo;
 
     }
@@ -132,10 +134,10 @@ public class SearchController {
     @RequestMapping("/search/reviewPlus")
     public Map<String, Object> reviewPlus(@RequestBody ReviewVo reviewVo) {
         System.out.println("controller:/search/reviewPlus");
-        System.out.println("파람확인" + reviewVo);
+        System.out.println("리뷰추가파람확인" + reviewVo);
         Map<String, Object> rVo = searchService.reviewPlus(reviewVo);
         
-        System.out.println("리뷰추가 확인"+reviewVo);
+        System.out.println("리뷰추가 확인"+rVo);
 
         return rVo;
     }
@@ -166,16 +168,17 @@ public class SearchController {
         return rVo;
     }
 
-    //리뷰 삭제
+    //리뷰(답글) 삭제
     @ResponseBody
-    @RequestMapping("/search/reviewRemove")
-    public int reviewRemove(@RequestParam("reviewNo") int reviewNo) {
+    @RequestMapping("/search/reviewReRemove")
+    public int reviewReRemove(@RequestParam("reviewNo") int reviewNo) {
         System.out.println("controller:/search/reviewRemove");
         System.out.println("리뷰넘버 확인" + reviewNo);
-        int remove = searchService.reviewRemove(reviewNo);
+        int remove = searchService.reviewReRemove(reviewNo);
 
         return remove;
     }
-
+    
+ 
 
 }

@@ -47,12 +47,13 @@
 	<select id="reviewWrite" parameterType="int"
 	resultType="com.javaex.vo.ReviewVo">
 	<![CDATA[
-	SELECT  p.userno,p.trainerno,s.schedulecount,u.name
+	SELECT  p.userno,p.trainerno,s.schedulecount,u.name,r.order_no,r.check_review
 		FROM pt p,(SELECT ptNo, COUNT(scheduleNo) scheduleCount
 					            FROM schedule
-					            group by ptNo)s,users u
+					            group by ptNo)s,users u,review r
 		where p.ptno = s.ptno
 		and u.userno = p.userno
+        and p.ptno  = r.ptno(+)
 		and p.userno= #{no}
 	]]>
 	</select>
@@ -130,6 +131,7 @@
 		where reviewno = #{reviewNo}
 		]]>
 		</update>
+	
 	
 	
 	<!-- 리뷰지우기 -->

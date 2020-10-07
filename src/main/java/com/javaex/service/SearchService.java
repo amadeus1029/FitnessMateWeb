@@ -163,8 +163,14 @@ public class SearchService {
     // 리뷰작성자격 확인
     public ReviewVo reviewWrite(int no) {
         System.out.println("SearchService:reviewWrite");
+        
+        //스케쥴카운트 체크
         ReviewVo reviewVo = searchDao.reviewWrite(no);
-        return reviewVo;
+        
+        System.out.println("정보 불러와지나 체크"+reviewVo.getScheduleCount());
+        
+        
+               return reviewVo;
     }
 
 
@@ -309,16 +315,15 @@ public class SearchService {
         return ptNo;
     }
 
-    //리뷰삭제
-    public int reviewRemove(int reviewNo) {
+    //리뷰(답글)삭제
+    public int reviewReRemove(int reviewNo) {
         System.out.println("SearchService:reviewRemove");
 
         int remove = searchDao.reviewRemove(reviewNo);
         
-      
-
         return remove;
     }
 
+    
 
 }

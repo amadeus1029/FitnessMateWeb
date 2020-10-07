@@ -756,9 +756,12 @@
                 success: function (reviewVo) {
                     $(".reviewWrite").empty();
                     var reviewStr = "";
+                   
+                   
 					
 
-                    if (reviewVo.trainerNo == reviewNo && reviewVo.scheduleCount >= 1 ) {
+                    if (reviewVo.trainerNo == reviewNo && reviewVo.scheduleCount >= 1  ) {
+                    	
 
                         reviewStr += '<span>리뷰작성</span>';
                         reviewStr += '<div id="star_grade">';
@@ -877,7 +880,7 @@
 
                         dataType: "json",
                         success: function (rVo) {
-                        	
+                        	$(".reviewWrite").remove();
                         	$("ul.review-list").empty();
                             var reviewVo = rVo.reveiwList;
                             
@@ -1003,9 +1006,10 @@
             });
 
         });
+        
+     
 
-
-        //리뷰 삭제
+        //리뷰(답글) 삭제
         $(".review-list").on("click", "#removeRe", function () {
             console.log("삭제");
             var reviewNo = $(this).data('reno');
@@ -1014,7 +1018,7 @@
 
             $.ajax({
 
-                url: "${pageContext.request.contextPath}/search/reviewRemove",
+                url: "${pageContext.request.contextPath}/search/reviewReRemove",
                 type: "post",
                 //contentType : "application/json",
                 data: {reviewNo: reviewNo},
@@ -1128,12 +1132,13 @@
                 } else {
                     reviewStr += '<li class="review-line" id="r-' + review.reviewNo + '">';
                 }
+            	
                 reviewStr += '<input type="hidden" id="reptNo-' + review.reviewNo + '" value="' + review.ptNo + '">';
                 reviewStr += '<input type="hidden" id="scoreNo-' + review.reviewNo + '" value="' + review.score + '">';
                 reviewStr += '<input type="hidden" id="orderNo-' + review.reviewNo + '" value="' + review.order_no + '">';
                 reviewStr += '  <div class="user-profile ff">';
                 //회원이 쓴 리뷰의 경우
-                if (review.order_no != 2) {
+                if (review.order_no != 2 ) {
                     reviewStr += '    <img class="user-profile-img" src="${pageContext.request.contextPath}/upload/' + review.profileImg + '">';
                     reviewStr += '    <div class="user-profile-info">';
                     reviewStr += '      <div class="user-profile-name">' + review.name + '</div>';
