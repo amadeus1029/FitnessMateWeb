@@ -758,9 +758,11 @@
                     var reviewStr = "";
                    
                    
+					var test = reviewVo.check_review;
+					console.log("test"+test);
 					
 
-                    if (reviewVo.trainerNo == reviewNo && reviewVo.scheduleCount >= 1  ) {
+                    if (reviewVo.trainerNo == reviewNo && reviewVo.scheduleCount >= 1 && test==0) {
                     	
 
                         reviewStr += '<span>리뷰작성</span>';
