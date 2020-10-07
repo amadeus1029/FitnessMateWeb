@@ -175,7 +175,7 @@
                      <div class="info-wrapper clearfix">
                      <div class="info">
                             <h3 class="title">연락처/sns</h3>
-                            <p class=""></p>
+                            <p class="content phone"></p>
                      </div>
                      </div>
                     <div class="info-wrapper clearfix">
@@ -373,6 +373,8 @@
                     $(".content.introduction").html(vo.introduction); //자기소개
                     $(".content.age").html("만" + years + "세");
                     $(".content.ptTimer").html(vo.workingHours); //자기소개
+                   console.log(vo.phone);
+                    $(".content.phone").html(vo.phone);//연락처
 
 
                 },
