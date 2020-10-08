@@ -204,26 +204,12 @@
             });
         });
 
-        /* ? 호버 했을 때 툴팁 */
-        $(".question").hover(function () {
-            $(this).append("<span class='tipMsg'>트레이너의 요청에 응답해주세요 :)</span>");
-        }, function () {
-            $(".tipMsg").remove();
-        });
-
-        /* X 호버 했을 때 툴팁 */
-        $(".rejected").hover(function () {
-            $(this).append("<span class='tipMsg'>거절된 요청을 삭제해 주세요 :(</span>");
-        }, function () {
-            $(".tipMsg").remove();
-        });
-
         /* ?  클릭  */
         function popMenu(scheduleNo, target) {
             event.stopPropagation();
             $(".tipMsg").remove();
             $(".btnPop").remove();
-
+			console.log("asdf");
             target.prepend(
                 "<div class='btnPop'>" +
                 "<button type='button' class='button btn_modify' onclick='changeScheduleState(" + scheduleNo + ",\"confirm\");'>수락</button>" +

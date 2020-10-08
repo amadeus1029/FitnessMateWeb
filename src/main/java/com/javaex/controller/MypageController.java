@@ -209,7 +209,7 @@ public class MypageController {
     }
 
     @RequestMapping("/manageUser")
-    public String ManageUser(HttpSession session, Model model) {
+    public String manageUser(HttpSession session, Model model) {
         UserVo user = (UserVo) session.getAttribute("authUser");
         List<PtVo> ptList = mypageService.getTraineeList(user.getUserNo());
 

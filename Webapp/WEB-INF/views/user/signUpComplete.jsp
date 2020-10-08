@@ -39,7 +39,7 @@
             <div class="img-part"></div>
             <div class="signUp-part">
                 <a class="logo" href="${pageContext.request.contextPath}/main">
-                    <img src="${pageContext.request.contextPath}/assets/image/logoB.jpeg" title="logo" alt="logo">
+                    <img src="${pageContext.request.contextPath}/assets/image/logoC.png" title="logo" alt="logo">
                 </a>
                 <p class="title larger">환영합니다!</p>
                 <p class="guide larger">${vo.name} 님, 회원가입을 축하합니다.<br>

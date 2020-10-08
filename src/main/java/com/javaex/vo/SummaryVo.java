@@ -5,11 +5,11 @@ public class SummaryVo {
 	int countAll; //누적회원
 	int countCurrent; //현재회원
 	int reviewCount; //리뷰갯수
-	int avgScore; //리뷰 평점
+	float avgScore; //리뷰 평점
 	
 	public SummaryVo() {}
 
-	public SummaryVo(int countAll, int countCurrent, int reviewCount, int avgScore) {
+	public SummaryVo(int countAll, int countCurrent, int reviewCount, float avgScore) {
 		this.countAll = countAll;
 		this.countCurrent = countCurrent;
 		this.reviewCount = reviewCount;
@@ -40,11 +40,11 @@ public class SummaryVo {
 		this.reviewCount = reviewCount;
 	}
 
-	public int getavgScore() {
+	public float getavgScore() {
 		return avgScore;
 	}
 
-	public void setavgScore(int avgScore) {
+	public void setavgScore(float avgScore) {
 		this.avgScore = avgScore;
 	}
 
