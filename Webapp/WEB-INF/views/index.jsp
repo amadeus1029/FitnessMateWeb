@@ -177,12 +177,6 @@
 
                     </div>
                     <div class="info-wrapper clearfix">
-                        <div class="info">
-                            <h3 class="title">연락처/sns</h3>
-                            <p class="content phone"></p>
-                        </div>
-                    </div>
-                    <div class="info-wrapper clearfix">
                         <div class="category-info">
                             <h3 class="title field">전문분야</h3>
                         </div>
