@@ -275,9 +275,11 @@ ul.search-paging {
               }
             }
 
-            div.score {
+            div.score,
+            div.review,
+            div.contact {
               float: right;
-              width: 150px;
+              width: 120px;
               margin-top: 30px;
 
               p.head {
@@ -289,6 +291,12 @@ ul.search-paging {
               p.body {
                 color: @color-main;
                 font-size: 20px;
+              }
+            }
+            div.contact {
+              p.head,
+              p.body {
+                text-align: left;
               }
             }
           }
@@ -406,6 +414,10 @@ ul.search-paging {
                   width: 120px;
                   padding: 0 0 0 100px;
                 }
+              }
+
+              .review-btn-area {
+                margin-right: 30px;
               }
 
               .box {
