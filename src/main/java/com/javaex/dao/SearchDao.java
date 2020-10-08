@@ -118,6 +118,8 @@ public class SearchDao {
 		
 		return reviewWr;
 	}
+	
+
 
 	//리뷰 추가
 	public int reviewPlus(ReviewVo vo ) {
@@ -163,14 +165,42 @@ public class SearchDao {
 		return ptNo;
 	}
 
-	//리뷰삭제
-	public int reviewRemove(int reviewNo) {
+	//리뷰(답글)삭제위한 정보
+	public ReviewVo reviewRemove(ReviewVo reviewVo) {
 		System.out.println("searchDao:reviewRemove");
 		
-		int remove = sqlSession.delete("review.reviewRemove", reviewNo);
+		ReviewVo pt = sqlSession.selectOne("review.findPt2",reviewVo);
+		System.out.println("pt넘받아와지나 확인"+pt);
 		
-		return remove;
+		return pt;
 	}
+	
+	//리뷰(답글)삭제위한 정보
+	public void reviewRemove2(ReviewVo reviewVo) {
+		sqlSession.delete("review.reviewRemove", reviewVo);
+	}
+	
+	public void reviewRemove3(ReviewVo reviewVo,int ptNo) {
+		sqlSession.delete("review.reviewRemove2",reviewVo);
+		sqlSession.update("review.reviewRemove3", ptNo);
+		
+	}
+
+	
+	//이미 리뷰,답글 썼는지 체크
+	public void checkReview(int ptNo) {
+		System.out.println("searchDao:리뷰쓴거 카운트업");
+		
+		sqlSession.update("review.checkReview",ptNo);
+	}
+
+	
+
+	
+
+	
+
+	
 
 	
 

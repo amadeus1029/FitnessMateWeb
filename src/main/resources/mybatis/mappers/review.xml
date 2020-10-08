@@ -9,11 +9,11 @@
 	<select id="reviewList" parameterType="com.javaex.vo.ReviewVo"
 	resultType="com.javaex.vo.ReviewVo">
 	<![CDATA[
-		SELECT reviewno,ptno,"regDate",score,content,userno,trainerno,schedulecount,name,profileImg,group_no,order_no,"trainerName","trainerImg"
-		FROM (SELECT ROWNUM rn,reviewno,ptno,"regDate",score,content,userno,trainerno,schedulecount,name,profileImg,group_no,order_no,"trainerName","trainerImg"
+		SELECT reviewno,ptno,"regDate",score,content,userno,trainerno,schedulecount,name,profileImg,group_no,order_no,"trainerName","trainerImg",check_review
+		FROM (SELECT ROWNUM rn,reviewno,ptno,"regDate",score,content,userno,trainerno,schedulecount,name,profileImg,group_no,order_no,"trainerName","trainerImg",check_review
 		FROM(SELECT r.reviewno,r.ptno,TO_CHAR(r.regdate, 'YYYY/MM/DD')as "regDate",r.score,r.content,
 				    p.userno,p.trainerno,s.schedulecount,u.name,u.profileImg,r.group_no,r.order_no,
-				    tra.name as "trainerName",tra.img as "trainerImg"
+				    tra.name as "trainerName",tra.img as "trainerImg",r.check_review
 				 
 				FROM review r,pt p,(SELECT ptNo, COUNT(scheduleNo) scheduleCount
 							            FROM schedule
@@ -47,14 +47,17 @@
 	<select id="reviewWrite" parameterType="int"
 	resultType="com.javaex.vo.ReviewVo">
 	<![CDATA[
-	SELECT  p.userno,p.trainerno,s.schedulecount,u.name
+	SELECT DISTINCT p.userno,p.trainerno,s.schedulecount,u.name,r.check_review
 		FROM pt p,(SELECT ptNo, COUNT(scheduleNo) scheduleCount
 					            FROM schedule
-					            group by ptNo)s,users u
+					            group by ptNo)s,users u,review r
 		where p.ptno = s.ptno
 		and u.userno = p.userno
+        and p.ptno  = r.ptno(+)
 		and p.userno= #{no}
 	]]>
+	
+	
 	</select>
 	
 	
@@ -69,7 +72,7 @@
       
 	  <![CDATA[
 		insert into review
-		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content},#{reviewNo},1)
+		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content},#{reviewNo},1,1)
 	  ]]>
 
 	</insert>
@@ -85,7 +88,7 @@
 	
 	  <![CDATA[
 		insert into review
-		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content},#{group_no},2)
+		VALUES (#{reviewNo},#{ptNo},sysdate,#{score},#{content},#{group_no},2,1)
 	  ]]>
 
 	</insert>
@@ -121,6 +124,19 @@
 	]]>
 	</select>
 	
+	<!--리뷰삭제 위한 pt번호 불러오기 -->
+	<select id="findPt2" parameterType="com.javaex.vo.ReviewVo"
+	resultType="com.javaex.vo.ReviewVo">
+	<![CDATA[
+	SELECT r.ptno,p.trainerno,r.order_no
+			FROM review r,pt p
+			WHERE r.ptno = p.ptno
+            and reviewno = #{reviewNo}
+	]]>
+	</select>
+	
+	
+	
 	<!--리뷰수정 -->
 	<update id="reviewModify" parameterType="map">
 		<![CDATA[
@@ -132,14 +148,41 @@
 		</update>
 	
 	
+	
 	<!-- 리뷰지우기 -->
-	<delete id="reviewRemove" parameterType="int">
+	<delete id="reviewRemove" parameterType="com.javaex.vo.ReviewVo">
+		<![CDATA[
+			DELETE from review
+			where ptno =#{ptNo}
+		]]>
+	</delete>
+	
+	<!-- 리뷰지우기 -->
+	<delete id="reviewRemove2" parameterType="com.javaex.vo.ReviewVo">
 		<![CDATA[
 			DELETE from review
 			where reviewno =#{reviewNo}
 		]]>
 	</delete>
 	
+	<!--리뷰지우기 -->
+	<update id="reviewRemove3" parameterType="int">
+		<![CDATA[
+		update review
+		set check_review = 1
+		where ptNo = #{ptNo}
+		]]>
+		</update>
+	
+	
+	<!--리뷰수정 -->
+	<update id="checkReview" parameterType="int">
+		<![CDATA[
+		update review
+		set check_review = 2
+		where ptNo = #{ptNo}
+		]]>
+		</update>
 
 	
 	

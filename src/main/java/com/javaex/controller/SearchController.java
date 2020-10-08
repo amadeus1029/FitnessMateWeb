@@ -1,13 +1,10 @@
 package com.javaex.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.javaex.vo.SearchVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -114,6 +111,8 @@ public class SearchController {
     @RequestMapping("/search/reviewWrite")
     public ReviewVo reviewWrite(@RequestParam("no") int no) {
         ReviewVo reviewVo = searchService.reviewWrite(no);
+        
+        System.out.println("리뷰 작성 가능한 사람인가?"+reviewVo);
         return reviewVo;
 
     }
@@ -133,26 +132,26 @@ public class SearchController {
     // 리뷰추가
     @ResponseBody
     @RequestMapping("/search/reviewPlus")
-    public ReviewVo reviewPlus(@RequestParam("score") int score, @RequestParam("content") String content,
-                               @RequestParam("ptNo") int ptNo) {
+    public Map<String, Object> reviewPlus(@RequestBody ReviewVo reviewVo) {
         System.out.println("controller:/search/reviewPlus");
-        System.out.println("파람확인" + score + content);
-        ReviewVo reviewVo = searchService.reviewPlus(score, content, ptNo);
+        System.out.println("리뷰추가파람확인" + reviewVo);
+        Map<String, Object> rVo = searchService.reviewPlus(reviewVo);
+        
+        System.out.println("리뷰추가 확인"+rVo);
 
-        return reviewVo;
+        return rVo;
     }
 
     // 답글추가
     @ResponseBody
     @RequestMapping("/search/rereviewPlus")
-    public ReviewVo rereviewPlus(@RequestParam("score") int score, @RequestParam("content") String content,
-                                 @RequestParam("ptNo") int ptNo, @RequestParam("group_no") int group_no) {
+    public Map<String, Object> rereviewPlus(@RequestBody ReviewVo reviewVo) {
         System.out.println("controller:/search/rereviewPlus");
-        System.out.println("파람확인" + score + content + ptNo + group_no);
-        ReviewVo reviewVo = searchService.rereviewPlus(score, content, ptNo, group_no);
+        System.out.println("파람확인" + reviewVo);
+        Map<String, Object> rVo = searchService.rereviewPlus(reviewVo);
         System.out.println("답글 컨트롤러" + reviewVo);
 
-        return reviewVo;
+        return rVo;
     }
 
 
@@ -169,16 +168,19 @@ public class SearchController {
         return rVo;
     }
 
-    //리뷰 삭제
+    //리뷰(답글) 삭제
     @ResponseBody
     @RequestMapping("/search/reviewRemove")
-    public int reviewRemove(@RequestParam("reviewNo") int reviewNo) {
+    public Map<String, Object> reviewReRemove(@RequestBody ReviewVo reviewVo) {
         System.out.println("controller:/search/reviewRemove");
-        System.out.println("리뷰넘버 확인" + reviewNo);
-        int remove = searchService.reviewRemove(reviewNo);
+        System.out.println("리뷰넘버 확인" + reviewVo);
+        Map<String, Object> remove = searchService.reviewReRemove(reviewVo);
+        
+        
 
         return remove;
     }
-
+    
+ 
 
 }
