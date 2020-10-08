@@ -640,10 +640,7 @@ ul.search-paging li.off {
   color: #898989;
 }
 #profileModal .modal-wrapper .modal-content .label-tab.review-wrapper ul.review-list .review-line .user-profile .user-profile-star {
-  display: inline-block;
   height: 30px;
-  width: 120px;
-  padding: 0 0 0 100px;
 }
 #profileModal .modal-wrapper .modal-content .label-tab.review-wrapper ul.review-list .review-line .review-btn-area {
   margin-right: 30px;
