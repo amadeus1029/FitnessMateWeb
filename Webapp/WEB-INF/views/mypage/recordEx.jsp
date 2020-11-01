@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/recordForm.css">
     
-    <style>
+    <%--<style>
     .summary-wrapper .summary .statistics h3.title.left {
     text-align: left;
 	}
@@ -40,7 +40,7 @@
     font-size: 20px;
     margin-bottom: 25px;
 	}
-    </style>
+    </style>--%>
     
 </head>
 <body>
