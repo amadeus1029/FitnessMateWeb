@@ -52,7 +52,8 @@ public class UserService {
 		String birthDate = birthList.get(0).substring(2)+"/"+birthList.get(1)+"/"+birthList.get(2);
 		
 		vo.setBirthDate(birthDate);
-		
+
+		System.out.println(vo);
 		if("normal".equals(vo.getUserType())) {
 			userDao.updateUserInfo(vo);
 			

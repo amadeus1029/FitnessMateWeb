@@ -157,7 +157,11 @@ public class MypageController {
 								@RequestParam(value="fieldNo", required=false) List<String> fieldList,
 								@RequestParam(value="careerRecord", required=false) List<String> careerList,
 								@RequestParam(value="birth", required=false) List<String> birthList) {
-    	
+        System.out.println(vo);
+        System.out.println(address);
+        System.out.println(fieldList);
+        System.out.println(careerList);
+        System.out.println(birthList);
     	userService.updateProfile(vo, address, fieldList, careerList, birthList);
     	
         return "redirect:/mypage/profile";

@@ -147,7 +147,7 @@
 				gender = #{gender},
 			    birthDate = #{birthDate},
 			    career = #{career},
-				introduction = #{introduction},
+				/*introduction = #{introduction},*/
 				profileImg = #{profileImg}
 			WHERE userNo = #{userNo}
 			
